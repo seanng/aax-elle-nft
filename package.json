@@ -1,6 +1,7 @@
 {
   "name": "project-elle",
   "version": "0.0.0",
+  "license": "ISC",
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
@@ -11,6 +12,7 @@
     "typecheck": "tsc --pretty --noEmit"
   },
   "dependencies": {
+    "@openzeppelin/contracts": "^4.5.0",
     "axios": "^0.24.0",
     "next": "12.0.7",
     "react": "17.0.2",
@@ -18,15 +20,21 @@
     "react-hook-form": "^7.22.5"
   },
   "devDependencies": {
-    "@types/react": "17.0.37",
-    "@types/node": "^15.6.0",
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/forms": "^0.4.0",
+    "@types/node": "^15.6.0",
+    "@types/react": "17.0.37",
     "autoprefixer": "^10.4.2",
+    "chai": "^4.3.6",
     "config": "*",
     "eslint": "8.11.0",
     "eslint-config-next": "12.1.0",
     "eslint-config-prettier": "^8.5.0",
+    "ethereum-waffle": "^3.4.4",
+    "ethers": "^5.6.4",
+    "hardhat": "^2.9.3",
     "husky": ">=6",
     "lint-staged": ">=10",
     "next-transpile-modules": "9.0.0",
