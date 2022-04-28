@@ -7,14 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install",
     "postinstall": "husky install",
-    "typecheck": "tsc --pretty --noEmit"
+    "typecheck": "tsc --pretty --noEmit",
+    "prismagen": "dotenv -e .env.local prisma generate"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.5.0",
+    "@prisma/client": "^3.13.0",
     "axios": "^0.24.0",
     "dotenv": "^16.0.0",
+    "dotenv-cli": "^5.1.0",
     "ethers": "^5.6.4",
     "next": "12.0.7",
     "react": "17.0.2",
@@ -45,8 +47,12 @@
     "next-transpile-modules": "9.0.0",
     "postcss": "^8.4.5",
     "prettier": "^2.6.0",
+    "prisma": "^3.13.0",
     "tailwindcss": "^3.0.12",
     "ts-node": "^10.7.0",
     "typescript": "^4.5.3"
+  },
+  "prisma": {
+    "seed": "dotenv -e .env.local ts-node prisma/seed.ts"
   }
 }
