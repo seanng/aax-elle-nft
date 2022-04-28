@@ -1,8 +1,22 @@
-export default function Landing() {
-  // testing husky again
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import Link from 'next/link'
+import { Web3Button } from 'components'
+
+const Home: NextPage = () => {
   return (
-    <div className="flex justify-center px-8 pt-8">
-      <div className="w-full max-w-s">The landing page goes here.</div>
+    <div className="flex h-screen flex-col">
+      <Head>
+        <title>Web3 Next-Boilerplate Mono</title>
+        <meta name="description" content="Boilerplate for Web3 dApp" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <nav className="flex flex-row justify-between p-4">
+        <Web3Button />
+      </nav>
     </div>
   )
 }
+
+export default Home
