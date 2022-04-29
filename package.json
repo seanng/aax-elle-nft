@@ -8,8 +8,17 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "husky install",
+    "format": "prettier --write .",
     "typecheck": "tsc --pretty --noEmit",
+    "test": "jest --watch",
     "prismagen": "dotenv -e .env.local prisma generate"
+  },
+  "lint-staged": {
+    "*.{ts|tsx}": [
+      "prisma format",
+      "yarn lint --fix",
+      "yarn format"
+    ]
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.5.0",
@@ -30,10 +39,14 @@
     "@nomiclabs/hardhat-waffle": "^2.0.3",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/forms": "^0.4.0",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "12.1.2",
     "@types/chai": "^4.3.1",
+    "@types/jest": "^27.4.1",
     "@types/mocha": "^9.1.1",
     "@types/node": "^15.6.0",
-    "@types/react": "17.0.37",
+    "@types/react": "18.0.6",
+    "@types/testing-library__jest-dom": "^5.14.3",
     "autoprefixer": "^10.4.2",
     "chai": "^4.3.6",
     "config": "*",
@@ -43,6 +56,8 @@
     "ethereum-waffle": "^3.4.4",
     "hardhat": "^2.9.3",
     "husky": ">=6",
+    "jest": "^28.0.2",
+    "jest-environment-jsdom": "^28.0.2",
     "lint-staged": ">=10",
     "next-transpile-modules": "9.0.0",
     "postcss": "^8.4.5",
