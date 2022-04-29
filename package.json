@@ -14,7 +14,7 @@
     "prismagen": "dotenv -e .env.local prisma generate"
   },
   "lint-staged": {
-    "*.{ts|tsx}": [
+    "*.{ts,tsx}": [
       "jest",
       "prisma format",
       "yarn lint --fix",
