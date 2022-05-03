@@ -8,17 +8,16 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "husky install",
-    "format": "prettier --write .",
     "typecheck": "tsc --pretty --noEmit",
     "test": "jest --watch",
     "prismagen": "dotenv -e .env.local prisma generate"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "jest",
       "prisma format",
-      "yarn lint --fix",
-      "yarn format"
+      "eslint --fix",
+      "prettier --write",
+      "jest"
     ]
   },
   "dependencies": {

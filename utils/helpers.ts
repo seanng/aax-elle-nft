@@ -1,1 +1,1 @@
-import { AUTH_TOKEN_KEY } from "shared/constants";
+import { AUTH_TOKEN_KEY } from 'shared/constants'

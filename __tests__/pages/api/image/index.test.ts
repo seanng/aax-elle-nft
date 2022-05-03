@@ -9,7 +9,7 @@ beforeEach(() => {
 
 describe('/api/image', () => {
   it('should create new image', async () => {
-    console.log('mocked context', prisma)
+    console.log('mocked context yo', prisma)
 
     // const mockImage = prismaMock.image.create.mockResolvedValue({
     //   id: '123',
