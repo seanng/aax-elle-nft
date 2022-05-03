@@ -1,19 +1,26 @@
-import { Image, PrismaClient } from '@prisma/client'
+import type { Image, PrismaClient } from '@prisma/client'
 import { NextApiHandler } from 'next'
 
-const prisma = new PrismaClient()
+import { prisma as prismaClient } from 'lib/prisma'
 
-const getRandomUnclaimedImage = async (): Promise<Image> => {
+const getRandomUnclaimedImage = async (
+  prisma: PrismaClient
+): Promise<Image | undefined> => {
   try {
     const unclaimedCondition = { contractAddress: undefined }
     const count = await prisma.image.count({ where: unclaimedCondition })
     const rand = Math.random()
-    let image = null
+    let image: Image | undefined
     while (!image) {
-      image = await prisma.image.findFirst({
-        where: unclaimedCondition,
-        skip: Math.floor(rand * count),
-      })
+      try {
+        image = await prisma.image.findFirst({
+          where: unclaimedCondition,
+          skip: Math.floor(rand * count),
+          rejectOnNotFound: true,
+        })
+      } catch (error) {
+        return undefined
+      }
     }
     return image
   } catch (e) {
@@ -25,7 +32,7 @@ const handler: NextApiHandler = async (req, res) => {
   // checks re. methods, etc..
 
   if (req.method === 'GET') {
-    const image = await getRandomUnclaimedImage()
+    const image = await getRandomUnclaimedImage(prismaClient)
     res.json(image)
     return
   }
