@@ -58,6 +58,7 @@
     "husky": ">=6",
     "jest": "^28.0.2",
     "jest-environment-jsdom": "^28.0.2",
+    "jest-mock-extended": "^2.0.5",
     "lint-staged": ">=10",
     "next-transpile-modules": "9.0.0",
     "postcss": "^8.4.5",

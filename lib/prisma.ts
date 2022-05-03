@@ -1,5 +1,6 @@
 // https://www.prisma.io/docs/support/help-articles/nextjs-prisma-client-dev-practices
 import { PrismaClient } from '@prisma/client'
+import { mockDeep, mockReset, DeepMockProxy } from 'jest-mock-extended'
 
 declare global {
   // allow global `var` declarations
@@ -13,4 +14,5 @@ export const prisma =
     log: ['query'],
   })
 
-if (process.env.NODE_ENV !== 'production') global.prisma = prisma
+if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test')
+  global.prisma = prisma
