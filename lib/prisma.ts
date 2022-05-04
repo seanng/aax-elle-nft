@@ -14,5 +14,13 @@ export const prisma =
     log: ['query'],
   })
 
+// export const prisma =
+//   process.env.NODE_ENV === 'test'
+//     ? mockDeep<PrismaClient>()
+//     : global.prisma ||
+//       new PrismaClient({
+//         log: ['query'],
+//       })
+
 if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test')
   global.prisma = prisma

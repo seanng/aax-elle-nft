@@ -24,3 +24,31 @@ export const getRandomUnclaimedImage = async (
     console.log('error: ', e)
   }
 }
+
+export const uploadNewImages = async (
+  images: Pick<Image, 'previewUrl'>[],
+  prisma: PrismaClient
+) => {
+  try {
+    await prisma.image.createMany({
+      data: images,
+    })
+  } catch (e) {
+    console.log('error in uploadNewImage: ', e)
+  }
+}
+
+export const updateImage = async (
+  imageId: string,
+  data: Pick<Image, 'message' | 'nftId' | 'contractAddress'>,
+  prisma: PrismaClient
+): Promise<void> => {
+  try {
+    await prisma.image.update({
+      where: { id: imageId },
+      data,
+    })
+  } catch (e) {
+    console.log('error in updateImage; ', e)
+  }
+}
