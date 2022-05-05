@@ -1,3 +1,5 @@
+// TODO: move to __tests__ and use jest.
+
 const { expect } = require('chai')
 const { ethers } = require('hardhat')
 

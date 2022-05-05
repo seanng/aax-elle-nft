@@ -1,11 +1,6 @@
-import { createPrismaMock, PrismaMock } from 'utils'
+import { prismaMock } from 'utils'
+// Order of imports is important
 import { getRandomUnclaimedImage } from 'backend/image'
-
-let prisma: PrismaMock
-
-beforeEach(() => {
-  prisma = createPrismaMock()
-})
 
 describe('backend/image', () => {
   describe('getRandomUnclaimedImage', () => {
@@ -20,8 +15,10 @@ describe('backend/image', () => {
         createdAt: new Date(),
         updatedAt: new Date(),
       }
-      prisma.image.findFirst.mockResolvedValue(imageData)
-      expect(await getRandomUnclaimedImage(prisma)).toEqual(imageData)
+      prismaMock.image.findFirst.mockResolvedValue(imageData)
+      prismaMock.image.count.mockResolvedValue(1)
+      const randomImage = await getRandomUnclaimedImage()
+      expect(randomImage).toEqual(imageData)
     })
   })
 })

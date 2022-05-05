@@ -1,8 +1,7 @@
-import type { Image, PrismaClient } from '@prisma/client'
+import type { Image } from '@prisma/client'
+import { prisma } from 'lib/prisma'
 
-export const getRandomUnclaimedImage = async (
-  prisma: PrismaClient
-): Promise<Image | undefined> => {
+export const getRandomUnclaimedImage = async (): Promise<Image | undefined> => {
   try {
     const unclaimedCondition = { contractAddress: undefined }
     const count = await prisma.image.count({ where: unclaimedCondition })
@@ -25,10 +24,7 @@ export const getRandomUnclaimedImage = async (
   }
 }
 
-export const uploadNewImages = async (
-  images: Pick<Image, 'previewUrl'>[],
-  prisma: PrismaClient
-) => {
+export const uploadNewImages = async (images: Pick<Image, 'previewUrl'>[]) => {
   try {
     await prisma.image.createMany({
       data: images,
@@ -40,8 +36,7 @@ export const uploadNewImages = async (
 
 export const updateImage = async (
   imageId: string,
-  data: Pick<Image, 'message' | 'nftId' | 'contractAddress'>,
-  prisma: PrismaClient
+  data: Pick<Image, 'message' | 'nftId' | 'contractAddress'>
 ): Promise<void> => {
   try {
     await prisma.image.update({

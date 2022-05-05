@@ -1,3 +1,3 @@
 export * from './api'
-export * from './helpers'
 export * from './mocks'
+export * from './config'
