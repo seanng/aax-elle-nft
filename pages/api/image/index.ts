@@ -1,5 +1,5 @@
 import { NextApiHandler } from 'next'
-import { getRandomUnclaimedImage, uploadNewImages } from 'backend/image'
+import { getRandomUnclaimedImage, uploadNewImages } from 'services/image'
 
 const handler: NextApiHandler = async (req, res) => {
   // checks re. methods, etc..

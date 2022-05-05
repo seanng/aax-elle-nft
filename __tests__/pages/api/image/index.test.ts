@@ -1,6 +1,6 @@
 import handler from 'pages/api/image'
 import { createMocks } from 'node-mocks-http'
-import * as helpers from 'backend/image'
+import * as imageService from 'services/image'
 
 const imageData = {
   id: '123',
@@ -20,7 +20,7 @@ describe('api/image handler', () => {
     })
 
     const spy = jest
-      .spyOn(helpers, 'getRandomUnclaimedImage')
+      .spyOn(imageService, 'getRandomUnclaimedImage')
       .mockResolvedValue(imageData)
 
     await handler(req, res)

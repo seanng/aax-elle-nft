@@ -1,5 +1,5 @@
 import { NextApiHandler } from 'next'
-import { updateImage } from 'backend/image'
+import { updateImage } from 'services/image'
 
 const handler: NextApiHandler = async (req, res) => {
   // checks re. methods, etc..

@@ -1,8 +1,8 @@
 import { prismaMock } from 'utils'
 // Order of imports is important
-import { getRandomUnclaimedImage } from 'backend/image'
+import { getRandomUnclaimedImage } from 'services/image'
 
-describe('backend/image', () => {
+describe('services/image', () => {
   describe('getRandomUnclaimedImage', () => {
     it('returns an image', async () => {
       const imageData = {
