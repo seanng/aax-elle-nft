@@ -1,12 +1,12 @@
 import { NextApiHandler } from 'next'
-import { getRandomUnclaimedImage, uploadNewImages } from 'services/image'
+import { uploadNewImages, getRandomImage } from 'services/image'
 
 const handler: NextApiHandler = async (req, res) => {
   // checks re. methods, etc..
 
   if (req.method === 'GET') {
-    const image = await getRandomUnclaimedImage()
-    res.json(image)
+    const image = await getRandomImage()
+    res.json({ data: image })
     return
   }
 

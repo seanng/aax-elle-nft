@@ -1,29 +1,6 @@
 import type { Image } from '@prisma/client'
 import { prisma } from 'lib/prisma'
 
-export const getRandomUnclaimedImage = async (): Promise<Image | undefined> => {
-  try {
-    const unclaimedCondition = { contractAddress: undefined }
-    const count = await prisma.image.count({ where: unclaimedCondition })
-    const rand = Math.random()
-    let image: Image | undefined
-    while (!image) {
-      try {
-        image = await prisma.image.findFirst({
-          where: unclaimedCondition,
-          skip: Math.floor(rand * count),
-          rejectOnNotFound: true,
-        })
-      } catch (error) {
-        return undefined
-      }
-    }
-    return image
-  } catch (e) {
-    console.log('error: ', e)
-  }
-}
-
 export const uploadNewImages = async (images: Pick<Image, 'previewUrl'>[]) => {
   try {
     await prisma.image.createMany({
@@ -34,16 +11,7 @@ export const uploadNewImages = async (images: Pick<Image, 'previewUrl'>[]) => {
   }
 }
 
-export const updateImage = async (
-  imageId: string,
-  data: Pick<Image, 'message' | 'nftId' | 'contractAddress'>
-): Promise<void> => {
-  try {
-    await prisma.image.update({
-      where: { id: imageId },
-      data,
-    })
-  } catch (e) {
-    console.log('error in updateImage; ', e)
-  }
+export const getRandomImage = async (): Promise<Image | null> => {
+  const count = await prisma.image.count()
+  return prisma.image.findFirst({ skip: Math.floor(Math.random() * count) })
 }

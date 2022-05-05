@@ -4,23 +4,20 @@ import * as imageService from 'services/image'
 
 const imageData = {
   id: '123',
-  message: 'abcdefg',
   previewUrl:
     'https://diginomica.com/sites/default/files/styles/article_images_desktop/public/images/2017-06/mongodb.png',
-  contractAddress: null,
-  nftId: null,
   createdAt: new Date(),
   updatedAt: new Date(),
 }
 
 describe('api/image handler', () => {
-  it('calls getRandomUnclaimedImage', async () => {
+  it('calls getRandomImage', async () => {
     const { req, res } = createMocks({
       method: 'GET',
     })
 
     const spy = jest
-      .spyOn(imageService, 'getRandomUnclaimedImage')
+      .spyOn(imageService, 'getRandomImage')
       .mockResolvedValue(imageData)
 
     await handler(req, res)
