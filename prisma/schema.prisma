@@ -8,22 +8,25 @@ datasource db {
 }
 
 model Image {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  previewUrl      String
-  donations       Donation[] // if v2
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  previewUrl String
+  donations  Donation[] // if v2
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
 }
 
 model Donation {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
   message         String
-  nftId           String
-  contractAddress String
+  nftId           String?
+  contractAddress String?
+  tokenURI        String?
   email           String
   donationAmount  BigInt // wei
-  image           Image   @relation(fields: [imageId], references: [id])
-  imageId         String    @db.ObjectId
+  image           Image    @relation(fields: [imageId], references: [id])
+  imageId         String   @db.ObjectId
+  mintedAt        DateTime?
+  decryptedAt     DateTime?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }

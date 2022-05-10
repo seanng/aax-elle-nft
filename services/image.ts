@@ -1,7 +1,7 @@
 import type { Image } from '@prisma/client'
 import { prisma } from 'lib/prisma'
 
-export const uploadNewImages = async (images: Pick<Image, 'previewUrl'>[]) => {
+export const createImages = async (images: Pick<Image, 'previewUrl'>[]) => {
   try {
     await prisma.image.createMany({
       data: images,

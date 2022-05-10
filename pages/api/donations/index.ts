@@ -1,5 +1,5 @@
 import { NextApiHandler } from 'next'
-import { create } from 'services/donation'
+import { create } from 'services/donations'
 
 const handler: NextApiHandler = async (req, res) => {
   if (req.method === 'POST') {
@@ -7,7 +7,6 @@ const handler: NextApiHandler = async (req, res) => {
     await create({
       email: b.email,
       message: b.message,
-      nftId: b.nftId,
       donationAmount: b.donationAmount,
       contractAddress: b.contractAddress,
       imageId: b.imageId,

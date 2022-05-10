@@ -1,5 +1,5 @@
 import { NextApiHandler } from 'next'
-import { uploadNewImages, getRandomImage } from 'services/image'
+import { createImages, getRandomImage } from 'services/image'
 
 const handler: NextApiHandler = async (req, res) => {
   // checks re. methods, etc..
@@ -12,7 +12,7 @@ const handler: NextApiHandler = async (req, res) => {
 
   if (req.method === 'POST') {
     const { images } = req.body
-    await uploadNewImages(images)
+    await createImages(images)
   }
 }
 
