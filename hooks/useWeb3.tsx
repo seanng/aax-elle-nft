@@ -2,7 +2,7 @@ import { useEffect, useReducer, useCallback } from 'react'
 import Web3Modal from 'web3modal'
 import { ethers } from 'ethers'
 import { toast } from 'react-toastify'
-import Torus from '@toruslabs/torus-embed'
+import WalletConnect from '@walletconnect/web3-provider'
 
 import {
   Web3ProviderState,
@@ -12,8 +12,11 @@ import {
 } from 'reducers'
 
 const providerOptions = {
-  torus: {
-    package: Torus,
+  walletconnect: {
+    package: WalletConnect,
+    options: {
+      infuraId: process.env.NEXT_PUBLIC_INFURA_PROJECT_ID,
+    },
   },
 }
 
