@@ -2,15 +2,9 @@ import type { EncryptedImage } from '@prisma/client'
 import { prisma } from 'lib/prisma'
 
 export const createEncryptedImages = async (
-  images: Pick<EncryptedImage, 'previewUrl'>[]
+  data: Pick<EncryptedImage, 'url'>[]
 ) => {
-  try {
-    await prisma.encryptedImage.createMany({
-      data: images,
-    })
-  } catch (e) {
-    console.log('error in uploadNewImage: ', e)
-  }
+  return prisma.encryptedImage.createMany({ data })
 }
 
 export const getRandomEncryptedImage =

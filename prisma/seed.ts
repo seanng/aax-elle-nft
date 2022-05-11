@@ -2,27 +2,23 @@ import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const imagesData: Prisma.ImageCreateInput[] = [
+const imagesData: Prisma.EncryptedImageCreateInput[] = [
   {
-    previewUrl:
-      'https://diginomica.com/sites/default/files/styles/article_images_desktop/public/images/2017-06/mongodb.png',
+    url: 'https://diginomica.com/sites/default/files/styles/article_images_desktop/public/images/2017-06/mongodb.png',
   },
   {
-    previewUrl:
-      'https://webapp.io/blog/content/images/size/w2000/2019/11/postgres.png',
+    url: 'https://webapp.io/blog/content/images/size/w2000/2019/11/postgres.png',
   },
   {
-    previewUrl:
-      'https://images.ctfassets.net/po4qc9xpmpuh/3LKPgAL1A9JEZuoxehHw3n/ae77470349d852a5e5d8240e5aa21045/fauna-twitter-card.png',
+    url: 'https://images.ctfassets.net/po4qc9xpmpuh/3LKPgAL1A9JEZuoxehHw3n/ae77470349d852a5e5d8240e5aa21045/fauna-twitter-card.png',
   },
   {
-    previewUrl:
-      'https://dev-to-uploads.s3.amazonaws.com/uploads/articles/1zyyyetufa3bwkswvxr5.png',
+    url: 'https://dev-to-uploads.s3.amazonaws.com/uploads/articles/1zyyyetufa3bwkswvxr5.png',
   },
 ]
 
 async function dropCollections() {
-  await prisma.image.deleteMany()
+  await prisma.encryptedImage.deleteMany()
 }
 
 async function main() {
@@ -31,7 +27,7 @@ async function main() {
   console.log(`Start seeding ...`)
 
   for (const imageData of imagesData) {
-    const image = await prisma.image.create({
+    const image = await prisma.encryptedImage.create({
       data: {
         ...imageData,
       },
