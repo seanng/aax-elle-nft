@@ -1,4 +1,4 @@
-import { prismaMock } from 'utils'
+import { prismaMock } from 'utils/mocks'
 // Order of imports is important
 import { getRandomEncryptedImage } from 'backend/services/encrypted-images'
 

@@ -2,6 +2,7 @@ import { useEffect, useReducer, useCallback } from 'react'
 import Web3Modal from 'web3modal'
 import { ethers } from 'ethers'
 import { toast } from 'react-toastify'
+import Torus from '@toruslabs/torus-embed'
 
 import {
   Web3ProviderState,
@@ -11,7 +12,9 @@ import {
 } from 'reducers'
 
 const providerOptions = {
-  //
+  torus: {
+    package: Torus,
+  },
 }
 
 const web3Network =
@@ -31,7 +34,7 @@ export function useWeb3() {
   const { provider, web3Provider, address, network } = state
 
   const connect = useCallback(async () => {
-    if (!web3Modal) console.error('No Web3Modal')
+    if (!web3Modal) return console.error('No Web3Modal')
     try {
       const provider = await web3Modal.connect()
       console.log('provider: ', provider)
@@ -54,7 +57,7 @@ export function useWeb3() {
   }, [])
 
   const disconnect = useCallback(async () => {
-    if (!web3Modal) console.error('No Web3Modal')
+    if (!web3Modal) return console.error('No Web3Modal')
     web3Modal.clearCachedProvider()
     if (provider?.disconnect && typeof provider.disconnect === 'function') {
       await provider.disconnect()

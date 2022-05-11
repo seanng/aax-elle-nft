@@ -23,6 +23,7 @@
   "dependencies": {
     "@openzeppelin/contracts": "^4.5.0",
     "@prisma/client": "^3.13.0",
+    "@toruslabs/torus-embed": "^1.22.6",
     "axios": "^0.27.2",
     "dotenv": "^16.0.0",
     "dotenv-cli": "^5.1.0",

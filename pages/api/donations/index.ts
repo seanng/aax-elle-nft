@@ -34,6 +34,11 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
     contractAddress: req.body.contractAddress,
     encryptedImageId: req.body.encryptedImageId,
   })
+
+  // TODO: Generate and upload NFT json to s3. Get back tokenURI.
+
+  // TODO: Update Donation with tokenURI.
+
   res.json(donation)
 }
 
