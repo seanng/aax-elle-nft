@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Image {
+model EncryptedImage {
   id         String     @id @default(auto()) @map("_id") @db.ObjectId
   previewUrl String
   donations  Donation[] // if v2
@@ -16,17 +16,17 @@ model Image {
 }
 
 model Donation {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  message         String
-  nftId           String?
-  contractAddress String?
-  tokenURI        String?
-  email           String
-  donationAmount  BigInt // wei
-  image           Image    @relation(fields: [imageId], references: [id])
-  imageId         String   @db.ObjectId
-  mintedAt        DateTime?
-  decryptedAt     DateTime?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id               String         @id @default(auto()) @map("_id") @db.ObjectId
+  message          String
+  nftId            String?
+  contractAddress  String?
+  tokenURI         String?
+  email            String
+  donationAmount   String // wei
+  encryptedImage   EncryptedImage @relation(fields: [encryptedImageId], references: [id])
+  encryptedImageId String         @db.ObjectId
+  mintedAt         DateTime?
+  decryptedAt      DateTime?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
 }

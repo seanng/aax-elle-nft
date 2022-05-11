@@ -1,18 +1,21 @@
 import { NextApiHandler } from 'next'
-import { createImages, getRandomImage } from 'services/image'
+import {
+  createEncryptedImages,
+  getRandomEncryptedImage,
+} from 'backend/services/encrypted-images'
 
 const handler: NextApiHandler = async (req, res) => {
   // checks re. methods, etc..
 
   if (req.method === 'GET') {
-    const image = await getRandomImage()
+    const image = await getRandomEncryptedImage()
     res.json({ data: image })
     return
   }
 
   if (req.method === 'POST') {
     const { images } = req.body
-    await createImages(images)
+    await createEncryptedImages(images)
   }
 }
 

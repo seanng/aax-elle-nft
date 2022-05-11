@@ -1,9 +1,9 @@
 import { prismaMock } from 'utils'
 // Order of imports is important
-import { getRandomImage } from 'services/image'
+import { getRandomEncryptedImage } from 'backend/services/encrypted-images'
 
 describe('services/image', () => {
-  describe('getRandomImage', () => {
+  describe('getRandomEncryptedImage', () => {
     it('returns an image', async () => {
       const imageData = {
         id: '123',
@@ -12,9 +12,9 @@ describe('services/image', () => {
         createdAt: new Date(),
         updatedAt: new Date(),
       }
-      prismaMock.image.findFirst.mockResolvedValue(imageData)
-      prismaMock.image.count.mockResolvedValue(1)
-      const randomImage = await getRandomImage()
+      prismaMock.encryptedImage.findFirst.mockResolvedValue(imageData)
+      prismaMock.encryptedImage.count.mockResolvedValue(1)
+      const randomImage = await getRandomEncryptedImage()
       expect(randomImage).toEqual(imageData)
     })
   })
