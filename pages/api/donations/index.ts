@@ -14,18 +14,16 @@ interface PostHandlerRequest extends NextApiRequest {
 }
 
 async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
-  const errors = await validate([
-    check('email').isEmail(),
-    check('message').exists(),
-    check('donationAmount').exists().isInt(),
-    check('contractAddress').exists(),
-    check('encryptedImageId').exists(),
-  ])(req)
-
-  if (!errors.isEmpty()) {
-    res.status(400).json({ errors: errors.array() })
+  if (
+    !(await validate([
+      check('email').isEmail(),
+      check('message').exists(),
+      check('donationAmount').exists().isInt(),
+      check('contractAddress').exists(),
+      check('encryptedImageId').exists(),
+    ])(req, res))
+  )
     return
-  }
 
   const donation = await donations.create({
     email: req.body.email,

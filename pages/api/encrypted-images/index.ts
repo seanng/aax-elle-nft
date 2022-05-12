@@ -13,11 +13,7 @@ interface PostHandlerRequest extends NextApiRequest {
 }
 
 async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
-  const errors = await validate([check('urls').exists().isArray()])(req)
-  if (!errors.isEmpty()) {
-    res.status(400).json({ errors: errors.array() })
-    return
-  }
+  if (!(await validate([check('urls').exists().isArray()])(req, res))) return
   const { urls } = req.body
   const images = await createEncryptedImages(urls.map((url) => ({ url })))
   res.json(images)
