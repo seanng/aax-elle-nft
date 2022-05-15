@@ -10,7 +10,8 @@
     "postinstall": "husky install",
     "typecheck": "tsc --pretty --noEmit",
     "test": "jest --watch",
-    "prismagen": "prisma generate"
+    "prisma-gen": "prisma generate",
+    "hardhat-compile": "hardhat compile"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
