@@ -6,3 +6,14 @@ export const config = {
   siteTitle: 'NFT Mintverse',
   siteDesc: 'Enter the stylish metaverse to shill you love.',
 }
+
+export const navigation = [
+  {
+    title: 'Help',
+    route: 'help',
+  },
+  {
+    title: 'Collection',
+    route: 'collection',
+  },
+]
