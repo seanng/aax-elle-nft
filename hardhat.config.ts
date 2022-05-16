@@ -24,9 +24,10 @@ task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
 export default {
   solidity: '0.8.1',
   networks: {
-    rinkeby: {
+    goerli: {
       url: process.env.ALCHEMY_API_URL,
-      accounts: [process.env.RINKEBY_ACCOUNT_PRIVATE_KEY],
+      from: process.env.GOERLI_ACCOUNT_ADDRESS,
+      accounts: [process.env.GOERLI_ACCOUNT_PRIVATE_KEY],
     },
   },
 }
