@@ -8,25 +8,27 @@ datasource db {
 }
 
 model EncryptedImage {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  url       String
-  donations Donation[] // if v2
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  url            String          @unique
+  secretMessages SecretMessage[] // if v2
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 }
 
-model Donation {
-  id               String         @id @default(auto()) @map("_id") @db.ObjectId
-  message          String
-  nftId            String?
-  contractAddress  String?
-  tokenURI         String?
-  email            String
-  donationAmount   String // wei
-  encryptedImage   EncryptedImage @relation(fields: [encryptedImageId], references: [id])
-  encryptedImageId String         @db.ObjectId
-  mintedAt         DateTime?
-  decryptedAt      DateTime?
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
+model SecretMessage {
+  id                String         @id @default(auto()) @map("_id") @db.ObjectId
+  message           String
+  senderEmail       String
+  donationAmount    String // wei
+  encryptedImage    EncryptedImage @relation(fields: [encryptedImageUrl], references: [url])
+  encryptedImageUrl String         @db.ObjectId
+  senderAddress     String?
+  receiverAddress   String?
+  nftId             String?
+  contractAddress   String?
+  tokenURI          String?
+  mintedAt          DateTime?
+  decryptedAt       DateTime?
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
 }

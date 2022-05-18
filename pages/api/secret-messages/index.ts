@@ -1,22 +1,22 @@
-import * as donations from 'backend/services/donations'
+import * as secretMessages from 'backend/services/secret-messages'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import { validate } from 'lib/middlewares'
 import { check } from 'express-validator'
 
 interface PostHandlerRequest extends NextApiRequest {
   body: {
-    email: string
+    senderEmail: string
     message: string
     donationAmount: string
     contractAddress: string
-    encryptedImageId: string
+    encryptedImageUrl: string
   }
 }
 
 async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
   if (
     !(await validate([
-      check('email').isEmail(),
+      check('senderEmail').isEmail(),
       check('message').exists(),
       check('donationAmount').exists().isInt(),
       check('contractAddress').exists(),
@@ -25,19 +25,19 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
   )
     return
 
-  const donation = await donations.create({
-    email: req.body.email,
+  const secretMessage = await secretMessages.create({
+    senderEmail: req.body.senderEmail,
     message: req.body.message,
     donationAmount: req.body.donationAmount,
     contractAddress: req.body.contractAddress,
-    encryptedImageId: req.body.encryptedImageId,
+    encryptedImageUrl: req.body.encryptedImageUrl,
   })
 
   // TODO: Generate and upload NFT json to s3. Get back tokenURI.
 
-  // TODO: Update Donation with tokenURI.
+  // TODO: Update Secret with tokenURI.
 
-  res.json(donation)
+  res.json(secretMessage)
 }
 
 const handler: NextApiHandler = async (req, res) => {
