@@ -1,15 +1,15 @@
 import 'styles/tailwind.css'
 import 'react-toastify/dist/ReactToastify.css'
+import 'styles/loader.css'
 
 import { Web3ContextProvider } from 'context'
-import { Layout } from 'components'
+import SEO from 'components/SEO'
 
 function MyApp({ Component, pageProps }) {
   return (
     <Web3ContextProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <SEO />
+      <Component {...pageProps} />
     </Web3ContextProvider>
   )
 }
