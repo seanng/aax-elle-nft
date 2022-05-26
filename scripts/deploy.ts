@@ -12,7 +12,7 @@ async function main() {
   console.log('Contract deployed to:', contract.address)
 }
 
-// testnet contract: 0xabb8b6c797dbad714dcb87e3102eef736e553a60
+// Rinkeby Contract deployed on 24 May: 0xAbfFa373ef628884951567831f1650cfB8883aca
 
 main()
   .then(() => process.exit(0))

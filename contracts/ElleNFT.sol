@@ -32,4 +32,26 @@ contract ElleNFT is ERC721URIStorage, Ownable {
     
     return newItemId;
   }
+
+  // Mints 2 NFTs at a time. 1 for the sender and 1 for the receiver
+  function mint2(address to, string memory messageURI, string memory receiptURI) payable external returns (uint256) {
+    require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
+    
+    // mint secret message
+    _tokenIds.increment();
+    uint256 secretMessageId = _tokenIds.current();
+    _safeMint(to, secretMessageId);
+    _setTokenURI(secretMessageId, messageURI);
+
+    // mint receipt
+    _tokenIds.increment();
+    uint256 receiptItemId = _tokenIds.current();
+    _safeMint(msg.sender, receiptItemId);
+    _setTokenURI(receiptItemId, receiptURI);
+
+    // pay the donation
+    payable(owner()).transfer(msg.value);
+
+    return secretMessageId;
+  }
 }

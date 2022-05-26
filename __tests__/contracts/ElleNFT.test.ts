@@ -23,11 +23,22 @@ describe('ElleNFT', function () {
 
     it('successfully pays to the owner', async function () {
       const [owner, sender] = await ethers.getSigners()
-      const oldBalance = Number(bigNumberToString(await owner.getBalance()))
+      const oldBalance = await owner.getBalance()
       await contract.connect(sender).mint('FAKE_TOKEN_URI', { value: donation })
-      const newBalance = Number(bigNumberToString(await owner.getBalance()))
-      const donationAmt = Number(bigNumberToString(donation))
-      expect(newBalance - donationAmt).toBe(oldBalance)
+      const newBalance = await owner.getBalance()
+      expect(newBalance.sub(oldBalance)).toEqual(donation)
+    })
+  })
+  describe('mint2', () => {
+    it('increments the tokenId by 2', async function () {
+      const [owner, sender, receiver] = await ethers.getSigners()
+      expect(bigNumberToString(await contract.getTokenId())).toBe('0')
+      await contract
+        .connect(sender)
+        .mint2(receiver.address, 'FAKE_MSG_URI', 'FAKE_RECEIPT_URI', {
+          value: donation,
+        })
+      expect(bigNumberToString(await contract.getTokenId())).toBe('2')
     })
   })
 })

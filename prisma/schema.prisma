@@ -20,6 +20,7 @@ model SecretMessage {
   message           String
   senderEmail       String
   donationAmount    String // wei
+  isPrivateOnly     Boolean        @default(true) // word cloud + update json on decrypt
   encryptedImage    EncryptedImage @relation(fields: [encryptedImageUrl], references: [url])
   encryptedImageUrl String         @db.ObjectId
   senderAddress     String?

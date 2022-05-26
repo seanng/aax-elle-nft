@@ -40,7 +40,6 @@ export function useWeb3() {
     if (!web3Modal) return console.error('No Web3Modal')
     try {
       const provider = await web3Modal.connect()
-      console.log('provider: ', provider)
       const web3Provider = new ethers.providers.Web3Provider(provider)
       const signer = web3Provider.getSigner()
       const address = await signer.getAddress()

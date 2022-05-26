@@ -24,10 +24,18 @@ task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
 export default {
   solidity: '0.8.1',
   networks: {
-    goerli: {
+    localhost: {
+      from: process.env.METAMASK_ACCOUNT_ADDRESS, // owner address
+      accounts: [
+        process.env.METAMASK_ACCOUNT_PRIVATE_KEY, // owner private key
+      ],
+    },
+    rinkeby: {
       url: process.env.ALCHEMY_API_URL,
-      from: process.env.GOERLI_ACCOUNT_ADDRESS,
-      accounts: [process.env.GOERLI_ACCOUNT_PRIVATE_KEY],
+      from: process.env.METAMASK_ACCOUNT_ADDRESS, // owner address
+      accounts: [
+        process.env.METAMASK_ACCOUNT_PRIVATE_KEY, // owner private key
+      ],
     },
   },
 }
