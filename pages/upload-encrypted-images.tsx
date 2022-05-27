@@ -72,7 +72,6 @@ const UploadImagesPage: NextPage = () => {
         console.log('error fetching: ', error)
       }
     }
-    // console.log('the urls: ', urls)
   }
 
   useEffect(() => {

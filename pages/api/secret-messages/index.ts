@@ -5,37 +5,42 @@ import { check } from 'express-validator'
 
 interface PostHandlerRequest extends NextApiRequest {
   body: {
-    senderEmail: string
     message: string
-    donationAmount: string
-    contractAddress: string
-    encryptedImageUrl: string
+    senderEmail: string
+    senderWallet: string
+    ethDonated: string
+    isPrivateOnly: boolean
+    password: string
+    tokenURI: string
+    nftTokenId: number
   }
 }
 
 async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
   if (
     !(await validate([
-      check('senderEmail').isEmail(),
       check('message').exists(),
-      check('donationAmount').exists().isInt(),
-      check('contractAddress').exists(),
-      check('encryptedImageId').exists(),
+      check('senderEmail').isEmail(),
+      check('senderWallet').exists(),
+      check('ethDonated').exists(),
+      check('isPrivateOnly').exists().isBoolean(),
+      check('password').exists(),
+      check('tokenURI').exists(),
+      check('nftTokenId').exists().isNumeric(),
     ])(req, res))
   )
     return
 
   const secretMessage = await secretMessages.create({
-    senderEmail: req.body.senderEmail,
     message: req.body.message,
-    donationAmount: req.body.donationAmount,
-    contractAddress: req.body.contractAddress,
-    encryptedImageUrl: req.body.encryptedImageUrl,
+    senderEmail: req.body.senderEmail,
+    senderWallet: req.body.senderWallet,
+    ethDonated: req.body.ethDonated,
+    isPrivateOnly: req.body.isPrivateOnly,
+    password: req.body.password,
+    tokenURI: req.body.tokenURI,
+    nftTokenId: req.body.nftTokenId,
   })
-
-  // TODO: Generate and upload NFT json to s3. Get back tokenURI.
-
-  // TODO: Update Secret with tokenURI.
 
   res.json(secretMessage)
 }

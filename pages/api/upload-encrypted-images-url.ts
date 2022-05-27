@@ -44,7 +44,7 @@ export default async function handler(
     Bucket: process.env.S3_BUCKET,
     Expires: 60, // seconds
     Fields: { key: req.query.file },
-    Conditions: [['content-length-range', 0, 10485760]], // up to 10 MB]
+    Conditions: [['content-length-range', 0, 1048576]], // up to 1 MB]
   })
   res.status(200).json(post)
 }
