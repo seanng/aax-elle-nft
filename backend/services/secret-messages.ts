@@ -3,8 +3,10 @@ import { prisma } from 'lib/prisma'
 
 export const create = async (
   input: Prisma.SecretMessageCreateInput
-): Promise<Partial<SecretMessage>> => {
-  return prisma.secretMessage.create({
+): Promise<Partial<SecretMessage>> =>
+  prisma.secretMessage.create({
     data: Prisma.validator<Prisma.SecretMessageCreateInput>()(input),
   })
-}
+
+export const findAll = async (where: Prisma.SecretMessageWhereInput) =>
+  prisma.secretMessage.findMany({ where })

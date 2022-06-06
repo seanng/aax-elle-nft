@@ -8,16 +8,16 @@ datasource db {
 }
 
 model SecretMessage {
-  id                String         @id @default(auto()) @map("_id") @db.ObjectId
-  message           String
-  senderEmail       String
-  ethDonated        String // eth
-  isPrivateOnly     Boolean        @default(true) // word cloud + update json on decrypt
-  password          String         @default("")
-  senderWallet      String?
-  nftTokenId        Int
-  tokenURI          String?
-  decryptedAt       DateTime?
-  createdAt         DateTime       @default(now())
-  updatedAt         DateTime       @updatedAt
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  message       String
+  senderEmail   String
+  ethDonated    String // eth
+  isPrivateOnly Boolean   @default(true) // word cloud + update json on decrypt
+  password      String    @default("")
+  senderWallet  String?
+  nftTokenId    Int
+  tokenURI      String?
+  decryptedAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }

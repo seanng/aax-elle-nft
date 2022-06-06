@@ -12,7 +12,7 @@ const Logo = () => (
 
 export function LayoutHeader() {
   return (
-    <Popover as="header" className="absolute left-0 right-0">
+    <Popover as="header" className="fixed left-0 right-0 z-10">
       <div className="flex justify-between items-center mx-auto px-4 py-6 sm:px-6 lg:px-8 md:justify-start md:space-x-10 ">
         <Logo />
         {/* Mobile Hamburger Button */}

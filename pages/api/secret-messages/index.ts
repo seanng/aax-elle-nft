@@ -1,4 +1,4 @@
-import * as secretMessages from 'backend/services/secret-messages'
+import * as service from 'backend/services/secret-messages'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import { validate } from 'lib/middlewares'
 import { check } from 'express-validator'
@@ -31,7 +31,7 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
   )
     return
 
-  const secretMessage = await secretMessages.create({
+  const secretMessage = await service.create({
     message: req.body.message,
     senderEmail: req.body.senderEmail,
     senderWallet: req.body.senderWallet,
@@ -45,8 +45,19 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
   res.json(secretMessage)
 }
 
+async function getHandler(req: PostHandlerRequest, res: NextApiResponse) {
+  const { sw: senderWallet, id } = req.query
+  const where = {
+    ...(typeof senderWallet === 'string' && { senderWallet }),
+    ...(typeof id === 'string' && { id }),
+  }
+  const secretMessages = await service.findAll(where)
+  res.json(secretMessages)
+}
+
 const handler: NextApiHandler = async (req, res) => {
   if (req.method === 'POST') return postHandler(req, res)
+  if (req.method === 'GET') return getHandler(req, res)
 }
 
 export default handler
