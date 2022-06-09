@@ -6,3 +6,6 @@ export const LOCAL_STORAGE_KEY = 'cbe:token'
 export const AUTH_TOKEN_KEY = 'cbe:token'
 export const LOGIN = 'LOGIN'
 export const SIGNUP = 'SIGNUP'
+
+export const CANVAS_WIDTH = 1287
+export const CANVAS_HEIGHT = 897

@@ -3,6 +3,7 @@ import {
   FaqSection,
   EncryptDialog,
   LayoutHeader,
+  HeroSectionOld,
   HeroSection,
 } from 'components'
 import { useState } from 'react'
@@ -11,8 +12,7 @@ import { ethers } from 'ethers'
 import axios from 'lib/axios'
 import { useWeb3Context } from 'context'
 import { toast, ToastContainer } from 'react-toastify'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Mousewheel, Pagination } from 'swiper'
+import ReactFullpage from '@fullpage/react-fullpage'
 
 // const GIFT_TOKEN_URI = 'https://jsonkeeper.com/b/SFRG'
 const PROXY_URI = 'https://jsonkeeper.com/b/BTF9'
@@ -23,42 +23,28 @@ const HomePage: NextPage = () => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [previousIndex, setPreviousIndex] = useState(0)
 
-  const handleSlideChange = ({ activeIndex, previousIndex }) => {
-    setActiveIndex(activeIndex)
-    setPreviousIndex(previousIndex)
+  const handleSlideChange = (swiper) => {
+    setActiveIndex(swiper.activeIndex)
+    setPreviousIndex(swiper.previousIndex)
   }
 
   return (
     <>
       <LayoutHeader />
-      <main className="h-screen">
-        <Swiper
-          modules={[Mousewheel, Pagination]}
-          direction={'vertical'}
-          // slidesPerView={1}
-          spaceBetween={30}
-          mousewheel={{ releaseOnEdges: true }}
-          pagination={{ clickable: false }}
-          simulateTouch={false}
-          speed={1000}
-          onSlideChangeTransitionEnd={handleSlideChange}
-        >
-          <SwiperSlide>
-            <HeroSection
-              activeIndex={activeIndex}
-              previousIndex={previousIndex}
-            />
-          </SwiperSlide>
-          <SwiperSlide>Slide 2</SwiperSlide>
-          <SwiperSlide>
-            <div style={{ paddingBottom: '100px' }}>what</div>
-            <div style={{ paddingBottom: '100px' }}>up</div>
-            <div style={{ paddingBottom: '100px' }}>up</div>
-            <div style={{ paddingBottom: '100px' }}>john</div>
-          </SwiperSlide>
-        </Swiper>
-        <div>hello testing 2.</div>
-      </main>
+      <ReactFullpage
+        navigation
+        render={(comp) => (
+          <ReactFullpage.Wrapper>
+            <HeroSection />
+            <div className="section">
+              <div style={{ paddingBottom: '500px' }}>what</div>
+              <div style={{ paddingBottom: '500px' }}>up</div>
+              <div style={{ paddingBottom: '500px' }}>up</div>
+              <div style={{ paddingBottom: '500px' }}>john</div>
+            </div>
+          </ReactFullpage.Wrapper>
+        )}
+      />
       <ToastContainer
         hideProgressBar
         position="bottom-right"

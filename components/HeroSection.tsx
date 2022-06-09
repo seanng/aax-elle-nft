@@ -1,60 +1,19 @@
-import { useEffect } from 'react'
-import { RedLips, PinkSunFlower } from 'components'
-import { motion, useAnimation } from 'framer-motion'
+import { PoopFlower, HushHandSign, PinkSunflower, RedMouth } from 'components'
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from 'shared/constants'
+// import { classNames } from 'utils/helpers'
 
-interface Props {
-  activeIndex: number
-  previousIndex: number
-}
-
-// motion variants
-const container = {
-  visible: {},
-  hidden: {},
-}
-
-export function HeroSection({
-  activeIndex,
-  previousIndex,
-}: Props): JSX.Element {
-  const control1 = useAnimation()
-  const control2 = useAnimation()
-
-  const animateAll = async () => {
-    await control1.start('visible')
-    await control2.start('visible')
-  }
-  const hideAll = () => {
-    control1.start('hidden')
-    control2.start('hidden')
-  }
-
-  useEffect(() => {
-    if (activeIndex === 0) animateAll()
-    else hideAll()
-  }, [activeIndex])
-
+export function HeroSection(): JSX.Element {
   return (
-    <div className="relative flex h-full w-full items-center justify-center">
-      <PinkSunFlower
-        className="w-12 h-12 absolute top-[40%] left-[40%]"
-        animate={control2}
-        initial="hidden"
-        variants={{
-          visible: { opacity: 1 },
-          hidden: { opacity: 0 },
-        }}
-      />
-      <RedLips
-        className="w-36 h-36"
-        animate={control1}
-        initial="hidden"
-        variants={{
-          visible: { scale: 1, x: 0 },
-          hidden: { scale: 0.5, x: -25 },
-        }}
-        transition={{ type: 'spring', duration: 0.5 }}
-      />
+    <div className="section h-full w-full bg-black flex items-center justify-center">
+      <div
+        style={{ aspectRatio: `${CANVAS_WIDTH} / ${CANVAS_HEIGHT}` }}
+        className={`w-full relative max-w-[${CANVAS_WIDTH}px]`}
+      >
+        <RedMouth className="absolute m-auto left-0 right-0 top-0 bottom-0" />
+        <HushHandSign className="absolute top-[55%] left-[48%]" />
+        <PinkSunflower className="absolute left-[15%] bottom-0" />
+        <PoopFlower className="absolute left-0 bottom-0" />
+      </div>
     </div>
   )
 }

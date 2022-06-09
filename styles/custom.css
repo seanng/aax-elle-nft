@@ -21,3 +21,7 @@
     transform: rotate(360deg);
   }
 }
+
+.fp-watermark {
+  display: none;
+}
