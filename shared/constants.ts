@@ -7,5 +7,7 @@ export const AUTH_TOKEN_KEY = 'cbe:token'
 export const LOGIN = 'LOGIN'
 export const SIGNUP = 'SIGNUP'
 
-export const CANVAS_WIDTH = 1287
-export const CANVAS_HEIGHT = 897
+export const HERO_CANVAS_WIDTH = 1394
+export const HERO_CANVAS_HEIGHT = 1030
+export const INTRO_CANVAS_WIDTH = 1920
+export const INTRO_CANVAS_HEIGHT = 1080

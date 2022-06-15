@@ -5,6 +5,7 @@ import {
   LayoutHeader,
   HeroSectionOld,
   HeroSection,
+  IntroSection,
 } from 'components'
 import { useState } from 'react'
 import { useContract } from 'hooks'
@@ -36,12 +37,10 @@ const HomePage: NextPage = () => {
         render={(comp) => (
           <ReactFullpage.Wrapper>
             <HeroSection />
-            <div className="section">
-              <div style={{ paddingBottom: '500px' }}>what</div>
-              <div style={{ paddingBottom: '500px' }}>up</div>
-              <div style={{ paddingBottom: '500px' }}>up</div>
-              <div style={{ paddingBottom: '500px' }}>john</div>
-            </div>
+            <IntroSection />
+            {/* ExplainerSection */}
+            {/* FeaturesSection */}
+            <FaqSection />
           </ReactFullpage.Wrapper>
         )}
       />
