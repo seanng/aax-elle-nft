@@ -94,7 +94,10 @@ function Desktop() {
         <BLCursorButton>{text.button}</BLCursorButton>
       </div>
       <PinkPetals className="absolute top-[7px] left-[81%]" />
-      <BlackShh className="absolute left-[8%] bottom-[2%]" />
+      <BlackShh
+        className="absolute left-[8%] bottom-[2%]"
+        {...getWidthHeightPercentages(845, 321, 1920, 1080)}
+      />
       <div className="absolute top-[25%] left-0 right-0 mx-auto h-[400px]">
         <h1 className="text-center font-black text-5xl pt-8 pb-5">
           {text.heading}
