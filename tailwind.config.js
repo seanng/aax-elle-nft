@@ -5,11 +5,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: [
-          'GenSenRounded',
-          'MplusRounded',
-          ...defaultTheme.fontFamily.sans,
-        ],
+        sans: ['GenSenRounded', ...defaultTheme.fontFamily.sans],
+        english: 'MplusRounded',
       },
     },
   },
