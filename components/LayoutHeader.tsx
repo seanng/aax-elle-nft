@@ -6,11 +6,13 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Web3Button } from './Web3Button'
 
 const Logo = () => (
-  <Link href="/">
-    <a>
-      <Image src="/elle.png" alt="ELLE" height={46} width={112} />
-    </a>
-  </Link>
+  <div className="hidden md:block">
+    <Link href="/">
+      <a>
+        <Image priority src="/elle.png" alt="ELLE" height={46} width={112} />
+      </a>
+    </Link>
+  </div>
 )
 
 // see https://github.com/codeSTACKr/hamburger-animation if you want to make an animated hamburger
@@ -18,7 +20,7 @@ const Logo = () => (
 export function LayoutHeader() {
   return (
     <Popover as="header" className="fixed left-0 right-0 z-10">
-      <div className="flex justify-between items-center mx-auto px-4 py-6 sm:px-6 lg:px-8 ">
+      <div className="flex justify-end md:justify-between items-center mx-auto py-6 px-8">
         <Logo />
         {/* Hamburger */}
         <div className="-mr-2">
