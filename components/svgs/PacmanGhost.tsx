@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { getWidthHeightPercentages } from 'utils/helpers'
 
 const [width, height] = [199, 179]
 
@@ -8,7 +7,8 @@ export const PacmanGhost = (props) => (
     viewBox={`0 0 ${width} ${height}`}
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    {...getWidthHeightPercentages(width, height)}
+    width={width}
+    height={height}
     {...props}
   >
     <path

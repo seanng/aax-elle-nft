@@ -3,9 +3,10 @@ import {
   FaqSection,
   EncryptDialog,
   LayoutHeader,
-  HeroSectionOld,
+  // HeroSectionOld,
   HeroSection,
   IntroSection,
+  FeaturesSection,
 } from 'components'
 import { useState } from 'react'
 import { useContract } from 'hooks'
@@ -39,7 +40,7 @@ const HomePage: NextPage = () => {
             <HeroSection />
             <IntroSection />
             {/* ExplainerSection */}
-            {/* FeaturesSection */}
+            <FeaturesSection />
             <FaqSection />
           </ReactFullpage.Wrapper>
         )}

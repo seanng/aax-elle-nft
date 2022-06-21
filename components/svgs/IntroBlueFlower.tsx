@@ -1,6 +1,4 @@
 import { motion } from 'framer-motion'
-import { getWidthHeightPercentages } from 'utils/helpers'
-import { INTRO_CANVAS_WIDTH, INTRO_CANVAS_HEIGHT } from 'shared/constants'
 
 const [width, height] = [550, 504]
 
@@ -9,12 +7,8 @@ export const IntroBlueFlower = (props) => (
     fill="none"
     viewBox={`0 0 ${width} ${height}`}
     xmlns="http://www.w3.org/2000/svg"
-    {...getWidthHeightPercentages(
-      width,
-      height,
-      INTRO_CANVAS_WIDTH,
-      INTRO_CANVAS_HEIGHT
-    )}
+    width={width}
+    height={height}
     {...props}
   >
     <g clipPath="url(#a)">
