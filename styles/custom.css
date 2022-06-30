@@ -81,3 +81,11 @@
     transform: translateX(-100%);
   }
 }
+
+.swiper-slide {
+  opacity: 0.2;
+}
+
+.swiper-slide-active {
+  opacity: 1;
+}

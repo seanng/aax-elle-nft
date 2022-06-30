@@ -56,7 +56,7 @@ function Mobile() {
       >
         <Image
           priority
-          src="/elle.png"
+          src="/logos/elle-white.png"
           layout="fill"
           alt="ELLE"
           objectFit="contain"

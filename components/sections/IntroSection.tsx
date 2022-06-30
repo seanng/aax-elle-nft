@@ -37,7 +37,7 @@ function Mobile() {
 
   return (
     <div className="w-full h-full relative md:hidden overflow-clip">
-      <div className={`absolute bg-[#55F263] w-full top-0 h-[84px]`} />
+      <div className={`absolute bg-lime w-full top-0 h-[84px]`} />
       <div className={`absolute bg-[#FF66FF] w-full bottom-0 h-[70px]`} />
       <WhiteScreenSmall className="absolute top-0 bottom-0 right-0 left-0 m-auto" />
       <PinkPetals
@@ -80,7 +80,7 @@ const pClassesDesktop =
 function Desktop() {
   return (
     <div className="relative h-full w-full overflow-clip hidden md:block ">
-      <div className={`absolute bg-[#55F263] w-full top-0 h-[135px]`} />
+      <div className={`absolute bg-lime w-full top-0 h-[135px]`} />
       <div className={`absolute bg-[#FF66FF] w-full bottom-0 h-[125px]`} />
       <RedMouth
         className="absolute -left-[650px] -bottom-[6%]"

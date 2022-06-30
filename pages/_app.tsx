@@ -6,6 +6,10 @@ import 'styles/tailwind.css'
 import 'react-toastify/dist/ReactToastify.css'
 import 'styles/custom.css'
 
+import 'swiper/css'
+import 'swiper/css/effect-coverflow'
+import 'swiper/css/pagination'
+
 function MyApp({ Component, pageProps }) {
   return (
     <Web3ContextProvider>

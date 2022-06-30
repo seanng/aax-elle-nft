@@ -4,6 +4,10 @@ module.exports = {
   content: ['./components/**/*.{tsx,jsx}', './pages/**/*.{tsx,jsx}'],
   theme: {
     extend: {
+      colors: {
+        'black-rgba': 'rgba(0, 0, 0, 0.6)',
+        lime: '#55F263',
+      },
       fontFamily: {
         sans: ['GenSenRounded', ...defaultTheme.fontFamily.sans],
         english: 'MplusRounded',

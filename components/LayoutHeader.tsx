@@ -9,7 +9,13 @@ const Logo = () => (
   <div className="hidden md:block">
     <Link href="/">
       <a>
-        <Image priority src="/elle.png" alt="ELLE" height={46} width={112} />
+        <Image
+          priority
+          src="/logos/elle-white.png"
+          alt="ELLE"
+          height={46}
+          width={112}
+        />
       </a>
     </Link>
   </div>

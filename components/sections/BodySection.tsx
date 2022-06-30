@@ -1,7 +1,14 @@
-import { BLCursorButton, GreenDialog } from 'components'
+import {
+  BLCursorButton,
+  GreenDialog,
+  PoopSmall,
+  PinkSunflower,
+} from 'components'
 import Image from 'next/image'
 import { Disclosure } from '@headlessui/react'
 import { PlusIcon, MinusIcon } from '@heroicons/react/outline'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { EffectCoverflow, Pagination } from 'swiper'
 
 const faqs = [
   {
@@ -65,7 +72,12 @@ export function BodySection() {
       {/* Features */}
       <div className="w-full flex flex-col items-center px-8 py-20 lg:py-24">
         <div className="w-[365px] h-[299px] md:w-[730px] md:h-[598px] lg:w-[914px] lg:h-[749px] relative">
-          <Image src="/spca.png" layout="fill" alt="SPCA" objectFit="contain" />
+          <Image
+            src="/images/spca.png"
+            layout="fill"
+            alt="SPCA"
+            objectFit="contain"
+          />
         </div>
         <Feature
           heading="我們一樣有幸福的權利"
@@ -76,7 +88,7 @@ export function BodySection() {
         />
         <div className="w-[350px] h-[274px] md:w-[700px] md:h-[548px] lg:w-[1058px] lg:h-[827px] mt-20 md:mt-28 lg:mt-44 relative">
           <Image
-            src="/elleverse.png"
+            src="/images/elleverse.png"
             layout="fill"
             alt="Elleverse"
             objectFit="contain"
@@ -91,34 +103,64 @@ export function BodySection() {
         />
       </div>
       {/* Team */}
-      <div className="px-8 md:px-20 lg:px-28 mb-10 md:mb-36">
+      <div className="lg:px-28 mb-10 md:mb-36">
         {/* Heading */}
-        <div className="relative flex justify-between items-center my-12 md:my-28 lg:my-40">
-          <div className="w-full h-[2px] md:h-1 bg-[#55F263]" />
+        <div className="relative flex justify-between items-center my-12 md:my-28 lg:my-40 px-8 md:px-20">
+          <div className="w-full h-[2px] md:h-1 bg-lime" />
           <div className="text-white px-3 md:px-6 font-english font-black text-2xl md:text-5xl lg:text-7xl">
             TEAM
           </div>
-          <div className="w-full h-[2px] md:h-1 bg-[#55F263]" />
+          <div className="w-full h-[2px] md:h-1 bg-lime" />
           <GreenDialog className="absolute -top-[125%] left-[56%] md:left-[62%] w-[35px] h-[21px] md:w-[111px] md:h-[65px]" />
         </div>
-        {/* Grid */}
-        <div className="hidden md:block text-center">
+        {/* Mobile Carousel */}
+        <div className="md:hidden">
+          <Swiper
+            effect="coverflow"
+            grabCursor
+            centeredSlides
+            loop
+            slidesPerView={3}
+            // coverflowEffect={{
+            //   rotate: 50,
+            //   stretch: 0,
+            //   depth: 100,
+            //   modifier: 1,
+            //   slideShadows: true,
+            // }}
+            modules={[EffectCoverflow]}
+          >
+            {teamMembers.map((item) => (
+              <SwiperSlide key={item.name}>
+                <TeamMember
+                  src={item.src}
+                  name={item.name}
+                  title={item.title}
+                  site={item.site}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+        {/* Desktop Grid */}
+        <div className="hidden md:block text-center px-20">
           <div className="flex flex-wrap justify-center">
             {teamMembers.map((item) => (
-              <TeamMember
-                key={item.name}
-                src={item.src}
-                name={item.name}
-                title={item.title}
-                site={item.site}
-              />
+              <div key={item.name} className="w-[33%]">
+                <TeamMember
+                  src={item.src}
+                  name={item.name}
+                  title={item.title}
+                  site={item.site}
+                />
+              </div>
             ))}
           </div>
         </div>
       </div>
       {/* Marquee */}
       <div className="mb-14 md:mb-48 font-english w-[120%] -ml-[10%] -rotate-3 font-extrabold text-4xl md:text-[168px] leading-[48px] md:leading-[224px]">
-        <div className="relative bg-[#55F263] h-12 md:h-56">
+        <div className="relative bg-lime h-12 md:h-56">
           <p className="marquee">
             <span>
               SHHHH.......&nbsp;&nbsp;&nbsp;SHHHH.......&nbsp;&nbsp;&nbsp;SHHHH.......&nbsp;&nbsp;&nbsp;
@@ -140,51 +182,73 @@ export function BodySection() {
         </div>
       </div>
       {/* FAQ */}
-      <div className="px-8 md:px-20 lg:px-28 mb-10 md:mb-36">
-        {/* Heading */}
-        <div className="relative text-white text-center px-3 md:px-6 font-english font-black text-2xl md:text-5xl lg:text-7xl">
-          <span>FAQ</span>
-          <GreenDialog className="absolute -top-[110%] left-[56%] md:left-[62%] w-[35px] h-[21px] md:w-[111px] md:h-[65px]" />
+      <div className="relative pb-14 md:pb-48">
+        <div className="px-8 md:px-20 lg:px-28 mb-10 md:mb-36">
+          {/* Heading */}
+          <div className="relative text-white text-center px-3 md:px-6 font-english font-black text-2xl md:text-5xl lg:text-7xl">
+            <span>FAQ</span>
+            <GreenDialog className="absolute -top-[110%] left-[56%] md:left-[62%] w-[35px] h-[21px] md:w-[111px] md:h-[65px]" />
+          </div>
+
+          {/* Content */}
+          <div className="relative z-10 bg-black-rgba">
+            <dl className="mt-4 md:mt-24 lg:mt-32 space-y-2 md:space-y-6 divide-y-2 md:divide-y-4 divide-[#C3FA08] border-y-2 md:border-y-4 border-[#C3FA08] pb-2 md:pb-6">
+              {faqs.map((faq) => (
+                <Disclosure
+                  as="div"
+                  key={faq.question}
+                  className="pt-2 md:pt-6"
+                >
+                  {({ open }) => (
+                    <>
+                      <dt className="text-lg">
+                        <Disclosure.Button className="text-left w-full flex justify-between items-center text-[#C3FA08]">
+                          <span className="font-bold text-white text-xs md:text-3xl lg:text-5xl lg:leading-[165%]">
+                            {faq.question}
+                          </span>
+                          <span className="ml-6 h-7 lg:ml-12 flex items-center">
+                            {open ? (
+                              <MinusIcon
+                                className="h-6 w-6 md:h-12 md:w-12 lg:h-16 lg:w-16"
+                                aria-hidden="true"
+                              />
+                            ) : (
+                              <PlusIcon
+                                className="h-6 w-6 md:h-12 md:w-12 lg:h-16 lg:w-16"
+                                aria-hidden="true"
+                              />
+                            )}
+                          </span>
+                        </Disclosure.Button>
+                      </dt>
+                      <Disclosure.Panel
+                        as="dd"
+                        className="my-2 md:my-6 lg:my-8 pr-12"
+                      >
+                        <p className="font-extralight text-gray-100 text-xs md:text-3xl lg:text-5xl">
+                          {faq.answer}
+                        </p>
+                      </Disclosure.Panel>
+                    </>
+                  )}
+                </Disclosure>
+              ))}
+            </dl>
+          </div>
         </div>
-        {/* Content */}
-        <dl className="mt-4 md:mt-24 lg:mt-32 space-y-6 divide-y-4 divide-[#C3FA08]">
-          {faqs.map((faq) => (
-            <Disclosure as="div" key={faq.question} className="pt-6">
-              {({ open }) => (
-                <>
-                  <dt className="text-lg">
-                    <Disclosure.Button className="text-left w-full flex justify-between items-center text-[#C3FA08]">
-                      <span className="font-bold text-white text-xs md:text-3xl lg:text-5xl lg:leading-[165%]">
-                        {faq.question}
-                      </span>
-                      <span className="ml-6 h-7 lg:ml-12 flex items-center">
-                        {open ? (
-                          <MinusIcon
-                            className="h-6 w-6 md:h-12 md:w-12 lg:h-16 lg:w-16"
-                            aria-hidden="true"
-                          />
-                        ) : (
-                          <PlusIcon
-                            className="h-6 w-6 md:h-12 md:w-12 lg:h-16 lg:w-16"
-                            aria-hidden="true"
-                          />
-                        )}
-                      </span>
-                    </Disclosure.Button>
-                  </dt>
-                  <Disclosure.Panel
-                    as="dd"
-                    className="my-2 md:my-6 lg:my-8 pr-12"
-                  >
-                    <p className="font-extralight text-gray-100 text-xs md:text-3xl lg:text-5xl">
-                      {faq.answer}
-                    </p>
-                  </Disclosure.Panel>
-                </>
-              )}
-            </Disclosure>
-          ))}
-        </dl>
+        <PoopSmall className="absolute z-0 top-[255px] md:top-[600px] lg:top-[715px] left-[5%] w-[125px] h-[121px] md:w-[375px] md:h-[363px] lg:w-[568px] lg:h-[579px]" />
+        <PinkSunflower className="absolute z-0 top-[115px] md:top-[200px] lg:top-[250px] right-[5%] w-[123px] h-[302px] md:w-[369px] md:h-[906px] lg:w-[493px] lg:h-[1206px]" />
+      </div>
+      {/* Footer */}
+      <div className="h-10 md:h-44 py-2 md:py-11 bg-lime flex items-center justify-center">
+        <div className="relative h-full w-full">
+          <Image
+            src="/logos/elle-black.svg"
+            alt="ELLE"
+            layout="fill"
+            objectFit="contain"
+          />
+        </div>
       </div>
     </div>
   )
@@ -206,9 +270,9 @@ function Feature({ heading, body, button }) {
 
 function TeamMember({ src, name, title, site }) {
   return (
-    <div className="w-[33%] font-english font-light text-white text-sm md:text-xl lg:text-3xl px-4 mb-16">
+    <div className="font-english font-light text-white text-sm md:text-xl lg:text-3xl mx-2 md:px-4 md:mb-16 text-center">
       {/* <div className="max-w-[355px] w-[33%] min-w-[303px] font-english font-light text-white text-sm md:text-xl lg:text-3xl mx-3 md:mx-20"> */}
-      <div className="relative h-[222px]">
+      <div className="relative h-[88px] md:h-[222px]">
         <Image src={src} layout="fill" alt={name} objectFit="contain" />
       </div>
       <h6 className="font-extrabold mt-3 md:mt-10 leading-5 md:leading-10">
