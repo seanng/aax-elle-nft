@@ -1,12 +1,11 @@
 import type { NextPage } from 'next'
 import {
-  FaqSection,
   EncryptDialog,
   LayoutHeader,
   // HeroSectionOld,
   HeroSection,
   IntroSection,
-  FeaturesSection,
+  BodySection,
 } from 'components'
 import { useState } from 'react'
 import { useContract } from 'hooks'
@@ -22,14 +21,6 @@ const RECEIPT_TOKEN_URI = 'https://jsonkeeper.com/b/G7TR'
 const RECEIVER_ADDRESS = '0xCD1E014Eee1c8E7FcB49eB1AaAeA58154004E554'
 
 const HomePage: NextPage = () => {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [previousIndex, setPreviousIndex] = useState(0)
-
-  const handleSlideChange = (swiper) => {
-    setActiveIndex(swiper.activeIndex)
-    setPreviousIndex(swiper.previousIndex)
-  }
-
   return (
     <>
       <LayoutHeader />
@@ -40,8 +31,7 @@ const HomePage: NextPage = () => {
             <HeroSection />
             <IntroSection />
             {/* ExplainerSection */}
-            <FeaturesSection />
-            <FaqSection />
+            <BodySection />
           </ReactFullpage.Wrapper>
         )}
       />
@@ -106,7 +96,6 @@ function Old() {
       >
         donate 0.0005 eth & mint
       </button>
-      <FaqSection />
 
       <button
         type="button"

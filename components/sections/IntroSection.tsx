@@ -83,23 +83,28 @@ function Desktop() {
       <div className={`absolute bg-[#55F263] w-full top-0 h-[135px]`} />
       <div className={`absolute bg-[#FF66FF] w-full bottom-0 h-[125px]`} />
       <RedMouth
-        className="absolute -left-[650px] top-[50px]"
-        height={1030}
+        className="absolute -left-[650px] -bottom-[6%]"
+        {...getWidthHeightPercentages(1653, 1030, 1920, 1080)}
         width={1653}
       />
-      <IntroWhiteScreen className="absolute left-0 right-0 top-0 bottom-0 m-auto" />
-      <PacmanGhost className="absolute top-[8%] left-[27%]" />
-      <IntroBlueFlower className="absolute bottom-0 left-[80%]" />
-      <div className="absolute bottom-[20%] left-0 right-0 mx-auto text-center">
-        <BLCursorButton>{text.button}</BLCursorButton>
+      <div className="absolute left-0 right-0 top-0 bottom-0 m-auto w-[1006px] h-[698px]">
+        <div className="relative w-full h-full">
+          <IntroWhiteScreen width="100%" height="100%" />
+          <PacmanGhost className="absolute -top-[75px] left-[123px]" />
+          <div className="absolute bottom-4 left-0 right-0 mx-auto text-center">
+            <BLCursorButton>{text.button}</BLCursorButton>
+          </div>
+        </div>
       </div>
+      <IntroBlueFlower className="absolute bottom-0 left-[80%]" />
       <PinkPetals className="absolute top-[7px] left-[81%]" />
       <BlackShh
-        className="absolute left-[8%] bottom-[2%]"
+        className="absolute left-[8%] bottom-0"
         {...getWidthHeightPercentages(845, 321, 1920, 1080)}
+        // width={845}
       />
-      <div className="absolute top-[25%] left-0 right-0 mx-auto h-[400px]">
-        <h1 className="text-center font-black text-5xl pt-8 pb-5">
+      <div className="absolute top-0 left-0 right-0 bottom-0 m-auto h-[400px]">
+        <h1 className="text-center font-black text-5xl -mt-4 pb-5">
           {text.heading}
         </h1>
         <p className={pClassesDesktop}>{text.body1}</p>
