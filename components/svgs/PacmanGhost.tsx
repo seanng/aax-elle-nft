@@ -1,9 +1,7 @@
-import { motion } from 'framer-motion'
-
 const [width, height] = [199, 179]
 
 export const PacmanGhost = (props) => (
-  <motion.svg
+  <svg
     viewBox={`0 0 ${width} ${height}`}
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -31,5 +29,5 @@ export const PacmanGhost = (props) => (
       d="M69.11 84.07c.17-9.823-7.653-17.925-17.475-18.096-9.823-.172-17.924 7.652-18.096 17.474-.171 9.823 7.652 17.924 17.475 18.096 9.822.171 17.924-7.652 18.095-17.475Z"
       fill="#fff"
     />
-  </motion.svg>
+  </svg>
 )

@@ -1,9 +1,7 @@
-import { motion } from 'framer-motion'
-
 const [width, height] = [550, 504]
 
 export const IntroBlueFlower = (props) => (
-  <motion.svg
+  <svg
     fill="none"
     viewBox={`0 0 ${width} ${height}`}
     xmlns="http://www.w3.org/2000/svg"
@@ -30,5 +28,5 @@ export const IntroBlueFlower = (props) => (
         <path fill="#fff" d="M0 0h550v504H0z" />
       </clipPath>
     </defs>
-  </motion.svg>
+  </svg>
 )

@@ -41,7 +41,7 @@ function Mobile() {
       <div className={`absolute bg-[#FF66FF] w-full bottom-0 h-[70px]`} />
       <WhiteScreenSmall className="absolute top-0 bottom-0 right-0 left-0 m-auto" />
       <PinkPetals
-        className="absolute -rotate-[25deg] top-[10%] -left-[10%]"
+        className="absolute top-[10%] -left-[10%] animate-[spin_3s_linear_infinite]"
         {...dimensions(171, 155)}
       />
       <RedMouth
@@ -97,11 +97,10 @@ function Desktop() {
         </div>
       </div>
       <IntroBlueFlower className="absolute bottom-0 left-[80%]" />
-      <PinkPetals className="absolute top-[7px] left-[81%]" />
+      <PinkPetals className="absolute top-[7px] left-[81%] animate-[spin_3s_linear_infinite]" />
       <BlackShh
         className="absolute left-[8%] bottom-0"
         {...getWidthHeightPercentages(845, 321, 1920, 1080)}
-        // width={845}
       />
       <div className="absolute top-0 left-0 right-0 bottom-0 m-auto h-[400px]">
         <h1 className="text-center font-black text-5xl -mt-4 pb-5">

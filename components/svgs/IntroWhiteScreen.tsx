@@ -1,9 +1,7 @@
-import { motion } from 'framer-motion'
-
 const [width, height] = [1006, 698]
 
 export const IntroWhiteScreen = (props) => (
-  <motion.svg
+  <svg
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     viewBox={`0 0 ${width} ${height}`}
@@ -21,5 +19,5 @@ export const IntroWhiteScreen = (props) => (
       strokeWidth={12}
       strokeMiterlimit={10}
     />
-  </motion.svg>
+  </svg>
 )
