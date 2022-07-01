@@ -2,7 +2,7 @@ export function BLCursorButton({ children, ...props }) {
   return (
     <button
       type="button"
-      className="bg-black text-white justify-center rounded-3xl relative border-[6px] px-6 py-4 border-lime"
+      className="bg-black text-white justify-center rounded-3xl relative border-[6px] py-2 px-6 md:py-4 border-lime"
       {...props}
     >
       <span className="text-lg md:text-4xl font-bold">{children}</span>

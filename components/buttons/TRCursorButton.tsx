@@ -2,10 +2,10 @@ export function TRCursorButton({ children, ...props }) {
   return (
     <button
       type="button"
-      className="bg-black text-white justify-center rounded-3xl relative border-[6px] px-6 py-4 border-[#55F263]"
+      className="bg-black text-white justify-center rounded-3xl relative border-[6px] py-2 px-6 md:py-4 border-[#55F263]"
       {...props}
     >
-      <span className="text-lg font-bold">{children}</span>
+      <span className="text-lg md:text-4xl font-bold">{children}</span>
       <TRCursor className="absolute -top-[14px] -right-[4px]" />
     </button>
   )
