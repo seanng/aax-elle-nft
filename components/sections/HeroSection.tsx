@@ -2,7 +2,7 @@ import {
   Cactus,
   PacManSmall,
   PoopFlower,
-  BLCursorButton,
+  Raindrop,
   HushHandSign,
   PoopSmall,
   PinkSunflower,
@@ -29,7 +29,7 @@ import { getWidthHeightPercentages } from 'utils/helpers'
 export function HeroSection(): JSX.Element {
   return (
     <>
-      <div className="section h-full w-full bg-black flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <div className="section h-full w-full bg-black flex flex-col items-center justify-center sm:px-6 lg:px-8 overflow-hidden">
         <Desktop />
         <Mobile />
       </div>
@@ -37,23 +37,16 @@ export function HeroSection(): JSX.Element {
   )
 }
 
-// 660
-
 const MOBILE_WIDTH = 414
-const MOBILE_HEIGHT = 660
-const MOBILE_CANVAS1_HEIGHT = 359
-const MOBILE_CANVAS2_HEIGHT = 174
+const MOBILE_CANVAS_HEIGHT = 359
 
 function Mobile() {
-  const dimensions = (w: number, h: number, ch: number) =>
-    getWidthHeightPercentages(w, h, MOBILE_WIDTH, ch)
+  const dimensions = (w: number, h: number) =>
+    getWidthHeightPercentages(w, h, MOBILE_WIDTH, MOBILE_CANVAS_HEIGHT)
 
   return (
-    <div className="flex flex-col items-center w-full h-full pt-[142px] md:hidden">
-      <div
-        style={{ height: `${(82 / MOBILE_HEIGHT) * 100}%` }}
-        className="relative w-[206px]"
-      >
+    <div className="flex flex-col items-center justify-between w-full h-full pt-[142px] md:hidden">
+      <div className="relative w-[206px] h-[82px] mb-10">
         <Image
           priority
           src="/logos/elle-white.png"
@@ -63,68 +56,77 @@ function Mobile() {
         />
       </div>
       <div
-        style={{ height: `${(MOBILE_CANVAS1_HEIGHT / MOBILE_HEIGHT) * 100}%` }}
-        className="relative w-full mt-10"
+        className="relative h-full w-full"
+        style={{
+          maxHeight: `calc(${MOBILE_CANVAS_HEIGHT} / ${MOBILE_WIDTH} * 100vw)`,
+          maxWidth: `calc(${MOBILE_WIDTH} / ${MOBILE_CANVAS_HEIGHT} * 100vh)`,
+        }}
       >
         <RocketShoot
-          className="absolute top-[3%] left-[46%]"
-          {...dimensions(170, 181, MOBILE_CANVAS1_HEIGHT)}
+          className="absolute top-[3%] left-[43%]"
+          {...dimensions(170, 181)}
         />
         <Telephone
-          className="absolute left-[68%] bottom-[9%]"
-          {...dimensions(178, 65, MOBILE_CANVAS1_HEIGHT)}
+          className="absolute left-[67%] bottom-[9%]"
+          {...dimensions(178, 65)}
         />
         <Lolipop
-          className="absolute left-[30%] bottom-[4%]"
-          {...dimensions(318, 87, MOBILE_CANVAS1_HEIGHT)}
+          className="absolute left-[27%] bottom-[4%]"
+          {...dimensions(318, 87)}
         />
         <GiftboxSmall
           className="absolute left-[18%] top-[60%]"
-          {...dimensions(53, 57, MOBILE_CANVAS1_HEIGHT)}
+          {...dimensions(53, 57)}
         />
         <GreenBeard
-          className="absolute top-[17%] left-[15%]"
-          {...dimensions(51, 46, MOBILE_CANVAS1_HEIGHT)}
+          className="absolute top-[17%] left-[12%]"
+          {...dimensions(51, 46)}
         />
         <YellowSunflower
-          className="absolute top-[15%] left-[29%]"
-          {...dimensions(57, 52, MOBILE_CANVAS1_HEIGHT)}
+          className="absolute top-[15%] left-[26%]"
+          {...dimensions(57, 52)}
         />
         <Hearts
           className="absolute left-[10%] top-[55%]"
-          {...dimensions(45, 50, MOBILE_CANVAS1_HEIGHT)}
+          {...dimensions(45, 50)}
         />
         <Cactus
-          className="absolute top-[17%] right-[13%]"
-          {...dimensions(125, 127, MOBILE_CANVAS1_HEIGHT)}
+          className="absolute top-[17%] right-[16%]"
+          {...dimensions(125, 127)}
         />
         <RedMouth
           className="absolute m-auto left-0 right-0 top-0 bottom-0"
-          {...dimensions(246, 154, MOBILE_CANVAS1_HEIGHT)}
+          {...dimensions(246, 154)}
+        />
+        <Raindrop
+          className="absolute left-[18%] top-[42%] opacity-50"
+          {...dimensions(24, 33)}
+        />
+        <Raindrop
+          className="absolute left-[18%] top-[36%]"
+          {...dimensions(24, 33)}
         />
         <YellowShh
-          className="absolute left-[63%] top-[45%]"
-          {...dimensions(192, 183, MOBILE_CANVAS1_HEIGHT)}
+          className="absolute left-[60%] top-[45%]"
+          {...dimensions(192, 183)}
         />
         <HushHandSign
-          className="absolute left-[48%] top-[55%]"
-          {...dimensions(95, 141, MOBILE_CANVAS1_HEIGHT)}
+          className="absolute left-[46%] top-[55%]"
+          {...dimensions(95, 141)}
         />
         <BowlingStick
           className="absolute right-[1%] top-[52%]"
-          {...dimensions(52, 64, MOBILE_CANVAS1_HEIGHT)}
+          {...dimensions(52, 64)}
         />
       </div>
-      <div
-        style={{ height: `${(MOBILE_CANVAS2_HEIGHT / MOBILE_HEIGHT) * 100}%` }}
-        className="relative w-full overflow-clip"
-      >
+      <div className="h-[212px] relative w-full overflow-clip">
         <PinkSunflowerSmall className="absolute top-0 left-[2%]" />
-        <PoopSmall className="absolute bottom-1 right-0" />
-        <PacManSmall className="absolute bottom-1 right-[27%]" />
+        <PoopSmall className="absolute bottom-0 right-0" />
+        <PacManSmall className="absolute bottom-2 right-[27%]" />
         <div className="absolute top-[30%] left-0 right-0 mx-auto text-center">
           <TRCursorButton>我想說個祕密...</TRCursorButton>
         </div>
+        <div className="absolute bottom-0 bg-lime h-[10px] w-full" />
       </div>
     </div>
   )
@@ -155,6 +157,8 @@ function Desktop() {
       <YellowShh className="absolute top-[44%] right-[2%]" />
       <TellYou className="absolute left-[80%] top-[10%]" />
       <ASecret className="absolute left-[80%] top-[17%]" />
+      <Raindrop className="absolute left-[24%] top-[44%] opacity-50" />
+      <Raindrop className="absolute left-[24%] top-[38%]" />
       <div className="absolute right-[53%] top-[52%] mx-auto text-center">
         <TRCursorButton>我想說個祕密...</TRCursorButton>
       </div>
