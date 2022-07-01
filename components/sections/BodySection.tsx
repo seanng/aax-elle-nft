@@ -3,12 +3,24 @@ import {
   GreenDialog,
   PoopSmall,
   PinkSunflower,
+  TeamFlower,
 } from 'components'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { Disclosure } from '@headlessui/react'
 import { PlusIcon, MinusIcon } from '@heroicons/react/outline'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { EffectCoverflow, Pagination } from 'swiper'
+import { EffectCoverflow } from 'swiper'
+
+const ElleLips = dynamic(() => import('components').then((m) => m.ElleLips))
+const BaizhouLips = dynamic(() =>
+  import('components').then((m) => m.BaizhouLips)
+)
+const CrzyLips = dynamic(() => import('components').then((m) => m.CrzyLips))
+const AaxLips = dynamic(() => import('components').then((m) => m.AaxLips))
+const PointOfLips = dynamic(() =>
+  import('components').then((m) => m.PointOfLips)
+)
 
 const faqs = [
   {
@@ -37,32 +49,32 @@ const teamMembers = [
   {
     title: 'ELLEverse Producer',
     name: 'ELLEverse Producer',
-    site: 'www.elle.com/tw',
-    src: '/images/LipsElle.png',
+    url: 'https://elle.com/tw',
+    Svg: ElleLips,
   },
   {
     title: 'Tech Partner',
     name: 'AAX Limited',
-    site: 'www.aax.com',
-    src: '/images/LipsAax.png',
+    url: 'https://aax.com/',
+    Svg: AaxLips,
   },
   {
     title: 'Strategic Planner',
     name: 'CRZY.io 肖準行銷',
-    site: 'http://crzy.io/',
-    src: '/images/LipsCrzy.png',
+    url: 'https://crzy.io/',
+    Svg: CrzyLips,
   },
   {
     title: 'Visual Partner',
     name: '白晝有限公司 Baizhou.tw',
-    site: 'IG@baizhou.tw',
-    src: '/images/LipsBaizhou.png',
+    url: 'https://instagram.com/baizhou.tw',
+    Svg: BaizhouLips,
   },
   {
     title: 'Visual Partner',
     name: 'Point of',
-    site: 'www.pointof.co',
-    src: '/images/LipsPointof.png',
+    url: 'https://pointof.co',
+    Svg: PointOfLips,
   },
 ]
 
@@ -121,22 +133,15 @@ export function BodySection() {
             centeredSlides
             loop
             slidesPerView={3}
-            // coverflowEffect={{
-            //   rotate: 50,
-            //   stretch: 0,
-            //   depth: 100,
-            //   modifier: 1,
-            //   slideShadows: true,
-            // }}
             modules={[EffectCoverflow]}
           >
             {teamMembers.map((item) => (
               <SwiperSlide key={item.name}>
                 <TeamMember
-                  src={item.src}
+                  Svg={item.Svg}
                   name={item.name}
                   title={item.title}
-                  site={item.site}
+                  url={item.url}
                 />
               </SwiperSlide>
             ))}
@@ -148,10 +153,10 @@ export function BodySection() {
             {teamMembers.map((item) => (
               <div key={item.name} className="w-[33%]">
                 <TeamMember
-                  src={item.src}
+                  Svg={item.Svg}
                   name={item.name}
                   title={item.title}
-                  site={item.site}
+                  url={item.url}
                 />
               </div>
             ))}
@@ -268,18 +273,25 @@ function Feature({ heading, body, button }) {
   )
 }
 
-function TeamMember({ src, name, title, site }) {
+function TeamMember({ name, title, Svg, url }) {
   return (
     <div className="font-english font-light text-white text-sm md:text-xl lg:text-3xl mx-2 md:px-4 md:mb-16 text-center">
-      {/* <div className="max-w-[355px] w-[33%] min-w-[303px] font-english font-light text-white text-sm md:text-xl lg:text-3xl mx-3 md:mx-20"> */}
-      <div className="relative h-[88px] md:h-[222px]">
-        <Image src={src} layout="fill" alt={name} objectFit="contain" />
-      </div>
-      <h6 className="font-extrabold mt-3 md:mt-10 leading-5 md:leading-10">
+      <a href={url} target="_blank" className="group relative" rel="noreferrer">
+        <TeamFlower
+          width="50%"
+          height="50%"
+          className="absolute transition-transform md:group-hover:-translate-y-3/4 md:group-hover:-translate-x-[220%] right-[60%] bottom-[30%] duration-300 ease-out"
+        />
+        <Svg
+          width="100%"
+          height="100%"
+          className="relative md:group-hover:scale-110 transition-transform origin-top duration-300 ease-out"
+        />
+      </a>
+      <h6 className="font-extrabold mt-3 md:mt-6 lg:mt-10 leading-5 md:leading-7 lg:leading-10">
         {name}
       </h6>
       <p>{title}</p>
-      <p>{site}</p>
     </div>
   )
 }

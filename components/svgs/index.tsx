@@ -27,3 +27,11 @@ export { WhiteScreenSmall } from './WhiteScreenSmall'
 export { PinkPetals } from './PinkPetals'
 export { Raindrop } from './Raindrop'
 export { GreenDialog } from './GreenDialog'
+
+// team
+export { AaxLips } from './team/AaxLips'
+export { ElleLips } from './team/ElleLips'
+export { BaizhouLips } from './team/BaizhouLips'
+export { CrzyLips } from './team/CrzyLips'
+export { PointOfLips } from './team/PointOfLips'
+export { TeamFlower } from './team/TeamFlower'
