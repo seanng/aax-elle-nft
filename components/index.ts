@@ -1,5 +1,5 @@
 export { Web3Button } from './Web3Button'
-export { LayoutHeader } from './LayoutHeader'
+export { Navigation } from './Navigation'
 export { ExitSvg } from './ExitSvg'
 export { HamburgerSvg } from './HamburgerSvg'
 export { FaqSection } from './FaqSection'

@@ -35,3 +35,8 @@ export { BaizhouLips } from './team/BaizhouLips'
 export { CrzyLips } from './team/CrzyLips'
 export { PointOfLips } from './team/PointOfLips'
 export { TeamFlower } from './team/TeamFlower'
+
+// social icons
+export { FBIcon } from './social/FBIcon'
+export { IGIcon } from './social/IGIcon'
+export { TwitterIcon } from './social/TwitterIcon'

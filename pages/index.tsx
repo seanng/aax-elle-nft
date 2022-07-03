@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import {
   EncryptDialog,
-  LayoutHeader,
+  Navigation,
   // HeroSectionOld,
   HeroSection,
   IntroSection,
@@ -23,7 +23,7 @@ const RECEIVER_ADDRESS = '0xCD1E014Eee1c8E7FcB49eB1AaAeA58154004E554'
 const HomePage: NextPage = () => {
   return (
     <>
-      <LayoutHeader />
+      <Navigation />
       <ReactFullpage
         navigation
         render={(comp) => (
