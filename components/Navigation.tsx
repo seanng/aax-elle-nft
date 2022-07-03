@@ -10,17 +10,17 @@ export function Navigation() {
   return (
     <Popover as="header" className="fixed left-0 right-0 z-10">
       <Navbar />
-      {/* <Transition
-          as={Fragment}
-          enter="duration-300 transition-max-height ease-out"
-          enterFrom="max-h-[0px]"
-          enterTo="max-h-[400px]"
-          leave="duration-200 ease-in"
-          leaveFrom="opacity-1"
-          leaveTo="opacity-0"
-        > */}
-      <Panel />
-      {/* </Transition> */}
+      <Transition
+        className="absolute top-0 h-screen w-full"
+        enter="transition-all duration-1000 ease-out"
+        enterFrom="transform max-h-0"
+        enterTo="transform max-h-[2000px]"
+        leave="transition-all duration-300"
+        leaveFrom="transform max-h-[2000px]"
+        leaveTo="transform max-h-0 opacity-0"
+      >
+        <Panel />
+      </Transition>
     </Popover>
   )
 }
@@ -35,10 +35,7 @@ const Navbar = () => (
 )
 
 const Panel = () => (
-  <Popover.Panel
-    focus
-    className="absolute top-0 h-screen bg-[#3D3D3D] w-full z-30"
-  >
+  <Popover.Panel focus className="h-full z-30 bg-[#3D3D3D]">
     {/* Header */}
     <div className="flex items-center justify-between px-8 py-6 md:px-10">
       <Logo />
@@ -59,9 +56,9 @@ const Panel = () => (
         </div>
       </div>
       <div className="flex justify-center">
-        <FBIcon />
-        <IGIcon />
-        <TwitterIcon />
+        <FBIcon className="h-16 w-16 md:h-28 md:w-28" />
+        <IGIcon className="h-16 w-16 md:h-28 md:w-28" />
+        <TwitterIcon className="h-16 w-16 md:h-28 md:w-28" />
       </div>
     </div>
   </Popover.Panel>
