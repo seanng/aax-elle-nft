@@ -8,6 +8,12 @@ export const RocketShoot = (props) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     viewBox={`0 0 ${width} ${height}`}
+    initial={{
+      scale: 0,
+      originX: 1,
+      originY: 1,
+    }}
+    variants={{ second: { scale: 1 } }}
     {...getWidthHeightPercentages(width, height)}
     {...props}
   >

@@ -8,6 +8,8 @@ export const Telephone = (props) => (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox={`0 0 ${width} ${height}`}
+    initial={{ scaleX: 0, originX: 0 }}
+    variants={{ third: { scaleX: 1 } }}
     {...getWidthHeightPercentages(width, height)}
     {...props}
   >

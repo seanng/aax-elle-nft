@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { useAnimation } from 'framer-motion'
 import {
   Cactus,
   PacManSmall,
@@ -27,11 +29,24 @@ import Image from 'next/image'
 import { getWidthHeightPercentages } from 'utils/helpers'
 
 export function HeroSection(): JSX.Element {
+  const controls = useAnimation()
+
+  const animateAll = async () => {
+    await controls.start('first')
+    await controls.start('second')
+    await controls.start('third')
+    await controls.start('fourth')
+  }
+
+  useEffect(() => {
+    animateAll()
+  }, [])
+
   return (
     <>
       <div className="section h-full w-full bg-black flex flex-col items-center justify-center sm:px-6 lg:px-8 overflow-hidden">
-        <Desktop />
-        <Mobile />
+        <Desktop controls={controls} />
+        <Mobile controls={controls} />
       </div>
     </>
   )
@@ -40,7 +55,7 @@ export function HeroSection(): JSX.Element {
 const MOBILE_WIDTH = 414
 const MOBILE_CANVAS_HEIGHT = 359
 
-function Mobile() {
+function Mobile({ controls }) {
   const dimensions = (w: number, h: number) =>
     getWidthHeightPercentages(w, h, MOBILE_WIDTH, MOBILE_CANVAS_HEIGHT)
 
@@ -64,13 +79,16 @@ function Mobile() {
       >
         <RocketShoot
           className="absolute top-[3%] left-[43%]"
+          animate={controls}
           {...dimensions(170, 181)}
         />
         <Telephone
           className="absolute left-[67%] bottom-[9%]"
+          animate={controls}
           {...dimensions(178, 65)}
         />
         <Lolipop
+          animate={controls}
           className="absolute left-[27%] bottom-[4%]"
           {...dimensions(318, 87)}
         />
@@ -79,11 +97,13 @@ function Mobile() {
           {...dimensions(53, 57)}
         />
         <GreenBeard
+          animate={controls}
           className="absolute top-[17%] left-[12%]"
           {...dimensions(51, 46)}
         />
         <YellowSunflower
           className="absolute top-[15%] left-[26%]"
+          animate={controls}
           {...dimensions(57, 52)}
         />
         <Hearts
@@ -92,18 +112,22 @@ function Mobile() {
         />
         <Cactus
           className="absolute top-[17%] right-[16%]"
+          animate={controls}
           {...dimensions(125, 127)}
         />
         <RedMouth
           className="absolute m-auto left-0 right-0 top-0 bottom-0"
+          animate={controls}
           {...dimensions(246, 154)}
         />
         <Raindrop
           className="absolute left-[18%] top-[42%] opacity-50"
+          animate={controls}
           {...dimensions(24, 33)}
         />
         <Raindrop
           className="absolute left-[18%] top-[36%]"
+          animate={controls}
           {...dimensions(24, 33)}
         />
         <YellowShh
@@ -115,12 +139,16 @@ function Mobile() {
           {...dimensions(95, 141)}
         />
         <BowlingStick
+          animate={controls}
           className="absolute right-[1%] top-[52%]"
           {...dimensions(52, 64)}
         />
       </div>
       <div className="h-[212px] relative w-full overflow-clip">
-        <PinkSunflowerSmall className="absolute top-0 left-[2%]" />
+        <PinkSunflowerSmall
+          animate={controls}
+          className="absolute top-0 left-[2%]"
+        />
         <PoopSmall className="absolute bottom-0 right-0" />
         <PacManSmall className="absolute bottom-2 right-[27%]" />
         <div className="absolute top-[30%] left-0 right-0 mx-auto text-center">
@@ -132,7 +160,7 @@ function Mobile() {
   )
 }
 
-function Desktop() {
+function Desktop({ controls }) {
   return (
     <div
       className={`w-full h-full relative hidden md:block`}
@@ -141,24 +169,48 @@ function Desktop() {
         maxWidth: `calc(${HERO_CANVAS_WIDTH} / ${HERO_CANVAS_HEIGHT} * 100vh)`,
       }}
     >
-      <RocketShoot className="absolute top-[3%] left-[46%]" />
+      <RocketShoot
+        className="absolute top-[3%] left-[46%]"
+        animate={controls}
+      />
       <ElleFanned className="absolute top-[7%]" />
-      <GreenBeard className="absolute top-[17%] left-[22%]" />
-      <Cactus className="absolute top-[15%] right-[23%]" />
-      <RedMouth className="absolute m-auto left-0 right-0 top-0 bottom-0" />
-      <Lolipop className="absolute right-[3%] bottom-[7%]" />
+      <GreenBeard
+        animate={controls}
+        className="absolute top-[17%] left-[22%]"
+      />
+      <Cactus animate={controls} className="absolute top-[15%] right-[23%]" />
+      <RedMouth
+        className="absolute m-auto left-0 right-0 top-0 bottom-0"
+        animate={controls}
+      />
+      <Lolipop animate={controls} className="absolute right-[3%] bottom-[7%]" />
       <HushHandSign className="absolute top-[55%] left-[48%]" />
-      <PinkSunflower className="absolute left-[12%] bottom-0" />
+      <PinkSunflower
+        animate={controls}
+        className="absolute left-[12%] bottom-0"
+      />
       <PoopFlower className="absolute left-[9%] bottom-0" />
-      <YellowSunflower className="absolute top-[16%] left-[33%]" />
-      <BowlingStick className="absolute top-[52%] right-[7%]" />
+      <YellowSunflower
+        animate={controls}
+        className="absolute top-[16%] left-[33%]"
+      />
+      <BowlingStick
+        animate={controls}
+        className="absolute top-[52%] right-[7%]"
+      />
       <Hearts className="absolute right-[4%] bottom-[23%]" />
-      <Telephone className="absolute right-[1%] bottom-[12%]" />
+      <Telephone
+        animate={controls}
+        className="absolute right-[1%] bottom-[12%]"
+      />
       <YellowShh className="absolute top-[44%] right-[2%]" />
       <TellYou className="absolute left-[80%] top-[10%]" />
       <ASecret className="absolute left-[80%] top-[17%]" />
-      <Raindrop className="absolute left-[24%] top-[44%] opacity-50" />
-      <Raindrop className="absolute left-[24%] top-[38%]" />
+      <Raindrop
+        animate={controls}
+        className="absolute left-[24%] top-[44%] opacity-50"
+      />
+      <Raindrop animate={controls} className="absolute left-[24%] top-[38%]" />
       <div className="absolute right-[53%] top-[52%] mx-auto text-center">
         <TRCursorButton>我想說個祕密...</TRCursorButton>
       </div>

@@ -8,6 +8,8 @@ export const RedMouth = (props) => (
     viewBox={`0 0 ${width} ${height}`}
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    initial={{ scale: props.animate ? 0.5 : 1 }}
+    variants={{ first: { scale: 1 } }}
     {...getWidthHeightPercentages(width, height)}
     {...props}
   >

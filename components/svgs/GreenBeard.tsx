@@ -8,6 +8,8 @@ export const GreenBeard = (props) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     viewBox={`0 0 ${width} ${height}`}
+    initial={{ opacity: 0 }}
+    variants={{ second: { opacity: 1 } }}
     {...getWidthHeightPercentages(width, height)}
     {...props}
   >

@@ -8,6 +8,8 @@ export const Raindrop = (props) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     viewBox={`0 0 ${width} ${height}`}
+    initial={{ y: '-600px' }}
+    variants={{ fourth: { y: 0 } }}
     {...getWidthHeightPercentages(width, height)}
     {...props}
   >
