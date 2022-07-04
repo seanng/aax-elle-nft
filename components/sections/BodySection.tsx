@@ -197,17 +197,13 @@ export function BodySection() {
 
           {/* Content */}
           <div className="relative z-10 bg-black-rgba">
-            <dl className="mt-4 md:mt-24 lg:mt-32 space-y-2 md:space-y-6 divide-y-2 md:divide-y-4 divide-[#C3FA08] border-y-2 md:border-y-4 border-[#C3FA08] pb-2 md:pb-6">
+            <dl className="mt-4 md:mt-24 lg:mt-32 space-y-2 md:space-y-6 divide-y-2 md:divide-y-4 divide-lemon border-y-2 md:border-y-4 border-lemon">
               {faqs.map((faq) => (
-                <Disclosure
-                  as="div"
-                  key={faq.question}
-                  className="pt-2 md:pt-6"
-                >
+                <Disclosure as="div" key={faq.question} className="!mt-0">
                   {({ open }) => (
                     <>
-                      <dt className="text-lg">
-                        <Disclosure.Button className="text-left w-full flex justify-between items-center text-[#C3FA08]">
+                      <dt className="text-lg py-2 md:py-6">
+                        <Disclosure.Button className="text-left w-full flex justify-between items-center text-lemon">
                           <span className="font-bold text-white text-xs md:text-3xl lg:text-5xl lg:leading-[165%]">
                             {faq.question}
                           </span>
@@ -228,7 +224,7 @@ export function BodySection() {
                       </dt>
                       <Disclosure.Panel
                         as="dd"
-                        className="my-2 md:my-6 lg:my-8 pr-12"
+                        className="py-2 md:py-6 lg:py-8 pr-12 border-t-2 md:border-t-4 border-lemon "
                       >
                         <p className="font-extralight text-gray-100 text-xs md:text-3xl lg:text-5xl">
                           {faq.answer}
