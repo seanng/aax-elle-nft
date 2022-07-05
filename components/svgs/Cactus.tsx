@@ -12,7 +12,7 @@ export const Cactus = (props) => (
       scaleX: 0,
       originX: 0,
     }}
-    variants={{ second: { scaleX: 1 } }}
+    variants={{ second: { scaleX: 1, transition: { duration: 0.5 } } }}
     {...getWidthHeightPercentages(width, height)}
     {...props}
   >
@@ -37,14 +37,12 @@ export const Cactus = (props) => (
       fill="#FF6216"
       initial={{ opacity: 0 }}
       variants={{ third: { opacity: 1 } }}
-      animate={props.animate}
     />
     <motion.path
       d="M304.132 67.456c7.006-.27 12.468-6.171 12.199-13.182-.269-7.011-6.167-12.476-13.174-12.207-7.007.27-12.469 6.171-12.2 13.182.269 7.01 6.168 12.476 13.175 12.207Z"
       fill="#EDFA00"
       initial={{ opacity: 0 }}
       variants={{ third: { opacity: 1 } }}
-      animate={props.animate}
     />
     <path
       d="m182.032 395.966-69.28-6.502a50.875 50.875 0 0 1-34.405-18.207 50.933 50.933 0 0 1-11.482-37.209l9.397-100.029 170.451 16.004-9.397 100.129a50.824 50.824 0 0 1-18.166 34.355 50.771 50.771 0 0 1-37.118 11.459Z"

@@ -4,6 +4,7 @@ import {
   PoopSmall,
   PinkSunflower,
   TeamFlower,
+  PoopStraight,
 } from 'components'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
@@ -237,7 +238,7 @@ export function BodySection() {
             </dl>
           </div>
         </div>
-        <PoopSmall className="absolute z-0 top-[255px] md:top-[600px] lg:top-[715px] left-[5%] w-[125px] h-[121px] md:w-[375px] md:h-[363px] lg:w-[568px] lg:h-[579px]" />
+        <PoopStraight className="absolute z-0 top-[255px] md:top-[600px] lg:top-[650px] left-[5%] w-[125px] h-[121px] md:w-[375px] md:h-[363px] lg:w-[568px] lg:h-[579px]" />
         <PinkSunflower className="absolute z-0 top-[115px] md:top-[200px] lg:top-[250px] right-[5%] w-[123px] h-[302px] md:w-[369px] md:h-[906px] lg:w-[493px] lg:h-[1206px]" />
       </div>
       {/* Footer */}

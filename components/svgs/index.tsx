@@ -27,6 +27,7 @@ export { WhiteScreenSmall } from './WhiteScreenSmall'
 export { PinkPetals } from './PinkPetals'
 export { Raindrop } from './Raindrop'
 export { GreenDialog } from './GreenDialog'
+export { PoopStraight } from './PoopStraight'
 
 // team
 export { AaxLips } from './team/AaxLips'

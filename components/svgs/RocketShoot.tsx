@@ -13,7 +13,7 @@ export const RocketShoot = (props) => (
       originX: 1,
       originY: 1,
     }}
-    variants={{ second: { scale: 1 } }}
+    variants={{ second: { scale: 1, transition: { duration: 0.5 } } }}
     {...getWidthHeightPercentages(width, height)}
     {...props}
   >
