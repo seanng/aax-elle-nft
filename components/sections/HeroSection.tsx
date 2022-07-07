@@ -29,7 +29,7 @@ import { HERO_CANVAS_HEIGHT, HERO_CANVAS_WIDTH } from 'shared/constants'
 import Image from 'next/image'
 import { getWidthHeightPercentages } from 'utils/helpers'
 
-export function HeroSection(): JSX.Element {
+export function HeroSection({ openModal }): JSX.Element {
   const controls = useAnimation()
 
   const animateAll = async () => {
@@ -49,8 +49,8 @@ export function HeroSection(): JSX.Element {
         className="section h-full w-full bg-black flex flex-col items-center justify-center sm:px-6 lg:px-8 overflow-hidden"
         animate={controls}
       >
-        <Desktop />
-        <Mobile />
+        <Desktop onButtonClick={openModal} />
+        <Mobile onButtonClick={openModal} />
       </motion.div>
     </>
   )
@@ -59,7 +59,7 @@ export function HeroSection(): JSX.Element {
 const MOBILE_WIDTH = 414
 const MOBILE_CANVAS_HEIGHT = 359
 
-function Mobile() {
+function Mobile({ onButtonClick }) {
   const dimensions = (w: number, h: number) =>
     getWidthHeightPercentages(w, h, MOBILE_WIDTH, MOBILE_CANVAS_HEIGHT)
 
@@ -144,7 +144,9 @@ function Mobile() {
         <PoopSmall className="absolute bottom-0 right-0" />
         <PacManSmall className="absolute bottom-2 right-[27%]" />
         <div className="absolute top-[30%] left-0 right-0 mx-auto text-center">
-          <TRCursorButton>我想說個祕密...</TRCursorButton>
+          <TRCursorButton onClick={onButtonClick}>
+            我想說個祕密...
+          </TRCursorButton>
         </div>
         <div className="absolute bottom-0 bg-lime h-[10px] w-full" />
       </div>
@@ -152,7 +154,7 @@ function Mobile() {
   )
 }
 
-function Desktop() {
+function Desktop({ onButtonClick }) {
   return (
     <motion.div
       className={`w-full h-full relative hidden md:block`}
@@ -183,7 +185,7 @@ function Desktop() {
       <Raindrop className="absolute left-[24%] top-[44%] opacity-50" />
       <Raindrop className="absolute left-[24%] top-[38%]" />
       <div className="absolute right-[53%] top-[52%] mx-auto text-center">
-        <TRCursorButton>我想說個祕密...</TRCursorButton>
+        <TRCursorButton onClick={onButtonClick}>我想說個祕密...</TRCursorButton>
       </div>
     </motion.div>
   )

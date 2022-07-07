@@ -3,12 +3,12 @@ import { getWidthHeightPercentages } from 'utils/helpers'
 
 const [width, height] = [669, 418]
 
-export const RedMouth = (props) => (
+export const RedMouth = ({ shouldAnimate = false, ...props }) => (
   <motion.svg
     viewBox={`0 0 ${width} ${height}`}
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    initial={{ scale: props.shouldAnimate ? 0.5 : 1 }}
+    initial={{ scale: shouldAnimate ? 0.5 : 1 }}
     variants={{ first: { scale: 1, transition: { duration: 0.5 } } }}
     {...getWidthHeightPercentages(width, height)}
     {...props}

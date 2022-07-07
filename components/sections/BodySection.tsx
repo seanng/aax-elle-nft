@@ -165,25 +165,25 @@ export function BodySection() {
         </div>
       </div>
       {/* Marquee */}
-      <div className="mb-14 md:mb-48 font-english w-[120%] -ml-[10%] -rotate-3 font-extrabold text-4xl md:text-[168px] leading-[48px] md:leading-[224px]">
+      <div className="mb-14 md:mb-48 font-english max-w-full overflow-x-hidden -rotate-3 font-extrabold text-4xl md:text-[168px] leading-[48px] md:leading-[224px]">
         <div className="relative bg-lime h-12 md:h-56">
           <p className="marquee scroll-left">
             <span>
-              SHHHH.......&nbsp;&nbsp;&nbsp;SHHHH.......&nbsp;&nbsp;&nbsp;SHHHH.......&nbsp;&nbsp;&nbsp;
+              SHHHH.......&nbsp;&nbsp;&nbsp;SHHHH.......&nbsp;&nbsp;&nbsp;
             </span>
           </p>
           <p className="marquee scroll-left marquee-delayed">
             <span>
-              SHHHH.......&nbsp;&nbsp;&nbsp;SHHHH.......&nbsp;&nbsp;&nbsp;SHHHH.......&nbsp;&nbsp;&nbsp;
+              SHHHH.......&nbsp;&nbsp;&nbsp;SHHHH.......&nbsp;&nbsp;&nbsp;
             </span>
           </p>
         </div>
         <div className="relative bg-[#EDFA00] h-12 md:h-56">
           <p className="marquee scroll-right">
-            <span>TELL YOU A SECRET ____ TELL YOU A SECRET ____</span>
+            <span>TELL YOU A SECRET ____&nbsp;&nbsp;</span>
           </p>
           <p className="marquee scroll-right marquee-delayed">
-            <span>TELL YOU A SECRET ____ TELL YOU A SECRET ____</span>
+            <span>TELL YOU A SECRET ____&nbsp;&nbsp;</span>
           </p>
         </div>
       </div>

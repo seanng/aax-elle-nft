@@ -56,9 +56,15 @@ const Panel = () => (
         </div>
       </div>
       <div className="flex justify-center">
-        <FBIcon className="h-16 w-16 md:h-28 md:w-28" />
-        <IGIcon className="h-16 w-16 md:h-28 md:w-28" />
-        <TwitterIcon className="h-16 w-16 md:h-28 md:w-28" />
+        <a href="https://facebook.com" target="_blank" rel="noreferrer">
+          <FBIcon className="h-16 w-16 md:h-28 md:w-28" />
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noreferrer">
+          <IGIcon className="h-16 w-16 md:h-28 md:w-28" />
+        </a>
+        <a href="https://twitter.com" target="_blank" rel="noreferrer">
+          <TwitterIcon className="h-16 w-16 md:h-28 md:w-28" />
+        </a>
       </div>
     </div>
   </Popover.Panel>
