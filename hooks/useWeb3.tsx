@@ -38,24 +38,20 @@ export function useWeb3() {
 
   const connect = useCallback(async () => {
     if (!web3Modal) return console.error('No Web3Modal')
-    try {
-      const provider = await web3Modal.connect()
-      const web3Provider = new ethers.providers.Web3Provider(provider)
-      const signer = web3Provider.getSigner()
-      const address = await signer.getAddress()
-      const network = await web3Provider.getNetwork()
-      toast.success('Connected to Web3')
+    const provider = await web3Modal.connect()
+    const web3Provider = new ethers.providers.Web3Provider(provider)
+    const signer = web3Provider.getSigner()
+    const address = await signer.getAddress()
+    const network = await web3Provider.getNetwork()
+    toast.success('Connected to Web3')
 
-      dispatch({
-        type: 'SET_WEB3_PROVIDER',
-        provider,
-        web3Provider,
-        address,
-        network,
-      } as Web3Action)
-    } catch (e) {
-      console.error('connect error', e)
-    }
+    dispatch({
+      type: 'SET_WEB3_PROVIDER',
+      provider,
+      web3Provider,
+      address,
+      network,
+    } as Web3Action)
   }, [])
 
   const disconnect = useCallback(async () => {

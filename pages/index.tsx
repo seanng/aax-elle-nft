@@ -21,8 +21,6 @@ const RECEIPT_TOKEN_URI = 'https://jsonkeeper.com/b/G7TR'
 const RECEIVER_ADDRESS = '0xCD1E014Eee1c8E7FcB49eB1AaAeA58154004E554'
 
 const HomePage: NextPage = () => {
-  const [isOpen, setIsOpen] = useState(false)
-
   return (
     <>
       <Navigation />
@@ -30,7 +28,7 @@ const HomePage: NextPage = () => {
         navigation
         render={(comp) => (
           <ReactFullpage.Wrapper>
-            <HeroSection openModal={() => setIsOpen(true)} />
+            <HeroSection />
             <IntroSection />
             {/* ExplainerSection */}
             <BodySection />
@@ -42,7 +40,6 @@ const HomePage: NextPage = () => {
         position="bottom-right"
         autoClose={2000}
       />
-      <EncryptDialog setOpen={setIsOpen} open={isOpen} />
     </>
   )
 }
@@ -107,7 +104,7 @@ function Old() {
       >
         open modal
       </button>
-      <EncryptDialog setOpen={setIsOpen} open={isOpen} />
+      {/* <EncryptDialog setOpen={setIsOpen} open={isOpen} /> */}
     </div>
   )
 }

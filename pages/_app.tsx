@@ -13,8 +13,10 @@ import 'swiper/css/pagination'
 function MyApp({ Component, pageProps }) {
   return (
     <Web3ContextProvider>
+      {/* <EncryptDialogProvider> */}
       <SEO />
       <Component {...pageProps} />
+      {/* </EncryptDialogProvider> */}
     </Web3ContextProvider>
   )
 }
