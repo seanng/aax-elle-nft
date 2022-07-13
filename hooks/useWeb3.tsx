@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useCallback } from 'react'
-import Web3Modal from 'web3modal'
+import Web3Modal, { providers } from 'web3modal'
 import { ethers } from 'ethers'
 import { toast } from 'react-toastify'
 import WalletConnect from '@walletconnect/web3-provider'
@@ -54,6 +54,7 @@ export function useWeb3() {
         network,
       } as Web3Action)
     } catch (e) {
+      toast.error(e)
       disconnect()
     }
   }, [])
@@ -119,6 +120,30 @@ export function useWeb3() {
       }
     }
   }, [provider, disconnect])
+
+  // Display "Install Metamask" for users without MetaMask installed
+  useEffect(() => {
+    if (!window.ethereum) {
+      providerOptions['custom-metamask'] = {
+        display: {
+          logo: providers.METAMASK.logo,
+          name: 'Install MetaMask',
+          description: 'Connect using browser wallet',
+        },
+        package: {},
+        connector: async () => {
+          window.open('https://metamask.io/download')
+          throw new Error('MetaMask not installed')
+        },
+      }
+
+      web3Modal = new Web3Modal({
+        cacheProvider: true,
+        network: web3Network,
+        providerOptions, // required
+      })
+    }
+  }, [])
 
   return {
     provider,
