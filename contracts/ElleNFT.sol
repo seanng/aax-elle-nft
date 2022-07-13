@@ -20,38 +20,24 @@ contract ElleNFT is ERC721URIStorage, Ownable {
     return _tokenIds.current();
   }
 
-  // A function our user will hit to get their NFT.
-  function mint(string memory tokenURI) payable external returns (uint256) {
+  function mint(string memory messageTokenUri, string memory prizeTokenUri) payable external returns (uint256) {
     require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
-    
-    _tokenIds.increment();
-    uint256 newItemId = _tokenIds.current();
-    _safeMint(msg.sender, newItemId);
-    _setTokenURI(newItemId, tokenURI);
-    payable(owner()).transfer(msg.value);
-    
-    return newItemId;
-  }
 
-  // Mints 2 NFTs at a time. 1 for the sender and 1 for the receiver
-  function mint2(address to, string memory messageURI, string memory receiptURI) payable external returns (uint256) {
-    require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
+    // mint message
+    _tokenIds.increment();
+    uint256 messageTokenId = _tokenIds.current();
+    _safeMint(msg.sender, messageTokenId);
+    _setTokenURI(messageTokenId, messageTokenUri);
     
-    // mint secret message
+    // mint prize / whitelist
     _tokenIds.increment();
-    uint256 secretMessageId = _tokenIds.current();
-    _safeMint(to, secretMessageId);
-    _setTokenURI(secretMessageId, messageURI);
-
-    // mint receipt
-    _tokenIds.increment();
-    uint256 receiptItemId = _tokenIds.current();
-    _safeMint(msg.sender, receiptItemId);
-    _setTokenURI(receiptItemId, receiptURI);
+    uint256 prizeTokenId = _tokenIds.current();
+    _safeMint(msg.sender, prizeTokenId);
+    _setTokenURI(prizeTokenId, prizeTokenUri);
 
     // pay the donation
     payable(owner()).transfer(msg.value);
-
-    return secretMessageId;
+    
+    return messageTokenId;
   }
 }

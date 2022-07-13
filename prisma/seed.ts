@@ -18,7 +18,7 @@ const prisma = new PrismaClient()
 // ]
 
 async function dropCollections() {
-  // await prisma.encryptedImage.deleteMany()
+  await prisma.mint.deleteMany()
 }
 
 async function main() {
