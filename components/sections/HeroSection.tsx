@@ -145,8 +145,10 @@ function Mobile() {
         <PoopSmall className="absolute bottom-0 right-0" />
         <PacManSmall className="absolute bottom-2 right-[27%]" />
         <div className="absolute top-[30%] left-0 right-0 mx-auto text-center">
-          <Link href="/mint">
-            <TRCursorButton>我想說個祕密...</TRCursorButton>
+          <Link href="/mint" passHref>
+            <a>
+              <TRCursorButton>我想說個祕密...</TRCursorButton>
+            </a>
           </Link>
         </div>
         <div className="absolute bottom-0 bg-lime h-[10px] w-full" />
@@ -186,8 +188,10 @@ function Desktop() {
       <Raindrop className="absolute left-[24%] top-[44%] opacity-50" />
       <Raindrop className="absolute left-[24%] top-[38%]" />
       <div className="absolute right-[53%] top-[52%] mx-auto text-center">
-        <Link href="/mint">
-          <TRCursorButton>我想說個祕密...</TRCursorButton>
+        <Link href="/mint" passHref>
+          <a>
+            <TRCursorButton>我想說個祕密...</TRCursorButton>
+          </a>
         </Link>
       </div>
     </motion.div>
