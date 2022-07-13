@@ -45,8 +45,8 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
     ...(typeof minterWallet === 'string' && { minterWallet }),
     ...(typeof id === 'string' && { id }),
   }
-  const secretMessages = await service.findAll(where)
-  res.json(secretMessages)
+  const mints = await service.findAll(where)
+  res.json(mints)
 }
 
 const handler: NextApiHandler = async (req, res) => {
