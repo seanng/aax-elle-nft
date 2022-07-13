@@ -1,24 +1,24 @@
-import { ethers } from 'ethers'
-import { useWeb3Context } from 'context'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { StepWizardChildProps } from 'react-step-wizard'
-import { useContract } from 'hooks'
 import { useForm } from 'react-hook-form'
 
 interface Props extends Partial<StepWizardChildProps> {
   updateForm: (formValues: Record<string, string>) => void
+  getEstGasFee: () => void
+  estGasFee: string
 }
 
-export function DonationStep({ updateForm, ...wizard }: Props) {
+export function DonationStep({
+  updateForm,
+  getEstGasFee,
+  estGasFee,
+  ...wizard
+}: Props) {
   const {
     handleSubmit,
     register,
     formState: { isDirty, isValid },
   } = useForm({ mode: 'onChange' })
-  const [estGasFee, setEstGasFee] = useState('0')
-  const { web3Provider } = useWeb3Context()
-
-  const contract = useContract()
 
   const handleFormSubmit = (data) => {
     updateForm(data)
@@ -28,28 +28,8 @@ export function DonationStep({ updateForm, ...wizard }: Props) {
     wizard.previousStep && wizard.previousStep()
   }
 
-  // TODO: not sure why i'm getting 0 gas fee. ask denis
-  const getEstGasFee = async () => {
-    if (contract && web3Provider) {
-      // TODO: use a different proxy uri
-      const functionFee = await contract.estimateGas.mint(
-        'https://jsonkeeper.com/b/BTF9'
-      )
-      console.log('functionFee: ', functionFee)
-      console.log('web3Provider: ', web3Provider)
-      const feeData = await web3Provider.getFeeData()
-      console.log('feeData: ', feeData)
-      console.log('maxFeePerGas: ', feeData.maxFeePerGas)
-      const estGasFeeBN = feeData.maxFeePerGas?.mul(functionFee)
-      estGasFeeBN && setEstGasFee(ethers.utils.formatEther(estGasFeeBN))
-    }
-  }
-
   useEffect(() => {
-    if (wizard.isActive) {
-      console.log('hello?', wizard.isActive)
-      getEstGasFee()
-    }
+    if (wizard.isActive) getEstGasFee()
   }, [wizard.isActive])
 
   return (

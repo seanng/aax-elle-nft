@@ -23,18 +23,28 @@ const transitions = {
   exitLeft: `${Animate.animated} ${Animate.fadeOutUp}`,
 }
 
-const PROXY_URI = 'https://jsonkeeper.com/b/BTF9'
+const PROXY_METADATA_URI = 'https://jsonkeeper.com/b/BTF9'
 
 const MintPage: NextPage = () => {
   const [form, setForm] = useState({
     email: '',
     message: '',
-    code: '',
-    donation: null,
+    passcode: '',
+    donation: '',
   })
-
+  const [estGasFee, setEstGasFee] = useState('0')
   const contract = useContract()
-  const { address } = useWeb3Context()
+  const { address, web3Provider } = useWeb3Context()
+
+  const getEstGasFee = async () => {
+    if (contract && web3Provider) {
+      // TODO: use a different proxy uri??
+      const functionFee = await contract.estimateGas.mint(PROXY_METADATA_URI)
+      const feeData = await web3Provider.getFeeData()
+      const estGasFeeBN = feeData.maxFeePerGas?.mul(functionFee)
+      estGasFeeBN && setEstGasFee(ethers.utils.formatEther(estGasFeeBN))
+    }
+  }
 
   const handleMint = async () => {
     if (!contract) {
@@ -44,10 +54,10 @@ const MintPage: NextPage = () => {
 
     try {
       // Get the current MessageTokenID from callStatic
-      const contractOpts = { value: ethers.utils.parseEther('0.0005') }
       const messageTokenIdBN = await contract.callStatic.mint(
-        PROXY_URI,
-        contractOpts
+        PROXY_METADATA_URI,
+        PROXY_METADATA_URI, // proxy prizeToken URI
+        { value: ethers.utils.parseEther(form.donation) }
       )
       const messageTokenId = messageTokenIdBN.toString()
 
@@ -56,17 +66,18 @@ const MintPage: NextPage = () => {
 
       await contract.mint(
         `https://elleverse.com/api/metadata/${messageTokenId}`, // messageToken
-        `https://elleverse.com/api/metadata/${messageTokenId + 1}` // prizeToken
+        `https://elleverse.com/api/metadata/${messageTokenId + 1}`, // prizeToken
+        { value: ethers.utils.parseEther(form.donation) }
       )
 
       // Save Mint in DB.
       const { data: mintData } = await axios.post(`/api/mints`, {
         messageTokenId: Number(messageTokenId),
-        message: 'abc',
-        minterEmail: 'email@address.com',
+        message: form.message,
+        minterEmail: form.email,
         minterWallet: address,
-        ethDonated: '0.0005',
-        passcode: '',
+        ethDonated: form.donation,
+        passcode: form.passcode,
         isPresale: false,
       })
 
@@ -85,6 +96,7 @@ const MintPage: NextPage = () => {
     setForm({ ...form, ...formValues })
   }
 
+  // TODO: Uncomment if we are using the "confirm?" modal
   // useEffect(() => {
   //   // open modal
   //   if (form.donation) {
@@ -101,7 +113,11 @@ const MintPage: NextPage = () => {
           <MessageStep updateForm={updateForm} />
           <EmailStep updateForm={updateForm} />
           <PasscodeStep updateForm={updateForm} />
-          <DonationStep updateForm={updateForm} />
+          <DonationStep
+            updateForm={updateForm}
+            getEstGasFee={getEstGasFee}
+            estGasFee={estGasFee}
+          />
         </StepWizard>
       </div>
     </>

@@ -28,8 +28,8 @@ export function PasscodeStep({ updateForm, ...wizard }: Props) {
         <input
           type="text"
           className="text-black"
-          id="code"
-          {...register('code', { required: true })}
+          id="passcode"
+          {...register('passcode', { required: true })}
         />
       </div>
       <button

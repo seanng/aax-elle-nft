@@ -9,7 +9,7 @@ datasource db {
 
 model Mint {
   id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  messageTokenId Int   // prizeTokenId = messageTokenId + 1
+  messageTokenId Int // prizeTokenId = messageTokenId + 1
   message        String
   minterEmail    String
   minterWallet   String
