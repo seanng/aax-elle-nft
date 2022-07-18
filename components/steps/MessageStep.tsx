@@ -17,21 +17,18 @@ export function MessageStep({ updateForm, ...wizard }: Props) {
   const { address, connect } = useWeb3Context()
 
   const handleConfideClick = handleSubmit(async (data) => {
-    if (!address) await connect()
-    // Invoke new function to re-check address
-    handleWalletConnect(data)
-  })
-
-  const handleWalletConnect = (data) => {
-    // If user closed modal during connect(), do not advance.
-    if (!address) return
     updateForm(data)
-    wizard.nextStep && wizard.nextStep()
-  }
+    let connected = true
+    if (!address) connected = await connect()
+    if (connected) wizard.nextStep && wizard.nextStep()
+  })
 
   const handleAnnounceClick = handleSubmit(async (data) => {
     // Open social media sharing modal.
   })
+
+  // https://stackoverflow.com/a/46118025/6007700
+  // https://stackoverflow.com/a/65893635/6007700
 
   return (
     <div className="relative">

@@ -3,24 +3,24 @@ import { StepWizardChildProps } from 'react-step-wizard'
 
 interface Props extends Partial<StepWizardChildProps> {}
 
-const STORAGE_KEY = 'elle-nft-project-tutorial-seen'
+const TUTORIAL_SEEN = 'tutorial-seen'
 
 /**
  * @description Includes Impact NFT Perks Banner & How to win a prize & Onboarding & Start Journey.
  */
 export function CoverStep({ ...wizard }: Props) {
-  const [hasWatched, setHasWatched] = useState(false)
+  const [seenTutorial, setSeenTutorial] = useState(false)
 
   useEffect(() => {
-    if (window) {
-      const hasStorageItem = !!window.localStorage.getItem(STORAGE_KEY)
-      if (hasStorageItem) setHasWatched(true)
+    if (!!window?.localStorage.getItem(TUTORIAL_SEEN)) {
+      setSeenTutorial(true)
     }
   }, [])
 
+  // Done after user has swiped through instructions or clicked "I understand."
   const completeOnboarding = () => {
-    window.localStorage.setItem(STORAGE_KEY, 'true')
-    setHasWatched(true)
+    setSeenTutorial(true)
+    window.localStorage.setItem(TUTORIAL_SEEN, 'true')
   }
 
   const handleStartJourneyClick = () => {
@@ -31,10 +31,9 @@ export function CoverStep({ ...wizard }: Props) {
     <div className="relative">
       <div>Impact NFT Perks Banner</div>
       <div>How to win a prize?</div>
-      <div className={hasWatched ? 'hidden' : 'block'}>
+      <div className={seenTutorial ? 'hidden' : 'block'}>
         TUTORIAL VIDS OVER HEREEEE
       </div>
-
       <button
         type="button"
         // disabled={!hasWatched}

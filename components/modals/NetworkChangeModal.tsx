@@ -1,9 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { useEncryptDialog } from 'context/encrypt-dialog'
 import { Fragment } from 'react'
 
-export function EncryptDialog() {
-  const { isOpen, closeModal } = useEncryptDialog()
+export function NetworkChangeModal({
+  isOpen,
+  handleChangeNetwork,
+  closeModal,
+}) {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -20,9 +22,9 @@ export function EncryptDialog() {
             <button
               type="button"
               className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none sm:text-sm"
-              onClick={closeModal}
+              onClick={handleChangeNetwork}
             >
-              close modal
+              Switch Network
             </button>
           </Dialog.Panel>
         </Transition.Child>

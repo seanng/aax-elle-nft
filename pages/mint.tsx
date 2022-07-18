@@ -7,7 +7,6 @@ import {
   Navigation,
   MessageStep,
   CoverStep,
-  PasscodeStep,
   DonationStep,
 } from 'components'
 import Animate from 'styles/animate.module.css'
@@ -32,17 +31,32 @@ const MintPage: NextPage = () => {
     passcode: '',
     donation: '',
   })
-  const [estGasFee, setEstGasFee] = useState('0')
+  const [estGasFee, setEstGasFee] = useState<string | null>(null)
   const contract = useContract()
   const { address, web3Provider } = useWeb3Context()
 
+  const getBalance = async (): Promise<string | undefined> => {
+    if (web3Provider && address) {
+      const balance = await web3Provider.getBalance(address)
+      return ethers.utils.formatEther(balance)
+    }
+  }
+
   const getEstGasFee = async () => {
     if (contract && web3Provider) {
-      // TODO: use a different proxy uri??
-      const functionFee = await contract.estimateGas.mint(PROXY_METADATA_URI)
-      const feeData = await web3Provider.getFeeData()
-      const estGasFeeBN = feeData.maxFeePerGas?.mul(functionFee)
-      estGasFeeBN && setEstGasFee(ethers.utils.formatEther(estGasFeeBN))
+      try {
+        const functionFee = await contract.estimateGas.mint(
+          PROXY_METADATA_URI,
+          PROXY_METADATA_URI,
+          { value: ethers.utils.parseEther('0.0001') }
+        )
+        const feeData = await web3Provider.getFeeData()
+        const estGasFeeBN = feeData.maxFeePerGas?.mul(functionFee)
+        estGasFeeBN && setEstGasFee(ethers.utils.formatEther(estGasFeeBN))
+      } catch (error) {
+        console.log('error calculating gas fee: ', error)
+        setEstGasFee(null)
+      }
     }
   }
 
@@ -61,12 +75,14 @@ const MintPage: NextPage = () => {
       )
       const messageTokenId = messageTokenIdBN.toString()
 
-      //  TODO: Convert message to image (NFT Image Service)
+      //  TODO: Convert message to image (NFT Image Service) OR a frontend function.
       // axios.post(`/api/image`, { id: messageTokenId, message })
+
+      // If frontend function, upload file(s) onto S3
 
       await contract.mint(
         `https://elleverse.com/api/metadata/${messageTokenId}`, // messageToken
-        `https://elleverse.com/api/metadata/${messageTokenId + 1}`, // prizeToken
+        `https://elleverse.com/api/metadata/${messageTokenId + 1}`, // WLToken / prizeToken
         { value: ethers.utils.parseEther(form.donation) }
       )
 
@@ -112,11 +128,11 @@ const MintPage: NextPage = () => {
           <CoverStep />
           <MessageStep updateForm={updateForm} />
           <EmailStep updateForm={updateForm} />
-          <PasscodeStep updateForm={updateForm} />
           <DonationStep
             updateForm={updateForm}
             getEstGasFee={getEstGasFee}
             estGasFee={estGasFee}
+            getBalance={getBalance}
           />
         </StepWizard>
       </div>

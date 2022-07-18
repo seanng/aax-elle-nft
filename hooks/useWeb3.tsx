@@ -3,13 +3,13 @@ import Web3Modal, { providers } from 'web3modal'
 import { ethers } from 'ethers'
 import { toast } from 'react-toastify'
 import WalletConnect from '@walletconnect/web3-provider'
-
 import {
   Web3ProviderState,
   Web3Action,
   web3InitialState,
   web3Reducer,
 } from 'reducers'
+import { CORRECT_HEX_CHAIN, CORRECT_NETWORK } from 'shared/constants'
 
 const providerOptions = {
   walletconnect: {
@@ -20,14 +20,14 @@ const providerOptions = {
   },
 }
 
-const web3Network =
+const web3ModalNetwork =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? 'mainnet' : 'rinkeby'
 
 let web3Modal: Web3Modal | null
 if (typeof window !== 'undefined') {
   web3Modal = new Web3Modal({
     cacheProvider: true,
-    network: web3Network,
+    network: web3ModalNetwork,
     providerOptions, // required
   })
 }
@@ -36,14 +36,26 @@ export function useWeb3() {
   const [state, dispatch] = useReducer(web3Reducer, web3InitialState)
   const { provider, web3Provider, address, network } = state
 
-  const connect = useCallback(async () => {
-    if (!web3Modal) return console.error('No Web3Modal')
+  const connect = useCallback(async (): Promise<boolean> => {
+    if (!web3Modal) {
+      console.error('No Web3Modal')
+      return false
+    }
     try {
       const provider = await web3Modal.connect()
       const web3Provider = new ethers.providers.Web3Provider(provider)
       const signer = web3Provider.getSigner()
       const address = await signer.getAddress()
       const network = await web3Provider.getNetwork()
+      // If network is not Mainnet (prod) or Rinkeby (testing), prompt user to swap to correct network
+
+      if (window.ethereum && network.name !== CORRECT_NETWORK) {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: CORRECT_HEX_CHAIN }],
+        })
+      }
+
       toast.success('Connected to Web3')
 
       dispatch({
@@ -53,9 +65,12 @@ export function useWeb3() {
         address,
         network,
       } as Web3Action)
+
+      return true
     } catch (e) {
       toast.error(e)
       disconnect()
+      return false
     }
   }, [])
 
@@ -89,16 +104,16 @@ export function useWeb3() {
         } as Web3Action)
       }
 
-      // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
-      const handleChainChanged = (_hexChainId: string) => {
-        if (typeof window !== 'undefined') {
-          console.log('switched to chain...', _hexChainId)
-          toast.info(`Web3 Network Changed to: ${_hexChainId}`)
-          window.location.reload()
-        } else {
-          console.log('window is undefined')
-        }
-      }
+      // // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
+      // const handleChainChanged = (_hexChainId: string) => {
+      //   if (typeof window !== 'undefined') {
+      //     console.log('switched to chain...', _hexChainId)
+      //     toast.info(`Web3 Network Changed to: ${_hexChainId}`)
+      //     // window.location.reload()
+      //   } else {
+      //     console.log('window is undefined')
+      //   }
+      // }
 
       const handleDisconnect = (error: { code: number; message: string }) => {
         // eslint-disable-next-line no-console
@@ -107,14 +122,12 @@ export function useWeb3() {
       }
 
       provider.on('accountsChanged', handleAccountsChanged)
-      provider.on('chainChanged', handleChainChanged)
       provider.on('disconnect', handleDisconnect)
 
       // Subscription Cleanup
       return () => {
         if (provider.removeListener) {
           provider.removeListener('accountsChanged', handleAccountsChanged)
-          provider.removeListener('chainChanged', handleChainChanged)
           provider.removeListener('disconnect', handleDisconnect)
         }
       }
@@ -139,7 +152,7 @@ export function useWeb3() {
 
       web3Modal = new Web3Modal({
         cacheProvider: true,
-        network: web3Network,
+        network: web3ModalNetwork,
         providerOptions, // required
       })
     }

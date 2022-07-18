@@ -38,6 +38,13 @@ export function EmailStep({ updateForm, ...wizard }: Props) {
             },
           })}
         />
+        <input
+          type="text"
+          className="text-black"
+          id="passcode"
+          placeholder="unique code"
+          {...register('passcode', { required: true })}
+        />
       </div>
       <button
         type="button"

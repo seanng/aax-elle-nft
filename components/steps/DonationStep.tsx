@@ -5,13 +5,15 @@ import { useForm } from 'react-hook-form'
 interface Props extends Partial<StepWizardChildProps> {
   updateForm: (formValues: Record<string, string>) => void
   getEstGasFee: () => void
-  estGasFee: string
+  estGasFee: string | null
+  getBalance: () => Promise<string | undefined>
 }
 
 export function DonationStep({
   updateForm,
   getEstGasFee,
   estGasFee,
+  getBalance,
   ...wizard
 }: Props) {
   const {
@@ -30,6 +32,7 @@ export function DonationStep({
 
   useEffect(() => {
     if (wizard.isActive) getEstGasFee()
+    getBalance()
   }, [wizard.isActive])
 
   return (
@@ -61,7 +64,11 @@ export function DonationStep({
       </button>
       <div>
         <h2 className="py-4">Gas Fee Estimate</h2>
-        <p>{estGasFee}</p>
+        <p>{estGasFee !== '0' && estGasFee}</p>
+      </div>
+      <div>
+        <h2 className="py-4">Wallet Address Balance</h2>
+        <p>{estGasFee !== '0' && estGasFee}</p>
       </div>
     </form>
   )
