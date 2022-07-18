@@ -104,7 +104,7 @@ contract Elleverse is ERC721AE, Ownable {
       "Can't mint - Does not own whitelist token"
     );
     require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
-    if (_nextTokenId() % 2 == 0) _incrementIndex(1);
+    if (_nextTokenId() % 2 != 0) _incrementIndex(1);
     _safeMint(msg.sender, 2);
   }
 
@@ -116,7 +116,7 @@ contract Elleverse is ERC721AE, Ownable {
     withinLimit
   {
     require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
-    if (_nextTokenId() % 2 == 0) _incrementIndex(1);
+    if (_nextTokenId() % 2 != 0) _incrementIndex(1);
     _safeMint(msg.sender, 2);
   }
 
