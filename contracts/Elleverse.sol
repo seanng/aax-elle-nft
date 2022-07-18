@@ -43,14 +43,6 @@ contract Elleverse is ERC721AE, Ownable {
     _;
   }
 
-  modifier startsOnEven() {
-    require(
-      _nextTokenId() % 2 == 0,
-      "Can't mint - Starting token ID is not even number"
-    );
-    _;
-  }
-
   // =============================================================
   //                      HELPERS
   // =============================================================
@@ -106,13 +98,13 @@ contract Elleverse is ERC721AE, Ownable {
     preSaleActive
     callerIsUser
     withinLimit
-    startsOnEven
   {
     require(
       ownsWhitelistToken(msg.sender) == true,
       "Can't mint - Does not own whitelist token"
     );
     require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
+    if (_nextTokenId() % 2 == 0) _incrementIndex(1);
     _safeMint(msg.sender, 2);
   }
 
@@ -122,9 +114,9 @@ contract Elleverse is ERC721AE, Ownable {
     publicSaleActive
     callerIsUser
     withinLimit
-    startsOnEven
   {
     require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
+    if (_nextTokenId() % 2 == 0) _incrementIndex(1);
     _safeMint(msg.sender, 2);
   }
 
