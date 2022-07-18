@@ -91,11 +91,10 @@ contract Elleverse is ERC721AE, Ownable {
   function airdropWhitelistTokens(address[] calldata _addresses)
     external
     onlyOwner
-    startsOnEven
     withinLimit
   {
     for (uint256 i; i < _addresses.length; i++) {
-      _incrementIndex(1);
+      if (_nextTokenId() % 2 == 0) _incrementIndex(1);
       // mint whitelist token to owner
       _safeMint(_addresses[i], 1);
     }
