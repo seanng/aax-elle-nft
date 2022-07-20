@@ -1,10 +1,9 @@
 import { task } from 'hardhat/config'
-import '@nomiclabs/hardhat-waffle'
 import dotenv from 'dotenv'
 
-if (!process.env.VERCEL) {
-  dotenv.config({ path: __dirname + '/.env.local' })
-}
+import '@nomiclabs/hardhat-waffle'
+
+if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -22,7 +21,7 @@ task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 export default {
-  solidity: '0.8.1',
+  solidity: '0.8.4',
   networks: {
     localhost: {
       from: process.env.METAMASK_ACCOUNT_ADDRESS, // owner address

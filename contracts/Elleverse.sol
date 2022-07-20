@@ -1,16 +1,19 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.8.1;
+pragma solidity ^0.8.4;
 
 import '@openzeppelin/contracts/access/Ownable.sol';
 import './ERC721AE.sol';
 
 contract Elleverse is ERC721AE, Ownable {
   uint256 public MAX_SUPPLY = 6226;
+  uint256 public PRESALE_MAX_SUPPLY = 1000;
   bool public isPreSale = false;
   bool public isPublicSale = false;
   string public _baseContractURI;
-  string private _baseTokenURI;
+  // TODO: change to production base token uri
+  string private _baseTokenURI =
+    'https://aax-elle-nft.vercel.app/api/metadata/';
   address public treasury;
 
   constructor() ERC721AE('Elleverse', 'ELLEVERSE') {
@@ -22,6 +25,10 @@ contract Elleverse is ERC721AE, Ownable {
   // =============================================================
   modifier preSaleActive() {
     require(isPreSale == true, "Can't mint - Not in Pre Sale Phase");
+    require(
+      PRESALE_MAX_SUPPLY >= _nextTokenId() - 1,
+      "Can't mint - Presale token limit exceeded"
+    );
     _;
   }
 
@@ -37,7 +44,7 @@ contract Elleverse is ERC721AE, Ownable {
 
   modifier withinLimit() {
     require(
-      MAX_SUPPLY >= totalSupply(),
+      MAX_SUPPLY > _nextTokenId(),
       "Can't mint - Max token supply limit exceeded."
     );
     _;
@@ -91,6 +98,18 @@ contract Elleverse is ERC721AE, Ownable {
       _safeMint(_addresses[i], 1);
     }
   }
+
+  // TODO: batch mint (for KOLs)
+  // function airdrop(address[] calldata _to) external onlyOwner withinLimit {
+  //   require(
+  //     MAX_SUPPLY >= _to.length * 2 + _nextTokenId() - 1,
+  //     "Can't mint - Max token supply limit exceeded."
+  //   );
+  //   if (_nextTokenId() % 2 != 0) _incrementIndex(1);
+  //   for (uint256 i; i < _to.length; i++) {
+  //     _safeMint(_to[i], 2);
+  //   }
+  // }
 
   function preSaleMint()
     external

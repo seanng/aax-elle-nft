@@ -20,6 +20,13 @@ contract ElleNFT is ERC721URIStorage, Ownable {
     return _tokenIds.current();
   }
 
+  function airdropWhitelistOnly(string memory whiteListTokenUri) external onlyOwner {
+    _tokenIds.increment();
+    _tokenIds.increment();
+    uint256 whiteListTokenId = _tokenIds.current();
+    _setTokenURI(whiteListTokenId, whiteListTokenUri);
+  }
+
   function mint(string memory messageTokenUri, string memory prizeTokenUri) payable external returns (uint256) {
     require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
 
