@@ -6,7 +6,7 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Web3Button } from './Web3Button'
 import { IGIcon, TwitterIcon, FBIcon } from 'components'
 
-export function Navigation() {
+export function LandingNavigation() {
   return (
     <Popover as="header" className="fixed left-0 right-0 z-10">
       <Navbar />

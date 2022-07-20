@@ -1,12 +1,17 @@
 import type { NextPage } from 'next'
-import { Navigation, HeroSection, IntroSection, BodySection } from 'components'
+import {
+  LandingNavigation,
+  HeroSection,
+  IntroSection,
+  BodySection,
+} from 'components'
 import { ToastContainer } from 'react-toastify'
 import ReactFullpage from '@fullpage/react-fullpage'
 
 const HomePage: NextPage = () => {
   return (
     <>
-      <Navigation />
+      <LandingNavigation />
       <ReactFullpage
         navigation
         render={(comp) => (

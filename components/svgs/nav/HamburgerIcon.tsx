@@ -1,0 +1,35 @@
+export const HamburgerIcon = (props) => (
+  <svg
+    width="16"
+    height="13"
+    viewBox="0 0 16 13"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <line
+      x1="0.5"
+      y1="0.5"
+      x2="15.5"
+      y2="0.5"
+      stroke="white"
+      strokeLinecap="round"
+    />
+    <line
+      x1="0.5"
+      y1="6.5"
+      x2="15.5"
+      y2="6.5"
+      stroke="white"
+      strokeLinecap="round"
+    />
+    <line
+      x1="0.5"
+      y1="12.5"
+      x2="15.5"
+      y2="12.5"
+      stroke="white"
+      strokeLinecap="round"
+    />
+  </svg>
+)

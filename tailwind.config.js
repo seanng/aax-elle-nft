@@ -15,6 +15,8 @@ module.exports = {
       fontFamily: {
         sans: ['GenSenRounded', ...defaultTheme.fontFamily.sans],
         english: 'MplusRounded',
+        mono: 'DM Mono',
+        noto: 'Noto Sans',
       },
     },
   },

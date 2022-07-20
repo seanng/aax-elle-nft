@@ -22,6 +22,8 @@
     ]
   },
   "dependencies": {
+    "@fontsource/dm-mono": "^4.5.8",
+    "@fontsource/noto-sans": "^4.5.10",
     "@fullpage/react-fullpage": "^0.1.26",
     "@headlessui/react": "^1.6.1",
     "@heroicons/react": "^1.0.6",

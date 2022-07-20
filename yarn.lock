@@ -949,6 +949,16 @@
     "@ethersproject/properties" "^5.6.0"
     "@ethersproject/strings" "^5.6.0"
 
+"@fontsource/dm-mono@^4.5.8":
+  version "4.5.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/dm-mono/-/dm-mono-4.5.8.tgz#83783fcf23920f7409de9d7aa0ff5807e1c6a93c"
+  integrity sha512-BWVF+sw+xultMAp1VXXkTF4VTS8G4ZhmlX6bLz1xZtblmee/d0vfH4yWYZ5OyYeF/lUnSefZhRWW7cc2Rqjifw==
+
+"@fontsource/noto-sans@^4.5.10":
+  version "4.5.10"
+  resolved "https://registry.yarnpkg.com/@fontsource/noto-sans/-/noto-sans-4.5.10.tgz#6e85323823946a267351511132a421c97472c71b"
+  integrity sha512-sJ5WOE5zX9kFBZWsIRtGWTD2/DvashD1Q1L+Jhh5FccWLrug4REw2PVYItPnA8XBdQ09Vpxd8+I6UsKI/5QdFg==
+
 "@fullpage/react-fullpage@^0.1.26":
   version "0.1.26"
   resolved "https://registry.yarnpkg.com/@fullpage/react-fullpage/-/react-fullpage-0.1.26.tgz#8772a748d1d544181c1f9349630fc9ec48b50fc7"

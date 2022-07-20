@@ -4,7 +4,7 @@ import StepWizard from 'react-step-wizard'
 import type { NextPage } from 'next'
 import {
   EmailStep,
-  Navigation,
+  MintNavigation,
   MessageStep,
   CoverStep,
   DonationStep,
@@ -122,7 +122,7 @@ const MintPage: NextPage = () => {
 
   return (
     <>
-      <Navigation />
+      <MintNavigation />
       <div className="bg-black min-h-screen pt-28 text-white">
         <StepWizard transitions={transitions}>
           <CoverStep />
