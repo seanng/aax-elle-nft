@@ -115,6 +115,35 @@ describe('Elleverse', function () {
     })
   })
 
+  describe('ownsWhitelistToken', () => {
+    beforeEach(async () => {
+      const [, sender1, __, sender3] = signers
+      await contract.airdrop([sender1.address, sender3.address])
+    })
+
+    it('returns correct boolean if user owns whitelist token', async function () {
+      const [, sender1, sender2, sender3] = signers
+      expect(await contract.ownsWhitelistToken(sender1.address)).toBe(true)
+      expect(await contract.ownsWhitelistToken(sender2.address)).toBe(false)
+      expect(await contract.ownsWhitelistToken(sender3.address)).toBe(true)
+    })
+    it('returns correct boolean after user transfers whitelist token', async function () {
+      const [, sender1, sender2] = signers
+      expect(await contract.ownsWhitelistToken(sender1.address)).toBe(true)
+      expect(await contract.ownsWhitelistToken(sender2.address)).toBe(false)
+
+      await contract
+        .connect(sender1)
+        ['safeTransferFrom(address,address,uint256)'](
+          sender1.address,
+          sender2.address,
+          1
+        )
+      expect(await contract.ownsWhitelistToken(sender1.address)).toBe(false)
+      expect(await contract.ownsWhitelistToken(sender2.address)).toBe(true)
+    })
+  })
+
   describe('withdraw', () => {
     beforeEach(async () => {
       await contract.setPublicSaleState(true)
