@@ -99,17 +99,16 @@ contract Elleverse is ERC721AE, Ownable {
     }
   }
 
-  // TODO: batch mint (for KOLs)
-  // function airdrop(address[] calldata _to) external onlyOwner withinLimit {
-  //   require(
-  //     MAX_SUPPLY >= _to.length * 2 + _nextTokenId() - 1,
-  //     "Can't mint - Max token supply limit exceeded."
-  //   );
-  //   if (_nextTokenId() % 2 != 0) _incrementIndex(1);
-  //   for (uint256 i; i < _to.length; i++) {
-  //     _safeMint(_to[i], 2);
-  //   }
-  // }
+  function airdrop(address[] calldata _to) external onlyOwner withinLimit {
+    require(
+      MAX_SUPPLY >= _to.length * 2 + _nextTokenId() - 1,
+      "Can't mint - Max token supply limit exceeded."
+    );
+    if (_nextTokenId() % 2 != 0) _incrementIndex(1);
+    for (uint256 i; i < _to.length; i++) {
+      _safeMint(_to[i], 2);
+    }
+  }
 
   function preSaleMint()
     external
