@@ -11,6 +11,7 @@ module.exports = {
         'black-rgba': 'rgba(0, 0, 0, 0.6)',
         lime: '#55F263',
         lemon: '#C3FA08',
+        pomegranate: '#F8646F',
       },
       fontFamily: {
         sans: ['GenSenRounded', ...defaultTheme.fontFamily.sans],

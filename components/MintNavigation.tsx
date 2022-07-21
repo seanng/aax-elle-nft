@@ -1,9 +1,10 @@
 import Image from 'next/image'
 import { Popover } from '@headlessui/react'
 import Link from 'next/link'
-// import { Web3Button } from './Web3Button'
-import { HamburgerIcon, WalletIcon } from 'components'
+import { HamburgerIcon, WalletIcon, ErrorIcon } from 'components'
 import { useWeb3Context } from 'context'
+import { useEffect, useState } from 'react'
+import { CORRECT_HEX_CHAIN } from 'shared/constants'
 
 export function MintNavigation() {
   return (
@@ -55,13 +56,27 @@ const Hamburger = () => (
 )
 
 const Web3Button = () => {
-  const { web3Provider, address, connect, disconnect } = useWeb3Context()
+  const { web3Provider, address, connect, disconnect, provider } =
+    useWeb3Context()
+  const [walletHasError, setWalletHasError] = useState(false)
+
+  useEffect(() => {
+    if (provider?.on) {
+      provider?.on('chainChanged', (_hexChainId: string) => {
+        setWalletHasError(_hexChainId !== CORRECT_HEX_CHAIN)
+      })
+    }
+  }, [provider])
 
   return web3Provider ? (
     <Popover>
-      <Popover.Button className="pr-2 flex rounded-full mr-4 border border-white items-center">
-        <div className="flex bg-white rounded-full justify-center items-center p-2">
-          <WalletIcon />
+      <Popover.Button className="border-white pr-2 flex rounded-full mr-4 border items-center">
+        <div
+          className={`rounded-full ${
+            walletHasError ? 'bg-pomegranate' : 'bg-white'
+          }`}
+        >
+          {walletHasError ? <ErrorIcon /> : <WalletIcon />}
         </div>
         <div className="text-white font-mono font-medium text-xs ml-2">
           {`${address?.slice(0, 4)}...${address?.slice(-3)}`}

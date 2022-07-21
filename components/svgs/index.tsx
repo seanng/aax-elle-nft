@@ -45,3 +45,4 @@ export { TwitterIcon } from './social/TwitterIcon'
 // nav
 export { HamburgerIcon } from './nav/HamburgerIcon'
 export { WalletIcon } from './nav/WalletIcon'
+export { ErrorIcon } from './nav/ErrorIcon'
