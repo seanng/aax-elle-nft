@@ -3,9 +3,9 @@
 pragma solidity ^0.8.4;
 
 import '@openzeppelin/contracts/access/Ownable.sol';
-import './ERC721AE.sol';
+import 'erc721a/contracts/extensions/ERC721AQueryable.sol';
 
-contract Elleverse is ERC721AE, Ownable {
+contract Elleverse is ERC721AQueryable, Ownable {
   uint256 public MAX_SUPPLY = 6226;
   uint256 public PRESALE_MAX_SUPPLY = 1000;
   bool public isPreSale = false;
@@ -16,7 +16,7 @@ contract Elleverse is ERC721AE, Ownable {
     'https://aax-elle-nft.vercel.app/api/metadata/';
   address public treasury;
 
-  constructor() ERC721AE('Elleverse', 'ELLEVERSE') {
+  constructor() ERC721A('Elleverse', 'ELLEVERSE') {
     treasury = msg.sender;
   }
 
@@ -47,6 +47,11 @@ contract Elleverse is ERC721AE, Ownable {
       MAX_SUPPLY > _nextTokenId(),
       "Can't mint - Max token supply limit exceeded."
     );
+    _;
+  }
+
+  modifier isEven() {
+    require(_nextTokenId() % 2 == 0, "Can't mint - nextTokenId not an even number");
     _;
   }
 
@@ -87,24 +92,12 @@ contract Elleverse is ERC721AE, Ownable {
   // =============================================================
   //                      MINTS & TRANSACTIONS
   // =============================================================
-  function airdropWhitelistTokens(address[] calldata _addresses)
-    external
-    onlyOwner
-    withinLimit
-  {
-    for (uint256 i; i < _addresses.length; i++) {
-      if (_nextTokenId() % 2 == 0) _incrementIndex(1);
-      // mint whitelist token to owner
-      _safeMint(_addresses[i], 1);
-    }
-  }
 
-  function airdrop(address[] calldata _to) external onlyOwner withinLimit {
+  function airdrop(address[] calldata _to) external onlyOwner withinLimit isEven {
     require(
       MAX_SUPPLY >= _to.length * 2 + _nextTokenId() - 1,
       "Can't mint - Max token supply limit exceeded."
     );
-    if (_nextTokenId() % 2 != 0) _incrementIndex(1);
     for (uint256 i; i < _to.length; i++) {
       _safeMint(_to[i], 2);
     }
@@ -116,13 +109,13 @@ contract Elleverse is ERC721AE, Ownable {
     preSaleActive
     callerIsUser
     withinLimit
+    isEven
   {
     require(
       ownsWhitelistToken(msg.sender) == true,
       "Can't mint - Does not own whitelist token"
     );
     require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
-    if (_nextTokenId() % 2 != 0) _incrementIndex(1);
     _safeMint(msg.sender, 2);
   }
 
@@ -132,9 +125,9 @@ contract Elleverse is ERC721AE, Ownable {
     publicSaleActive
     callerIsUser
     withinLimit
+    isEven
   {
     require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
-    if (_nextTokenId() % 2 != 0) _incrementIndex(1);
     _safeMint(msg.sender, 2);
   }
 

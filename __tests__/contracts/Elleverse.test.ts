@@ -174,4 +174,20 @@ describe('Elleverse', function () {
       expect(diffInEth).toBeGreaterThan(0.099)
     })
   })
+
+  describe('tokensOfOwner', () => {
+    beforeEach(async () => {
+      const [, sender1, __, sender3] = signers
+      await contract.airdrop([sender1.address, sender3.address])
+    })
+    it('returns the correct ownership data on query', async () => {
+      const [, sender1, sender2, sender3] = signers
+      const tokensOfSender1 = await contract.tokensOfOwner(sender1.address)
+      const tokensOfSender2 = await contract.tokensOfOwner(sender2.address)
+      const tokensOfSender3 = await contract.tokensOfOwner(sender3.address)
+      expect(tokensOfSender1.map((bn) => bn.toNumber())).toEqual([0, 1])
+      expect(tokensOfSender2.map((bn) => bn.toNumber())).toEqual([])
+      expect(tokensOfSender3.map((bn) => bn.toNumber())).toEqual([2, 3])
+    })
+  })
 })
