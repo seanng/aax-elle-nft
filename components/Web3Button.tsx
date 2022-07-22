@@ -1,7 +1,7 @@
 import { useWeb3Context } from 'context'
 
 interface ConnectProps {
-  connect: (() => Promise<void>) | null
+  connect: (() => Promise<boolean>) | null
 }
 const ConnectButton = ({ connect }: ConnectProps) => {
   return connect ? (
