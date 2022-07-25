@@ -8,6 +8,7 @@ import {
   MessageStep,
   CoverStep,
   DonationStep,
+  SharingModal,
 } from 'components'
 import Animate from 'styles/animate.module.css'
 import { useContract } from 'hooks'
@@ -25,6 +26,7 @@ const transitions = {
 const PROXY_METADATA_URI = 'https://jsonkeeper.com/b/BTF9'
 
 const MintPage: NextPage = () => {
+  const [isSharingModalOpen, setIsSharingModalOpen] = useState(false)
   const [form, setForm] = useState({
     email: '',
     message: '',
@@ -123,10 +125,13 @@ const MintPage: NextPage = () => {
   return (
     <>
       <MintNavigation />
-      <div className="bg-black min-h-screen pt-28 text-white">
+      <div className="bg-white min-h-screen pt-28 text-black">
         <StepWizard transitions={transitions}>
           <CoverStep />
-          <MessageStep updateForm={updateForm} />
+          <MessageStep
+            updateForm={updateForm}
+            openSharingModal={() => setIsSharingModalOpen(true)}
+          />
           <EmailStep updateForm={updateForm} />
           <DonationStep
             updateForm={updateForm}
@@ -136,6 +141,10 @@ const MintPage: NextPage = () => {
           />
         </StepWizard>
       </div>
+      <SharingModal
+        isOpen={isSharingModalOpen}
+        closeModal={setIsSharingModalOpen}
+      />
     </>
   )
 }
