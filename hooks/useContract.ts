@@ -1,6 +1,6 @@
 import { useWeb3Context } from 'context'
 import { ethers } from 'ethers'
-import contractABI from 'artifacts/contracts/ElleNFT.sol/ElleNFT.json'
+import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
 
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
 
