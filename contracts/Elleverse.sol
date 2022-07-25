@@ -110,13 +110,16 @@ contract Elleverse is ERC721AQueryable, Ownable {
     callerIsUser
     withinLimit
     isEven
+    returns (uint256)
   {
     require(
       ownsWhitelistToken(msg.sender) == true,
       "Can't mint - Does not own whitelist token"
     );
     require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
+    uint256 tokenId = _nextTokenId();
     _safeMint(msg.sender, 2);
+    return tokenId;
   }
 
   function publicSaleMint()
@@ -126,9 +129,12 @@ contract Elleverse is ERC721AQueryable, Ownable {
     callerIsUser
     withinLimit
     isEven
+    returns (uint256)
   {
     require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
+    uint256 tokenId = _nextTokenId();
     _safeMint(msg.sender, 2);
+    return tokenId;
   }
 
   /**
