@@ -12,3 +12,10 @@ export const CORRECT_NETWORK =
 
 export const CORRECT_HEX_CHAIN =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? '0x1' : '0x4'
+
+export const NOT_STARTED = 'not started'
+export const PUBLIC_SALE = 'public sale'
+export const PRESALE = 'presale'
+export const FINISHED = 'finished'
+
+export const NO_WHITELIST_TOKEN = 'no whitelist token'

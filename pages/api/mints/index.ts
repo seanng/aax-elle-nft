@@ -36,6 +36,8 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
     messageTokenId: req.body.messageTokenId,
   })
 
+  // send success email to minterEmail.
+
   res.json(mint)
 }
 

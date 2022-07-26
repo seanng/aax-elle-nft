@@ -37,8 +37,15 @@ export function DonationStep({
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)}>
-      <div>
-        <h2>你的告白能幫助小動物！</h2>
+      <div className="flex flex-col items-center font-noto">
+        <h1 className="font-medium text-xl mb-3">你的告白能幫助小動物！</h1>
+        <p className="text-gray-500 mb-4">
+          我們也非常關注浪浪議題，透過這份意義非凡的活動，讓ELLEverse 為你捐款
+        </p>
+        <div className="bg-[#FBAEAE] rounded-full px-4 py-2 flex space-x-2 mb-12">
+          <img src="/images/lil-cat.png" height={23} width={25} />
+          <span>毛小孩之家官網</span>
+        </div>
         <input
           type="number"
           id="donation"

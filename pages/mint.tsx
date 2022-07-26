@@ -1,26 +1,35 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { ethers } from 'ethers'
 import StepWizard from 'react-step-wizard'
 import type { NextPage } from 'next'
 import {
   EmailStep,
+  PasscodeStep,
   MintNavigation,
   MessageStep,
   CoverStep,
   DonationStep,
   SharingModal,
+  Stepper,
 } from 'components'
 import Animate from 'styles/animate.module.css'
 import { useContract } from 'hooks'
 import axios from 'lib/axios'
+import {
+  NO_WHITELIST_TOKEN,
+  FINISHED,
+  NOT_STARTED,
+  PRESALE,
+  PUBLIC_SALE,
+} from 'shared/constants'
 import { useWeb3Context } from 'context'
+import { config } from 'utils/config'
 
-// TODO: change to Tailwind animation classes?
 const transitions = {
-  enterRight: `${Animate.animated} ${Animate.fadeInDown}`,
-  enterLeft: `${Animate.animated} ${Animate.fadeInUp}`,
-  exitRight: `${Animate.animated} ${Animate.fadeOutDown}`,
-  exitLeft: `${Animate.animated} ${Animate.fadeOutUp}`,
+  enterRight: `${Animate.animated} ${Animate.fadeInRight}`,
+  enterLeft: `${Animate.animated} ${Animate.fadeInLeft}`,
+  exitRight: `${Animate.animated} ${Animate.fadeOutRight}`,
+  exitLeft: `${Animate.animated} ${Animate.fadeOutLeft}`,
 }
 
 const PROXY_METADATA_URI = 'https://jsonkeeper.com/b/BTF9'
@@ -69,38 +78,48 @@ const MintPage: NextPage = () => {
     }
 
     try {
-      // Get the current MessageTokenID from callStatic
-      const messageTokenIdBN = await contract.callStatic.mint(
-        PROXY_METADATA_URI,
-        PROXY_METADATA_URI, // proxy prizeToken URI
-        { value: ethers.utils.parseEther(form.donation) }
-      )
-      const messageTokenId = messageTokenIdBN.toString()
+      const { saleStatus } = config
 
-      //  TODO: Convert message to image (NFT Image Service) OR a frontend function.
-      // axios.post(`/api/image`, { id: messageTokenId, message })
-
-      // If frontend function, upload file(s) onto S3
-
-      await contract.mint(
-        `https://elleverse.com/api/metadata/${messageTokenId}`, // messageToken
-        `https://elleverse.com/api/metadata/${messageTokenId + 1}`, // WLToken / prizeToken
-        { value: ethers.utils.parseEther(form.donation) }
-      )
-
-      // Save Mint in DB.
-      const { data: mintData } = await axios.post(`/api/mints`, {
-        messageTokenId: Number(messageTokenId),
+      if (saleStatus === NOT_STARTED || saleStatus === FINISHED) {
+        // Do something?
+        // return
+      }
+      const mintOpts = { value: ethers.utils.parseEther(form.donation) }
+      const payload = {
+        messageTokenId: null as number | null,
+        isPresale: saleStatus === PRESALE,
         message: form.message,
         minterEmail: form.email,
         minterWallet: address,
         ethDonated: form.donation,
         passcode: form.passcode,
-        isPresale: false,
-      })
+      }
+
+      if (saleStatus === PRESALE) {
+        // check if user has whitelist token.
+        const hasWhitelistToken = await contract.ownsWhitelistToken(address)
+        if (!hasWhitelistToken) throw new Error(NO_WHITELIST_TOKEN)
+        const tokenIdBN = await contract.preSaleMint(mintOpts)
+        payload.messageTokenId = Number(tokenIdBN.toString())
+      } else if (saleStatus === PUBLIC_SALE) {
+        const tokenIdBN = await contract.publicSaleMint(mintOpts)
+        payload.messageTokenId = Number(tokenIdBN.toString())
+      }
+      // TODO: Upload images & HTMLs to S3
+      //  TODO: Convert message to image (NFT Image Service) OR a frontend function.
+      // axios.post(`/api/image`, { id: messageTokenId, message })
+
+      // If frontend function, upload file(s) onto S3
+
+      // Save Mint in DB.
+      const { data: mintData } = await axios.post(`/api/mints`, payload)
 
       // Do something on success? Here or in Donation Step.
     } catch (error) {
+      if (error.message === NO_WHITELIST_TOKEN) {
+        // Show error message toast?
+        return
+      }
       if (error?.code === -32603) {
         console.log('Do something to show that donation is required!!! ')
       }
@@ -125,14 +144,15 @@ const MintPage: NextPage = () => {
   return (
     <>
       <MintNavigation />
-      <div className="bg-white min-h-screen pt-28 text-black">
-        <StepWizard transitions={transitions}>
+      <div className="bg-white min-h-screen pt-16 text-black">
+        <StepWizard transitions={transitions} nav={<Stepper />}>
           <CoverStep />
           <MessageStep
             updateForm={updateForm}
             openSharingModal={() => setIsSharingModalOpen(true)}
           />
           <EmailStep updateForm={updateForm} />
+          <PasscodeStep updateForm={updateForm} />
           <DonationStep
             updateForm={updateForm}
             getEstGasFee={getEstGasFee}

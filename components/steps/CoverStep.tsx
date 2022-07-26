@@ -1,47 +1,46 @@
-import { useState, useEffect } from 'react'
 import { StepWizardChildProps } from 'react-step-wizard'
+import { PrimaryButton } from 'components'
+import { config } from 'utils/config'
+import { PRESALE, PUBLIC_SALE } from 'shared/constants'
+import { useWeb3Context } from 'context'
 
 interface Props extends Partial<StepWizardChildProps> {}
-
-const TUTORIAL_SEEN = 'tutorial-seen'
 
 /**
  * @description Includes Impact NFT Perks Banner & How to win a prize & Onboarding & Start Journey.
  */
 export function CoverStep({ ...wizard }: Props) {
-  const [seenTutorial, setSeenTutorial] = useState(false)
+  const { address, connect } = useWeb3Context()
 
-  useEffect(() => {
-    if (!!window?.localStorage.getItem(TUTORIAL_SEEN)) {
-      setSeenTutorial(true)
+  const handleCtaClick = async () => {
+    if (config.saleStatus === PUBLIC_SALE) {
+      if (wizard.nextStep) wizard.nextStep()
+      return
     }
-  }, [])
-
-  // Done after user has swiped through instructions or clicked "I understand."
-  const completeOnboarding = () => {
-    setSeenTutorial(true)
-    window.localStorage.setItem(TUTORIAL_SEEN, 'true')
-  }
-
-  const handleStartJourneyClick = () => {
-    if (wizard.nextStep) wizard.nextStep()
+    if (config.saleStatus === PRESALE) {
+      // Open connect wallet modal.
+      let connected = true
+      if (!address) connected = await connect()
+      if (connected) {
+        // Open loading modal to display Loading.
+        // Check if address contains whitelist token
+        // If address does not contain whitelist token, display Sorry modal.
+        // If address contains whitelist token, continue to Mint (wizard.nextStep())
+      }
+    }
   }
 
   return (
     <div className="relative">
       <div>Impact NFT Perks Banner</div>
       <div>How to win a prize?</div>
-      <div className={seenTutorial ? 'hidden' : 'block'}>
-        TUTORIAL VIDS OVER HEREEEE
-      </div>
-      <button
-        type="button"
-        // disabled={!hasWatched}
-        className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none sm:text-sm disabled:bg-indigo-300"
-        onClick={handleStartJourneyClick}
-      >
-        Start Journey
-      </button>
+      {(config.saleStatus === PUBLIC_SALE || config.saleStatus === PRESALE) && (
+        <div className="fixed bottom-10 w-full text-center">
+          <PrimaryButton className="w-48" onClick={handleCtaClick}>
+            我要告白
+          </PrimaryButton>
+        </div>
+      )}
     </div>
   )
 }
