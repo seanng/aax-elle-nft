@@ -32,7 +32,11 @@ const providerOptions = {
 }
 
 const web3ModalNetwork =
-  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? 'mainnet' : 'rinkeby'
+  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+    ? 'mainnet'
+    : process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
+    ? 'rinkeby'
+    : 'localhost'
 
 let web3Modal: Web3Modal | null
 let modalHeader: HTMLDivElement
@@ -89,7 +93,7 @@ export function useWeb3() {
       const signer = web3Provider.getSigner()
       const address = await signer.getAddress()
       const network = await web3Provider.getNetwork()
-      // If network is not Mainnet (prod) or Rinkeby (testing), prompt user to swap to correct network
+      // If network is not Mainnet (prod), localhost (dev), Rinkeby (preview), prompt user to swap to correct network
 
       if (window.ethereum && network.name !== CORRECT_NETWORK) {
         await window.ethereum.request({

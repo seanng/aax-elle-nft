@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { StepWizardChildProps } from 'react-step-wizard'
 import { useForm } from 'react-hook-form'
+import { DonationButton, SecondaryButton, PrimaryButton } from 'components'
 
 interface Props extends Partial<StepWizardChildProps> {
   updateForm: (formValues: Record<string, string>) => void
@@ -19,8 +20,10 @@ export function DonationStep({
   const {
     handleSubmit,
     register,
+    watch,
+    setValue,
     formState: { isDirty, isValid },
-  } = useForm({ mode: 'onChange' })
+  } = useForm({ mode: 'onChange', defaultValues: { donation: 500 } })
 
   const handleFormSubmit = (data) => {
     updateForm(data)
@@ -35,6 +38,8 @@ export function DonationStep({
     getBalance()
   }, [wizard.isActive])
 
+  const donationValue = watch('donation')
+
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)}>
       <div className="flex flex-col items-center font-noto">
@@ -46,29 +51,46 @@ export function DonationStep({
           <img src="/images/lil-cat.png" height={23} width={25} />
           <span>毛小孩之家官網</span>
         </div>
-        <input
-          type="number"
-          id="donation"
-          className="text-black"
-          placeholder="Enter donation"
-          min={0}
-          {...register('donation', { required: true })}
-        />
+        <div className="flex font-mono mb-2 ml-10">
+          <span className="text-sm mr-1">NT$</span>
+          <input
+            type="number"
+            id="donation"
+            className="w-36 font-medium text-4xl caret-cucumber text-black bg-transparent border-transparent focus:border-transparent focus:ring-0 p-0"
+            min={0}
+            {...register('donation', { required: true })}
+          />
+        </div>
+        <div className="font-mono text-sm text-gray-500 mb-6">
+          (+ ETH $0.002 Gas fee)
+        </div>
+        <div className="flex space-x-2">
+          <DonationButton
+            isActive={donationValue == 100}
+            onClick={() => setValue('donation', 100)}
+          >
+            $100
+          </DonationButton>
+          <DonationButton
+            isActive={donationValue == 500}
+            onClick={() => setValue('donation', 500)}
+          >
+            $500
+          </DonationButton>
+          <DonationButton
+            isActive={donationValue == 1000}
+            onClick={() => setValue('donation', 1000)}
+          >
+            $1000
+          </DonationButton>
+        </div>
+        <div className="flex space-x-6 w-80 mt-20">
+          <SecondaryButton onClick={handleBackClick}>上一步</SecondaryButton>
+          <PrimaryButton disabled={donationValue < 10} type="submit">
+            下一步
+          </PrimaryButton>
+        </div>
       </div>
-      <button
-        type="button"
-        className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none sm:text-sm"
-        onClick={handleBackClick}
-      >
-        Back
-      </button>
-      <button
-        type="submit"
-        disabled={!isValid || !isDirty}
-        className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 disabled:bg-indigo-300 focus:outline-none sm:text-sm"
-      >
-        鑄造
-      </button>
       <div>
         <h2 className="py-4">Gas Fee Estimate</h2>
         <p>{estGasFee !== '0' && estGasFee}</p>

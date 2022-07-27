@@ -23,11 +23,11 @@ task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
 export default {
   solidity: '0.8.4',
   networks: {
+    hardhat: {
+      chainId: 1337,
+    },
     localhost: {
-      from: process.env.METAMASK_ACCOUNT_ADDRESS, // owner address
-      accounts: [
-        process.env.METAMASK_ACCOUNT_PRIVATE_KEY, // owner private key
-      ],
+      from: '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266', // owner address from npx hardhat node
     },
     rinkeby: {
       url: process.env.ALCHEMY_API_URL,

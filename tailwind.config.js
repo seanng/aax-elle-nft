@@ -10,6 +10,7 @@ module.exports = {
       colors: {
         'black-rgba': 'rgba(0, 0, 0, 0.6)',
         lime: '#55F263',
+        cucumber: '#2FB500',
         lemon: '#C3FA08',
         pomegranate: '#F8646F',
       },

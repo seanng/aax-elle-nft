@@ -8,10 +8,18 @@ export const INTRO_CANVAS_WIDTH = 1920
 export const INTRO_CANVAS_HEIGHT = 1080
 
 export const CORRECT_NETWORK =
-  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? 'homestead' : 'rinkeby'
+  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+    ? 'homestead'
+    : process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
+    ? 'rinkeby'
+    : 'localhost'
 
 export const CORRECT_HEX_CHAIN =
-  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? '0x1' : '0x4'
+  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+    ? '0x1'
+    : process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
+    ? '0x4'
+    : '0x539'
 
 export const NOT_STARTED = 'not started'
 export const PUBLIC_SALE = 'public sale'
@@ -19,3 +27,8 @@ export const PRESALE = 'presale'
 export const FINISHED = 'finished'
 
 export const NO_WHITELIST_TOKEN = 'no whitelist token'
+
+// s3 folders
+export const OPENED = 'opened'
+export const UNOPENED = 'unopened'
+export const PUBLIC = 'public'
