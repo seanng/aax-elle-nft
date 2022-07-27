@@ -7,8 +7,10 @@ export const config = {
       : 'http://localhost:3001',
   siteTitle: 'NFT Mintverse',
   siteDesc: 'Enter the stylish metaverse to shill you love.',
-  // saleStatus: PUBLIC_SALE,
-  saleStatus: NOT_STARTED,
+  saleStatus:
+    process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+      ? NOT_STARTED
+      : PUBLIC_SALE,
 }
 
 export const navigation = [
