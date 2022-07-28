@@ -1,7 +1,18 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useRef } from 'react'
 
-export function SharingModal({ isOpen, closeModal }) {
+interface Props {
+  form: {
+    email: string
+    message: string
+    passcode: string
+    donation: string
+  }
+  isOpen: boolean
+  closeModal: (b: boolean) => void
+}
+
+export function MintConfirmationModal({ isOpen, closeModal, form }: Props) {
   const cancelButtonRef = useRef(null)
 
   return (
@@ -20,17 +31,8 @@ export function SharingModal({ isOpen, closeModal }) {
             <TransitionChild>
               <Dialog.Panel className="rounded-lg overflow-hidden transition-all">
                 <div className="flex flex-col bg-white items-center p-10">
-                  <h1 className="text-2xl mb-9">鑄造秘密告白NFT才能抽獎唷！</h1>
-                  <div>animation HTML goes here?</div>
-                  <div className="inline-grid grid-cols-4 gap-4">
-                    <div>btn1</div>
-                    <div>btn2</div>
-                    <div>btn3</div>
-                    <div>btn3</div>
-                    <div>btn3</div>
-                    <div>btn3</div>
-                    <div>btn3</div>
-                  </div>
+                  <h1 className="text-2xl mb-9">Confirm your stuff!!!</h1>
+                  <div>{JSON.stringify(form.donation)}</div>
                 </div>
               </Dialog.Panel>
             </TransitionChild>

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Popover } from '@headlessui/react'
 import Link from 'next/link'
-import { HamburgerIcon, WalletIcon, ErrorIcon } from 'components'
+import { HamburgerIcon, WalletIcon, NavErrorIcon } from 'components'
 import { useWeb3Context } from 'context'
 import { useEffect, useState } from 'react'
 import { CORRECT_HEX_CHAIN } from 'shared/constants'
@@ -76,7 +76,7 @@ const Web3Button = () => {
             walletHasError ? 'bg-pomegranate' : 'bg-white'
           }`}
         >
-          {walletHasError ? <ErrorIcon /> : <WalletIcon />}
+          {walletHasError ? <NavErrorIcon /> : <WalletIcon />}
         </div>
         <div className="text-white font-mono font-medium text-xs ml-2">
           {`${address?.slice(0, 4)}...${address?.slice(-3)}`}

@@ -1,7 +1,7 @@
 import { StepWizardChildProps } from 'react-step-wizard'
 import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX } from 'shared/constants'
-import { ErrorIcon, SecondaryButton, PrimaryButton, Stepper } from 'components'
+import { FormErrorIcon, SecondaryButton, PrimaryButton } from 'components'
 
 interface Props extends Partial<StepWizardChildProps> {
   updateForm: (formValues: Record<string, string>) => void
@@ -51,8 +51,8 @@ export function EmailStep({ updateForm, ...wizard }: Props) {
             })}
           />
           {errors?.email?.message && (
-            <div className="flex">
-              <ErrorIcon />
+            <div className="flex items-center">
+              <FormErrorIcon />
               <span className="ml-2">Email 格式不正確</span>
             </div>
           )}

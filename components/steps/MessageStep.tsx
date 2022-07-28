@@ -1,7 +1,9 @@
 import { StepWizardChildProps } from 'react-step-wizard'
-import { useForm } from 'react-hook-form'
 import { useWeb3Context } from 'context'
 import { PrimaryButton, SecondaryButton } from 'components'
+import { useState } from 'react'
+
+const TEXTAREA_HEIGHT = 232
 
 interface Props extends Partial<StepWizardChildProps> {
   updateForm: (formValues: Record<string, string>) => void
@@ -13,26 +15,27 @@ export function MessageStep({
   openSharingModal,
   ...wizard
 }: Props) {
-  const {
-    handleSubmit,
-    register,
-    formState: { isDirty, isValid },
-  } = useForm({ mode: 'onChange' })
-
+  const [val, setVal] = useState('')
   const { address, connect } = useWeb3Context()
 
-  const handleConfideClick = handleSubmit(async (data) => {
-    updateForm(data)
+  const handleConfideClick = async () => {
+    updateForm({ message: val })
     let connected = true
     if (!address) connected = await connect()
     if (connected) wizard.nextStep && wizard.nextStep()
-  })
+  }
 
-  const handleAnnounceClick = handleSubmit(async (data) => {
+  const handleAnnounceClick = async () => {
     // Generate animation HTML out of message.
     // Open social media sharing modal and show the image, with buttons.
     openSharingModal()
-  })
+  }
+
+  const handleMessageInput = (e) => {
+    if (e.target.scrollHeight <= TEXTAREA_HEIGHT) {
+      setVal(e.target.value)
+    }
+  }
 
   // https://stackoverflow.com/a/46118025/6007700
   // https://stackoverflow.com/a/65893635/6007700
@@ -43,21 +46,16 @@ export function MessageStep({
       <textarea
         id="message"
         rows={5}
-        className="shadow-sm block w-48 text-4xl border border-gray-300 rounded-md text-black p-4 mb-6"
-        maxLength={49}
-        {...register('messsage', { required: true })}
+        className="shadow-sm block w-56 text-3xl border border-gray-300 rounded-md text-black p-4 mb-6 resize-none overflow-hidden"
+        onInput={handleMessageInput}
+        placeholder="寫下你的告白"
+        value={val}
       />
       <div className="w-64 space-y-6">
-        <PrimaryButton
-          disabled={!isValid || !isDirty}
-          onClick={handleConfideClick}
-        >
+        <PrimaryButton disabled={val === ''} onClick={handleConfideClick}>
           偷偷告白
         </PrimaryButton>
-        <SecondaryButton
-          disabled={!isValid || !isDirty}
-          onClick={handleAnnounceClick}
-        >
+        <SecondaryButton disabled={val === ''} onClick={handleAnnounceClick}>
           大方告白
         </SecondaryButton>
       </div>

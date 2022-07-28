@@ -11,10 +11,10 @@ import {
   DonationStep,
   SharingModal,
   Stepper,
+  MintConfirmationModal,
 } from 'components'
 import Animate from 'styles/animate.module.css'
-import { useContract } from 'hooks'
-import axios from 'lib/axios'
+import { useContract, useMint } from 'hooks'
 import {
   NO_WHITELIST_TOKEN,
   FINISHED,
@@ -36,6 +36,7 @@ const PROXY_METADATA_URI = 'https://jsonkeeper.com/b/BTF9'
 
 const MintPage: NextPage = () => {
   const [isSharingModalOpen, setIsSharingModalOpen] = useState(false)
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
   const [form, setForm] = useState({
     email: '',
     message: '',
@@ -45,6 +46,7 @@ const MintPage: NextPage = () => {
   const [estGasFee, setEstGasFee] = useState<string | null>(null)
   const contract = useContract()
   const { address, web3Provider } = useWeb3Context()
+  const { publicSaleMint, preSaleMint } = useMint(contract)
 
   const getBalance = async (): Promise<string | undefined> => {
     if (web3Provider && address) {
@@ -84,35 +86,8 @@ const MintPage: NextPage = () => {
         // Do something?
         // return
       }
-      const mintOpts = { value: ethers.utils.parseEther(form.donation) }
-      const payload = {
-        messageTokenId: null as number | null,
-        isPresale: saleStatus === PRESALE,
-        message: form.message,
-        minterEmail: form.email,
-        minterWallet: address,
-        ethDonated: form.donation,
-        passcode: form.passcode,
-      }
-
-      if (saleStatus === PRESALE) {
-        // check if user has whitelist token.
-        const hasWhitelistToken = await contract.ownsWhitelistToken(address)
-        if (!hasWhitelistToken) throw new Error(NO_WHITELIST_TOKEN)
-        const tokenIdBN = await contract.preSaleMint(mintOpts)
-        payload.messageTokenId = Number(tokenIdBN.toString())
-      } else if (saleStatus === PUBLIC_SALE) {
-        const tokenIdBN = await contract.publicSaleMint(mintOpts)
-        payload.messageTokenId = Number(tokenIdBN.toString())
-      }
-      // TODO: Upload images & HTMLs to S3
-      //  TODO: Convert message to image (NFT Image Service) OR a frontend function.
-      // axios.post(`/api/image`, { id: messageTokenId, message })
-
-      // If frontend function, upload file(s) onto S3
-
-      // Save Mint in DB.
-      const { data: mintData } = await axios.post(`/api/mints`, payload)
+      if (saleStatus === PRESALE) preSaleMint()
+      if (saleStatus === PUBLIC_SALE) publicSaleMint()
 
       // Do something on success? Here or in Donation Step.
     } catch (error) {
@@ -133,6 +108,11 @@ const MintPage: NextPage = () => {
     setForm({ ...form, ...formValues })
   }
 
+  const handleDonateClick = ({ donation }) => {
+    updateForm({ donation })
+    setIsConfirmModalOpen(true)
+  }
+
   // TODO: Uncomment if we are using the "confirm?" modal
   // useEffect(() => {
   //   // open modal
@@ -146,7 +126,7 @@ const MintPage: NextPage = () => {
       <MintNavigation />
       <div className="bg-white min-h-screen pt-16 text-black">
         <StepWizard transitions={transitions} nav={<Stepper />}>
-          <CoverStep />
+          <CoverStep handleMintClick={handleMint} />
           <MessageStep
             updateForm={updateForm}
             openSharingModal={() => setIsSharingModalOpen(true)}
@@ -154,7 +134,7 @@ const MintPage: NextPage = () => {
           <EmailStep updateForm={updateForm} />
           <PasscodeStep updateForm={updateForm} />
           <DonationStep
-            updateForm={updateForm}
+            onSubmit={handleDonateClick}
             getEstGasFee={getEstGasFee}
             estGasFee={estGasFee}
             getBalance={getBalance}
@@ -164,6 +144,11 @@ const MintPage: NextPage = () => {
       <SharingModal
         isOpen={isSharingModalOpen}
         closeModal={setIsSharingModalOpen}
+      />
+      <MintConfirmationModal
+        form={form}
+        isOpen={isConfirmModalOpen}
+        closeModal={setIsConfirmModalOpen}
       />
     </>
   )

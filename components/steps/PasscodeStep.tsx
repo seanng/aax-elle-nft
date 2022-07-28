@@ -1,6 +1,6 @@
 import { StepWizardChildProps } from 'react-step-wizard'
 import { useForm } from 'react-hook-form'
-import { ErrorIcon, SecondaryButton, Stepper, PrimaryButton } from 'components'
+import { FormErrorIcon, SecondaryButton, PrimaryButton } from 'components'
 
 interface Props extends Partial<StepWizardChildProps> {
   updateForm: (formValues: Record<string, string>) => void
@@ -50,8 +50,8 @@ export function PasscodeStep({ updateForm, ...wizard }: Props) {
             })}
           />
           {errors?.passcode?.message ? (
-            <div className="flex">
-              <ErrorIcon />
+            <div className="flex items-center">
+              <FormErrorIcon />
               <span className="ml-2">格式錯誤，請輸入英文字母和字數</span>
             </div>
           ) : (

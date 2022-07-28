@@ -1,4 +1,4 @@
-export const ErrorIcon = ({ width = 24, height = 25 }) => (
+export const NavErrorIcon = ({ width = 24, height = 25 }) => (
   <svg
     width={width}
     height={height}
