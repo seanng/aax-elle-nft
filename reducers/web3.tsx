@@ -7,6 +7,8 @@ export type Web3ProviderState = {
   network: ethers.providers.Network | null | undefined
   connect: () => Promise<boolean>
   disconnect: (() => Promise<void>) | null
+  balance: string
+  getBalance: () => Promise<void>
 }
 
 export const web3InitialState: Web3ProviderState = {
@@ -16,6 +18,8 @@ export const web3InitialState: Web3ProviderState = {
   network: null,
   connect: async () => false,
   disconnect: null,
+  balance: '',
+  getBalance: async () => {},
 }
 
 export type Web3Action =
@@ -36,6 +40,10 @@ export type Web3Action =
     }
   | {
       type: 'RESET_WEB3_PROVIDER'
+    }
+  | {
+      type: 'SET_BALANCE'
+      balance: Web3ProviderState['balance']
     }
 
 export function web3Reducer(
@@ -60,6 +68,11 @@ export function web3Reducer(
       return {
         ...state,
         network: action.network,
+      }
+    case 'SET_BALANCE':
+      return {
+        ...state,
+        balance: action.balance,
       }
     case 'RESET_WEB3_PROVIDER':
       return web3InitialState

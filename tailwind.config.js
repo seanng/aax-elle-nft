@@ -8,11 +8,13 @@ module.exports = {
         'max-height': 'max-height',
       },
       colors: {
-        'black-rgba': 'rgba(0, 0, 0, 0.6)',
+        'black-rgba': 'rgba(0, 0, 0, 0.7)',
         lime: '#55F263',
         cucumber: '#2FB500',
         lemon: '#C3FA08',
+        banana: '#EDFA00',
         pomegranate: '#F8646F',
+        tomato: '#FF003A',
       },
       fontFamily: {
         sans: ['GenSenRounded', ...defaultTheme.fontFamily.sans],

@@ -18,17 +18,13 @@ interface Props {
 
 export const Web3ContextProvider = ({ children }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isMinting, setIsMinting] = useState(false)
   const web3ProviderState = useWeb3()
-  const { provider, web3Provider } = web3ProviderState
+  const { provider } = web3ProviderState
 
   const toggleModal = () => setIsModalOpen(!isModalOpen)
 
   // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
   const handleChainChanged = async (_hexChainId: string) => {
-    if (isMinting) {
-      // Do something to stop the transaction? Refresh page?
-    }
     setIsModalOpen(_hexChainId !== CORRECT_HEX_CHAIN)
   }
 

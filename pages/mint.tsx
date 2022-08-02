@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { ethers } from 'ethers'
 import StepWizard from 'react-step-wizard'
 import type { NextPage } from 'next'
 import {
@@ -32,46 +31,14 @@ const transitions = {
   exitLeft: `${Animate.animated} ${Animate.fadeOutLeft}`,
 }
 
-const PROXY_METADATA_URI = 'https://jsonkeeper.com/b/BTF9'
-
 const MintPage: NextPage = () => {
   const [isSharingModalOpen, setIsSharingModalOpen] = useState(false)
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
-  const [form, setForm] = useState({
-    email: '',
-    message: '',
-    passcode: '',
-    donation: '',
-  })
-  const [estGasFee, setEstGasFee] = useState<string | null>(null)
-  const contract = useContract()
-  const { address, web3Provider } = useWeb3Context()
-  const { publicSaleMint, preSaleMint } = useMint(contract)
 
-  const getBalance = async (): Promise<string | undefined> => {
-    if (web3Provider && address) {
-      const balance = await web3Provider.getBalance(address)
-      return ethers.utils.formatEther(balance)
-    }
-  }
-
-  const getEstGasFee = async () => {
-    if (contract && web3Provider) {
-      try {
-        const functionFee = await contract.estimateGas.mint(
-          PROXY_METADATA_URI,
-          PROXY_METADATA_URI,
-          { value: ethers.utils.parseEther('0.0001') }
-        )
-        const feeData = await web3Provider.getFeeData()
-        const estGasFeeBN = feeData.maxFeePerGas?.mul(functionFee)
-        estGasFeeBN && setEstGasFee(ethers.utils.formatEther(estGasFeeBN))
-      } catch (error) {
-        console.log('error calculating gas fee: ', error)
-        setEstGasFee(null)
-      }
-    }
-  }
+  const { contract, mintGasFee, calcMintGasFee } = useContract()
+  const { getBalance, balance } = useWeb3Context()
+  const { preSaleMint, publicSaleMint, calcEthToNtd, ethToNtd, form, setForm } =
+    useMint(contract)
 
   const handleMint = async () => {
     if (!contract) {
@@ -113,18 +80,10 @@ const MintPage: NextPage = () => {
     setIsConfirmModalOpen(true)
   }
 
-  // TODO: Uncomment if we are using the "confirm?" modal
-  // useEffect(() => {
-  //   // open modal
-  //   if (form.donation) {
-  //     console.log('in the mintpage useeffect.')
-  //   }
-  // }, [form.donation])
-
   return (
     <>
       <MintNavigation />
-      <div className="bg-white min-h-screen pt-16 text-black">
+      <div className="bg-white min-h-screen pt-32 text-black">
         <StepWizard transitions={transitions} nav={<Stepper />}>
           <CoverStep handleMintClick={handleMint} />
           <MessageStep
@@ -135,9 +94,12 @@ const MintPage: NextPage = () => {
           <PasscodeStep updateForm={updateForm} />
           <DonationStep
             onSubmit={handleDonateClick}
-            getEstGasFee={getEstGasFee}
-            estGasFee={estGasFee}
+            calcMintGasFee={calcMintGasFee}
+            calcEthToNtd={calcEthToNtd}
+            ethToNtd={ethToNtd}
+            mintGasFee={mintGasFee}
             getBalance={getBalance}
+            balance={balance}
           />
         </StepWizard>
       </div>
@@ -146,9 +108,11 @@ const MintPage: NextPage = () => {
         closeModal={setIsSharingModalOpen}
       />
       <MintConfirmationModal
+        balance={balance}
         form={form}
         isOpen={isConfirmModalOpen}
-        closeModal={setIsConfirmModalOpen}
+        setOpen={setIsConfirmModalOpen}
+        handleMintClick={handleMint}
       />
     </>
   )

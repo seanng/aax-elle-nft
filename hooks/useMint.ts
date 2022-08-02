@@ -1,15 +1,24 @@
-import { useState } from 'react'
 import axios from 'lib/axios'
 import { ethers } from 'ethers'
 import { NO_WHITELIST_TOKEN, OPENED, UNOPENED, PUBLIC } from 'shared/constants'
+import { useState } from 'react'
 
-export function useMint(contract: ethers.Contract | void) {
+export function useMint(contract: ethers.Contract | null) {
   const [form, setForm] = useState({
     email: '',
     message: '',
     passcode: '',
     donation: '',
   })
+  const [isMinting, setIsMinting] = useState(false)
+  const [ethToNtd, setEthToNtd] = useState(null)
+
+  const calcEthToNtd = async (): Promise<void> => {
+    const { data } = await axios.get(
+      'https://api.coinbase.com/v2/exchange-rates?currency=ETH'
+    )
+    setEthToNtd(data?.rates?.twd)
+  }
 
   const preSaleMint = async () => {
     const hasWhitelistToken = await contract?.ownsWhitelistToken(
@@ -24,6 +33,7 @@ export function useMint(contract: ethers.Contract | void) {
   const executeMint = async (isPresale: boolean) => {
     if (!contract) return
     // TODO: delete.
+    setIsMinting(true)
     const form = {
       message: 'Yo this is a test LOVE message. 愛愛愛',
       donation: '0.5',
@@ -56,6 +66,7 @@ export function useMint(contract: ethers.Contract | void) {
       ethDonated: form.donation,
       passcode: form.passcode,
     })
+    setIsMinting(false)
   }
 
   const uploadOneFile = async (folder: string, key: string, file: string) => {
@@ -81,8 +92,12 @@ export function useMint(contract: ethers.Contract | void) {
   }
 
   return {
+    isMinting,
     preSaleMint,
     publicSaleMint,
+    calcEthToNtd,
+    ethToNtd,
+    form,
     setForm,
   }
 }

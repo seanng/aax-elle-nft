@@ -8,22 +8,28 @@ interface FormData {
 }
 
 interface Props extends Partial<StepWizardChildProps> {
-  getEstGasFee: () => void
-  estGasFee: string | null
-  getBalance: () => Promise<string | undefined>
+  calcMintGasFee: () => Promise<void>
+  calcEthToNtd: () => Promise<void>
+  mintGasFee: string | null
+  ethToNtd: string | null
+  getBalance: () => void
+  balance: string | null
   onSubmit: (data: FormData) => void
 }
 
 export function DonationStep({
-  getEstGasFee,
-  estGasFee,
+  calcMintGasFee,
+  calcEthToNtd,
+  mintGasFee,
+  ethToNtd,
   getBalance,
+  balance,
   onSubmit,
   ...wizard
 }: Props) {
   const { handleSubmit, register, watch, setValue } = useForm({
     mode: 'onChange',
-    defaultValues: { donation: 500 },
+    defaultValues: { donation: 5000 },
   })
 
   const handleBackClick = () => {
@@ -31,7 +37,7 @@ export function DonationStep({
   }
 
   useEffect(() => {
-    if (wizard.isActive) getEstGasFee()
+    if (wizard.isActive) calcMintGasFee()
     getBalance()
   }, [wizard.isActive])
 
@@ -60,27 +66,19 @@ export function DonationStep({
           />
         </div>
         <div className="font-mono text-sm text-gray-500 mb-6">
-          (+ ETH $0.002 Gas fee)
+          (Includes gas fee of ~{mintGasFee?.slice(0, 7)}ETH)
         </div>
         <div className="flex space-x-2">
-          <DonationButton
-            isActive={donationValue == 100}
-            onClick={() => setValue('donation', 100)}
-          >
-            $100
-          </DonationButton>
-          <DonationButton
-            isActive={donationValue == 500}
-            onClick={() => setValue('donation', 500)}
-          >
-            $500
-          </DonationButton>
-          <DonationButton
-            isActive={donationValue == 1000}
-            onClick={() => setValue('donation', 1000)}
-          >
-            $1000
-          </DonationButton>
+          {[1000, 5000, 10000].map((val) => (
+            <DonationButton
+              type="button"
+              isActive={donationValue == val}
+              onClick={() => setValue('donation', val)}
+              key={val}
+            >
+              ${val}
+            </DonationButton>
+          ))}
         </div>
         <div className="flex space-x-6 w-80 mt-20">
           <SecondaryButton onClick={handleBackClick}>上一步</SecondaryButton>
@@ -88,14 +86,6 @@ export function DonationStep({
             下一步
           </PrimaryButton>
         </div>
-      </div>
-      <div>
-        <h2 className="py-4">Gas Fee Estimate</h2>
-        <p>{estGasFee !== '0' && estGasFee}</p>
-      </div>
-      <div>
-        <h2 className="py-4">Wallet Address Balance</h2>
-        <p>{estGasFee !== '0' && estGasFee}</p>
       </div>
     </form>
   )

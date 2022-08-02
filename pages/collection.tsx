@@ -1,7 +1,17 @@
+import { MintNavigation } from 'components'
 import type { NextPage } from 'next'
 
 const CollectionPage: NextPage = () => {
-  return <div className="mx-auto max-w-2xl px-4 md:px-0 pt-12 sm:pt-24">yo</div>
+  return (
+    <>
+      <MintNavigation />
+      <div className="bg-white min-h-screen pt-16 text-black">
+        <div className="flex flex-col items-center">
+          <h1 className="font-mono text-xl">My Secrets</h1>
+        </div>
+      </div>
+    </>
+  )
 }
 
 export default CollectionPage

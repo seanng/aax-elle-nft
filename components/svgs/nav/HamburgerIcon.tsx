@@ -1,35 +1,18 @@
+const width = 25
+const height = 20
+
 export const HamburgerIcon = (props) => (
   <svg
-    width="16"
-    height="13"
-    viewBox="0 0 16 13"
+    width={width}
+    height={height}
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    viewBox={`0 0 ${width} ${height}`}
     {...props}
   >
-    <line
-      x1="0.5"
-      y1="0.5"
-      x2="15.5"
-      y2="0.5"
-      stroke="white"
-      strokeLinecap="round"
-    />
-    <line
-      x1="0.5"
-      y1="6.5"
-      x2="15.5"
-      y2="6.5"
-      stroke="white"
-      strokeLinecap="round"
-    />
-    <line
-      x1="0.5"
-      y1="12.5"
-      x2="15.5"
-      y2="12.5"
-      stroke="white"
-      strokeLinecap="round"
+    <path
+      fill="#fff"
+      d="M0 0h5v5H0zM0 15h5v5H0zM5 0h5v5H5zM5 15h5v5H5zM10 0h5v5h-5zM10 15h5v5h-5zM15 0h5v5h-5zM15 15h5v5h-5zM20 0h5v5h-5zM20 15h5v5h-5z"
     />
   </svg>
 )

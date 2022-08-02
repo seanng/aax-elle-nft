@@ -78,9 +78,53 @@ if (typeof window !== 'undefined') {
   `
 }
 
+function useCustomModal(connect) {
+  // Inject custom header, help info & autoconnect in modal
+  useEffect(() => {
+    if (web3Modal) {
+      if (!document.querySelector('#web3modal-header')) {
+        document.querySelector('.web3modal-modal-card')?.prepend(modalHeader)
+      }
+
+      if (!document.querySelector('#web3modal-footer')) {
+        document.querySelector('.web3modal-modal-card')?.append(modalFooter)
+      }
+
+      // Auto connect to the cached provider
+      if (web3Modal.cachedProvider) {
+        connect()
+      }
+    }
+  }, [connect])
+
+  // Display "Install Metamask" for users without MetaMask installed
+  useEffect(() => {
+    if (!window.ethereum) {
+      providerOptions['custom-metamask'] = {
+        display: {
+          logo: providers.METAMASK.logo,
+          name: 'Install MetaMask',
+          description: 'Connect using browser wallet',
+        },
+        package: {},
+        connector: async () => {
+          window.open('https://metamask.io/download')
+          throw new Error('MetaMask not installed')
+        },
+      }
+
+      web3Modal = new Web3Modal({
+        cacheProvider: true,
+        network: web3ModalNetwork,
+        providerOptions, // required
+      })
+    }
+  }, [])
+}
+
 export function useWeb3() {
   const [state, dispatch] = useReducer(web3Reducer, web3InitialState)
-  const { provider, web3Provider, address, network } = state
+  const { provider, web3Provider, address, network, balance } = state
 
   const connect = useCallback(async (): Promise<boolean> => {
     if (!web3Modal) {
@@ -120,6 +164,16 @@ export function useWeb3() {
     }
   }, [])
 
+  const getBalance = useCallback(async () => {
+    if (web3Provider && address) {
+      const bal = await web3Provider.getBalance(address)
+      dispatch({
+        type: 'SET_BALANCE',
+        balance: ethers.utils.formatEther(bal),
+      } as Web3Action)
+    }
+  }, [web3Provider, address])
+
   const disconnect = useCallback(async () => {
     if (!web3Modal) return console.error('No Web3Modal')
     web3Modal.clearCachedProvider()
@@ -132,23 +186,8 @@ export function useWeb3() {
     } as Web3Action)
   }, [provider])
 
-  useEffect(() => {
-    if (web3Modal) {
-      // Inject new div with css stuff into web3 modal
-      if (!document.querySelector('#web3modal-header')) {
-        document.querySelector('.web3modal-modal-card')?.prepend(modalHeader)
-      }
-
-      if (!document.querySelector('#web3modal-footer')) {
-        document.querySelector('.web3modal-modal-card')?.append(modalFooter)
-      }
-
-      // Auto connect to the cached provider
-      if (web3Modal.cachedProvider) {
-        connect()
-      }
-    }
-  }, [connect])
+  // Modify original web3 modal
+  useCustomModal(connect)
 
   // EIP-1193 events
   useEffect(() => {
@@ -160,17 +199,6 @@ export function useWeb3() {
           address: accounts[0],
         } as Web3Action)
       }
-
-      // // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
-      // const handleChainChanged = (_hexChainId: string) => {
-      //   if (typeof window !== 'undefined') {
-      //     console.log('switched to chain...', _hexChainId)
-      //     toast.info(`Web3 Network Changed to: ${_hexChainId}`)
-      //     // window.location.reload()
-      //   } else {
-      //     console.log('window is undefined')
-      //   }
-      // }
 
       const handleDisconnect = (error: { code: number; message: string }) => {
         // eslint-disable-next-line no-console
@@ -191,30 +219,6 @@ export function useWeb3() {
     }
   }, [provider, disconnect])
 
-  // Display "Install Metamask" for users without MetaMask installed
-  useEffect(() => {
-    if (!window.ethereum) {
-      providerOptions['custom-metamask'] = {
-        display: {
-          logo: providers.METAMASK.logo,
-          name: 'Install MetaMask',
-          description: 'Connect using browser wallet',
-        },
-        package: {},
-        connector: async () => {
-          window.open('https://metamask.io/download')
-          throw new Error('MetaMask not installed')
-        },
-      }
-
-      web3Modal = new Web3Modal({
-        cacheProvider: true,
-        network: web3ModalNetwork,
-        providerOptions, // required
-      })
-    }
-  }, [])
-
   return {
     provider,
     web3Provider,
@@ -222,5 +226,7 @@ export function useWeb3() {
     network,
     connect,
     disconnect,
+    balance,
+    getBalance,
   } as Web3ProviderState
 }
