@@ -30,7 +30,7 @@ const FaqPage: NextPage = () => {
         <div className="pt-10 mb-10">
           <BigQuestionIcon />
         </div>
-        <dl className="mt-4 md:mt-24 lg:mt-32 space-y-2 md:space-y-6 pr-4">
+        <dl className="pr-4">
           {faqs.map((faq) => (
             <Disclosure as="div" key={faq.question} className="!mt-0">
               {({ open }) => (
