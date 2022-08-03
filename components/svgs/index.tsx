@@ -43,6 +43,9 @@ export { IGIcon } from './icons/IGIcon'
 export { TwitterIcon } from './icons/TwitterIcon'
 export { HamburgerIcon } from './icons/HamburgerIcon'
 export { CloseIcon } from './icons/CloseIcon'
+export { BigQuestionIcon } from './icons/BigQuestionIcon'
+export { ClosePinkIcon } from './icons/ClosePinkIcon'
+export { CaretDownPinkIcon } from './icons/CaretDownPinkIcon'
 
 // buttons
 export { ConnectButton } from './buttons/ConnectButton'
