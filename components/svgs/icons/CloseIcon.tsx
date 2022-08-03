@@ -1,7 +1,4 @@
-const width = 25
-const height = 25
-
-export const CloseIcon = (props) => (
+export const CloseIcon = ({ width = 25, height = 25, ...props }) => (
   <svg
     width={width}
     height={height}

@@ -1,6 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
-import { NavErrorIcon } from 'components'
 
 export function NetworkChangeModal({
   isOpen,
@@ -18,7 +17,7 @@ export function NetworkChangeModal({
             <TransitionChild>
               <Dialog.Panel className="flex rounded-lg overflow-hidden shadow-xl transition-all">
                 <div className="flex items-center px-4 border-l-4 border-pomegranate bg-[#FFF2F2]">
-                  <NavErrorIcon />
+                  error
                 </div>
                 <div className="py-4 bg-white text-left px-4 text-base">
                   <h4 className="text-base font-semibold">切換 Network</h4>

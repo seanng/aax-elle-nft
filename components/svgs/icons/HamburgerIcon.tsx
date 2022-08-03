@@ -1,7 +1,4 @@
-const width = 25
-const height = 20
-
-export const HamburgerIcon = (props) => (
+export const HamburgerIcon = ({ width = 25, height = 20, ...props }) => (
   <svg
     width={width}
     height={height}

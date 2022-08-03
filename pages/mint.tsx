@@ -83,7 +83,7 @@ const MintPage: NextPage = () => {
   return (
     <>
       <MintNavigation />
-      <div className="bg-white min-h-screen pt-32 text-black">
+      <div className="bg-black min-h-screen pt-navbar-height text-black">
         <StepWizard transitions={transitions} nav={<Stepper />}>
           <CoverStep handleMintClick={handleMint} />
           <MessageStep

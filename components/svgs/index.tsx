@@ -37,17 +37,17 @@ export { CrzyLips } from './team/CrzyLips'
 export { PointOfLips } from './team/PointOfLips'
 export { TeamFlower } from './team/TeamFlower'
 
-// social icons
-export { FBIcon } from './social/FBIcon'
-export { IGIcon } from './social/IGIcon'
-export { TwitterIcon } from './social/TwitterIcon'
+// icons
+export { FBIcon } from './icons/FBIcon'
+export { IGIcon } from './icons/IGIcon'
+export { TwitterIcon } from './icons/TwitterIcon'
+export { HamburgerIcon } from './icons/HamburgerIcon'
+export { CloseIcon } from './icons/CloseIcon'
 
-// nav
-export { HamburgerIcon } from './nav/HamburgerIcon'
-export { CloseIcon } from './nav/CloseIcon'
-export { ConnectButton } from './nav/ConnectButton'
-export { AddressOKButton } from './nav/AddressOKButton'
-export { AddressErrorButton } from './nav/AddressErrorButton'
+// buttons
+export { ConnectButton } from './buttons/ConnectButton'
+export { AddressOKButton } from './buttons/AddressOKButton'
+export { AddressErrorButton } from './buttons/AddressErrorButton'
 
 // form
 export { FormErrorIcon } from './form/FormErrorIcon'

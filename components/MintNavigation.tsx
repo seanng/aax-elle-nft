@@ -32,7 +32,7 @@ export function MintNavigation() {
 }
 
 const Navbar = () => (
-  <div className="flex justify-between items-center px-4 py-4 bg-black">
+  <div className="flex justify-between items-center px-4 h-navbar-height bg-black">
     <Logo />
     <div className="flex items-center space-x-4">
       <Web3Button />
@@ -117,7 +117,7 @@ const Web3Button = () => {
   }, [provider])
 
   return web3Provider ? (
-    <Popover>
+    <Popover className="flex flex-col justify-center">
       <Popover.Button className="relative">
         {walletHasError ? <AddressErrorButton /> : <AddressOKButton />}
         <div className="absolute top-2 right-2 text-black font-mono text-sm ">

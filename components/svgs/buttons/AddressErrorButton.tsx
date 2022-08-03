@@ -1,7 +1,4 @@
-const width = 126
-const height = 37
-
-export const AddressErrorButton = (props) => (
+export const AddressErrorButton = ({ width = 126, height = 37, ...props }) => (
   <svg
     width={width}
     height={height}

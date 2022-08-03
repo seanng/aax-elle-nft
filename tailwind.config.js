@@ -22,6 +22,9 @@ module.exports = {
         mono: 'DM Mono',
         noto: 'Noto Sans',
       },
+      spacing: {
+        'navbar-height': '84px',
+      },
     },
   },
   plugins: [

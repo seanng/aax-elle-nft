@@ -1,7 +1,4 @@
-const width = 127
-const height = 42
-
-export const ConnectButton = (props) => (
+export const ConnectButton = ({ width = 127, height = 42, ...props }) => (
   <svg
     width={width}
     height={height}
