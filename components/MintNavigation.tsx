@@ -42,19 +42,19 @@ const Navbar = () => (
 )
 
 const Panel = () => (
-  <Popover.Panel focus className="h-full z-30 bg-black-rgba backdrop-blur-3xl">
-    <div className="flex justify-between items-center px-4 py-4">
-      <Logo />
+  <Popover.Panel
+    focus
+    className="h-full z-30 bg-black-rgba backdrop-blur-3xl bg-repeat"
+    style={{
+      backgroundImage: `linear-gradient(to right, #55F263 0.1px, transparent 0.5px), linear-gradient(to bottom, #55F263 0.1px, transparent 0.5px)`,
+      backgroundSize: '40px 40px',
+    }}
+  >
+    <div className="flex justify-end items-center px-4 h-navbar-height">
       <CloseButton />
     </div>
-    <div
-      className="h-full flex flex-col bg-repeat py-2 pl-6 text-4xl text-lime font-bold font-noto leading-[150%] space-y-4"
-      style={{
-        backgroundImage: `linear-gradient(to right, #55F263 0.1px, transparent 1px), linear-gradient(to bottom, #55F263 0.1px, transparent 1px)`,
-        backgroundSize: '40px 40px',
-      }}
-    >
-      <Link href="/mint">
+    <div className="h-full flex flex-col bg-repeat py-2 pl-6 text-4xl text-lime font-bold font-noto leading-[150%] space-y-4">
+      <Link href="/">
         <a className="font-noto">鑄造首頁</a>
       </Link>
       <Link href="/">
@@ -73,19 +73,21 @@ const Panel = () => (
   </Popover.Panel>
 )
 
-const Logo = () => (
-  <Link href="/">
-    <a>
-      <Image
-        priority
-        src="/logos/elle-white.png"
-        alt="ELLE"
-        height={46}
-        width={112}
-      />
-    </a>
-  </Link>
-)
+const Logo = () => {
+  return (
+    <Link href="/welcome">
+      <a>
+        <Image
+          priority
+          src="/logos/elle-white.png"
+          alt="ELLE"
+          height={46}
+          width={112}
+        />
+      </a>
+    </Link>
+  )
+}
 
 const Hamburger = () => (
   <div className="-mr-2">
