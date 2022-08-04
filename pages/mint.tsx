@@ -6,7 +6,6 @@ import {
   PasscodeStep,
   MintNavigation,
   MessageStep,
-  CoverStep,
   DonationStep,
   SharingModal,
   Stepper,
@@ -36,7 +35,7 @@ const MintPage: NextPage = () => {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
 
   const { contract, mintGasFee, calcMintGasFee } = useContract()
-  const { getBalance, balance } = useWeb3Context()
+  const { calcBalance, balance } = useWeb3Context()
   const { preSaleMint, publicSaleMint, calcEthToNtd, ethToNtd, form, setForm } =
     useMint(contract)
 
@@ -75,17 +74,22 @@ const MintPage: NextPage = () => {
     setForm({ ...form, ...formValues })
   }
 
-  const handleDonateClick = ({ donation }) => {
-    updateForm({ donation })
+  const handleDonateClick = (data) => {
+    updateForm(data)
     setIsConfirmModalOpen(true)
   }
 
   return (
     <>
       <MintNavigation />
-      <div className="bg-black min-h-screen pt-navbar-height text-black">
+      <div
+        className="bg-black min-h-screen pt-navbar-height text-white bg-repeat"
+        style={{
+          backgroundImage: `linear-gradient(to right, #55F263 0.1px, transparent 0.4px), linear-gradient(to bottom, #55F263 0.1px, transparent 0.4px)`,
+          backgroundSize: '40px 40px',
+        }}
+      >
         <StepWizard transitions={transitions} nav={<Stepper />}>
-          <CoverStep handleMintClick={handleMint} />
           <MessageStep
             updateForm={updateForm}
             openSharingModal={() => setIsSharingModalOpen(true)}
@@ -98,7 +102,7 @@ const MintPage: NextPage = () => {
             calcEthToNtd={calcEthToNtd}
             ethToNtd={ethToNtd}
             mintGasFee={mintGasFee}
-            getBalance={getBalance}
+            calcBalance={calcBalance}
             balance={balance}
           />
         </StepWizard>

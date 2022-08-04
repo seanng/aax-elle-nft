@@ -46,6 +46,8 @@ export { CloseIcon } from './icons/CloseIcon'
 export { BigQuestionIcon } from './icons/BigQuestionIcon'
 export { ClosePinkIcon } from './icons/ClosePinkIcon'
 export { CaretDownPinkIcon } from './icons/CaretDownPinkIcon'
+export { StepperArrowRight } from './icons/StepperArrowRight'
+export { PinkLockIcon } from './icons/PinkLockIcon'
 
 // buttons
 export { ConnectButton } from './buttons/ConnectButton'

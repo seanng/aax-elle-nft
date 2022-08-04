@@ -8,16 +8,17 @@ export function useMint(contract: ethers.Contract | null) {
     email: '',
     message: '',
     passcode: '',
-    donation: '',
+    donationInput: 0,
+    donationInEth: 0,
   })
   const [isMinting, setIsMinting] = useState(false)
-  const [ethToNtd, setEthToNtd] = useState(null)
+  const [ethToNtd, setEthToNtd] = useState<number | null>(null)
 
   const calcEthToNtd = async (): Promise<void> => {
     const { data } = await axios.get(
       'https://api.coinbase.com/v2/exchange-rates?currency=ETH'
     )
-    setEthToNtd(data?.rates?.twd)
+    setEthToNtd(Number(data.data?.rates?.TWD))
   }
 
   const preSaleMint = async () => {

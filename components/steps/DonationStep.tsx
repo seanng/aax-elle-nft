@@ -1,18 +1,20 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { StepWizardChildProps } from 'react-step-wizard'
 import { useForm } from 'react-hook-form'
 import { DonationButton, SecondaryButton, PrimaryButton } from 'components'
 
+const EXCHANGE_RATE_REQUEST_INTERVAL = 5000
+
 interface FormData {
-  donation: number
+  donationInput: number
 }
 
 interface Props extends Partial<StepWizardChildProps> {
   calcMintGasFee: () => Promise<void>
   calcEthToNtd: () => Promise<void>
   mintGasFee: string | null
-  ethToNtd: string | null
-  getBalance: () => void
+  ethToNtd: number | null
+  calcBalance: () => void
   balance: string | null
   onSubmit: (data: FormData) => void
 }
@@ -20,28 +22,42 @@ interface Props extends Partial<StepWizardChildProps> {
 export function DonationStep({
   calcMintGasFee,
   calcEthToNtd,
+  calcBalance,
   mintGasFee,
   ethToNtd,
-  getBalance,
   balance,
   onSubmit,
   ...wizard
 }: Props) {
-  const { handleSubmit, register, watch, setValue } = useForm({
+  const { handleSubmit, register, watch, setValue, getValues } = useForm({
     mode: 'onChange',
-    defaultValues: { donation: 5000 },
+    defaultValues: { donationInput: 5000, donationInEth: 0 },
   })
+
+  const donationInput = watch('donationInput')
+  const donationInEth = watch('donationInEth')
 
   const handleBackClick = () => {
     wizard.previousStep && wizard.previousStep()
   }
 
   useEffect(() => {
-    if (wizard.isActive) calcMintGasFee()
-    getBalance()
+    if (wizard.isActive && typeof window !== 'undefined') {
+      const interval = window.setInterval(
+        () => calcEthToNtd(),
+        EXCHANGE_RATE_REQUEST_INTERVAL
+      )
+      calcMintGasFee()
+      calcEthToNtd()
+      calcBalance()
+      return () => window.clearInterval(interval)
+    }
   }, [wizard.isActive])
 
-  const donationValue = watch('donation')
+  useEffect(() => {
+    if (ethToNtd && ethToNtd > 0)
+      setValue('donationInEth', donationInput / ethToNtd)
+  }, [donationInput, ethToNtd])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -58,22 +74,25 @@ export function DonationStep({
           <span className="text-sm mr-1">NT$</span>
           <input
             type="number"
-            id="donation"
+            id="donationInput"
             className="w-36 font-medium text-4xl caret-cucumber text-black bg-transparent border-transparent focus:border-transparent focus:ring-0 p-0"
             min={0}
             placeholder="0"
-            {...register('donation', { required: true })}
+            {...register('donationInput', { required: true })}
           />
         </div>
-        <div className="font-mono text-sm text-gray-500 mb-6">
-          (Includes gas fee of ~{mintGasFee?.slice(0, 7)}ETH)
+        <div className="font-mono text-sm text-gray-400 mb-2">
+          (~ETH {donationInEth.toFixed(4)})
+        </div>
+        <div className="font-mono text-sm text-gray-400">
+          Your balance: ETH {Number(balance).toFixed(4)}
         </div>
         <div className="flex space-x-2">
           {[1000, 5000, 10000].map((val) => (
             <DonationButton
               type="button"
-              isActive={donationValue == val}
-              onClick={() => setValue('donation', val)}
+              isActive={donationInput == val}
+              onClick={() => setValue('donationInput', val)}
               key={val}
             >
               ${val}
@@ -82,7 +101,7 @@ export function DonationStep({
         </div>
         <div className="flex space-x-6 w-80 mt-20">
           <SecondaryButton onClick={handleBackClick}>上一步</SecondaryButton>
-          <PrimaryButton disabled={donationValue < 0} type="submit">
+          <PrimaryButton disabled={donationInput < 0} type="submit">
             下一步
           </PrimaryButton>
         </div>

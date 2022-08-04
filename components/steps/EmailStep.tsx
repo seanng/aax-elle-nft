@@ -1,7 +1,12 @@
 import { StepWizardChildProps } from 'react-step-wizard'
 import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX } from 'shared/constants'
-import { FormErrorIcon, SecondaryButton, PrimaryButton } from 'components'
+import {
+  FormErrorIcon,
+  SecondaryButton,
+  PrimaryButton,
+  FormStamp,
+} from 'components'
 
 interface Props extends Partial<StepWizardChildProps> {
   updateForm: (formValues: Record<string, string>) => void
@@ -25,15 +30,11 @@ export function EmailStep({ updateForm, ...wizard }: Props) {
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)}>
-      <div className="flex flex-col items-center font-noto">
-        <div className="flex items-center mb-3">
-          <div className="flex items-center justify-center w-6 h-6 rounded-full bg-black text-white text-sm">
-            1
-          </div>
-          <h1 className="ml-2 text-xl">輸入你的 Email</h1>
-        </div>
+      <div className="flex flex-col items-center font-noto pt-16">
+        <FormStamp className="mb-4">1</FormStamp>
+        <h2 className="font-medium text-2xl mb-2">輸入你的 Email</h2>
         <div className="w-80 mb-10">
-          <p className="text-gray-500 mb-10 text-center">
+          <p className="text-white mb-10 text-center">
             噓...
             為你的秘密加密上鎖，輸入他/她的email後，對方將會收到通知和你設定的專屬密碼，決定是否揭曉秘密。
           </p>
@@ -41,7 +42,7 @@ export function EmailStep({ updateForm, ...wizard }: Props) {
             id="email"
             type="text"
             placeholder="Your email"
-            className="text-black border-gray-300 rounded-md w-full mb-2"
+            className="text-black border-lime w-full mb-2 font-mono placeholder-slate-500 bg-lime border-transparent focus:border-transparent focus:ring-0 "
             {...register('email', {
               required: true,
               pattern: {
@@ -57,7 +58,7 @@ export function EmailStep({ updateForm, ...wizard }: Props) {
             </div>
           )}
         </div>
-        <div className="flex space-x-6 w-80">
+        <div className="flex space-x-8">
           <SecondaryButton onClick={handleBackClick}>上一步</SecondaryButton>
           <PrimaryButton disabled={!isValid || !isDirty} type="submit">
             下一步

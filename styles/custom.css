@@ -147,11 +147,17 @@
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
 }
 
+.web3modal-modal-container {
+  flex-direction: column;
+}
+
 .web3modal-modal-card {
-  padding: 36px !important;
-  width: 400px !important;
+  width: 320px !important;
   font-family: Noto Sans;
   display: block !important;
+  position: relative;
+  border-radius: 0 !important;
+  margin: 0 !important;
 }
 
 .web3modal-provider-name {
@@ -166,33 +172,28 @@
 }
 
 #web3modal-header > h4 {
-  font-size: 20px;
+  font-size: 22px;
   line-height: 150%;
-  font-weight: 500;
+  margin-bottom: 32px;
 }
 
 #web3modal-header > p {
-  padding: 16px 0;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 150%;
-  color: #9d9d9d;
-  line-height: 150%;
-  letter-spacing: 1px;
+  margin-bottom: 16px;
 }
 
-#web3modal-footer > p {
-  font-size: 14px;
-  line-height: 150%;
-  letter-spacing: 1px;
-  color: #9d9d9d;
-  padding-top: 24px;
-}
-
-#web3modal-footer > p > span > a {
+#web3modal-header > p > span > a {
   color: #3563e9;
   text-decoration: underline;
 }
 
 .web3modal-provider-icon > img {
   height: auto !important;
+}
+
+.web3modal-dangle {
+  background-color: #ffffff;
+  height: 15px;
+  width: 288px;
 }

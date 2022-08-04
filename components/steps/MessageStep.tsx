@@ -41,8 +41,7 @@ export function MessageStep({
   // https://stackoverflow.com/a/65893635/6007700
 
   return (
-    <div className="flex flex-col items-center font-noto">
-      <h1 className="font-medium text-xl mb-7">選擇偷偷告白或大方告白</h1>
+    <div className="flex flex-col items-center font-noto h-full pt-16">
       <textarea
         id="message"
         rows={5}

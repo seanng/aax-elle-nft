@@ -8,7 +8,8 @@ interface Props {
     email: string
     message: string
     passcode: string
-    donation: string
+    donationInput: number
+    donationInEth: number
   }
   isOpen: boolean
   handleMintClick: () => Promise<void>
@@ -65,14 +66,14 @@ export function MintConfirmationModal({
                   <p className="font-bold mb-2">捐款金額</p>
                   <div className="flex space-x-2 font-mono items-center">
                     <div className="text-[#2FB500] font-bold">
-                      NTD {form.donation}
+                      NTD {form.donationInput}
                     </div>
                     <div className="text-gray-400 text-xs">
                       (已包含 gas fee)
                     </div>
                   </div>
                 </div>
-                {Number(balance) < Number(form.donation) && (
+                {Number(balance) < Number(form.donationInput) && (
                   <div>you have no money pls top up thx</div>
                 )}
                 <PrimaryButton onClick={handleMintClick}>

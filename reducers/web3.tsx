@@ -8,7 +8,7 @@ export type Web3ProviderState = {
   connect: () => Promise<boolean>
   disconnect: (() => Promise<void>) | null
   balance: string
-  getBalance: () => Promise<void>
+  calcBalance: () => Promise<void>
 }
 
 export const web3InitialState: Web3ProviderState = {
@@ -19,7 +19,7 @@ export const web3InitialState: Web3ProviderState = {
   connect: async () => false,
   disconnect: null,
   balance: '',
-  getBalance: async () => {},
+  calcBalance: async () => {},
 }
 
 export type Web3Action =
