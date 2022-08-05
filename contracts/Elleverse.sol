@@ -1,13 +1,13 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.4;
 
 import '@openzeppelin/contracts/access/Ownable.sol';
-import 'erc721a/contracts/extensions/ERC721AQueryable.sol';
+import './ERC721BQueryable.sol';
 
-contract Elleverse is ERC721AQueryable, Ownable {
-  uint256 public MAX_SUPPLY = 6226;
-  uint256 public PRESALE_MAX_SUPPLY = 1000;
+contract Elleverse is ERC721BQueryable, Ownable {
+  uint256 public TOTAL_MINT_LIMIT = 6226;
+  uint256 public PRESALE_MINT_LIMIT = 1000;
   bool public isPreSale = false;
   bool public isPublicSale = false;
   string public _baseContractURI;
@@ -16,42 +16,15 @@ contract Elleverse is ERC721AQueryable, Ownable {
     'https://aax-elle-nft.vercel.app/api/metadata/';
   address public treasury;
 
-  constructor() ERC721A('Elleverse', 'ELLEVERSE') {
+  constructor() ERC721B('Elleverse', 'ELLEVERSE') {
     treasury = msg.sender;
   }
 
   // =============================================================
   //                      MODIFIERS
   // =============================================================
-  modifier preSaleActive() {
-    require(isPreSale == true, "Can't mint - Not in Pre Sale Phase");
-    require(
-      PRESALE_MAX_SUPPLY >= _nextTokenId() - 1,
-      "Can't mint - Presale token limit exceeded"
-    );
-    _;
-  }
-
-  modifier publicSaleActive() {
-    require(isPublicSale == true, "Can't mint - Not in Public Sale Phase");
-    _;
-  }
-
   modifier callerIsUser() {
     require(tx.origin == msg.sender, 'Invalid caller - Caller is a Contract');
-    _;
-  }
-
-  modifier withinLimit() {
-    require(
-      MAX_SUPPLY > _nextTokenId(),
-      "Can't mint - Max token supply limit exceeded."
-    );
-    _;
-  }
-
-  modifier isEven() {
-    require(_nextTokenId() % 2 == 0, "Can't mint - nextTokenId not an even number");
     _;
   }
 
@@ -77,8 +50,15 @@ contract Elleverse is ERC721AQueryable, Ownable {
     _baseTokenURI = baseURI;
   }
 
-  function setMaxSupply(uint256 _newMaxSupply) external onlyOwner {
-    MAX_SUPPLY = _newMaxSupply;
+  function setTotalMintLimit(uint256 _newTotalMintLimit) external onlyOwner {
+    TOTAL_MINT_LIMIT = _newTotalMintLimit;
+  }
+
+  function setPreSaleMintLimit(uint256 _newPreSaleMintLimit)
+    external
+    onlyOwner
+  {
+    PRESALE_MINT_LIMIT = _newPreSaleMintLimit;
   }
 
   function setPreSaleState(bool _state) public onlyOwner {
@@ -93,53 +73,66 @@ contract Elleverse is ERC721AQueryable, Ownable {
   //                      MINTS & TRANSACTIONS
   // =============================================================
 
-  function airdrop(address[] calldata _to) external onlyOwner withinLimit isEven {
+  function airdropBothTokens(address[] calldata _to) external onlyOwner {
     require(
-      MAX_SUPPLY >= _to.length * 2 + _nextTokenId() - 1,
-      "Can't mint - Max token supply limit exceeded."
+      TOTAL_MINT_LIMIT >= _to.length * 2 + _nextTokenId(),
+      "Can't mint - Max mint limit will be exceeded."
     );
+    if (_nextTokenId() % 2 != 0) _incrementIndex(1);
     for (uint256 i; i < _to.length; i++) {
       _safeMint(_to[i], 2);
     }
   }
 
-  function preSaleMint()
-    external
-    payable
-    preSaleActive
-    callerIsUser
-    withinLimit
-    isEven
-    returns (uint256)
-  {
+  function airdropWhitelistTokens(address[] calldata _to) external onlyOwner {
+    require(
+      TOTAL_MINT_LIMIT >= _to.length * 2 + _nextTokenId(),
+      "Can't mint - Max mint limit will be exceeded."
+    );
+    require(
+      isPublicSale == false,
+      'Cannot airdrop whitelist tokens during public sale'
+    );
+    if (_nextTokenId() % 2 == 0) _incrementIndex(1);
+    for (uint256 i; i < _to.length; i++) {
+      // mint whitelist token to owner
+      _safeMint(_to[i], 1);
+    }
+  }
+
+  function preSaleMint() external payable callerIsUser returns (uint256) {
+    require(isPreSale == true, "Can't mint - Not in Pre Sale Phase");
+    require(
+      PRESALE_MINT_LIMIT > _nextTokenId() + 1, // because mint 2 at a time
+      "Can't mint - mints will exceed presale mint limit."
+    );
     require(
       ownsWhitelistToken(msg.sender) == true,
       "Can't mint - Does not own whitelist token"
     );
     require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
+    if (_nextTokenId() % 2 != 0) _incrementIndex(1);
     uint256 tokenId = _nextTokenId();
     _safeMint(msg.sender, 2);
     return tokenId;
   }
 
-  function publicSaleMint()
-    external
-    payable
-    publicSaleActive
-    callerIsUser
-    withinLimit
-    isEven
-    returns (uint256)
-  {
+  function publicSaleMint() external payable callerIsUser returns (uint256) {
+    require(isPublicSale == true, "Can't mint - Not in Public Sale Phase");
+    require(
+      TOTAL_MINT_LIMIT > _nextTokenId() + 1, // because mint 2 at a time
+      "Can't mint - mints will exceed total mint limit."
+    );
     require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
+    if (_nextTokenId() % 2 != 0) _incrementIndex(1);
     uint256 tokenId = _nextTokenId();
     _safeMint(msg.sender, 2);
     return tokenId;
   }
 
-  /**
-   * Withdrawal Functions
-   */
+  // =============================================================
+  //                      WITHDRAWALS
+  // =============================================================
 
   /** @dev Set the address that act as treasury and recieve all the fund from token contract.
    * @param _treasury New address that caller wants to set as the treasury address
@@ -151,5 +144,19 @@ contract Elleverse is ERC721AQueryable, Ownable {
 
   function withdraw() external onlyOwner {
     payable(treasury).transfer(address(this).balance);
+  }
+
+  // =============================================================
+  //                      BURNS
+  // =============================================================
+  function burnMultiple(uint256[] calldata _tokenIds) external onlyOwner {
+    require(isPreSale == false, "Can't burn tokens during presale phase");
+    require(
+      isPublicSale == false,
+      "Can't burn tokens during public sale phase"
+    );
+    for (uint256 i; i < _tokenIds.length; i++) {
+      _burn(_tokenIds[i]);
+    }
   }
 }

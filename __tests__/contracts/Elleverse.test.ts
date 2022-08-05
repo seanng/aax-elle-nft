@@ -87,10 +87,10 @@ describe('Elleverse', function () {
     })
   })
 
-  describe('airdrop', () => {
+  describe('airdropBothTokens', () => {
     it('transfers tokens to wallets in correct order', async function () {
       const [, sender1, sender2, sender3, sender4] = signers
-      await contract.airdrop([
+      await contract.airdropBothTokens([
         sender1.address,
         sender2.address,
         sender3.address,
@@ -118,7 +118,7 @@ describe('Elleverse', function () {
   describe('ownsWhitelistToken', () => {
     beforeEach(async () => {
       const [, sender1, __, sender3] = signers
-      await contract.airdrop([sender1.address, sender3.address])
+      await contract.airdropBothTokens([sender1.address, sender3.address])
     })
 
     it('returns correct boolean if user owns whitelist token', async function () {
@@ -178,7 +178,7 @@ describe('Elleverse', function () {
   describe('tokensOfOwner', () => {
     beforeEach(async () => {
       const [, sender1, __, sender3] = signers
-      await contract.airdrop([sender1.address, sender3.address])
+      await contract.airdropBothTokens([sender1.address, sender3.address])
     })
     it('returns the correct ownership data on query', async () => {
       const [, sender1, sender2, sender3] = signers
@@ -188,6 +188,36 @@ describe('Elleverse', function () {
       expect(tokensOfSender1.map((bn) => bn.toNumber())).toEqual([0, 1])
       expect(tokensOfSender2.map((bn) => bn.toNumber())).toEqual([])
       expect(tokensOfSender3.map((bn) => bn.toNumber())).toEqual([2, 3])
+    })
+  })
+
+  describe('airdropWhitelistTokens', () => {
+    beforeEach(async () => {
+      const [, sender1, sender2, sender3, sender4] = signers
+      await contract.airdropWhitelistTokens([
+        sender1.address,
+        sender2.address,
+        sender3.address,
+        sender4.address,
+      ])
+    })
+
+    it('transfers tokens to wallets in correct order', async function () {
+      const [, sender1, sender2, sender3, sender4] = signers
+      const token1Owner = await contract.ownerOf(1)
+      const token3Owner = await contract.ownerOf(3)
+      const token5Owner = await contract.ownerOf(5)
+      const token7Owner = await contract.ownerOf(7)
+      expect(token1Owner).toEqual(sender1.address)
+      expect(token3Owner).toEqual(sender2.address)
+      expect(token5Owner).toEqual(sender3.address)
+      expect(token7Owner).toEqual(sender4.address)
+    })
+
+    it('only issues 1 token to sender', async function () {
+      const [, _, sender2] = signers
+      const tokensOfSender2 = await contract.tokensOfOwner(sender2.address)
+      expect(tokensOfSender2.map((bn) => bn.toNumber())).toEqual([3])
     })
   })
 })
