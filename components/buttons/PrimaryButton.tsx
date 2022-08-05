@@ -15,7 +15,7 @@ export const PrimaryButton = ({
       {disabled ? <DisabledSvg /> : <PrimarySvg />}
       <div
         className={classNames(
-          'absolute mx-auto font-noto text-base font-medium w-full h-full top-0 leading-[40px]',
+          'absolute mx-auto font-noto text-base font-medium w-full h-full top-0 leading-[38px]',
           disabled ? 'text-[#5F6368]' : 'text-black'
         )}
       >

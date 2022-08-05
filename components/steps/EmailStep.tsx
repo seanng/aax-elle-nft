@@ -42,7 +42,7 @@ export function EmailStep({ updateForm, ...wizard }: Props) {
             id="email"
             type="text"
             placeholder="Your email"
-            className="text-black border-lime w-full mb-2 font-mono placeholder-slate-500 bg-lime border-transparent focus:border-transparent focus:ring-0 "
+            className="text-black border-lime w-full mb-2 font-mono placeholder-slate-500 bg-lime border-transparent focus:border-transparent focus:ring-0"
             {...register('email', {
               required: true,
               pattern: {
@@ -54,7 +54,7 @@ export function EmailStep({ updateForm, ...wizard }: Props) {
           {errors?.email?.message && (
             <div className="flex items-center">
               <FormErrorIcon />
-              <span className="ml-2">Email 格式不正確</span>
+              <span className="ml-2 text-sm">Email 格式不正確</span>
             </div>
           )}
         </div>
