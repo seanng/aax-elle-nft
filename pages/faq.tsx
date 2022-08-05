@@ -26,7 +26,13 @@ const FaqPage: NextPage = () => {
   return (
     <>
       <MintNavigation />
-      <div className="bg-black min-h-screen pt-navbar-height flex flex-col items-center">
+      <div
+        className="bg-black min-h-screen pt-navbar-height text-white bg-repeat flex flex-col items-center"
+        style={{
+          backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px)`,
+          backgroundSize: '40px 40px',
+        }}
+      >
         <div className="pt-10 mb-10">
           <BigQuestionIcon />
         </div>

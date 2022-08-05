@@ -7,6 +7,7 @@ import {
   CloseIcon,
   ConnectButton,
   AddressOKButton,
+  DisconnectIcon,
   AddressErrorButton,
 } from 'components'
 import { useWeb3Context } from 'context'
@@ -46,7 +47,7 @@ const Panel = () => (
     focus
     className="h-full z-30 bg-black-rgba backdrop-blur-3xl bg-repeat"
     style={{
-      backgroundImage: `linear-gradient(to right, #55F263 0.1px, transparent 0.5px), linear-gradient(to bottom, #55F263 0.1px, transparent 0.5px)`,
+      backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.7) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.7) 0.1px, transparent 1px)`,
       backgroundSize: '40px 40px',
     }}
   >
@@ -55,11 +56,9 @@ const Panel = () => (
     </div>
     <div className="h-full flex flex-col bg-repeat py-2 pl-6 text-4xl text-lime font-bold font-noto leading-[150%] space-y-4">
       <Link href="/">
-        <a className="font-noto">鑄造首頁</a>
+        <a>鑄造首頁</a>
       </Link>
-      <Link href="/">
-        <a className="font-noto">新手指南</a>
-      </Link>
+      <a href="https://academy.aax.com/en/what-is-a-crypto-wallet/">新手指南</a>
       <Link href="/">
         <a className="font-mono">My Collection</a>
       </Link>
@@ -106,7 +105,7 @@ const CloseButton = () => (
 )
 
 const Web3Button = () => {
-  const { web3Provider, address, connect, disconnect, provider } =
+  const { web3Provider, address, openConnectModal, disconnect, provider } =
     useWeb3Context()
   const [walletHasError, setWalletHasError] = useState(false)
 
@@ -126,12 +125,18 @@ const Web3Button = () => {
           {`${address?.slice(0, 4)}...${address?.slice(-2)}`}
         </div>
       </Popover.Button>
-      <Popover.Panel className="absolute z-10 mt-2 right-16 rounded-lg shadow-lg bg-white p-6 font-noto text-sm">
-        <button onClick={disconnect ? disconnect : () => {}}>Disconnect</button>
+      <Popover.Panel className="absolute z-10 top-navbar-height -mt-3 right-4 bg-white p-6 ">
+        <button
+          className="flex space-x-2"
+          onClick={disconnect ? disconnect : () => {}}
+        >
+          <DisconnectIcon />
+          <span className="text-lg">退出錢包連結</span>
+        </button>
       </Popover.Panel>
     </Popover>
   ) : (
-    <button type="button" onClick={connect}>
+    <button type="button" onClick={() => openConnectModal()}>
       <ConnectButton />
     </button>
   )

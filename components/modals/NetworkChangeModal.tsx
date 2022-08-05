@@ -1,14 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 
-export function NetworkChangeModal({
-  isOpen,
-  handleChangeNetwork,
-  closeModal,
-}) {
+export function NetworkChangeModal({ isOpen, handleChangeNetwork }) {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={closeModal}>
+      <Dialog as="div" className="relative z-10" onClose={() => {}}>
         <TransitionChild>
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </TransitionChild>

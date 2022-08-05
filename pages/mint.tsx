@@ -83,9 +83,9 @@ const MintPage: NextPage = () => {
     <>
       <MintNavigation />
       <div
-        className="bg-black min-h-screen pt-navbar-height text-white bg-repeat"
+        className="bg-black min-h-screen pt-navbar-height text-white bg-repeat overflow-y-hidden"
         style={{
-          backgroundImage: `linear-gradient(to right, #55F263 0.1px, transparent 0.4px), linear-gradient(to bottom, #55F263 0.1px, transparent 0.4px)`,
+          backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px)`,
           backgroundSize: '40px 40px',
         }}
       >

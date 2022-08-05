@@ -7,6 +7,8 @@ export function useMint(contract: ethers.Contract | null) {
   const [form, setForm] = useState({
     email: '',
     message: '',
+    senderName: '',
+    receiverName: '',
     passcode: '',
     donationInput: 0,
     donationInEth: 0,

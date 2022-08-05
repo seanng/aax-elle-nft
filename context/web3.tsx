@@ -7,25 +7,52 @@ import {
 } from 'react'
 import { useWeb3 } from 'hooks'
 import { Web3ProviderState, web3InitialState } from 'reducers'
-import { CORRECT_HEX_CHAIN, CORRECT_NETWORK } from 'shared/constants'
-import { NetworkChangeModal } from 'components'
+import { CORRECT_HEX_CHAIN } from 'shared/constants'
+import { NetworkChangeModal, ConnectModal } from 'components'
 
-const Web3Context = createContext<Web3ProviderState>(web3InitialState)
+const Web3Context = createContext<
+  Web3ProviderState & { openConnectModal: (cb?: () => void) => void }
+>({
+  openConnectModal: () => {},
+  ...web3InitialState,
+})
 
 interface Props {
   children: ReactNode
 }
 
 export const Web3ContextProvider = ({ children }: Props) => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isConnectModalOpen, setIsConnectModalOpen] = useState(false)
+  const [isNetworkChangeModalOpen, setIsNetworkChangeModalOpen] =
+    useState(false)
+  const [onConnect, setOnConnect] = useState<() => {}>(() => () => {})
   const web3ProviderState = useWeb3()
   const { provider } = web3ProviderState
 
-  const toggleModal = () => setIsModalOpen(!isModalOpen)
-
   // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
   const handleChainChanged = async (_hexChainId: string) => {
-    setIsModalOpen(_hexChainId !== CORRECT_HEX_CHAIN)
+    setIsNetworkChangeModalOpen(_hexChainId !== CORRECT_HEX_CHAIN)
+  }
+
+  const openConnectModal = (cb = () => {}) => {
+    console.log('cb: ', cb)
+    setIsConnectModalOpen(true)
+    setOnConnect(() => () => {
+      setIsConnectModalOpen(false)
+      cb()
+    })
+  }
+
+  const closeConnectModal = () => {
+    setOnConnect(() => () => {})
+    setIsConnectModalOpen(false)
+  }
+
+  const handleConnect = async () => {
+    const { connect, address } = web3ProviderState
+    let connected = true
+    if (!address) connected = await connect()
+    if (connected) onConnect()
   }
 
   const onChangeNetwork = async () => {
@@ -49,14 +76,23 @@ export const Web3ContextProvider = ({ children }: Props) => {
 
   return (
     <>
-      <Web3Context.Provider value={web3ProviderState}>
+      <Web3Context.Provider
+        value={{
+          openConnectModal,
+          ...web3ProviderState,
+        }}
+      >
         {children}
       </Web3Context.Provider>
       {/* Add Modal here. */}
       <NetworkChangeModal
-        isOpen={isModalOpen}
-        closeModal={toggleModal}
+        isOpen={isNetworkChangeModalOpen}
         handleChangeNetwork={onChangeNetwork}
+      />
+      <ConnectModal
+        isOpen={isConnectModalOpen}
+        connect={handleConnect}
+        closeModal={closeConnectModal}
       />
     </>
   )

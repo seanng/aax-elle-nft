@@ -166,7 +166,7 @@ export function BodySection() {
       </div>
       {/* Marquee */}
       <div className="mb-14 md:mb-48 font-english max-w-full overflow-x-hidden -rotate-3 font-extrabold text-4xl md:text-[168px] leading-[48px] md:leading-[224px]">
-        <div className="relative bg-lime h-12 md:h-56">
+        <div className="relative text-black bg-lime h-12 md:h-56">
           <p className="marquee scroll-left">
             <span>
               SHHHH.......&nbsp;&nbsp;&nbsp;SHHHH.......&nbsp;&nbsp;&nbsp;
@@ -178,7 +178,7 @@ export function BodySection() {
             </span>
           </p>
         </div>
-        <div className="relative bg-[#EDFA00] h-12 md:h-56">
+        <div className="relative text-black bg-[#EDFA00] h-12 md:h-56">
           <p className="marquee scroll-right">
             <span>TELL YOU A SECRET ____&nbsp;&nbsp;</span>
           </p>
