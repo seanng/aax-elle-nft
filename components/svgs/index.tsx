@@ -48,6 +48,7 @@ export { ClosePinkIcon } from './icons/ClosePinkIcon'
 export { CaretDownPinkIcon } from './icons/CaretDownPinkIcon'
 export { StepperArrowRight } from './icons/StepperArrowRight'
 export { PinkLockIcon } from './icons/PinkLockIcon'
+export { DisconnectIcon } from './icons/DisconnectIcon'
 
 // buttons
 export { ConnectButton } from './buttons/ConnectButton'

@@ -1,21 +1,15 @@
-export const FormErrorIcon = ({ width = 24, height = 25 }) => (
+export const FormErrorIcon = (props) => (
   <svg
-    width="16"
-    height="17"
-    viewBox="0 0 16 17"
+    width="14"
+    height="14"
+    viewBox="0 0 14 14"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    {...props}
   >
-    <circle cx="8" cy="8.5" r="8" fill="#E24446" />
-    <line
-      x1="8.26562"
-      y1="4.9082"
-      x2="8.26562"
-      y2="9.4082"
-      stroke="white"
-      strokeWidth="1.5"
-      strokeLinecap="round"
+    <path
+      fill="#FF003A"
+      d="M0 1.75h1.75v10.5H0zM12.25 1.75H14v10.5h-1.75zM6.125 3.5h1.75v4.375h-1.75zM6.125 8.75h1.75v1.75h-1.75zM1.75 0h10.5v1.75H1.75zM1.75 12.25h10.5V14H1.75z"
     />
-    <ellipse cx="8.26562" cy="11.8984" rx="0.75" ry="0.75" fill="white" />
   </svg>
 )
