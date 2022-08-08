@@ -58,7 +58,16 @@ export function MessageStep({
   // https://stackoverflow.com/a/65893635/6007700
 
   return (
-    <div className="flex flex-col items-center font-noto h-full pt-16">
+    <div className="flex flex-col items-center font-noto h-full pt-4">
+      <div
+        className="text-black text-[40px] font-mono w-80 text-center leading-[44px] italic mb-6"
+        style={{
+          textShadow:
+            '-1.5px -1.5px 0 #55F263, 1.5px -1.5px 0 #55F263, -1.5px 1.5px 0 #55F263, 1.5px 1.5px 0 #55F263',
+        }}
+      >
+        Ready to tell your Secret?
+      </div>
       <div className="flex w-80 mb-4">
         <div className="flex-none bg-lime text-black font-mono p-2">寄件人</div>
         <input
