@@ -16,7 +16,7 @@ export function NetworkChangeModal({ isOpen, handleChangeNetwork }) {
                 <div className="h-4 w-72 bg-white" />
                 <div className="w-80 bg-white px-4 pt-6 pb-5 text-center">
                   <WarningIcon className="mx-auto mb-6" />
-                  <h4 className="font-medium text-2xl mb-2 leading-[150%]">
+                  <h4 className="font-medium text-2xl mb-2 leading-150%">
                     切換 Network
                   </h4>
                   <p className="mb-4">

@@ -3,5 +3,5 @@ export { BLCursorButton } from './BLCursorButton'
 export { PrimaryButton } from './PrimaryButton'
 export { SecondaryButton } from './SecondaryButton'
 export { DonationButton } from './DonationButton'
-
+export { TwSpcaButton } from './TwSpcaButton'
 export { CaretDownButton } from './CaretDownButton'

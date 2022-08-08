@@ -1,9 +1,16 @@
 import { useEffect, useRef } from 'react'
 import { StepWizardChildProps } from 'react-step-wizard'
 import { useForm } from 'react-hook-form'
-import { DonationButton, SecondaryButton, PrimaryButton } from 'components'
+import {
+  DonationButton,
+  TwSpcaButton,
+  SecondaryButton,
+  PrimaryButton,
+  CaretDownGreenIcon,
+} from 'components'
 
 const EXCHANGE_RATE_REQUEST_INTERVAL = 5000
+const ETH_DECIMAL_PLACES = 5
 
 interface FormData {
   donationInput: number
@@ -29,7 +36,7 @@ export function DonationStep({
   onSubmit,
   ...wizard
 }: Props) {
-  const { handleSubmit, register, watch, setValue, getValues } = useForm({
+  const { handleSubmit, register, watch, setValue } = useForm({
     mode: 'onChange',
     defaultValues: { donationInput: 5000, donationInEth: 0 },
   })
@@ -59,49 +66,67 @@ export function DonationStep({
       setValue('donationInEth', donationInput / ethToNtd)
   }, [donationInput, ethToNtd])
 
+  const balanceNum = Number(balance)
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col items-center font-noto">
+      <div className="flex flex-col items-center font-noto pt-8 w-72 mx-auto">
         <h1 className="font-medium text-xl mb-3">你的告白能幫助小動物！</h1>
-        <p className="text-gray-500 mb-4">
+        <p className="mb-4 text-center">
           我們也非常關注浪浪議題，透過這份意義非凡的活動，讓ELLEverse 為你捐款
         </p>
-        <div className="bg-[#FBAEAE] rounded-full px-4 py-2 flex space-x-2 mb-12">
-          <img src="/images/lil-cat.png" height={23} width={25} />
-          <span>毛小孩之家官網</span>
-        </div>
-        <div className="flex font-mono mb-2 ml-10">
-          <span className="text-sm mr-1">NT$</span>
-          <input
-            type="number"
-            id="donationInput"
-            className="w-36 font-medium text-4xl caret-cucumber text-black bg-transparent border-transparent focus:border-transparent focus:ring-0 p-0"
-            min={0}
-            placeholder="0"
-            {...register('donationInput', { required: true })}
-          />
-        </div>
-        <div className="font-mono text-sm text-gray-400 mb-2">
-          (~ETH {donationInEth.toFixed(4)})
-        </div>
-        <div className="font-mono text-sm text-gray-400">
-          Your balance: ETH {Number(balance).toFixed(4)}
-        </div>
-        <div className="flex space-x-2">
-          {[1000, 5000, 10000].map((val) => (
+        <TwSpcaButton className="mb-2" />
+        <CaretDownGreenIcon className="mb-3" />
+        <div className="flex border border-lime mb-3 w-full">
+          {[1000, 5000, 10000].map((val, i) => (
             <DonationButton
               type="button"
               isActive={donationInput == val}
               onClick={() => setValue('donationInput', val)}
               key={val}
+              className={i < 2 ? 'border-r border-lime' : ''}
             >
-              ${val}
+              {val}
             </DonationButton>
           ))}
         </div>
-        <div className="flex space-x-6 w-80 mt-20">
+
+        <div className="w-full border border-lime text-lime">
+          <div className="border-b border-lime flex justify-between p-2">
+            <div
+              className="text-black text-5xl leading-120%"
+              style={{
+                textShadow:
+                  '-1px -1px 0 #55F263, 1px -1px 0 #55F263, -1px 1px 0 #55F263, 1px 1px 0 #55F263',
+              }}
+            >
+              NT$
+            </div>
+            <div className="flex flex-col items-end">
+              <input
+                type="number"
+                id="donationInput"
+                className="w-40 text-5xl font-medium font-mono bg-transparent border-transparent focus:border-transparent focus:ring-0 p-0 text-right"
+                min={0}
+                placeholder="0"
+                {...register('donationInput', { required: true })}
+              />
+              <p className="text-xs">
+                (~ETH {donationInEth.toFixed(ETH_DECIMAL_PLACES)})
+              </p>
+            </div>
+          </div>
+          <div
+            className={`text-right text-xs font-mono p-2 ${
+              balanceNum < donationInEth ? 'text-tomato' : ''
+            }`}
+          >
+            Your balance: ETH {balanceNum.toFixed(ETH_DECIMAL_PLACES)}
+          </div>
+        </div>
+        <div className="flex space-x-8 mt-20">
           <SecondaryButton onClick={handleBackClick}>上一步</SecondaryButton>
-          <PrimaryButton disabled={donationInput < 0} type="submit">
+          <PrimaryButton disabled={donationInput <= 0} type="submit">
             下一步
           </PrimaryButton>
         </div>

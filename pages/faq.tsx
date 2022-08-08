@@ -45,7 +45,7 @@ const FaqPage: NextPage = () => {
                     <Disclosure.Button className="text-left w-full flex justify-between text-lemon">
                       <div className="flex">
                         <div className="bg-lemon h-4 w-4 mt-1 mr-4" />
-                        <p className="font-noto text-white text-xl leading-[120%]">
+                        <p className="font-noto text-white text-xl leading-120%">
                           {faq.question}
                         </p>
                       </div>
@@ -55,7 +55,7 @@ const FaqPage: NextPage = () => {
                     </Disclosure.Button>
                   </dt>
                   <Disclosure.Panel as="dd" className="pt-2 pb-6 pl-8">
-                    <p className="font-noto text-lemon text-base leading-[140%]">
+                    <p className="font-noto text-lemon text-base leading-150%">
                       {faq.answer}
                     </p>
                   </Disclosure.Panel>

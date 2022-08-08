@@ -115,7 +115,7 @@ const MintPage: NextPage = () => {
         balance={balance}
         form={form}
         isOpen={isConfirmModalOpen}
-        setOpen={setIsConfirmModalOpen}
+        closeModal={() => setIsConfirmModalOpen(false)}
         handleMintClick={handleMint}
       />
     </>

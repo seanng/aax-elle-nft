@@ -54,7 +54,7 @@ const Panel = () => (
     <div className="flex justify-end items-center px-4 h-navbar-height">
       <CloseButton />
     </div>
-    <div className="h-full flex flex-col bg-repeat py-2 pl-6 text-4xl text-lime font-bold font-noto leading-[150%] space-y-4">
+    <div className="h-full flex flex-col bg-repeat py-2 pl-6 text-4xl text-lime font-bold font-noto leading-150% space-y-4">
       <Link href="/">
         <a>鑄造首頁</a>
       </Link>

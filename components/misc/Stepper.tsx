@@ -26,7 +26,7 @@ export function Stepper({
   return (
     <>
       <div
-        className="relative h-11 bg-guava text-guava font-mono font-medium italic text-4xl w-full leading-[120%] overflow-x-hidden"
+        className="relative h-11 bg-guava text-guava font-mono font-medium italic text-4xl w-full leading-120% overflow-x-hidden"
         style={{
           textShadow:
             '-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black',
@@ -62,7 +62,7 @@ export function Stepper({
           {steps.map(({ name, step }, i) => (
             <li key={name} className="flex items-center space-x-3">
               <span
-                className={`leading-[150%] text-lg font-noto ${
+                className={`leading-150% text-lg font-noto ${
                   currentStep >= step ? 'text-black' : 'text-white'
                 }`}
               >

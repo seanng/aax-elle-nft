@@ -1,7 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { XIcon } from '@heroicons/react/outline'
-import { PrimaryButton } from 'components/buttons'
-import { Fragment, useRef } from 'react'
+import { CloseIcon, PrimaryButton } from 'components'
+import Image from 'next/image'
+import { Fragment } from 'react'
+import { classNames } from 'utils/helpers'
 
 interface Props {
   form: {
@@ -13,72 +14,96 @@ interface Props {
   }
   isOpen: boolean
   handleMintClick: () => Promise<void>
-  setOpen: (b: boolean) => void
+  closeModal: () => void
   balance: string
 }
 
 export function MintConfirmationModal({
   isOpen,
-  setOpen,
+  closeModal,
   balance = '',
   handleMintClick,
   form,
 }: Props) {
-  const cancelButtonRef = useRef(null)
-
   return (
     <Transition.Root show={isOpen} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-10"
-        onClose={setOpen}
-        initialFocus={cancelButtonRef}
-      >
+      <Dialog as="div" className="relative z-10" onClose={closeModal}>
         <TransitionChild>
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          <div className="fixed inset-0 bg-black-rgba backdrop-blur-3xl transition-opacity" />
         </TransitionChild>
         <div className="fixed z-10 inset-0 overflow-y-auto">
           <div className="flex items-end sm:items-center justify-center min-h-full p-4 sm:p-0">
             <TransitionChild>
-              <Dialog.Panel className="relative rounded-lg bg-white overflow-hidden shadow-xl transition-all px-6 py-8 w-full sm:my-8 sm:max-w-lg">
-                <div className="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
+              <Dialog.Panel className="transition-all flex flex-col items-center">
+                <div className="h-4 w-[300px] bg-white" />
+                <div className="relative w-[330px] bg-white px-5 pt-9 text-left">
                   <button
                     type="button"
-                    className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none"
-                    onClick={() => setOpen(false)}
+                    className="absolute right-5 top-0 focus:outline-none"
+                    onClick={closeModal}
                   >
                     <span className="sr-only">Close</span>
-                    <XIcon className="h-6 w-6" aria-hidden="true" />
+                    <CloseIcon fill="#5F6368" width={20} height={20} />
                   </button>
-                </div>
-                <h1 className="text-2xl font-mono mb-6">Review and confirm</h1>
-                <div className="rounded-lg border border-gray-200 p-4 font-noto">
-                  <p className="font-bold mb-2">告白</p>
-                  <p>{form.message}</p>
-                  <hr className="text-gray-200 my-2" />
-                  <p className="font-bold mb-2">Email</p>
-                  <p>{form.email}</p>
-                  <hr className="text-gray-200 my-2" />
-                  <p className="font-bold mb-2">解鎖密碼</p>
-                  <p>{form.passcode}</p>
-                </div>
-                <div className="py-6 px-4">
-                  <p className="font-bold mb-2">捐款金額</p>
-                  <div className="flex space-x-2 font-mono items-center">
-                    <div className="text-[#2FB500] font-bold">
-                      NTD {form.donationInput}
+                  <h1 className="text-2xl font-mono mb-5 text-center">
+                    Review and confirm
+                  </h1>
+                  {Number(balance) < Number(form.donationInEth) && (
+                    <div className="bg-tomato flex px-7 py-4 space-x-4 items-center">
+                      <WarningStamp />
+                      <div className="text-white">
+                        <p>錢包資產不足</p>
+                        <p>請到錢包購買以太幣</p>
+                        <a href="#" target="_blank" className="underline">
+                          如何買幣？
+                        </a>
+                      </div>
                     </div>
-                    <div className="text-gray-400 text-xs">
-                      (已包含 gas fee)
+                  )}
+                  <div className="px-4 py-3 bg-lime font-mono mb-3">
+                    <p className="font-bold mb-2">告白</p>
+                    <p>{form.message}</p>
+                    <hr className="my-2 border-black" />
+                    <p className="font-bold mb-2">Email</p>
+                    <p>{form.email}</p>
+                    <hr className="my-2 border-black" />
+                    <p className="font-bold mb-2">解鎖密碼</p>
+                    <p>{form.passcode}</p>
+                  </div>
+                  <p className="font-medium">捐款金額</p>
+                  <div className="flex space-x-2 font-mono items-end mb-2">
+                    <div className="font-medium underline text-3xl tracking-wide">
+                      ETH {Number(form.donationInEth).toFixed(4)}
+                    </div>
+                    <div className="text-gray-400 text-xs mb-1">
+                      {`(NTD${form.donationInput})`}
                     </div>
                   </div>
+                  <div className="flex mb-5 space-x-1">
+                    <Image
+                      src="/images/tiny-gray-error-icon.png"
+                      layout="fixed"
+                      objectFit="contain"
+                      height="15px"
+                      width="15px"
+                      className="flex-none"
+                    />
+                    <p className="text-gray-400 font-mono text-xs leading-150%">
+                      ETH已包含 gas fee of
+                      ~0.00023ETH，台幣金額會依據ETH的浮動匯率而改變
+                    </p>
+                  </div>
+
+                  <div className="text-center mb-5">
+                    <PrimaryButton onClick={handleMintClick}>
+                      確定鑄造
+                    </PrimaryButton>
+                  </div>
                 </div>
-                {Number(balance) < Number(form.donationInput) && (
+                <div className="h-4 w-[300px] bg-white" />
+                {/* {Number(balance) < Number(form.donationInput) && (
                   <div>you have no money pls top up thx</div>
-                )}
-                <PrimaryButton onClick={handleMintClick}>
-                  確定鑄造
-                </PrimaryButton>
+                )} */}
               </Dialog.Panel>
             </TransitionChild>
           </div>
@@ -87,6 +112,24 @@ export function MintConfirmationModal({
     </Transition.Root>
   )
 }
+
+const WarningStamp = ({ className = '', ...props }) => (
+  <div
+    className={classNames(
+      'relative flex flex-col justify-between items-center h-16 w-16 flex-none',
+      className
+    )}
+    {...props}
+  >
+    <div className="w-12 h-2 bg-white" />
+    <div className="flex justify-between items-center w-full">
+      <div className="w-2 h-12 bg-white" />
+      <div className="text-white font-mono font-bold text-4xl">!</div>
+      <div className="w-2 h-12 bg-white" />
+    </div>
+    <div className="w-12 h-2 bg-white" />
+  </div>
+)
 
 const TransitionChild = (props) => (
   <Transition.Child

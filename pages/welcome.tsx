@@ -42,7 +42,7 @@ const WelcomePage: NextPage = () => {
           Limited time offer till 8/15
         </div>
         <div
-          className="relative text-black font-mono font-medium italic text-6xl w-full leading-[120%] h-20 overflow-x-hidden"
+          className="relative text-black font-mono font-medium italic text-6xl w-full leading-120% h-20 overflow-x-hidden"
           style={{
             textShadow:
               '-1px -1px 0 #C3FA08, 1px -1px 0 #C3FA08, -1px 1px 0 #C3FA08, 1px 1px 0 #C3FA08',
