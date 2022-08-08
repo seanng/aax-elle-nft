@@ -1,34 +1,30 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
+import { WarningIcon } from 'components'
 
 export function NetworkChangeModal({ isOpen, handleChangeNetwork }) {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => {}}>
         <TransitionChild>
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          <div className="fixed inset-0 bg-black-rgba backdrop-blur-3xl transition-opacity" />
         </TransitionChild>
         <div className="fixed z-10 inset-0 overflow-y-auto">
           <div className="flex items-center justify-center min-h-full text-center">
             <TransitionChild>
-              <Dialog.Panel className="flex rounded-lg overflow-hidden shadow-xl transition-all">
-                <div className="flex items-center px-4 border-l-4 border-pomegranate bg-[#FFF2F2]">
-                  error
+              <Dialog.Panel className="transition-all relative flex flex-col items-center">
+                <div className="h-4 w-72 bg-white" />
+                <div className="w-80 bg-white px-4 pt-6 pb-5 text-center">
+                  <WarningIcon className="mx-auto mb-6" />
+                  <h4 className="font-medium text-2xl mb-2 leading-[150%]">
+                    切換 Network
+                  </h4>
+                  <p className="mb-4">
+                    請到手機App或網頁版錢包切換至 Ethereum Main Network
+                  </p>
+                  <a className="text-blue-500 underline">Learn More</a>
                 </div>
-                <div className="py-4 bg-white text-left px-4 text-base">
-                  <h4 className="text-base font-semibold">切換 Network</h4>
-                  <p>請到手機App或網頁版錢包切換</p>
-                  <p>至 Ethereum Main Network</p>
-                  <div className="flex justify-end w-full">
-                    <button
-                      type="button"
-                      className="mt-4 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none sm:text-sm"
-                      onClick={handleChangeNetwork}
-                    >
-                      Switch Network
-                    </button>
-                  </div>
-                </div>
+                <div className="h-4 w-72 bg-white" />
               </Dialog.Panel>
             </TransitionChild>
           </div>
