@@ -34,22 +34,22 @@ export function MintConfirmationModal({
         <div className="fixed z-10 inset-0 overflow-y-auto">
           <div className="flex items-end sm:items-center justify-center min-h-full p-4 sm:p-0">
             <TransitionChild>
-              <Dialog.Panel className="transition-all flex flex-col items-center">
+              <Dialog.Panel className="relative transition-all flex flex-col items-center">
                 <div className="h-4 w-[300px] bg-white" />
-                <div className="relative w-[330px] bg-white px-5 pt-9 text-left">
+                <div className="w-[330px] bg-white px-5 pt-9 text-left">
                   <button
                     type="button"
-                    className="absolute right-5 top-0 focus:outline-none"
+                    className="absolute right-5 -top-10 focus:outline-none"
                     onClick={closeModal}
                   >
                     <span className="sr-only">Close</span>
-                    <CloseIcon fill="#5F6368" width={20} height={20} />
+                    <CloseIcon width={20} height={20} />
                   </button>
                   <h1 className="text-2xl font-mono mb-5 text-center">
                     Review and confirm
                   </h1>
                   {Number(balance) < Number(form.donationInEth) && (
-                    <div className="bg-tomato flex px-7 py-4 space-x-4 items-center">
+                    <div className="bg-tomato flex px-4 py-4 space-x-4 mb-2">
                       <WarningStamp />
                       <div className="text-white">
                         <p>錢包資產不足</p>
@@ -60,26 +60,26 @@ export function MintConfirmationModal({
                       </div>
                     </div>
                   )}
-                  <div className="px-4 py-3 bg-lime font-mono mb-3">
+                  <div className="px-4 py-3 border border-lime font-mono mb-3">
                     <p className="font-bold mb-2">告白</p>
                     <p>{form.message}</p>
-                    <hr className="my-2 border-black" />
+                    <hr className="my-2 border-lime" />
                     <p className="font-bold mb-2">Email</p>
                     <p>{form.email}</p>
-                    <hr className="my-2 border-black" />
+                    <hr className="my-2 border-lime" />
                     <p className="font-bold mb-2">解鎖密碼</p>
                     <p>{form.passcode}</p>
                   </div>
-                  <p className="font-medium">捐款金額</p>
-                  <div className="flex space-x-2 font-mono items-end mb-2">
-                    <div className="font-medium underline text-3xl tracking-wide">
-                      ETH {Number(form.donationInEth).toFixed(4)}
+                  <p className="font-medium px-4">捐款金額</p>
+                  <div className="flex pl-4 space-x-1 font-mono items-end mb-2">
+                    <div className="font-medium underline text-2xl tracking-wide">
+                      ~ETH {Number(form.donationInEth).toFixed(5)}
                     </div>
                     <div className="text-gray-400 text-xs mb-1">
                       {`(NTD${form.donationInput})`}
                     </div>
                   </div>
-                  <div className="flex mb-5 space-x-1">
+                  <div className="flex mb-5 space-x-1 px-4">
                     <Image
                       src="/images/tiny-gray-error-icon.png"
                       layout="fixed"
@@ -93,7 +93,6 @@ export function MintConfirmationModal({
                       ~0.00023ETH，台幣金額會依據ETH的浮動匯率而改變
                     </p>
                   </div>
-
                   <div className="text-center mb-5">
                     <PrimaryButton onClick={handleMintClick}>
                       確定鑄造
@@ -101,9 +100,6 @@ export function MintConfirmationModal({
                   </div>
                 </div>
                 <div className="h-4 w-[300px] bg-white" />
-                {/* {Number(balance) < Number(form.donationInput) && (
-                  <div>you have no money pls top up thx</div>
-                )} */}
               </Dialog.Panel>
             </TransitionChild>
           </div>
@@ -116,18 +112,18 @@ export function MintConfirmationModal({
 const WarningStamp = ({ className = '', ...props }) => (
   <div
     className={classNames(
-      'relative flex flex-col justify-between items-center h-16 w-16 flex-none',
+      'relative flex flex-col justify-between items-center h-8 w-8 flex-none',
       className
     )}
     {...props}
   >
-    <div className="w-12 h-2 bg-white" />
+    <div className="w-6 h-1 bg-white" />
     <div className="flex justify-between items-center w-full">
-      <div className="w-2 h-12 bg-white" />
-      <div className="text-white font-mono font-bold text-4xl">!</div>
-      <div className="w-2 h-12 bg-white" />
+      <div className="w-1 h-6 bg-white" />
+      <div className="text-white font-mono font-bold text-md">!</div>
+      <div className="w-1 h-6 bg-white" />
     </div>
-    <div className="w-12 h-2 bg-white" />
+    <div className="w-6 h-1 bg-white" />
   </div>
 )
 

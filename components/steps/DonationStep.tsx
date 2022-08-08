@@ -125,7 +125,9 @@ export function DonationStep({
           </div>
         </div>
         <div className="flex space-x-8 mt-20">
-          <SecondaryButton onClick={handleBackClick}>上一步</SecondaryButton>
+          <SecondaryButton type="button" onClick={handleBackClick}>
+            上一步
+          </SecondaryButton>
           <PrimaryButton disabled={donationInput <= 0} type="submit">
             下一步
           </PrimaryButton>
