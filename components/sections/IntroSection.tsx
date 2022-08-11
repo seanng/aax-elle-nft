@@ -8,6 +8,7 @@ import {
   BLCursorButton,
   PinkPetals,
 } from 'components'
+import Link from 'next/link'
 import { getWidthHeightPercentages } from 'utils/helpers'
 
 const text = {
@@ -92,7 +93,11 @@ function Desktop() {
           <IntroWhiteScreen width="100%" height="100%" />
           <PacmanGhost className="absolute -top-[75px] left-[123px]" />
           <div className="absolute bottom-4 left-0 right-0 mx-auto text-center">
-            <BLCursorButton>{text.button}</BLCursorButton>
+            <Link href="/mint" passHref>
+              <a>
+                <BLCursorButton>{text.button}</BLCursorButton>
+              </a>
+            </Link>
           </div>
         </div>
       </div>

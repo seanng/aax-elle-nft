@@ -1,4 +1,5 @@
 import * as service from 'backend/services/mints'
+import randomstring from 'randomstring'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import { validate } from 'lib/middlewares'
 import { check } from 'express-validator'
@@ -27,7 +28,19 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
   )
     return
 
+  let isShortcodeUnique = false
+  let shortcode = 'abcde'
+
+  while (!isShortcodeUnique) {
+    shortcode = randomstring.generate({
+      capitalization: 'lowercase',
+      length: 5,
+    })
+    isShortcodeUnique = !(await service.findUnique({ shortcode }))
+  }
+
   const mint = await service.create({
+    shortcode,
     message: req.body.message,
     minterEmail: req.body.minterEmail,
     minterWallet: req.body.minterWallet,

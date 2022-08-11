@@ -3,6 +3,10 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
   content: ['./components/**/*.{tsx,jsx}', './pages/**/*.{tsx,jsx}'],
   theme: {
+    screens: {
+      xs: '400px',
+      ...defaultTheme.screens,
+    },
     extend: {
       transitionProperty: {
         'max-height': 'max-height',

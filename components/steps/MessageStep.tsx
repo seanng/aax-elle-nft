@@ -2,16 +2,19 @@ import { StepWizardChildProps } from 'react-step-wizard'
 import { useWeb3Context } from 'context'
 import { PrimaryButton, SecondaryButton } from 'components'
 import { useState } from 'react'
+import { Files } from 'shared/types'
 
 const TEXTAREA_HEIGHT = 232
 
 interface Props extends Partial<StepWizardChildProps> {
   updateForm: (formValues: Record<string, string>) => void
+  updateFiles: (files: Files) => void
   openSharingModal: () => void
 }
 
 export function MessageStep({
   updateForm,
+  updateFiles,
   openSharingModal,
   ...wizard
 }: Props) {
@@ -23,6 +26,8 @@ export function MessageStep({
   const { openConnectModal, address } = useWeb3Context()
 
   const handleMintClick = async () => {
+    // Generate animation HTML out of message.
+    // updateFiles()
     updateForm(values)
     if (address) {
       wizard.nextStep && wizard.nextStep()
@@ -33,6 +38,7 @@ export function MessageStep({
 
   const handleShareClick = async () => {
     // Generate animation HTML out of message.
+    // updateFiles()
     // Open social media sharing modal and show the image, with buttons.
     openSharingModal()
   }

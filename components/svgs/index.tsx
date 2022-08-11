@@ -42,7 +42,6 @@ export { FBIcon } from './icons/FBIcon'
 export { IGIcon } from './icons/IGIcon'
 export { TwitterIcon } from './icons/TwitterIcon'
 export { HamburgerIcon } from './icons/HamburgerIcon'
-export { CloseIcon } from './icons/CloseIcon'
 export { BigQuestionIcon } from './icons/BigQuestionIcon'
 export { ClosePinkIcon } from './icons/ClosePinkIcon'
 export { CaretDownPinkIcon } from './icons/CaretDownPinkIcon'
@@ -59,3 +58,7 @@ export { AddressErrorButton } from './buttons/AddressErrorButton'
 
 // form
 export { FormErrorIcon } from './form/FormErrorIcon'
+
+// welcome
+export { MintHeroDesktop } from './welcome/MintHeroDesktop'
+export { MintHeroMobile } from './welcome/MintHeroMobile'

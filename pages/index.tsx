@@ -13,6 +13,7 @@ const HomePage: NextPage = () => {
     <>
       <LandingNavigation />
       <ReactFullpage
+        licenseKey="62K6J-PQ71H-00KVJ-7RJGJ-VYVZP"
         navigation
         render={(comp) => (
           <ReactFullpage.Wrapper>

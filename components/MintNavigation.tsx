@@ -4,7 +4,7 @@ import { Popover, Transition } from '@headlessui/react'
 import Link from 'next/link'
 import {
   HamburgerIcon,
-  CloseIcon,
+  ModalCloseButton,
   ConnectButton,
   AddressOKButton,
   DisconnectIcon,
@@ -47,12 +47,17 @@ const Panel = () => (
     focus
     className="h-full z-30 bg-black-rgba backdrop-blur-3xl bg-repeat"
     style={{
-      backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.7) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.7) 0.1px, transparent 1px)`,
+      backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px)`,
       backgroundSize: '40px 40px',
     }}
   >
     <div className="flex justify-end items-center px-4 h-navbar-height">
-      <CloseButton />
+      <Popover.Button
+        className="p-2"
+        width={25}
+        height={25}
+        as={ModalCloseButton}
+      />
     </div>
     <div className="h-full flex flex-col bg-repeat py-2 pl-6 text-4xl text-lime font-bold font-noto leading-150% space-y-4">
       <Link href="/">
@@ -95,13 +100,6 @@ const Hamburger = () => (
       <HamburgerIcon />
     </Popover.Button>
   </div>
-)
-
-const CloseButton = () => (
-  <Popover.Button className="bg-transparent p-2 inline-flex items-center justify-center text-gray-400 focus:outline-none">
-    <span className="sr-only">Close menu</span>
-    <CloseIcon />
-  </Popover.Button>
 )
 
 const Web3Button = () => {

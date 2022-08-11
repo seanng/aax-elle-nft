@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { CloseIcon } from 'components'
+import { ModalCloseButton } from 'components'
 import Image from 'next/image'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { classNames } from 'utils/helpers'
@@ -27,14 +27,10 @@ export function ConnectModal({ isOpen, closeModal, connect }) {
           <div className="flex items-center justify-center min-h-full text-center">
             <TransitionChild>
               <Dialog.Panel className="transition-all relative flex flex-col items-center">
-                <button
-                  type="button"
-                  className="absolute right-4 -top-10 focus:outline-none"
+                <ModalCloseButton
                   onClick={closeModal}
-                >
-                  <span className="sr-only">Close</span>
-                  <CloseIcon />
-                </button>
+                  className="absolute right-5 -top-10"
+                />
                 <div className="h-4 w-72 bg-white" />
                 <div className="w-80 bg-white px-4 pt-6 pb-20 text-center">
                   <h4 className="font-medium text-2xl  mb-8">連結錢包</h4>

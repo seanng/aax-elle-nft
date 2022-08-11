@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { Popover, Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
-import { Web3Button } from './Web3Button'
 import { IGIcon, TwitterIcon, FBIcon } from 'components'
 
 export function LandingNavigation() {

@@ -2,6 +2,7 @@ import axios from 'lib/axios'
 import { ethers } from 'ethers'
 import { NO_WHITELIST_TOKEN, OPENED, UNOPENED, PUBLIC } from 'shared/constants'
 import { useState } from 'react'
+import { Files } from 'shared/types'
 
 export function useMint(contract: ethers.Contract | null) {
   const [form, setForm] = useState({
@@ -12,6 +13,14 @@ export function useMint(contract: ethers.Contract | null) {
     passcode: '',
     donationInput: 0,
     donationInEth: 0,
+  })
+  const [files, setFiles] = useState<Files>({
+    unopenedImage: null,
+    unopenedHtml: null,
+    openedImage: null,
+    openedHtml: null,
+    neverOpenedImage: null,
+    neverOpenedHtml: null,
   })
   const [isMinting, setIsMinting] = useState(false)
   const [ethToNtd, setEthToNtd] = useState<number | null>(null)
@@ -102,5 +111,6 @@ export function useMint(contract: ethers.Contract | null) {
     ethToNtd,
     form,
     setForm,
+    setFiles,
   }
 }

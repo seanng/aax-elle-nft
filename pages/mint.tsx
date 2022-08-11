@@ -36,8 +36,15 @@ const MintPage: NextPage = () => {
 
   const { contract, mintGasFee, calcMintGasFee } = useContract()
   const { calcBalance, balance } = useWeb3Context()
-  const { preSaleMint, publicSaleMint, calcEthToNtd, ethToNtd, form, setForm } =
-    useMint(contract)
+  const {
+    preSaleMint,
+    publicSaleMint,
+    calcEthToNtd,
+    ethToNtd,
+    form,
+    setForm,
+    setFiles,
+  } = useMint(contract)
 
   const handleMint = async () => {
     if (!contract) {
@@ -85,13 +92,14 @@ const MintPage: NextPage = () => {
       <div
         className="bg-black min-h-screen pt-navbar-height text-white bg-repeat overflow-y-hidden"
         style={{
-          backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.3) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.3) 0.1px, transparent 1px)`,
           backgroundSize: '40px 40px',
         }}
       >
         <StepWizard transitions={transitions} nav={<Stepper />}>
           <MessageStep
             updateForm={updateForm}
+            updateFiles={setFiles}
             openSharingModal={() => setIsSharingModalOpen(true)}
           />
           <EmailStep updateForm={updateForm} />
@@ -109,7 +117,7 @@ const MintPage: NextPage = () => {
       </div>
       <SharingModal
         isOpen={isSharingModalOpen}
-        closeModal={setIsSharingModalOpen}
+        closeModal={() => setIsSharingModalOpen(false)}
       />
       <MintConfirmationModal
         balance={balance}

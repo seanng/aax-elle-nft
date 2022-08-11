@@ -1,5 +1,6 @@
 import handler from 'pages/api/mints'
 import { createMocks, RequestMethod } from 'node-mocks-http'
+import randomstring from 'randomstring'
 import * as mintsService from 'backend/services/mints'
 
 const validRequestBody = {
@@ -13,10 +14,23 @@ const validRequestBody = {
 
 const mintData = {
   ...validRequestBody,
+  shortcode: '123as',
   id: '123',
   createdAt: new Date(),
   updatedAt: new Date(),
 }
+
+jest.mock('backend/services/mints', () => {
+  const originalModule = jest.requireActual('backend/services/mints')
+  return {
+    __esModule: true,
+    ...originalModule,
+    findUnique: jest.fn().mockResolvedValue(null),
+    create: jest.fn(),
+  }
+})
+
+randomstring.generate = jest.fn().mockResolvedValue('123as')
 
 describe('api/mints', () => {
   let httpMockedData = {

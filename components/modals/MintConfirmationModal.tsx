@@ -1,8 +1,9 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { CloseIcon, PrimaryButton } from 'components'
+import { ModalCloseButton, PrimaryButton } from 'components'
 import Image from 'next/image'
 import { Fragment } from 'react'
 import { classNames } from 'utils/helpers'
+import { SpinningOverlay } from 'components'
 
 interface Props {
   form: {
@@ -37,14 +38,7 @@ export function MintConfirmationModal({
               <Dialog.Panel className="relative transition-all flex flex-col items-center">
                 <div className="h-4 w-[300px] bg-white" />
                 <div className="w-[330px] bg-white px-5 pt-9 text-left">
-                  <button
-                    type="button"
-                    className="absolute right-5 -top-10 focus:outline-none"
-                    onClick={closeModal}
-                  >
-                    <span className="sr-only">Close</span>
-                    <CloseIcon width={20} height={20} />
-                  </button>
+                  <ModalCloseButton className="absolute right-5 -top-10" />
                   <h1 className="text-2xl font-mono mb-5 text-center">
                     Review and confirm
                   </h1>

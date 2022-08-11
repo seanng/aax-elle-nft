@@ -13,6 +13,7 @@ model Mint {
   message        String
   minterEmail    String
   minterWallet   String
+  shortcode      String   @unique
   passcode       String
   ethDonated     String // eth
   decryptedAt    DateTime?

@@ -196,3 +196,22 @@
   height: 15px;
   width: 288px;
 }
+
+/* TO DELETE */
+
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  height: 160px;
+  width: 100px;
+  border: solid 2px red;
+  background: lightcoral;
+  backface-visibility: hidden;
+}
+
+.card:hover {
+  cursor: pointer;
+  box-shadow: 0 0 5px green;
+}

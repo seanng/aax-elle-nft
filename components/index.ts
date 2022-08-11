@@ -1,8 +1,5 @@
-export { Web3Button } from './Web3Button'
 export { LandingNavigation } from './LandingNavigation'
 export { MintNavigation } from './MintNavigation'
-export { ExitSvg } from './ExitSvg'
-export { HamburgerSvg } from './HamburgerSvg'
 export { SpinningOverlay } from './SpinningOverlay'
 export * from './buttons'
 export * from './svgs'

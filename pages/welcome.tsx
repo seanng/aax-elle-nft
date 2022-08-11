@@ -1,4 +1,10 @@
-import { CaretDownButton, MintNavigation, PrimaryButton } from 'components'
+import {
+  CaretDownButton,
+  MintHeroDesktop,
+  MintHeroMobile,
+  MintNavigation,
+  PrimaryButton,
+} from 'components'
 import { config } from 'utils/config'
 import { useWeb3Context } from 'context'
 import type { NextPage } from 'next'
@@ -32,7 +38,7 @@ const WelcomePage: NextPage = () => {
     <>
       <MintNavigation />
       <div
-        className="bg-black min-h-screen pt-navbar-height text-white bg-repeat flex flex-col items-center"
+        className="bg-black min-h-screen pt-navbar-height text-white bg-repeat flex flex-col items-center overflow-hidden w-full"
         style={{
           backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px)`,
           backgroundSize: '40px 40px',
@@ -61,14 +67,8 @@ const WelcomePage: NextPage = () => {
             </span>
           </p>
         </div>
-        <div className="relative h-[514px] w-full max-w-[514px] mb-14">
-          <Image
-            src="/images/mint-cover-hero.png"
-            layout="fill"
-            alt="cover"
-            objectFit="cover"
-          />
-        </div>
+        <MintHeroMobile className="md:hidden mb-14" />
+        <MintHeroDesktop className="hidden md:block mb-14 max-h-[700px]" />
         {(config.saleStatus === PUBLIC_SALE ||
           config.saleStatus === PRESALE) && (
           <PrimaryButton className="mb-6" onClick={handleCtaClick}>

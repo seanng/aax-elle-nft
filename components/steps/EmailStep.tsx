@@ -59,7 +59,9 @@ export function EmailStep({ updateForm, ...wizard }: Props) {
           )}
         </div>
         <div className="flex space-x-8">
-          <SecondaryButton onClick={handleBackClick}>上一步</SecondaryButton>
+          <SecondaryButton type="button" onClick={handleBackClick}>
+            上一步
+          </SecondaryButton>
           <PrimaryButton disabled={!isValid || !isDirty} type="submit">
             下一步
           </PrimaryButton>

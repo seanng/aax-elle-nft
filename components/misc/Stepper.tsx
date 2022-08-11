@@ -52,7 +52,7 @@ export function Stepper({
         className="flex items-center justify-center h-10"
         aria-label="Progress"
       >
-        <div className="h-full w-11 bg-black flex justify-center items-center">
+        <div className="hidden xs:flex h-full w-11 bg-black justify-center items-center">
           <PinkLockIcon />
         </div>
         <ol
@@ -76,7 +76,7 @@ export function Stepper({
             </li>
           ))}
         </ol>
-        <div className="h-full w-11 bg-black flex justify-center items-center">
+        <div className="hidden xs:flex h-full w-11 bg-black justify-center items-center">
           <PinkLockIcon />
         </div>
       </nav>

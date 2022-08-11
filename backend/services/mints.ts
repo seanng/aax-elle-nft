@@ -10,3 +10,6 @@ export const create = async (
 
 export const findAll = async (where: Prisma.MintWhereInput) =>
   prisma.mint.findMany({ where })
+
+export const findUnique = async (where: Prisma.MintWhereUniqueInput) =>
+  prisma.mint.findUnique({ where })
