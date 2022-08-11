@@ -50,6 +50,7 @@ export { StepperArrowRight } from './icons/StepperArrowRight'
 export { PinkLockIcon } from './icons/PinkLockIcon'
 export { DisconnectIcon } from './icons/DisconnectIcon'
 export { WarningIcon } from './icons/WarningIcon'
+export { GreenLipsIcon } from './icons/GreenLipsIcon'
 
 // buttons
 export { ConnectButton } from './buttons/ConnectButton'

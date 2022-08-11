@@ -12,7 +12,8 @@ module.exports = {
         'max-height': 'max-height',
       },
       colors: {
-        'black-rgba': 'rgba(0, 0, 0, 0.7)',
+        'black-rgba-20': 'rgba(0, 0, 0, 0.2)',
+        'black-rgba-70': 'rgba(0, 0, 0, 0.7)',
         lime: '#55F263',
         cucumber: '#2FB500',
         lemon: '#C3FA08',

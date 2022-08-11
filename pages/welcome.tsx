@@ -8,9 +8,9 @@ import {
 import { config } from 'utils/config'
 import { useWeb3Context } from 'context'
 import type { NextPage } from 'next'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { PRESALE, PUBLIC_SALE } from 'shared/constants'
+import Link from 'next/link'
 
 const WelcomePage: NextPage = () => {
   const { address, connect } = useWeb3Context()
@@ -69,13 +69,12 @@ const WelcomePage: NextPage = () => {
         </div>
         <MintHeroMobile className="md:hidden mb-14" />
         <MintHeroDesktop className="hidden md:block mb-14 max-h-[700px]" />
-        {(config.saleStatus === PUBLIC_SALE ||
-          config.saleStatus === PRESALE) && (
-          <PrimaryButton className="mb-6" onClick={handleCtaClick}>
-            我要告白
-          </PrimaryButton>
-        )}
-        <CaretDownButton />
+        <Link href="/mint">
+          <a>
+            <PrimaryButton>我要告白</PrimaryButton>
+          </a>
+        </Link>
+        <CaretDownButton className="mt-6" />
       </div>
     </>
   )

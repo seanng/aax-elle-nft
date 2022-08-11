@@ -45,7 +45,7 @@ const Navbar = () => (
 const Panel = () => (
   <Popover.Panel
     focus
-    className="h-full z-30 bg-black-rgba backdrop-blur-3xl bg-repeat"
+    className="h-full z-30 bg-black-rgba-70 backdrop-blur-3xl bg-repeat"
     style={{
       backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px)`,
       backgroundSize: '40px 40px',

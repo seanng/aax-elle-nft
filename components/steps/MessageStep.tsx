@@ -1,8 +1,9 @@
 import { StepWizardChildProps } from 'react-step-wizard'
-import { useWeb3Context } from 'context'
-import { PrimaryButton, SecondaryButton } from 'components'
+import { PrimaryButton, SecondaryButton, GreenLipsIcon } from 'components'
 import { useState } from 'react'
 import { Files } from 'shared/types'
+import { FINISHED, NOT_STARTED, PRESALE, PUBLIC_SALE } from 'shared/constants'
+import { config } from 'utils/config'
 
 const TEXTAREA_HEIGHT = 232
 
@@ -10,12 +11,18 @@ interface Props extends Partial<StepWizardChildProps> {
   updateForm: (formValues: Record<string, string>) => void
   updateFiles: (files: Files) => void
   openSharingModal: () => void
+  openConnectModal: (cb: () => {}) => void
+  address?: string | null
+  ownsWhitelistToken: (address: string) => Promise<boolean>
 }
 
 export function MessageStep({
   updateForm,
   updateFiles,
   openSharingModal,
+  ownsWhitelistToken,
+  openConnectModal,
+  address,
   ...wizard
 }: Props) {
   const [values, setValues] = useState({
@@ -23,17 +30,24 @@ export function MessageStep({
     senderName: '',
     receiverName: '',
   })
-  const { openConnectModal, address } = useWeb3Context()
+  const onWalletConnect = async () => {
+    if (!address) return console.error('No Address Found...')
+    if (config.saleStatus === PRESALE) {
+      const hasWhitelistToken = await ownsWhitelistToken(address)
+      if (!hasWhitelistToken) {
+        // If address does not contain whitelist token, display Sorry modal.
+        console.log('User does not have whitelist token')
+        return
+      }
+    }
+    wizard.nextStep && wizard.nextStep()
+  }
 
   const handleMintClick = async () => {
     // Generate animation HTML out of message.
     // updateFiles()
     updateForm(values)
-    if (address) {
-      wizard.nextStep && wizard.nextStep()
-    } else {
-      openConnectModal(wizard.nextStep)
-    }
+    address ? onWalletConnect() : openConnectModal(onWalletConnect)
   }
 
   const handleShareClick = async () => {
@@ -60,70 +74,72 @@ export function MessageStep({
     }))
   }
 
+  const shouldDisableButtons =
+    values.message === '' ||
+    config.saleStatus === NOT_STARTED ||
+    config.saleStatus === FINISHED
+
   // https://stackoverflow.com/a/46118025/6007700
   // https://stackoverflow.com/a/65893635/6007700
 
   return (
-    <div className="flex flex-col items-center font-noto h-full pt-4">
-      <div
-        className="text-black text-[40px] font-mono w-80 text-center leading-[44px] italic mb-6"
-        style={{
-          textShadow:
-            '-1.5px -1.5px 0 #55F263, 1.5px -1.5px 0 #55F263, -1.5px 1.5px 0 #55F263, 1.5px 1.5px 0 #55F263',
-        }}
-      >
-        Ready to tell your Secret?
-      </div>
-      <div className="flex w-80 mb-4">
-        <div className="flex-none bg-lime text-black font-mono p-2">寄件人</div>
-        <input
-          id="senderName"
-          name="senderName"
-          type="text"
-          className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono"
-          onChange={handleInputChange}
-        />
-      </div>
-      <div className="flex w-80 mb-6">
-        <div className="flex-none bg-lime text-black font-mono p-2">收件人</div>
-        <input
-          id="receiverName"
-          name="receiverName"
-          type="text"
-          className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono"
-          onChange={handleInputChange}
-        />
-      </div>
-      {/* <input
-        id="receiverName"
-        name="receiverName"
-        type="text"
-        className="border-lime text-white bg-transparent"
-        onChange={handleInputChange}
-      /> */}
-
-      <textarea
-        id="message"
-        rows={5}
-        className="shadow-sm block w-56 text-3xl border border-gray-300 rounded-md text-black p-4 mb-6 resize-none overflow-hidden"
-        onInput={handleTextareaChange}
-        placeholder="寫下你的告白"
-        // value={message}
-      />
-      <div className="flex space-x-8">
-        <SecondaryButton
-          disabled={values.message === ''}
-          onClick={handleShareClick}
+    <>
+      <div className="flex flex-col items-center font-noto h-full pt-4">
+        <div
+          className="text-black text-[40px] font-mono w-80 text-center leading-[44px] italic mb-6"
+          style={{
+            textShadow:
+              '-1.5px -1.5px 0 #55F263, 1.5px -1.5px 0 #55F263, -1.5px 1.5px 0 #55F263, 1.5px 1.5px 0 #55F263',
+          }}
         >
-          分享告白
-        </SecondaryButton>
-        <PrimaryButton
-          disabled={values.message === ''}
-          onClick={handleMintClick}
-        >
-          鑄造告白
-        </PrimaryButton>
+          Ready to tell your Secret?
+        </div>
+        <div className="flex w-80 mb-4">
+          <div className="flex-none bg-lime text-black font-mono p-2">
+            寄件人
+          </div>
+          <input
+            id="senderName"
+            name="senderName"
+            type="text"
+            className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono"
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="flex w-80 mb-6">
+          <div className="flex-none bg-lime text-black font-mono p-2">
+            收件人
+          </div>
+          <input
+            id="receiverName"
+            name="receiverName"
+            type="text"
+            className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono"
+            onChange={handleInputChange}
+          />
+        </div>
+        <textarea
+          id="message"
+          rows={5}
+          className="shadow-sm block w-56 text-3xl border border-gray-300 rounded-md text-black p-4 mb-6 resize-none overflow-hidden"
+          onInput={handleTextareaChange}
+          placeholder="寫下你的告白"
+        />
+        <div className="flex space-x-8">
+          <SecondaryButton
+            disabled={shouldDisableButtons}
+            onClick={handleShareClick}
+          >
+            分享告白
+          </SecondaryButton>
+          <PrimaryButton
+            disabled={shouldDisableButtons}
+            onClick={handleMintClick}
+          >
+            鑄造告白
+          </PrimaryButton>
+        </div>
       </div>
-    </div>
+    </>
   )
 }

@@ -35,7 +35,6 @@ export const Web3ContextProvider = ({ children }: Props) => {
   }
 
   const openConnectModal = (cb = () => {}) => {
-    console.log('cb: ', cb)
     setIsConnectModalOpen(true)
     setOnConnect(() => () => {
       setIsConnectModalOpen(false)
@@ -48,7 +47,7 @@ export const Web3ContextProvider = ({ children }: Props) => {
     setIsConnectModalOpen(false)
   }
 
-  const handleConnect = async () => {
+  const handleModalConnect = async () => {
     const { connect, address } = web3ProviderState
     let connected = true
     if (!address) connected = await connect()
@@ -91,7 +90,7 @@ export const Web3ContextProvider = ({ children }: Props) => {
       />
       <ConnectModal
         isOpen={isConnectModalOpen}
-        connect={handleConnect}
+        connect={handleModalConnect}
         closeModal={closeConnectModal}
       />
     </>

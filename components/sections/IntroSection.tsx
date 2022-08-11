@@ -93,7 +93,7 @@ function Desktop() {
           <IntroWhiteScreen width="100%" height="100%" />
           <PacmanGhost className="absolute -top-[75px] left-[123px]" />
           <div className="absolute bottom-4 left-0 right-0 mx-auto text-center">
-            <Link href="/mint" passHref>
+            <Link href="/welcome" passHref>
               <a>
                 <BLCursorButton>{text.button}</BLCursorButton>
               </a>

@@ -25,7 +25,7 @@ export function LandingNavigation() {
 }
 
 const Navbar = () => (
-  <div className="flex justify-end md:justify-between items-center mx-auto px-8 py-6 md:px-10 bg-black-rgba">
+  <div className="flex justify-end md:justify-between items-center mx-auto px-8 py-6 md:px-10 bg-black-rgba-70">
     <div className="hidden md:block">
       <Logo />
     </div>

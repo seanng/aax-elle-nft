@@ -14,7 +14,7 @@ interface Props {
     donationInEth: number
   }
   isOpen: boolean
-  handleMintClick: () => Promise<void>
+  onMintClick: () => Promise<void>
   closeModal: () => void
   balance: string
 }
@@ -23,14 +23,14 @@ export function MintConfirmationModal({
   isOpen,
   closeModal,
   balance = '',
-  handleMintClick,
+  onMintClick,
   form,
 }: Props) {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
         <TransitionChild>
-          <div className="fixed inset-0 bg-black-rgba backdrop-blur-3xl transition-opacity" />
+          <div className="fixed inset-0 bg-black-rgba-70 backdrop-blur-3xl transition-opacity" />
         </TransitionChild>
         <div className="fixed z-10 inset-0 overflow-y-auto">
           <div className="flex items-end sm:items-center justify-center min-h-full p-4 sm:p-0">
@@ -88,7 +88,7 @@ export function MintConfirmationModal({
                     </p>
                   </div>
                   <div className="text-center mb-5">
-                    <PrimaryButton onClick={handleMintClick}>
+                    <PrimaryButton onClick={onMintClick}>
                       確定鑄造
                     </PrimaryButton>
                   </div>

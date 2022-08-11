@@ -197,7 +197,7 @@ export function BodySection() {
           </div>
 
           {/* Content */}
-          <div className="relative z-10 bg-black-rgba">
+          <div className="relative z-10 bg-black-rgba-70">
             <dl className="mt-4 md:mt-24 lg:mt-32 space-y-2 md:space-y-6 divide-y-2 md:divide-y-4 divide-lemon border-y-2 md:border-y-4 border-lemon">
               {faqs.map((faq) => (
                 <Disclosure as="div" key={faq.question} className="!mt-0">
