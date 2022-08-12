@@ -44,14 +44,14 @@ export function MessageStep({
   }
 
   const handleMintClick = async () => {
-    // Generate animation HTML out of message.
+    // Generate animation HTML + images out of message. @denis
     // updateFiles()
     updateForm(values)
     address ? onWalletConnect() : openConnectModal(onWalletConnect)
   }
 
   const handleShareClick = async () => {
-    // Generate animation HTML out of message.
+    // Generate animation HTML + images out of message. @denis
     // updateFiles()
     // Open social media sharing modal and show the image, with buttons.
     openSharingModal()
