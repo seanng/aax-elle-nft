@@ -1,9 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { ModalCloseButton, PrimaryButton } from 'components'
 import Image from 'next/image'
-import { Fragment } from 'react'
-import { classNames } from 'utils/helpers'
-import { SpinningOverlay } from 'components'
+import { ReactNode, Fragment } from 'react'
 
 interface Props {
   form: {
@@ -16,14 +14,14 @@ interface Props {
   isOpen: boolean
   onMintClick: () => Promise<void>
   closeModal: () => void
-  balance: string
+  errorComponent?: ReactNode
 }
 
 export function MintConfirmationModal({
   isOpen,
   closeModal,
-  balance = '',
   onMintClick,
+  errorComponent = <div />,
   form,
 }: Props) {
   return (
@@ -38,23 +36,15 @@ export function MintConfirmationModal({
               <Dialog.Panel className="relative transition-all flex flex-col items-center">
                 <div className="h-4 w-[300px] bg-white" />
                 <div className="w-[330px] bg-white px-5 pt-9 text-left">
-                  <ModalCloseButton className="absolute right-5 -top-10" />
+                  <ModalCloseButton
+                    onClick={closeModal}
+                    className="absolute right-5 -top-10"
+                  />
                   <h1 className="text-2xl font-mono mb-5 text-center">
                     Review and confirm
                   </h1>
-                  {Number(balance) < Number(form.donationInEth) && (
-                    <div className="bg-tomato flex px-4 py-4 space-x-4 mb-2">
-                      <WarningStamp />
-                      <div className="text-white">
-                        <p>錢包資產不足</p>
-                        <p>請到錢包購買以太幣</p>
-                        <a href="#" target="_blank" className="underline">
-                          如何買幣？
-                        </a>
-                      </div>
-                    </div>
-                  )}
-                  <div className="px-4 py-3 border border-lime font-mono mb-3">
+                  {errorComponent}
+                  <div className="px-4 py-3 border border-lime font-mono mt-2 mb-3">
                     <p className="font-bold mb-2">告白</p>
                     <p>{form.message}</p>
                     <hr className="my-2 border-lime" />
@@ -102,24 +92,6 @@ export function MintConfirmationModal({
     </Transition.Root>
   )
 }
-
-const WarningStamp = ({ className = '', ...props }) => (
-  <div
-    className={classNames(
-      'relative flex flex-col justify-between items-center h-8 w-8 flex-none',
-      className
-    )}
-    {...props}
-  >
-    <div className="w-6 h-1 bg-white" />
-    <div className="flex justify-between items-center w-full">
-      <div className="w-1 h-6 bg-white" />
-      <div className="text-white font-mono font-bold text-md">!</div>
-      <div className="w-1 h-6 bg-white" />
-    </div>
-    <div className="w-6 h-1 bg-white" />
-  </div>
-)
 
 const TransitionChild = (props) => (
   <Transition.Child

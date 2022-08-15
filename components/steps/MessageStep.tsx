@@ -1,8 +1,8 @@
 import { StepWizardChildProps } from 'react-step-wizard'
-import { PrimaryButton, SecondaryButton, GreenLipsIcon } from 'components'
+import { PrimaryButton, SecondaryButton } from 'components'
 import { useState } from 'react'
 import { Files } from 'shared/types'
-import { FINISHED, NOT_STARTED, PRESALE, PUBLIC_SALE } from 'shared/constants'
+import { FINISHED, NOT_STARTED, PRESALE } from 'shared/constants'
 import { config } from 'utils/config'
 
 const TEXTAREA_HEIGHT = 232

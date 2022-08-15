@@ -9,7 +9,7 @@ export const TwSpcaButton = ({ className = '', ...props }) => {
       className={className}
       rel="noreferrer"
     >
-      <button className="relative" {...props}>
+      <button className="relative" type="button" {...props}>
         <ButtonSvg />
         <div className="absolute flex w-full top-1 left-4 items-center">
           <Image

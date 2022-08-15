@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import {
   FormErrorIcon,
   SecondaryButton,
+  FormHeading,
   PrimaryButton,
   FormStamp,
 } from 'components'
@@ -31,7 +32,9 @@ export function PasscodeStep({ updateForm, ...wizard }: Props) {
     <form onSubmit={handleSubmit(handleFormSubmit)}>
       <div className="flex flex-col items-center font-noto pt-16">
         <FormStamp className="mb-4">2</FormStamp>
-        <h2 className="font-medium text-2xl mb-2">設定專屬於你們的密碼</h2>
+        <FormHeading className="text-3xl mb-2">
+          設定專屬於你們的密碼
+        </FormHeading>
         <div className="w-80 mb-10">
           <p className="text-white mb-10 text-center">
             噓...

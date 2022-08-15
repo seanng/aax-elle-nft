@@ -8,21 +8,17 @@ import {
   MessageStep,
   DonationStep,
   SharingModal,
+  SuccessStep,
   Stepper,
-  MintConfirmationModal,
   SpinningOverlay,
   GreenLipsIcon,
 } from 'components'
 import Animate from 'styles/animate.module.css'
 import { useContract, useMint } from 'hooks'
-import {
-  NOT_STARTED,
-  NO_WHITELIST_TOKEN,
-  PRESALE,
-  PUBLIC_SALE,
-} from 'shared/constants'
+import { NOT_STARTED } from 'shared/constants'
 import { useWeb3Context } from 'context'
 import { config } from 'utils/config'
+import { MintResponseData } from 'shared/types'
 
 const transitions = {
   enterRight: `${Animate.animated} ${Animate.fadeInRight}`,
@@ -33,8 +29,8 @@ const transitions = {
 
 const MintPage: NextPage = () => {
   const [isSharingModalOpen, setIsSharingModalOpen] = useState(false)
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [mintResponseData, setMintResponseData] = useState<MintResponseData>()
 
   const { contract, mintGasFee, calcMintGasFee } = useContract()
   const { calcBalance, balance, openConnectModal, address } = useWeb3Context()
@@ -48,37 +44,8 @@ const MintPage: NextPage = () => {
     setFiles,
   } = useMint(contract)
 
-  const handleMintClick = async () => {
-    if (!contract) {
-      // Tell user their Wallet is not connected
-      return
-    }
-
-    try {
-      if (config.saleStatus === PRESALE) preSaleMint()
-      if (config.saleStatus === PUBLIC_SALE) publicSaleMint()
-      // Do something on success? Here or in Donation Step.
-    } catch (error) {
-      if (error.message === NO_WHITELIST_TOKEN) {
-        // Show error message toast?
-        return
-      }
-      if (error?.code === -32603) {
-        console.log('Do something to show that donation is required!!! ')
-      }
-      if (error?.code === -32000) {
-        console.log('You do not have enough funds in your wallet.')
-      }
-    }
-  }
-
   const updateForm = (formValues) => {
     setForm({ ...form, ...formValues })
-  }
-
-  const handleDonateClick = (data) => {
-    updateForm(data)
-    setIsConfirmModalOpen(true)
   }
 
   const ownsWhitelistToken = async (address: string) => {
@@ -110,26 +77,28 @@ const MintPage: NextPage = () => {
           <EmailStep updateForm={updateForm} />
           <PasscodeStep updateForm={updateForm} />
           <DonationStep
-            onSubmit={handleDonateClick}
-            calcMintGasFee={calcMintGasFee}
-            calcEthToNtd={calcEthToNtd}
-            ethToNtd={ethToNtd}
-            mintGasFee={mintGasFee}
-            calcBalance={calcBalance}
-            balance={balance}
+            {...{
+              preSaleMint,
+              publicSaleMint,
+              ethToNtd,
+              calcEthToNtd,
+              calcMintGasFee,
+              form,
+              setIsLoading,
+              balance,
+              updateForm,
+              calcBalance,
+              mintGasFee,
+              contract,
+              setMintResponseData,
+            }}
           />
+          <SuccessStep data={mintResponseData} />
         </StepWizard>
       </div>
       <SharingModal
         isOpen={isSharingModalOpen}
         closeModal={() => setIsSharingModalOpen(false)}
-      />
-      <MintConfirmationModal
-        balance={balance}
-        form={form}
-        isOpen={isConfirmModalOpen}
-        closeModal={() => setIsConfirmModalOpen(false)}
-        onMintClick={handleMintClick}
       />
       <SpinningOverlay isLoading={isLoading} />
       {config.saleStatus === NOT_STARTED && (

@@ -1,3 +1,5 @@
+import { Mint } from '@prisma/client'
+
 export enum DisplayMode {
   initial,
   exists,
@@ -13,3 +15,15 @@ export interface Files {
   neverOpenedImage: File | null
   neverOpenedHtml: File | null
 }
+
+export interface MintForm {
+  email: string
+  message: string
+  passcode: string
+  senderName: string
+  receiverName: string
+  donationInput: number
+  donationInEth: number
+}
+
+export type MintResponseData = Partial<Mint> | undefined

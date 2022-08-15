@@ -26,7 +26,10 @@ export const PUBLIC_SALE = 'public sale'
 export const PRESALE = 'presale'
 export const FINISHED = 'finished'
 
+// error types
 export const NO_WHITELIST_TOKEN = 'no whitelist token'
+export const INCONSISTENT_CONTRACT_STATUS = 'INCONSISTENT_CONTRACT_STATUS'
+export const INSUFFICIENT_WALLET_BALANCE = 'INSUFFICIENT_WALLET_BALANCE'
 
 // s3 folders
 export const OPENED = 'opened'

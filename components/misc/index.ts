@@ -1,3 +1,5 @@
 export { Stepper } from './Stepper'
 export { FormStamp } from './FormStamp'
 export { ErrorScreen } from './ErrorScreen'
+export { FormHeading } from './FormHeading'
+export { LinkAndPasscode } from './LinkAndPasscode'

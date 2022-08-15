@@ -1,19 +1,28 @@
 import axios from 'lib/axios'
 import { ethers } from 'ethers'
-import { NO_WHITELIST_TOKEN, OPENED, UNOPENED, PUBLIC } from 'shared/constants'
+import {
+  NO_WHITELIST_TOKEN,
+  OPENED,
+  UNOPENED,
+  PUBLIC,
+  INCONSISTENT_CONTRACT_STATUS,
+} from 'shared/constants'
 import { useState } from 'react'
-import { Files } from 'shared/types'
+import { Files, MintForm, MintResponseData } from 'shared/types'
+import { Mint } from '@prisma/client'
 
 export function useMint(contract: ethers.Contract | null) {
-  const [form, setForm] = useState({
-    email: '',
-    message: '',
-    senderName: '',
-    receiverName: '',
-    passcode: '',
+  // TODO: reset to blank values
+  const [form, setForm] = useState<MintForm>({
+    email: 'sean.ng@aax.com',
+    message: 'Yo this is a test LOVE message. 愛愛愛',
+    passcode: 'asdfasdf',
+    senderName: 'Sean',
+    receiverName: 'Patrick',
     donationInput: 0,
     donationInEth: 0,
   })
+
   const [files, setFiles] = useState<Files>({
     unopenedImage: null,
     unopenedHtml: null,
@@ -22,7 +31,7 @@ export function useMint(contract: ethers.Contract | null) {
     neverOpenedImage: null,
     neverOpenedHtml: null,
   })
-  const [isMinting, setIsMinting] = useState(false)
+
   const [ethToNtd, setEthToNtd] = useState<number | null>(null)
 
   const calcEthToNtd = async (): Promise<void> => {
@@ -33,29 +42,26 @@ export function useMint(contract: ethers.Contract | null) {
   }
 
   const preSaleMint = async () => {
-    const hasWhitelistToken = await contract?.ownsWhitelistToken(
+    const hasWhitelistToken = await contract?.callStatic.ownsWhitelistToken(
       contract.address
     )
     if (!hasWhitelistToken) throw new Error(NO_WHITELIST_TOKEN)
-    await executeMint(true)
+    return executeMint(true)
   }
 
   const publicSaleMint = () => executeMint(false)
 
-  const executeMint = async (isPresale: boolean) => {
+  const executeMint = async (isPresale: boolean): Promise<MintResponseData> => {
     if (!contract) return
-    // TODO: delete.
-    setIsMinting(true)
-    const form = {
-      message: 'Yo this is a test LOVE message. 愛愛愛',
-      donation: '0.5',
-      email: 'sean.ng@aax.com',
-      passcode: 'asdfasdf',
+    const mintOpts = {
+      value: ethers.utils.parseEther(form.donationInEth.toString()),
     }
 
-    const mintOpts = { value: ethers.utils.parseEther(form.donation) }
-
     const mintMethod = isPresale ? 'preSaleMint' : 'publicSaleMint'
+    const contractStatusMethod = isPresale ? 'isPreSale' : 'isPublicSale'
+
+    const statusIsConsistent = await contract[contractStatusMethod]()
+    if (!statusIsConsistent) throw new Error(INCONSISTENT_CONTRACT_STATUS)
 
     const tokenIdBN = await contract.callStatic[mintMethod](mintOpts)
     const messageTokenId = Number(tokenIdBN.toString())
@@ -75,10 +81,11 @@ export function useMint(contract: ethers.Contract | null) {
       message: form.message,
       minterEmail: form.email,
       minterWallet: contract.address,
-      ethDonated: form.donation,
+      ethDonated: form.donationInEth.toString(),
       passcode: form.passcode,
     })
-    setIsMinting(false)
+
+    return mintData
   }
 
   const uploadOneFile = async (folder: string, key: string, file: string) => {
@@ -104,7 +111,6 @@ export function useMint(contract: ethers.Contract | null) {
   }
 
   return {
-    isMinting,
     preSaleMint,
     publicSaleMint,
     calcEthToNtd,

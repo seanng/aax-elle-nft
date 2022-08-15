@@ -1,5 +1,3 @@
-import React from 'react'
-
 export function PinkLockIcon({ width = 30, height = 30, ...props }) {
   return (
     <svg
