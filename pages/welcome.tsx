@@ -2,7 +2,7 @@ import {
   CaretDownButton,
   MintHeroDesktop,
   MintHeroMobile,
-  MintNavigation,
+  MintLayout,
   PrimaryButton,
 } from 'components'
 import { config } from 'utils/config'
@@ -35,48 +35,39 @@ const WelcomePage: NextPage = () => {
   }
 
   return (
-    <>
-      <MintNavigation />
+    <MintLayout>
+      <div className="font-mono font-medium text-xl text-center text-white bg-guava py-2 w-full">
+        Limited time offer till 8/15
+      </div>
       <div
-        className="bg-black min-h-screen pt-navbar-height text-white bg-repeat flex flex-col items-center overflow-hidden w-full"
+        className="relative text-black font-mono font-medium italic text-6xl w-full leading-120% h-20 overflow-x-hidden"
         style={{
-          backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px)`,
-          backgroundSize: '40px 40px',
+          textShadow:
+            '-1px -1px 0 #C3FA08, 1px -1px 0 #C3FA08, -1px 1px 0 #C3FA08, 1px 1px 0 #C3FA08',
         }}
       >
-        <div className="font-mono font-medium text-xl text-center text-white bg-guava py-2 w-full">
-          Limited time offer till 8/15
-        </div>
-        <div
-          className="relative text-black font-mono font-medium italic text-6xl w-full leading-120% h-20 overflow-x-hidden"
-          style={{
-            textShadow:
-              '-1px -1px 0 #C3FA08, 1px -1px 0 #C3FA08, -1px 1px 0 #C3FA08, 1px 1px 0 #C3FA08',
-          }}
-        >
-          <p className="marquee scroll-left">
-            <span>
-              Welcome to ELLEverse&nbsp;&nbsp;&nbsp;Welcome to
-              ELLEverse&nbsp;&nbsp;&nbsp;Welcome to ELLEverse&nbsp;&nbsp;&nbsp;
-            </span>
-          </p>
-          <p className="marquee scroll-left marquee-delayed">
-            <span>
-              Welcome to ELLEverse&nbsp;&nbsp;&nbsp;Welcome to
-              ELLEverse&nbsp;&nbsp;&nbsp;Welcome to ELLEverse&nbsp;&nbsp;&nbsp;
-            </span>
-          </p>
-        </div>
-        <MintHeroMobile className="md:hidden mb-14" />
-        <MintHeroDesktop className="hidden md:block mb-14 max-h-[700px]" />
-        <Link href="/mint">
-          <a>
-            <PrimaryButton>我要告白</PrimaryButton>
-          </a>
-        </Link>
-        <CaretDownButton className="mt-6" />
+        <p className="marquee scroll-left">
+          <span>
+            Welcome to ELLEverse&nbsp;&nbsp;&nbsp;Welcome to
+            ELLEverse&nbsp;&nbsp;&nbsp;Welcome to ELLEverse&nbsp;&nbsp;&nbsp;
+          </span>
+        </p>
+        <p className="marquee scroll-left marquee-delayed">
+          <span>
+            Welcome to ELLEverse&nbsp;&nbsp;&nbsp;Welcome to
+            ELLEverse&nbsp;&nbsp;&nbsp;Welcome to ELLEverse&nbsp;&nbsp;&nbsp;
+          </span>
+        </p>
       </div>
-    </>
+      <MintHeroMobile className="md:hidden mb-14" />
+      <MintHeroDesktop className="hidden md:block mb-14 max-h-[700px]" />
+      <Link href="/mint">
+        <a>
+          <PrimaryButton>我要告白</PrimaryButton>
+        </a>
+      </Link>
+      <CaretDownButton className="mt-6" />
+    </MintLayout>
   )
 }
 

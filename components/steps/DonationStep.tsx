@@ -136,21 +136,22 @@ export function DonationStep({
   }, [donationInput, ethToNtd])
 
   useEffect(() => {
-    if (Number(balance) < Number(form.donationInEth))
-      setErrorType(INSUFFICIENT_WALLET_BALANCE)
+    setErrorType(
+      Number(balance) < Number(form.donationInEth)
+        ? INSUFFICIENT_WALLET_BALANCE
+        : ''
+    )
   }, [balance, form.donationInEth])
 
   const balanceNum = Number(balance)
 
   return (
     <>
-      {/* <form onSubmit={handleSubmit(onSubmit)}> */}
-      <div className="flex flex-col items-center font-noto pt-8 w-72 mx-auto">
-        <FormHeading className="mb-3">
-          輸入你的 你的告白能幫助小動物！
-        </FormHeading>
+      <div className="flex flex-col items-center font-noto pt-8 w-[300px] mx-auto">
+        <FormHeading className="mb-3">你的愛能幫助受虐動物</FormHeading>
         <p className="mb-4 text-center">
-          我們也非常關注浪浪議題，透過這份意義非凡的活動，讓ELLEverse 為你捐款
+          你的愛不只轉動元宇宙，為你獨特的Impact
+          NFT定價，費用全額將捐助SPCA台灣防止虐待動物協會 一起關心受虐動物
         </p>
         <TwSpcaButton className="mb-2" />
         <CaretDownGreenIcon className="mb-3" />
@@ -213,7 +214,6 @@ export function DonationStep({
           </PrimaryButton>
         </div>
       </div>
-      {/* </form> */}
       <MintConfirmationModal
         form={form}
         isOpen={isConfirmModalOpen}

@@ -1,10 +1,5 @@
-import { ErrorScreen, MintNavigation } from 'components'
+import { ErrorScreen } from 'components'
 
 export default function Custom404() {
-  return (
-    <>
-      <MintNavigation />
-      <ErrorScreen />
-    </>
-  )
+  return <ErrorScreen />
 }

@@ -53,6 +53,12 @@ export function useWeb3() {
 
       toast.success('Connected to Web3')
 
+      const bal = await web3Provider.getBalance(address)
+      dispatch({
+        type: 'SET_BALANCE',
+        balance: ethers.utils.formatEther(bal),
+      } as Web3Action)
+
       dispatch({
         type: 'SET_WEB3_PROVIDER',
         provider,

@@ -1,17 +1,13 @@
+import { MintLayout } from 'components'
+
 export const ErrorScreen = () => {
   return (
-    <div
-      className="bg-black min-h-screen pt-navbar-height text-white bg-repeat flex flex-col items-center justify-center"
-      style={{
-        backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.4) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.4) 0.1px, transparent 1px)`,
-        backgroundSize: '40px 40px',
-      }}
-    >
+    <MintLayout>
       <Svg />
       <div className="font-mono font-medium text-3xl text-[#F6F]">
         page not found
       </div>
-    </div>
+    </MintLayout>
   )
 }
 

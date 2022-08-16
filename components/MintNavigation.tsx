@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { Popover, Transition } from '@headlessui/react'
 import Link from 'next/link'

@@ -9,7 +9,6 @@ import {
 } from 'shared/constants'
 import { useState } from 'react'
 import { Files, MintForm, MintResponseData } from 'shared/types'
-import { Mint } from '@prisma/client'
 
 export function useMint(contract: ethers.Contract | null) {
   // TODO: reset to blank values
@@ -19,6 +18,7 @@ export function useMint(contract: ethers.Contract | null) {
     passcode: 'asdfasdf',
     senderName: 'Sean',
     receiverName: 'Patrick',
+    mintedAt: new Date(),
     donationInput: 0,
     donationInEth: 0,
   })
@@ -83,12 +83,13 @@ export function useMint(contract: ethers.Contract | null) {
       minterWallet: contract.address,
       ethDonated: form.donationInEth.toString(),
       passcode: form.passcode,
+      mintedAt: new Date(),
     })
 
     return mintData
   }
 
-  const uploadOneFile = async (folder: string, key: string, file: string) => {
+  const uploadOneFile = async (folder: string, key: string, file: File) => {
     // Get presigned post fields
     const res = await fetch(
       `/api/upload-encrypted-images-url?file=${folder}/${key}`

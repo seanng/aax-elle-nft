@@ -13,3 +13,8 @@ export const findAll = async (where: Prisma.MintWhereInput) =>
 
 export const findUnique = async (where: Prisma.MintWhereUniqueInput) =>
   prisma.mint.findUnique({ where })
+
+export const update = async (
+  where: Prisma.MintWhereUniqueInput,
+  data: Prisma.MintUpdateInput
+) => prisma.mint.update({ where, data })

@@ -4,6 +4,8 @@ export const PrimaryButton = ({
   className = '',
   children,
   disabled = false,
+  height = 42,
+  width = 120,
   ...props
 }) => {
   return (
@@ -12,7 +14,11 @@ export const PrimaryButton = ({
       disabled={disabled}
       {...props}
     >
-      {disabled ? <DisabledSvg /> : <PrimarySvg />}
+      {disabled ? (
+        <DisabledSvg {...{ width, height }} />
+      ) : (
+        <PrimarySvg {...{ width, height }} />
+      )}
       <div
         className={classNames(
           'absolute mx-auto font-noto text-base font-medium w-full h-full top-0 leading-[38px]',
@@ -25,7 +31,7 @@ export const PrimaryButton = ({
   )
 }
 
-const PrimarySvg = ({ height = 42, width = 120, ...props }) => (
+const PrimarySvg = ({ height, width, ...props }) => (
   <svg
     width={width}
     height={height}
@@ -42,7 +48,7 @@ const PrimarySvg = ({ height = 42, width = 120, ...props }) => (
   </svg>
 )
 
-const DisabledSvg = ({ height = 42, width = 120, ...props }) => (
+const DisabledSvg = ({ height, width, ...props }) => (
   <svg
     width={width}
     height={height}

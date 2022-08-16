@@ -1,14 +1,14 @@
 import { StepWizardChildProps } from 'react-step-wizard'
 import { PrimaryButton, SecondaryButton } from 'components'
 import { useState } from 'react'
-import { Files } from 'shared/types'
+import { Files, MintForm } from 'shared/types'
 import { FINISHED, NOT_STARTED, PRESALE } from 'shared/constants'
 import { config } from 'utils/config'
 
 const TEXTAREA_HEIGHT = 232
 
 interface Props extends Partial<StepWizardChildProps> {
-  updateForm: (formValues: Record<string, string>) => void
+  updateForm: (formValues: Partial<MintForm>) => void
   updateFiles: (files: Files) => void
   openSharingModal: () => void
   openConnectModal: (cb: () => {}) => void
@@ -46,7 +46,7 @@ export function MessageStep({
   const handleMintClick = async () => {
     // Generate animation HTML + images out of message. @denis
     // updateFiles()
-    updateForm(values)
+    updateForm({ ...values, mintedAt: new Date() })
     address ? onWalletConnect() : openConnectModal(onWalletConnect)
   }
 

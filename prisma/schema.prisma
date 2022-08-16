@@ -13,10 +13,11 @@ model Mint {
   message        String
   minterEmail    String
   minterWallet   String
-  shortcode      String    @unique
+  slug           String    @unique
   passcode       String
   ethDonated     String // eth
-  decryptedAt    DateTime?
+  openedAt       DateTime?
+  mintedAt       DateTime?
   isPresale      Boolean   @default(false)
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt

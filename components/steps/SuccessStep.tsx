@@ -12,12 +12,11 @@ interface Props {
 }
 
 export function SuccessStep({ data }: Props) {
-  // const d = { shortcode: 'abcd1', passcode: 'love1331' }
   const handleIGClick = () => {
     console.log('handling ig click.')
   }
 
-  const link = `${config.siteUrl}/open/${data?.shortcode}`
+  const link = `${config.siteUrl}/open/${data?.slug}`
 
   return (
     <div className="flex flex-col font-noto pt-16 w-80 mx-auto text-center">

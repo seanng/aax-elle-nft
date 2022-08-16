@@ -12,6 +12,7 @@ interface PostHandlerRequest extends NextApiRequest {
     ethDonated: string
     passcode: string
     messageTokenId: number
+    mintedAt: string
   }
 }
 
@@ -23,29 +24,31 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
       check('minterWallet').exists(),
       check('ethDonated').exists(),
       check('passcode').exists(),
+      check('mintedAt').exists(),
       check('messageTokenId').exists().isNumeric(),
     ])(req, res))
   )
     return
 
-  let isShortcodeUnique = false
-  let shortcode = 'abcde'
+  let isSlugUnique = false
+  let slug = 'abcde'
 
-  while (!isShortcodeUnique) {
-    shortcode = randomstring.generate({
+  while (!isSlugUnique) {
+    slug = randomstring.generate({
       capitalization: 'lowercase',
       length: 5,
     })
-    isShortcodeUnique = !(await service.findUnique({ shortcode }))
+    isSlugUnique = !(await service.findUnique({ slug }))
   }
 
   const mint = await service.create({
-    shortcode,
+    slug,
     message: req.body.message,
     minterEmail: req.body.minterEmail,
     minterWallet: req.body.minterWallet,
     ethDonated: req.body.ethDonated,
     passcode: req.body.passcode,
+    mintedAt: req.body.mintedAt,
     messageTokenId: req.body.messageTokenId,
   })
 
@@ -55,10 +58,10 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
 }
 
 async function getHandler(req: NextApiRequest, res: NextApiResponse) {
-  const { mw: minterWallet, id } = req.query
+  const { mw: minterWallet, slug } = req.query
   const where = {
     ...(typeof minterWallet === 'string' && { minterWallet }),
-    ...(typeof id === 'string' && { id }),
+    ...(typeof slug === 'string' && { slug }),
   }
   const mints = await service.findAll(where)
   res.json(mints)
