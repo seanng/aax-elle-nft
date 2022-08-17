@@ -28,3 +28,13 @@ export interface MintForm {
 }
 
 export type MintResponseData = Partial<Mint> | undefined
+
+export interface NFTParameters {
+  opacity: string
+  background: string
+  gridIconColor: string
+  aroundTextColor: string
+  aroundText: string
+  messageColor: string
+  message: string
+}

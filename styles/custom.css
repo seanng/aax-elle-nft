@@ -152,7 +152,7 @@
 
 .web3modal-modal-card {
   width: 320px !important;
-  font-family: Noto Sans;
+  font-family: NotoSansTC;
   display: block !important;
   position: relative;
   border-radius: 0 !important;
@@ -160,12 +160,10 @@
 }
 
 .web3modal-provider-name {
-  /* font-family: Noto Sans; */
   font-size: 17px !important;
 }
 
 .web3modal-provider-description {
-  /* font-family: Noto Sans; */
   font-size: 14px !important;
   color: #9d9d9d !important;
 }
