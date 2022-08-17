@@ -66,7 +66,7 @@ const MintPage: NextPage = () => {
               updateForm,
               openConnectModal,
               ownsWhitelistToken,
-              updateFiles: setFiles,
+              setFiles,
               openSharingModal: () => setIsSharingModalOpen(true),
             }}
           />

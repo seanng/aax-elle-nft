@@ -1,4 +1,5 @@
 import * as service from 'backend/services/mints'
+import sendgrid from 'lib/sendgrid'
 import randomstring from 'randomstring'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import { validate } from 'lib/middlewares'
@@ -53,6 +54,7 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
   })
 
   // send success email to minterEmail.
+  // sendgrid.send()
 
   res.json(mint)
 }

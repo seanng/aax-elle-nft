@@ -242,7 +242,12 @@ export function DonationStep({
                 <div className="text-white">
                   <p>錢包資產不足</p>
                   <p>請到錢包購買以太幣</p>
-                  <a href="#" target="_blank" className="underline">
+                  <a
+                    href="https://www.aax.com/zh-TW/newbie/"
+                    target="_blank"
+                    className="underline"
+                    rel="noreferrer"
+                  >
                     如何買幣？
                   </a>
                 </div>

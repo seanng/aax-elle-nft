@@ -1,4 +1,5 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
+import sendgrid from 'lib/sendgrid'
 import * as service from 'backend/services/mints'
 
 async function putHandler(req: NextApiRequest, res: NextApiResponse) {
@@ -7,6 +8,7 @@ async function putHandler(req: NextApiRequest, res: NextApiResponse) {
   try {
     await service.update({ id }, req.body)
     // send opened email to minterEmail.
+    // sendgrid.send()
     res.json({ success: true })
   } catch (error) {
     console.log('mint update error: ', error)

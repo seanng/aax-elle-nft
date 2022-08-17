@@ -9,7 +9,7 @@ const TEXTAREA_HEIGHT = 232
 
 interface Props extends Partial<StepWizardChildProps> {
   updateForm: (formValues: Partial<MintForm>) => void
-  updateFiles: (files: Files) => void
+  setFiles: (files: Files) => void
   openSharingModal: () => void
   openConnectModal: (cb: () => {}) => void
   address?: string | null
@@ -18,7 +18,7 @@ interface Props extends Partial<StepWizardChildProps> {
 
 export function MessageStep({
   updateForm,
-  updateFiles,
+  setFiles,
   openSharingModal,
   ownsWhitelistToken,
   openConnectModal,
@@ -45,14 +45,14 @@ export function MessageStep({
 
   const handleMintClick = async () => {
     // Generate animation HTML + images out of message. @denis
-    // updateFiles()
+    // setFiles()
     updateForm({ ...values, mintedAt: new Date() })
     address ? onWalletConnect() : openConnectModal(onWalletConnect)
   }
 
   const handleShareClick = async () => {
     // Generate animation HTML + images out of message. @denis
-    // updateFiles()
+    // setFiles()
     // Open social media sharing modal and show the image, with buttons.
     openSharingModal()
   }
