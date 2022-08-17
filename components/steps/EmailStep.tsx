@@ -33,7 +33,7 @@ export function EmailStep({ updateForm, ...wizard }: Props) {
     <form onSubmit={handleSubmit(handleFormSubmit)}>
       <div className="flex flex-col items-center font-noto pt-16">
         <FormStamp className="mb-4">1</FormStamp>
-        <FormHeading className="text-3xl mb-2">輸入你的 Email</FormHeading>
+        <FormHeading className="mb-2">輸入你的 Email</FormHeading>
         <div className="w-80 mb-10">
           <p className="text-white mb-10 text-center">
             噓...

@@ -1,5 +1,5 @@
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { GreenLockIcon } from 'components/svgs'
+import { GreenLockIcon } from 'components'
 import { classNames } from 'utils/helpers'
 
 export function LinkAndPasscode({ link = '', passcode = '', className = '' }) {
@@ -11,7 +11,7 @@ export function LinkAndPasscode({ link = '', passcode = '', className = '' }) {
           className="border border-lime flex-1 text-white font-mono py-2 px-3 bg-transparent focus:ring-0 focus:border-lime"
           value={link}
         />
-        <CopyToClipboard text={link}>
+        <CopyToClipboard text={`${link}\n解鎖密碼：${passcode}`}>
           <a href="#" className="flex-none bg-lime text-blue-600 px-4 py-2 ">
             複製
           </a>

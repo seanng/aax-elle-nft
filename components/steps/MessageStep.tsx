@@ -1,5 +1,5 @@
 import { StepWizardChildProps } from 'react-step-wizard'
-import { PrimaryButton, SecondaryButton } from 'components'
+import { PrimaryButton, FormHeading, SecondaryButton } from 'components'
 import { useState } from 'react'
 import { Files, MintForm } from 'shared/types'
 import { FINISHED, NOT_STARTED, PRESALE } from 'shared/constants'
@@ -85,15 +85,9 @@ export function MessageStep({
   return (
     <>
       <div className="flex flex-col items-center font-noto h-full pt-4">
-        <div
-          className="text-black text-[40px] font-mono w-80 text-center leading-[44px] italic mb-6"
-          style={{
-            textShadow:
-              '-1.5px -1.5px 0 #55F263, 1.5px -1.5px 0 #55F263, -1.5px 1.5px 0 #55F263, 1.5px 1.5px 0 #55F263',
-          }}
-        >
-          Ready to tell your Secret?
-        </div>
+        <FormHeading className="italic mb-6 tracking-wide w-72 text-center font-mono">
+          Ready to share your Love?
+        </FormHeading>
         <div className="flex w-80 mb-4">
           <div className="flex-none bg-lime text-black font-mono p-2">
             寄件人

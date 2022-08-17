@@ -1,10 +1,5 @@
 import { MintResponseData } from 'shared/types'
-import {
-  FormHeading,
-  LinkAndPasscode,
-  SquareDLButton,
-  SquareIGButton,
-} from 'components'
+import { FormHeading, LinkAndPasscode, SocialButtons } from 'components'
 import { config } from 'utils/config'
 
 interface Props {
@@ -12,10 +7,6 @@ interface Props {
 }
 
 export function SuccessStep({ data }: Props) {
-  const handleIGClick = () => {
-    console.log('handling ig click.')
-  }
-
   const link = `${config.siteUrl}/open/${data?.slug}`
 
   return (
@@ -23,10 +14,7 @@ export function SuccessStep({ data }: Props) {
       <FormHeading className="mb-2">恭喜成功鑄造NFT！</FormHeading>
       <p className="mb-4">複製連結把上鎖的心意傳給你的愛人！</p>
       {/* NFT ANIMATION URL GOES HERE */}
-      <div className="flex space-x-4 justify-center mb-5">
-        <SquareDLButton />
-        <SquareIGButton onClick={handleIGClick} />
-      </div>
+      <SocialButtons className="mb-5" />
       <LinkAndPasscode
         link={link}
         passcode={data?.passcode ?? 'abc12'}
