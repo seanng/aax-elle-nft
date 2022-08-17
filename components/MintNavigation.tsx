@@ -61,11 +61,11 @@ const Panel = () => (
     </div>
     <div className="h-full flex flex-col bg-repeat py-2 pl-6 text-4xl text-lime font-bold font-noto leading-150% space-y-4">
       <Link href="/">
-        <a>鑄造首頁</a>
+        <a>ELLEverse</a>
       </Link>
-      <a href="https://academy.aax.com/en/what-is-a-crypto-wallet/">新手指南</a>
-      <Link href="/">
-        <a className="font-mono">My Collection</a>
+      <a href="https://www.aax.com/zh-TW/newbie/">新手指南</a>
+      <Link href="/collections">
+        <a className="font-mono">我的秘密告白</a>
       </Link>
       <Link href="/">
         <a className="font-mono">Instagram</a>
