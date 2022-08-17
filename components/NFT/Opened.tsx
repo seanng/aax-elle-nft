@@ -12,6 +12,17 @@ const compsStyle = {
   height: '350px',
 } as React.CSSProperties
 
+interface Props {
+  data: Partial<React.CSSProperties> & {
+    message: string
+    aroundText: string
+    gridIconColor: string
+    messageColor: string
+  }
+  setImage?: React.Dispatch<React.SetStateAction<null>>
+  setHTML?: React.Dispatch<React.SetStateAction<null>>
+}
+
 function CompsNFTOpened({
   data: {
     opacity,
@@ -23,7 +34,7 @@ function CompsNFTOpened({
   },
   setImage,
   setHTML,
-}) {
+}: Props) {
   const reference = useRef<HTMLDivElement>(null)
 
   const imageCB = () => {
@@ -38,7 +49,7 @@ function CompsNFTOpened({
   return (
     <div style={compsStyle} ref={reference}>
       <CompsNFTBackground background={background} />
-      <CompsNFTGridV1 color={gridIconColor} opacity={opacity} />
+      <CompsNFTGridV1 color={gridIconColor} opacity={opacity as string} />
       <CompsNFTAroundText
         color={gridIconColor}
         aroundText={aroundText}

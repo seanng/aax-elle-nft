@@ -11,11 +11,21 @@ const compsStyle = {
   height: '350px',
 } as React.CSSProperties
 
+interface Props {
+  data: {
+    background: string
+    gridIconColor: string
+    aroundText: string
+  }
+  setImage?: React.Dispatch<React.SetStateAction<null>>
+  setHTML?: React.Dispatch<React.SetStateAction<null>>
+}
+
 function CompsNFTUnopen({
   data: { background, gridIconColor, aroundText },
-  setImage = () => {},
-  setHTML = () => {},
-}) {
+  setImage,
+  setHTML,
+}: Props) {
   const reference = useRef<HTMLDivElement>(null)
 
   const imageCB = () => {
