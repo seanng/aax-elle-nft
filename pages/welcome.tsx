@@ -35,7 +35,7 @@ const WelcomePage: NextPage = () => {
   }
 
   return (
-    <MintLayout>
+    <MintLayout className="flex flex-col items-center overflow-hidden">
       <div className="font-mono font-medium text-xl text-center text-white bg-guava py-2 w-full">
         Limited time offer till 8/15
       </div>

@@ -40,7 +40,7 @@ export function MintConfirmationModal({
                     onClick={closeModal}
                     className="absolute right-5 -top-10"
                   />
-                  <h1 className="text-2xl font-mono mb-5 text-center">
+                  <h1 className="text-[22px] font-mono mb-5 text-center">
                     Review and confirm
                   </h1>
                   {errorComponent}

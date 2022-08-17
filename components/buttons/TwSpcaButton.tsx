@@ -11,41 +11,42 @@ export const TwSpcaButton = ({ className = '', ...props }) => {
     >
       <button className="relative" type="button" {...props}>
         <ButtonSvg />
-        <div className="absolute flex w-full top-1 left-4 items-center">
+        <div className="absolute flex w-full top-2 left-3 items-center">
           <Image
             layout="fixed"
-            width={34}
-            height={34}
+            width={24}
+            height={24}
             src="/images/taiwan-spca-dog-icon.png"
           />
-          <div className="block text-left text-lime ml-3">
-            <p className="font-mono leading-6">Taiwan SPCA</p>
-            <p className="text-sm leading-5">台灣防止虐待動物協會 </p>
-          </div>
+          <p className="text-lime ml-3 leading-150%">
+            認識SPCA台灣防止虐待動物協會
+          </p>
         </div>
       </button>
     </a>
   )
 }
 
-const ButtonSvg = ({ height = 57, width = 224, ...props }) => (
+const ButtonSvg = ({ height = 44, width = 300, ...props }) => (
   <svg
     width={width}
     height={height}
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    viewBox={`0 0 224 57`}
+    viewBox={`0 0 300 44`}
     {...props}
   >
-    <path fill="#000" stroke="#55F263" d="M.5.5h219v52H.5z" />
-    <path fill="#55F263" d="M219 4h5v53h-5z" />
-    <path fill="#55F263" d="M5 52h215v5H5zM219 2.001h2.999v1H219z" />
+    <path fill="#000" stroke="#55F263" d="M.5.5h295v39H.5z" />
     <path
       fill="#55F263"
-      d="M219 3h3.999v1H219zM219 4h4.999v1H219zM219 0h1v1h-1z"
+      d="M295 5h5v39h-5zM5 39h290v5H5zM295 2.001h2.999v1H295z"
     />
-    <path fill="#55F263" d="M219 .999h1.999v1H219zM5 54.999H2v-1h3z" />
-    <path fill="#55F263" d="M5 54H1v-1h4zM5 53H0v-1h5zM5 57.001H4v-1h1z" />
-    <path fill="#55F263" d="M5 56.002H3v-1h2z" />
+    <path
+      fill="#55F263"
+      d="M295 3h3.999v1H295zM295 4h4.999v1H295zM295 0h1v1h-1z"
+    />
+    <path fill="#55F263" d="M295 .999h1.999v1H295zM5 41.999H2v-1h3z" />
+    <path fill="#55F263" d="M5 41H1v-1h4zM5 40H0v-1h5zM5 44.001H4v-1h1z" />
+    <path fill="#55F263" d="M5 43.002H3v-1h2z" />
   </svg>
 )

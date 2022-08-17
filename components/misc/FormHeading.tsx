@@ -4,7 +4,7 @@ export function FormHeading({ className = '', children }) {
   return (
     <h2
       className={classNames(
-        'text-black text-2xl font-medium leading-150%',
+        'text-black font-medium leading-150% text-[28px]',
         className
       )}
       style={{

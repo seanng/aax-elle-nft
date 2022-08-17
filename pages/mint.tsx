@@ -4,7 +4,6 @@ import type { NextPage } from 'next'
 import {
   EmailStep,
   PasscodeStep,
-  MintNavigation,
   MessageStep,
   DonationStep,
   SharingModal,
@@ -12,9 +11,10 @@ import {
   Stepper,
   SpinningOverlay,
   GreenLipsIcon,
+  MintLayout,
 } from 'components'
 import Animate from 'styles/animate.module.css'
-import { useContract, useMint } from 'hooks'
+import { useMint } from 'hooks'
 import { NOT_STARTED } from 'shared/constants'
 import { useWeb3Context } from 'context'
 import { config } from 'utils/config'
@@ -31,8 +31,6 @@ const MintPage: NextPage = () => {
   const [isSharingModalOpen, setIsSharingModalOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [mintResponseData, setMintResponseData] = useState<MintResponseData>()
-
-  const { contract, mintGasFee, calcMintGasFee } = useContract()
   const { calcBalance, balance, openConnectModal, address } = useWeb3Context()
   const {
     preSaleMint,
@@ -42,7 +40,10 @@ const MintPage: NextPage = () => {
     form,
     setForm,
     setFiles,
-  } = useMint(contract)
+    contract,
+    calcMintGasFee,
+    mintGasFee,
+  } = useMint()
 
   const updateForm = (formValues) => {
     setForm({ ...form, ...formValues })
@@ -57,22 +58,17 @@ const MintPage: NextPage = () => {
 
   return (
     <>
-      <MintNavigation />
-      <div
-        className="bg-black min-h-screen pt-navbar-height text-white bg-repeat overflow-y-hidden"
-        style={{
-          backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.3) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.3) 0.1px, transparent 1px)`,
-          backgroundSize: '40px 40px',
-        }}
-      >
+      <MintLayout className="overflow-y-hidden">
         <StepWizard transitions={transitions} nav={<Stepper />}>
           <MessageStep
-            updateForm={updateForm}
-            updateFiles={setFiles}
-            openSharingModal={() => setIsSharingModalOpen(true)}
-            openConnectModal={openConnectModal}
-            ownsWhitelistToken={ownsWhitelistToken}
-            address={address}
+            {...{
+              address,
+              updateForm,
+              openConnectModal,
+              ownsWhitelistToken,
+              updateFiles: setFiles,
+              openSharingModal: () => setIsSharingModalOpen(true),
+            }}
           />
           <EmailStep updateForm={updateForm} />
           <PasscodeStep updateForm={updateForm} />
@@ -88,6 +84,7 @@ const MintPage: NextPage = () => {
               balance,
               updateForm,
               calcBalance,
+              address,
               mintGasFee,
               contract,
               setMintResponseData,
@@ -95,7 +92,7 @@ const MintPage: NextPage = () => {
           />
           <SuccessStep data={mintResponseData} />
         </StepWizard>
-      </div>
+      </MintLayout>
       <SharingModal
         isOpen={isSharingModalOpen}
         closeModal={() => setIsSharingModalOpen(false)}

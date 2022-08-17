@@ -25,11 +25,6 @@ export function NetworkChangeModal({ isOpen, handleChangeNetwork }) {
                   <PrimaryButton onClick={handleChangeNetwork}>
                     切換 Network
                   </PrimaryButton>
-                  <div className="block mt-3">
-                    <a className="text-blue-500 underline font-mono">
-                      Learn More
-                    </a>
-                  </div>
                 </div>
                 <div className="h-4 w-72 bg-white" />
               </Dialog.Panel>

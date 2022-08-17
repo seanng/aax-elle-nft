@@ -25,7 +25,7 @@ const faqs = [
 const FaqPage: NextPage = () => {
   return (
     <MintLayout>
-      <div className="pt-10 mb-10">
+      <div className="pt-10 mb-10 flex flex-col items-center">
         <BigQuestionIcon />
       </div>
       <dl className="pr-4">

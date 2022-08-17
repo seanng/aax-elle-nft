@@ -2,7 +2,7 @@ import { MintLayout } from 'components'
 
 export const ErrorScreen = () => {
   return (
-    <MintLayout>
+    <MintLayout className="flex flex-col items-center justify-center pb-20 overflow-y-hidden">
       <Svg />
       <div className="font-mono font-medium text-3xl text-[#F6F]">
         page not found

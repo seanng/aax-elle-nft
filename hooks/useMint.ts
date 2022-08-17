@@ -6,11 +6,46 @@ import {
   UNOPENED,
   PUBLIC,
   INCONSISTENT_CONTRACT_STATUS,
+  PUBLIC_SALE,
 } from 'shared/constants'
+import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
 import { useState } from 'react'
 import { Files, MintForm, MintResponseData } from 'shared/types'
+import { useWeb3Context } from 'context'
+import { config } from 'utils/config'
 
-export function useMint(contract: ethers.Contract | null) {
+const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
+
+export function useMint() {
+  const { web3Provider } = useWeb3Context()
+  const [mintGasFee, setMintGasFee] = useState<string>('')
+
+  const contract = web3Provider
+    ? new ethers.Contract(
+        contractAddress as string,
+        contractABI.abi,
+        web3Provider.getSigner()
+      )
+    : null
+
+  const calcMintGasFee = async (): Promise<void> => {
+    if (contract && web3Provider) {
+      try {
+        const mintMethod =
+          config.saleStatus === PUBLIC_SALE ? 'publicSaleMint' : 'preSaleMint'
+        const functionFee = await contract.estimateGas[mintMethod]({
+          value: ethers.utils.parseEther('0.1'),
+        })
+        const feeData = await web3Provider.getFeeData()
+        const estGasFeeBN = feeData.maxFeePerGas?.mul(functionFee)
+        estGasFeeBN && setMintGasFee(ethers.utils.formatEther(estGasFeeBN))
+      } catch (error) {
+        console.log('error calculating gas fee: ', error)
+        setMintGasFee('')
+      }
+    }
+  }
+
   // TODO: reset to blank values
   const [form, setForm] = useState<MintForm>({
     email: 'sean.ng@aax.com',
@@ -119,5 +154,9 @@ export function useMint(contract: ethers.Contract | null) {
     form,
     setForm,
     setFiles,
+    files,
+    contract,
+    calcMintGasFee,
+    mintGasFee,
   }
 }

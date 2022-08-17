@@ -10,11 +10,12 @@ import {
   SecondaryButton,
   PrimaryButton,
   FormHeading,
-  CaretDownGreenIcon,
+  CaretDownIcon,
 } from 'components'
 import {
   INCONSISTENT_CONTRACT_STATUS,
   INSUFFICIENT_WALLET_BALANCE,
+  NO_ADDRESS_FOUND,
   NO_WHITELIST_TOKEN,
   PRESALE,
   PUBLIC_SALE,
@@ -27,6 +28,7 @@ const EXCHANGE_RATE_REQUEST_INTERVAL = 5000
 const ETH_DECIMAL_PLACES = 5
 
 interface Props extends Partial<StepWizardChildProps> {
+  address: string | null | undefined
   updateForm: (formValues: {
     donationInput: number
     donationInEth: number
@@ -49,6 +51,7 @@ export function DonationStep({
   calcMintGasFee,
   calcEthToNtd,
   calcBalance,
+  address,
   mintGasFee,
   form,
   setIsLoading,
@@ -136,12 +139,13 @@ export function DonationStep({
   }, [donationInput, ethToNtd])
 
   useEffect(() => {
+    if (!address) return setErrorType(NO_ADDRESS_FOUND)
     setErrorType(
       Number(balance) < Number(form.donationInEth)
         ? INSUFFICIENT_WALLET_BALANCE
         : ''
     )
-  }, [balance, form.donationInEth])
+  }, [balance, form.donationInEth, address])
 
   const balanceNum = Number(balance)
 
@@ -149,12 +153,12 @@ export function DonationStep({
     <>
       <div className="flex flex-col items-center font-noto pt-8 w-[300px] mx-auto">
         <FormHeading className="mb-3">你的愛能幫助受虐動物</FormHeading>
-        <p className="mb-4 text-center">
+        <p className="mb-4 text-center tracking-wide">
           你的愛不只轉動元宇宙，為你獨特的Impact
           NFT定價，費用全額將捐助SPCA台灣防止虐待動物協會 一起關心受虐動物
         </p>
         <TwSpcaButton className="mb-2" />
-        <CaretDownGreenIcon className="mb-3" />
+        <CaretDownIcon fill="#fff" className="mb-3" />
         <div className="flex border border-lime mb-3 w-full">
           {[1000, 5000, 10000].map((val, i) => (
             <DonationButton
@@ -196,10 +200,12 @@ export function DonationStep({
           </div>
           <div
             className={`text-right text-xs font-mono p-2 ${
-              balanceNum < donationInEth ? 'text-tomato' : ''
+              balanceNum < donationInEth || !address ? 'text-tomato' : ''
             }`}
           >
-            Your balance: ETH {balanceNum.toFixed(ETH_DECIMAL_PLACES)}
+            {address
+              ? `Your balance: ETH ${balanceNum.toFixed(ETH_DECIMAL_PLACES)}`
+              : '尚未連結錢包'}
           </div>
         </div>
         <div className="flex space-x-8 mt-20">
@@ -239,6 +245,15 @@ export function DonationStep({
                   <a href="#" target="_blank" className="underline">
                     如何買幣？
                   </a>
+                </div>
+              </div>
+            ),
+            [NO_ADDRESS_FOUND]: (
+              <div className="bg-tomato flex px-4 py-4 space-x-4 mb-2">
+                <WarningStamp />
+                <div className="text-white">
+                  <p>尚未連結錢包</p>
+                  <p>請先連結錢包以繼續鑄造</p>
                 </div>
               </div>
             ),

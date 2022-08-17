@@ -30,6 +30,7 @@ export const FINISHED = 'finished'
 export const NO_WHITELIST_TOKEN = 'no whitelist token'
 export const INCONSISTENT_CONTRACT_STATUS = 'INCONSISTENT_CONTRACT_STATUS'
 export const INSUFFICIENT_WALLET_BALANCE = 'INSUFFICIENT_WALLET_BALANCE'
+export const NO_ADDRESS_FOUND = 'no address found'
 
 // s3 folders
 export const OPENED = 'opened'
