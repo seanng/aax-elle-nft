@@ -1,13 +1,13 @@
 import { MintResponseData } from 'shared/types'
 import { FormHeading, LinkAndPasscode, SocialButtons } from 'components'
-import { config } from 'utils/config'
+import { metadata } from 'utils/config'
 
 interface Props {
   data: MintResponseData
 }
 
 export function SuccessStep({ data }: Props) {
-  const link = `${config.siteUrl}/open/${data?.slug}`
+  const link = `${metadata.siteUrl}/open/${data?.slug}`
 
   return (
     <div className="flex flex-col font-noto pt-16 w-80 mx-auto text-center">

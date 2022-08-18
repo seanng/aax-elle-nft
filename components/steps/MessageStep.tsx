@@ -3,7 +3,8 @@ import { PrimaryButton, FormHeading, SecondaryButton } from 'components'
 import { useState } from 'react'
 import { Files, MintForm } from 'shared/types'
 import { FINISHED, NOT_STARTED, PRESALE } from 'shared/constants'
-import { config } from 'utils/config'
+import { saleStatus } from 'utils/config'
+// import { getAssets } from 'utils/nft'
 
 const TEXTAREA_HEIGHT = 232
 
@@ -32,7 +33,7 @@ export function MessageStep({
   })
   const onWalletConnect = async () => {
     if (!address) return console.error('No Address Found...')
-    if (config.saleStatus === PRESALE) {
+    if (saleStatus === PRESALE) {
       const hasWhitelistToken = await ownsWhitelistToken(address)
       if (!hasWhitelistToken) {
         // If address does not contain whitelist token, display Sorry modal.
@@ -45,7 +46,11 @@ export function MessageStep({
 
   const handleMintClick = async () => {
     // Generate animation HTML + images out of message. @denis
-    // setFiles()
+    // await getAssets()
+
+    // setFiles({
+    //   unopenedHtml
+    // })
     updateForm({ ...values, mintedAt: new Date() })
     address ? onWalletConnect() : openConnectModal(onWalletConnect)
   }
@@ -76,8 +81,8 @@ export function MessageStep({
 
   const shouldDisableButtons =
     values.message === '' ||
-    config.saleStatus === NOT_STARTED ||
-    config.saleStatus === FINISHED
+    saleStatus === NOT_STARTED ||
+    saleStatus === FINISHED
 
   // https://stackoverflow.com/a/46118025/6007700
   // https://stackoverflow.com/a/65893635/6007700

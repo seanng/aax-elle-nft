@@ -5,7 +5,7 @@ import {
   MintLayout,
   PrimaryButton,
 } from 'components'
-import { config } from 'utils/config'
+import { saleStatus } from 'utils/config'
 import { useWeb3Context } from 'context'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -17,11 +17,11 @@ const WelcomePage: NextPage = () => {
   const router = useRouter()
 
   const handleCtaClick = async () => {
-    if (config.saleStatus === PUBLIC_SALE) {
+    if (saleStatus === PUBLIC_SALE) {
       router.push('/mint')
       return
     }
-    if (config.saleStatus === PRESALE) {
+    if (saleStatus === PRESALE) {
       // Open connect wallet modal.
       let connected = true
       if (!address) connected = await connect()

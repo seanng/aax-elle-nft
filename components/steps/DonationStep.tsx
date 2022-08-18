@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { StepWizardChildProps } from 'react-step-wizard'
-import { config } from 'utils/config'
+import { saleStatus } from 'utils/config'
 import { ethers } from 'ethers'
 import { useForm } from 'react-hook-form'
 import {
@@ -92,10 +92,10 @@ export function DonationStep({
     setIsLoading(true)
     let mintResponseData: MintResponseData
     try {
-      if (config.saleStatus === PRESALE) {
+      if (saleStatus === PRESALE) {
         mintResponseData = await preSaleMint()
       }
-      if (config.saleStatus === PUBLIC_SALE) {
+      if (saleStatus === PUBLIC_SALE) {
         mintResponseData = await publicSaleMint()
       }
       // Do something on success? Here or in Donation Step.

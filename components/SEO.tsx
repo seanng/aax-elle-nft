@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { config } from 'utils/config'
+import { metadata } from 'utils/config'
 import type { NextImage } from 'lib/images'
 
 interface Props {
@@ -13,10 +13,10 @@ interface Props {
 
 function SEO(p: Props) {
   const router = useRouter()
-  const { href: canonical } = new URL(router.asPath, config.siteUrl)
+  const { href: canonical } = new URL(router.asPath, metadata.siteUrl)
 
-  const title = p.title || config.siteTitle
-  const description = p.description || config.siteDesc
+  const title = p.title || metadata.siteTitle
+  const description = p.description || metadata.siteDesc
 
   const jsonLd = getJsonLd({
     ...p,
@@ -60,7 +60,7 @@ function SEO(p: Props) {
 }
 
 function getJsonLd({ description, canonical, seoImage }: Props) {
-  const { siteUrl } = config
+  const { siteUrl } = metadata
 
   return {
     '@context': `https://schema.org/`,
