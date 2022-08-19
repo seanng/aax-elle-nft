@@ -39,6 +39,8 @@ export function Stepper({
     )
   }
 
+  if (currentStep === 5) return <></>
+
   return (
     <>
       <div
