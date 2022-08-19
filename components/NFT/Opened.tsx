@@ -13,11 +13,13 @@ const compsStyle = {
 } as React.CSSProperties
 
 interface Props {
-  data: Partial<React.CSSProperties> & {
+  data: {
     message: string
     aroundText: string
     gridIconColor: string
-    messageColor: string
+    background?: string
+    opacity?: string
+    messageColor?: string
   }
   setImage?: React.Dispatch<React.SetStateAction<null>>
   setHTML?: React.Dispatch<React.SetStateAction<null>>
@@ -25,10 +27,10 @@ interface Props {
 
 function CompsNFTOpened({
   data: {
-    opacity,
-    background,
+    opacity = '0.25',
+    background = '#000',
     gridIconColor,
-    messageColor,
+    messageColor = '#fff',
     aroundText,
     message,
   },
