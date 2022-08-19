@@ -33,6 +33,7 @@ export const INSUFFICIENT_WALLET_BALANCE = 'INSUFFICIENT_WALLET_BALANCE'
 export const NO_ADDRESS_FOUND = 'no address found'
 
 // s3 folders
-export const OPENED = 'opened'
-export const UNOPENED = 'unopened'
+export const BEFORE = 'before'
+export const AFTER = 'after'
+export const NEVER = 'never'
 export const PUBLIC = 'public'

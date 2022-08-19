@@ -2,8 +2,9 @@ import axios from 'lib/axios'
 import { ethers } from 'ethers'
 import {
   NO_WHITELIST_TOKEN,
-  OPENED,
-  UNOPENED,
+  BEFORE,
+  AFTER,
+  NEVER,
   PUBLIC,
   INCONSISTENT_CONTRACT_STATUS,
   PUBLIC_SALE,
@@ -59,10 +60,10 @@ export function useMint() {
   })
 
   const [files, setFiles] = useState<Files>({
-    unopenedImage: null,
-    unopenedHtml: null,
-    openedImage: null,
-    openedHtml: null,
+    beforeOpenImage: null,
+    beforeOpenHtml: null,
+    afterOpenImage: null,
+    afterOpenHtml: null,
     neverOpenedImage: null,
     neverOpenedHtml: null,
   })
@@ -103,12 +104,14 @@ export function useMint() {
     await contract[mintMethod](mintOpts)
 
     // TODO: Upload images & HTMLs to S3
-    // await uploadOneFile(OPENED, `${messageTokenId}.png`)
-    // await uploadOneFile(OPENED, `${messageTokenId}.html`)
-    // await uploadOneFile(UNOPENED, `${messageTokenId}.png`)
-    // await uploadOneFile(UNOPENED, `${messageTokenId}.html`)
-    // await uploadOneFile(PUBLIC, `${messageTokenId}.png`)
-    // await uploadOneFile(PUBLIC, `${messageTokenId}.html`)
+    await uploadOneFile(PUBLIC, `${messageTokenId}.png`, files.beforeOpenImage)
+    await uploadOneFile(PUBLIC, `${messageTokenId}.html`, files.beforeOpenHtml)
+    await uploadOneFile(BEFORE, `${messageTokenId}.png`, files.beforeOpenImage)
+    await uploadOneFile(BEFORE, `${messageTokenId}.html`, files.beforeOpenHtml)
+    await uploadOneFile(AFTER, `${messageTokenId}.png`, files.afterOpenImage)
+    await uploadOneFile(AFTER, `${messageTokenId}.html`, files.afterOpenHtml)
+    await uploadOneFile(NEVER, `${messageTokenId}.png`, files.neverOpenedImage)
+    await uploadOneFile(NEVER, `${messageTokenId}.html`, files.neverOpenedHtml)
 
     const { data: mintData } = await axios.post(`/api/mints`, {
       messageTokenId,
@@ -124,7 +127,12 @@ export function useMint() {
     return mintData
   }
 
-  const uploadOneFile = async (folder: string, key: string, file: File) => {
+  const uploadOneFile = async (
+    folder: string,
+    key: string,
+    file: File | null
+  ) => {
+    if (!file) throw new Error('No File in uploadOneFile')
     // Get presigned post fields
     const res = await fetch(
       `/api/upload-encrypted-images-url?file=${folder}/${key}`

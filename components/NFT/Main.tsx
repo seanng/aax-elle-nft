@@ -23,12 +23,12 @@ function CompsNFTMain({ data, assetsCB }: Props) {
     const htmlsReady = beforeOpenHTML && openedHTML && unopenHTML
     if (imagesReady && htmlsReady && assetsCB) {
       assetsCB({
-        unopenedImage: unopenImg,
-        unopenedHtml: unopenHTML,
-        openedImage: openedImg,
-        openedHtml: openedHTML,
-        neverOpenedImage: beforeOpenImg,
-        neverOpenedHtml: beforeOpenHTML,
+        beforeOpenImage: beforeOpenImg,
+        beforeOpenHtml: beforeOpenHTML,
+        afterOpenImage: openedImg,
+        afterOpenHtml: openedHTML,
+        neverOpenedImage: unopenImg,
+        neverOpenedHtml: unopenHTML,
       })
     }
   }, [

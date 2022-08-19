@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Files, MintForm } from 'shared/types'
 import { FINISHED, NOT_STARTED, PRESALE } from 'shared/constants'
 import { saleStatus } from 'utils/config'
-// import { getAssets } from 'utils/nft'
+import { getAssets } from 'utils/nft'
 
 const TEXTAREA_HEIGHT = 232
 
@@ -14,6 +14,7 @@ interface Props extends Partial<StepWizardChildProps> {
   openSharingModal: () => void
   openConnectModal: (cb: () => {}) => void
   address?: string | null
+  setIsLoading: (b: boolean) => void
   ownsWhitelistToken: (address: string) => Promise<boolean>
 }
 
@@ -23,6 +24,7 @@ export function MessageStep({
   openSharingModal,
   ownsWhitelistToken,
   openConnectModal,
+  setIsLoading,
   address,
   ...wizard
 }: Props) {
@@ -31,6 +33,7 @@ export function MessageStep({
     senderName: '',
     receiverName: '',
   })
+
   const onWalletConnect = async () => {
     if (!address) return console.error('No Address Found...')
     if (saleStatus === PRESALE) {
@@ -45,13 +48,18 @@ export function MessageStep({
   }
 
   const handleMintClick = async () => {
-    // Generate animation HTML + images out of message. @denis
-    // await getAssets()
-
-    // setFiles({
-    //   unopenedHtml
-    // })
+    const { message, senderName, receiverName } = values
+    setIsLoading(true)
+    // TODO: Change after designs are confirmed.
+    const files = await getAssets({
+      message: message,
+      aroundText: `${senderName} wants to give you something, ${receiverName}!`,
+      aroundTextColor: 'blue',
+      gridIconColor: 'blue',
+    })
+    setFiles(files)
     updateForm({ ...values, mintedAt: new Date() })
+    setIsLoading(false)
     address ? onWalletConnect() : openConnectModal(onWalletConnect)
   }
 

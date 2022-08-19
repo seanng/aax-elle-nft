@@ -8,10 +8,10 @@ export enum DisplayMode {
 }
 
 export interface Files {
-  unopenedImage: File | null
-  unopenedHtml: File | null
-  openedImage: File | null
-  openedHtml: File | null
+  beforeOpenImage: File | null
+  beforeOpenHtml: File | null
+  afterOpenImage: File | null
+  afterOpenHtml: File | null
   neverOpenedImage: File | null
   neverOpenedHtml: File | null
 }

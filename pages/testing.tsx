@@ -20,10 +20,10 @@ const data = {
 
 const TestPage: NextPage = () => {
   const [files, setFiles] = useState<Files>({
-    unopenedImage: null,
-    unopenedHtml: null,
-    openedImage: null,
-    openedHtml: null,
+    beforeOpenImage: null,
+    beforeOpenHtml: null,
+    afterOpenImage: null,
+    afterOpenHtml: null,
     neverOpenedImage: null,
     neverOpenedHtml: null,
   })
@@ -40,7 +40,7 @@ const TestPage: NextPage = () => {
   }, [])
 
   useEffect(() => {
-    if (files.unopenedHtml) {
+    if (files.beforeOpenHtml) {
       const reader = new FileReader()
 
       reader.addEventListener(
@@ -51,7 +51,7 @@ const TestPage: NextPage = () => {
         false
       )
 
-      reader.readAsText(files.unopenedHtml)
+      reader.readAsText(files.beforeOpenHtml)
     }
   }, [files])
   // return preview ? (
