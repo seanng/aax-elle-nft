@@ -40,10 +40,15 @@ export default async function handler(
   const accessParams = await getCrossAccountCredentials()
   const s3 = new aws.S3(accessParams)
 
+  const isHtml = req.query.file.slice(-5) === '.html'
+
   const post = await s3.createPresignedPost({
     Bucket: process.env.S3_BUCKET,
     Expires: 60, // seconds
-    Fields: { key: req.query.file },
+    Fields: {
+      key: req.query.file,
+      'Content-Type': isHtml ? 'text/html' : 'image/png',
+    },
     Conditions: [['content-length-range', 0, 1048576]], // up to 1 MB]
   })
   res.status(200).json(post)

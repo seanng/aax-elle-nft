@@ -8,10 +8,10 @@ export enum DisplayMode {
 }
 
 export interface Files {
-  unopenedImage: File | null
-  unopenedHtml: File | null
-  openedImage: File | null
-  openedHtml: File | null
+  beforeOpenImage: File | null
+  beforeOpenHtml: File | null
+  afterOpenImage: File | null
+  afterOpenHtml: File | null
   neverOpenedImage: File | null
   neverOpenedHtml: File | null
 }
@@ -30,11 +30,11 @@ export interface MintForm {
 export type MintResponseData = Partial<Mint> | undefined
 
 export interface NFTParameters {
-  opacity: string
-  background: string
+  message: string
   gridIconColor: string
   aroundTextColor: string
   aroundText: string
-  messageColor: string
-  message: string
+  background?: string
+  messageColor?: string
+  opacity?: string
 }

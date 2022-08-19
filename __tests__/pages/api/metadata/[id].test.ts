@@ -17,8 +17,8 @@ describe('api/metadata/[id]', () => {
 
       expect(res._getJSONData()).toEqual({
         name: 'Message Token',
-        image: `https://s3blablabla.amazonaws.com/images/${ODD_NUMBER}.png`,
-        animation_url: `https://s3blablabla.amazonaws.com/display/${ODD_NUMBER}.html`,
+        image: `https://dzzdqphbq7oxj.cloudfront.net/public/${ODD_NUMBER}.png`,
+        animation_url: `https://dzzdqphbq7oxj.cloudfront.net/public/${ODD_NUMBER}.html`,
       })
     })
 
@@ -31,8 +31,8 @@ describe('api/metadata/[id]', () => {
 
       expect(res._getJSONData()).toEqual({
         name: 'Whitelist Token',
-        image: `https://s3blablabla.amazonaws.com/images/${EVEN_NUMBER}.png`,
-        animation_url: `https://s3blablabla.amazonaws.com/display/${EVEN_NUMBER}.html`,
+        image: `https://dzzdqphbq7oxj.cloudfront.net/public/${EVEN_NUMBER}.png`,
+        animation_url: `https://dzzdqphbq7oxj.cloudfront.net/public/${EVEN_NUMBER}.html`,
       })
     })
   })

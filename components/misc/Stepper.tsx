@@ -1,6 +1,6 @@
 import { StepWizardChildProps } from 'react-step-wizard'
 import { StepperArrowRight, PinkLockIcon } from 'components'
-import { config } from 'utils/config'
+import { saleStatus } from 'utils/config'
 import { FINISHED } from 'shared/constants'
 
 const steps = [
@@ -25,7 +25,7 @@ const steps = [
 export function Stepper({
   currentStep = 0,
 }: Partial<StepWizardChildProps>): JSX.Element {
-  if (config.saleStatus === FINISHED) {
+  if (saleStatus === FINISHED) {
     return (
       <div
         className="relative h-11 bg-tomato text-tomato font-mono font-medium italic text-4xl w-full leading-120% overflow-x-hidden px-6"

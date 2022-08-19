@@ -3,7 +3,8 @@ import { PrimaryButton, FormHeading, SecondaryButton } from 'components'
 import { useState } from 'react'
 import { Files, MintForm } from 'shared/types'
 import { FINISHED, NOT_STARTED, PRESALE } from 'shared/constants'
-import { config } from 'utils/config'
+import { saleStatus } from 'utils/config'
+import { getAssets } from 'utils/nft'
 
 const TEXTAREA_HEIGHT = 232
 
@@ -13,6 +14,7 @@ interface Props extends Partial<StepWizardChildProps> {
   openSharingModal: () => void
   openConnectModal: (cb: () => {}) => void
   address?: string | null
+  setIsLoading: (b: boolean) => void
   ownsWhitelistToken: (address: string) => Promise<boolean>
 }
 
@@ -22,6 +24,7 @@ export function MessageStep({
   openSharingModal,
   ownsWhitelistToken,
   openConnectModal,
+  setIsLoading,
   address,
   ...wizard
 }: Props) {
@@ -30,9 +33,10 @@ export function MessageStep({
     senderName: '',
     receiverName: '',
   })
+
   const onWalletConnect = async () => {
     if (!address) return console.error('No Address Found...')
-    if (config.saleStatus === PRESALE) {
+    if (saleStatus === PRESALE) {
       const hasWhitelistToken = await ownsWhitelistToken(address)
       if (!hasWhitelistToken) {
         // If address does not contain whitelist token, display Sorry modal.
@@ -44,9 +48,18 @@ export function MessageStep({
   }
 
   const handleMintClick = async () => {
-    // Generate animation HTML + images out of message. @denis
-    // setFiles()
+    const { message, senderName, receiverName } = values
+    setIsLoading(true)
+    // TODO: Change after designs are confirmed.
+    const files = await getAssets({
+      message: message,
+      aroundText: `${senderName} wants to give you something, ${receiverName}!`,
+      aroundTextColor: 'blue',
+      gridIconColor: 'blue',
+    })
+    setFiles(files)
     updateForm({ ...values, mintedAt: new Date() })
+    setIsLoading(false)
     address ? onWalletConnect() : openConnectModal(onWalletConnect)
   }
 
@@ -76,8 +89,8 @@ export function MessageStep({
 
   const shouldDisableButtons =
     values.message === '' ||
-    config.saleStatus === NOT_STARTED ||
-    config.saleStatus === FINISHED
+    saleStatus === NOT_STARTED ||
+    saleStatus === FINISHED
 
   // https://stackoverflow.com/a/46118025/6007700
   // https://stackoverflow.com/a/65893635/6007700

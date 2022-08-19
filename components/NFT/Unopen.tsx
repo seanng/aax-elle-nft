@@ -13,7 +13,7 @@ const compsStyle = {
 
 interface Props {
   data: {
-    background: string
+    background?: string
     gridIconColor: string
     aroundText: string
   }
@@ -22,7 +22,7 @@ interface Props {
 }
 
 function CompsNFTUnopen({
-  data: { background, gridIconColor, aroundText },
+  data: { background = '#000', gridIconColor, aroundText },
   setImage,
   setHTML,
 }: Props) {

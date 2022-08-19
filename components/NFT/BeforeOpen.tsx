@@ -12,7 +12,7 @@ const compsStyle = {
 } as React.CSSProperties
 
 function CompsNFTBeforeOpen({
-  data: { background, gridIconColor, aroundText },
+  data: { background = '#000', gridIconColor, aroundText },
   setImage,
   setHTML,
 }) {
