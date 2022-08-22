@@ -53,6 +53,7 @@ export { GreenUnlockIcon } from './icons/GreenUnlockIcon'
 export { DisconnectIcon } from './icons/DisconnectIcon'
 export { WarningIcon } from './icons/WarningIcon'
 export { GreenLipsIcon } from './icons/GreenLipsIcon'
+export { ToastSuccessIcon } from './icons/ToastSuccessIcon'
 
 // buttons
 export { ConnectButton } from './buttons/ConnectButton'
