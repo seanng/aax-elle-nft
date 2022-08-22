@@ -60,30 +60,11 @@ export function SharingModal({ isOpen, closeModal, files }: Props) {
     // TODO: change beforeOpenImage to igStoryImage
     if (!files.beforeOpenImage) return
 
-    const reader = new FileReader()
+    // Open a new NextJS Page (_target=blank) that renders the IG image + instructions.
 
-    reader.addEventListener(
-      'load',
-      () => {
-        const a = document.createElement('a')
-        document.body.appendChild(a)
-        a.href = reader.result as string
-        a.download = 'My_IG_Story_Secret.png'
-        a.click()
-        toast.success(
-          <ToastMessage
-            heading="告白圖片已存入手機"
-            body="已將告白圖片存入你的手機，請至相簿分享至社群"
-          />
-        )
-        document.body.removeChild(a)
-
-        // TODO: go to instagram
-      },
-      false
-    )
-
-    reader.readAsDataURL(files.beforeOpenImage)
+    // Page must instruct the user how to save the image to his/her phone.
+    // For instance on iOS, user must hold down the image in order to save photo to phone.
+    // Page can have a button that directs the user to instagram://story-camera (see: https://stackoverflow.com/a/65893635) photo is saved.
   }
 
   return (
