@@ -38,6 +38,7 @@ const MintPage: NextPage = () => {
     calcEthToNtd,
     ethToNtd,
     form,
+    files,
     setForm,
     setFiles,
     contract,
@@ -97,6 +98,7 @@ const MintPage: NextPage = () => {
       <SharingModal
         isOpen={isSharingModalOpen}
         closeModal={() => setIsSharingModalOpen(false)}
+        files={files}
       />
       <SpinningOverlay isLoading={isLoading} />
       {saleStatus === NOT_STARTED && (

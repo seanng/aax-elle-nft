@@ -5,7 +5,6 @@ import {
   IntroSection,
   BodySection,
 } from 'components'
-import { ToastContainer } from 'react-toastify'
 import ReactFullpage from '@fullpage/react-fullpage'
 
 const HomePage: NextPage = () => {
@@ -22,11 +21,6 @@ const HomePage: NextPage = () => {
             <BodySection />
           </ReactFullpage.Wrapper>
         )}
-      />
-      <ToastContainer
-        hideProgressBar
-        position="bottom-right"
-        autoClose={2000}
       />
     </>
   )

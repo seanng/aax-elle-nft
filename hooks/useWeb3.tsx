@@ -1,7 +1,6 @@
 import { useEffect, useReducer, useCallback, ReactDOM } from 'react'
 import Web3Modal from 'web3modal'
 import { ethers } from 'ethers'
-import { toast } from 'react-toastify'
 import {
   Web3ProviderState,
   Web3Action,
@@ -51,8 +50,6 @@ export function useWeb3() {
         })
       }
 
-      toast.success('Connected to Web3')
-
       const bal = await web3Provider.getBalance(address)
       dispatch({
         type: 'SET_BALANCE',
@@ -69,7 +66,6 @@ export function useWeb3() {
 
       return true
     } catch (e) {
-      toast.error(e)
       disconnect()
       return false
     }
@@ -91,7 +87,6 @@ export function useWeb3() {
     if (provider?.disconnect && typeof provider.disconnect === 'function') {
       await provider.disconnect()
     }
-    toast.error('Disconnected from Web3')
     dispatch({
       type: 'RESET_WEB3_PROVIDER',
     } as Web3Action)
@@ -101,7 +96,6 @@ export function useWeb3() {
   useEffect(() => {
     if (provider?.on) {
       const handleAccountsChanged = (accounts: string[]) => {
-        toast.info('Changed Web3 Account')
         dispatch({
           type: 'SET_ADDRESS',
           address: accounts[0],

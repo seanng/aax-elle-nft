@@ -8,11 +8,14 @@ import {
   SocialButtons,
   FormHeading,
   SpinningOverlay,
+  ToastMessage,
 } from 'components'
 import axios from 'lib/axios'
 import { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
+import { S3_BASE_URL } from 'shared/constants'
 
 interface Props {
   slugExists: boolean
@@ -29,6 +32,25 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
     if (errorMsg) setErrorMsg('')
     const { value } = e.target
     setInputValue(value)
+  }
+
+  const handleDLClick = () => {
+    const a = document.createElement('a')
+    document.body.appendChild(a)
+    a.href = `${S3_BASE_URL}/public/${data.messageTokenId}.png`
+    a.download = 'My_Secret.png'
+    a.click()
+    toast.success(
+      <ToastMessage heading="成功下載告白圖片" body="請至手機相簿瀏覽" />
+    )
+    document.body.removeChild(a)
+  }
+
+  const handleIGClick = () => {
+    // Open a new NextJS Page (_target=blank) that renders the IG image + instructions.
+    // Page must instruct the user how to save the image to his/her phone.
+    // For instance on iOS, user must hold down the image in order to save photo to phone.
+    // Page can have a button that directs the user to instagram://story-camera (see: https://stackoverflow.com/a/65893635) photo is saved.
   }
 
   const handleSubmit = async (e) => {
@@ -71,7 +93,10 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
             <p className="my-3 text-center w-[275px] leading-150% tracking-wide">
               秘密 Impact NFT 已被解開
             </p>
-            <SocialButtons />
+            <SocialButtons
+              onIGClick={handleIGClick}
+              onDLClick={handleDLClick}
+            />
             <Link href="/mint">
               <a>
                 <PrimaryButton type="button">我也要告白</PrimaryButton>
