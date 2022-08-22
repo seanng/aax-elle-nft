@@ -16,11 +16,6 @@ const toastClass = {
   default: 'bg-white',
 }
 
-// const toastIcon = {
-//   success:
-//   default:
-// }
-
 function MyApp({ Component, pageProps }) {
   return (
     <>
