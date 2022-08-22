@@ -10,10 +10,16 @@ export enum DisplayMode {
 export interface Files {
   beforeOpenImage: File | null
   beforeOpenHtml: File | null
+  beforeOpenPreview: string | null
+  beforeOpenDataURL: string | null
   afterOpenImage: File | null
   afterOpenHtml: File | null
+  afterOpenPreview: string | null
+  afterOpenDataURL: string | null
   neverOpenedImage: File | null
   neverOpenedHtml: File | null
+  neverOpenedPreview: string | null
+  neverOpenedDataURL: string | null
 }
 
 export interface MintForm {
