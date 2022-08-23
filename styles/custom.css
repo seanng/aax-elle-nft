@@ -213,3 +213,8 @@
   cursor: pointer;
   box-shadow: 0 0 5px green;
 }
+
+/* TOAST */
+.Toastify__toast-icon {
+  width: 32px;
+}

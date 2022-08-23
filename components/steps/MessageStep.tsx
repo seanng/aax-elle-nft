@@ -64,8 +64,17 @@ export function MessageStep({
   }
 
   const handleShareClick = async () => {
-    // Generate animation HTML + images out of message. @denis
-    // setFiles()
+    const { message, senderName, receiverName } = values
+    setIsLoading(true)
+    // TODO: Change config after designs are confirmed.
+    const files = await getAssets({
+      message: message,
+      aroundText: `${senderName} wants to give you something, ${receiverName}!`,
+      aroundTextColor: 'black',
+      gridIconColor: 'blue',
+    })
+    setFiles(files)
+    setIsLoading(false)
     // Open social media sharing modal and show the image, with buttons.
     openSharingModal()
   }

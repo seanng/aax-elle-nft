@@ -1,5 +1,6 @@
 import aws from 'aws-sdk'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { S3_BASE_URL } from 'shared/constants'
 
 const sts = new aws.STS({
   accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -66,9 +67,9 @@ export default async function handler(
             reject(res.status(400).send('Error uploading data to S3.'))
           }
           resolve(
-            res
-              .status(200)
-              .json({ url: `${process.env.CLOUDFRONT_BASE_URL}/${key}` })
+            res.status(200).json({
+              url: `${S3_BASE_URL}/${key}`,
+            })
           )
         }
       )

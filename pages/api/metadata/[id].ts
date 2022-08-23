@@ -1,7 +1,5 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
-
-const baseUrl =
-  process.env.CLOUDFRONT_BASE_URL ?? 'https://dzzdqphbq7oxj.cloudfront.net'
+import { S3_BASE_URL } from 'shared/constants'
 
 async function getHandler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query as { id: string }
@@ -9,8 +7,8 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
   // TODO: After presale, change Whitelist Token to Prize Token (if id is a certain amount.)
   res.json({
     name: Number(id) % 2 === 1 ? 'Message Token' : 'Whitelist Token',
-    image: `${baseUrl}/public/${id}.png`,
-    animation_url: `${baseUrl}/public/${id}.html`,
+    image: `${S3_BASE_URL}/public/${id}.png`,
+    animation_url: `${S3_BASE_URL}/public/${id}.html`,
   })
 }
 
