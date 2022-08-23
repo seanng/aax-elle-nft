@@ -10,6 +10,11 @@ interface Props {
 export function SuccessStep({ data }: Props) {
   const link = `${metadata.siteUrl}/open/${data?.slug}`
 
+  // TODO:
+  const handleDLClick = () => {}
+  // TODO:
+  const handleIGClick = () => {}
+
   return (
     <div className="flex flex-col font-noto pt-16 text-center">
       <FormHeading className="mb-2">恭喜成功鑄造 Impact NFT！</FormHeading>
@@ -17,7 +22,11 @@ export function SuccessStep({ data }: Props) {
         <p>這份愛的告白會永久保存在區塊鏈上</p>
         <p className="mb-4">也可以分享NFT到社群喔</p>
         {/* NFT ANIMATION URL GOES HERE */}
-        <SocialButtons className="mb-5" />
+        <SocialButtons
+          onIGClick={handleIGClick}
+          onDLClick={handleDLClick}
+          className="mb-5"
+        />
         <LinkAndPasscode
           link={link}
           passcode={data?.passcode ?? 'abc12'}

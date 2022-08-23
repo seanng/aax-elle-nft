@@ -4,14 +4,13 @@ import html2canvas from 'html2canvas'
 import CompsNFTMain from 'components/NFT/Main'
 import type { Files, NFTParameters } from 'shared/types'
 
-export const genImageFile = (element, filename, imageCB, dataUrlCB) => {
+export const genImageFile = (element, filename, imageCB) => {
   html2canvas(element, {
     width: 350,
     height: 350,
     windowWidth: 350,
     windowHeight: 350,
   }).then((canvas) => {
-    if (dataUrlCB) dataUrlCB(canvas.toDataURL('image/png'))
     canvas.toBlob((blob) => {
       if (imageCB && blob)
         imageCB(new File([blob], filename, { type: 'image/png' }))
@@ -19,7 +18,7 @@ export const genImageFile = (element, filename, imageCB, dataUrlCB) => {
   })
 }
 
-export const genHTMLFile = (htmlStr, filename, fileCB, previewCB) => {
+export const genHTMLFile = (htmlStr, filename, fileCB) => {
   const withDoctype = `
     <!DOCTYPE html>
     <html lang="en" style="width: 350px; height: 350px;">
@@ -40,7 +39,6 @@ export const genHTMLFile = (htmlStr, filename, fileCB, previewCB) => {
   const blob = new Blob([withDoctype], { type: 'text/html' })
   const file = new File([blob], filename, { type: 'text/html' })
   if (fileCB) fileCB(file)
-  if (previewCB) previewCB(withDoctype)
 }
 
 export const getAssets = (data: NFTParameters): Promise<Files> =>

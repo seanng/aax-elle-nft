@@ -112,7 +112,6 @@ export function DonationStep({
     }
     setIsLoading(false)
 
-    console.log('mintResponseData: ', mintResponseData)
     if (mintResponseData) {
       setIsConfirmModalOpen(false)
       setMintResponseData(mintResponseData)
