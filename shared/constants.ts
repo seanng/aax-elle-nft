@@ -33,6 +33,7 @@ export const INSUFFICIENT_WALLET_BALANCE = 'INSUFFICIENT_WALLET_BALANCE'
 export const NO_ADDRESS_FOUND = 'no address found'
 
 // s3 folders
+export const S3_BUCKET = process.env.S3_BUCKET ?? 'elle-nft-dev'
 export const BEFORE = 'before'
 export const AFTER = 'after'
 export const NEVER = 'never'
