@@ -34,7 +34,7 @@ async function unlockSecret(req: NextApiRequest, res: NextApiResponse) {
 
     // Update public NFT image
     const s3 = await makeS3()
-    const response = await s3
+    await s3
       .copyObject({
         Bucket: `${S3_BUCKET}/public`,
         Key: `${data.messageTokenId}.html`,
@@ -42,7 +42,15 @@ async function unlockSecret(req: NextApiRequest, res: NextApiResponse) {
       })
       .promise()
 
-    res.status(200).send({ data: response })
+    await s3
+      .copyObject({
+        Bucket: `${S3_BUCKET}/public`,
+        Key: `${data.messageTokenId}.png`,
+        CopySource: `${S3_BUCKET}/after/${data.messageTokenId}.png`,
+      })
+      .promise()
+
+    res.status(200).send({ success: 'ok' })
   } catch (error) {
     console.log('error in unlockSecret: ', error)
     res.status(500).send('Server error')
