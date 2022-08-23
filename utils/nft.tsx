@@ -4,15 +4,22 @@ import html2canvas from 'html2canvas'
 import CompsNFTMain from 'components/NFT/Main'
 import type { Files, NFTParameters } from 'shared/types'
 
-export const genImageFile = (element, filename, cb) => {
-  html2canvas(element).then((canvas) => {
+export const genImageFile = (element, filename, imageCB, dataUrlCB) => {
+  html2canvas(element, {
+    width: 350,
+    height: 350,
+    windowWidth: 350,
+    windowHeight: 350,
+  }).then((canvas) => {
+    if (dataUrlCB) dataUrlCB(canvas.toDataURL('image/png'))
     canvas.toBlob((blob) => {
-      if (cb && blob) cb(new File([blob], filename, { type: 'image/png' }))
+      if (imageCB && blob)
+        imageCB(new File([blob], filename, { type: 'image/png' }))
     }, 'image/png')
   })
 }
 
-export const genHTMLFile = (htmlStr, filename, cb) => {
+export const genHTMLFile = (htmlStr, filename, fileCB, previewCB) => {
   const withDoctype = `
     <!DOCTYPE html>
     <html lang="en" style="width: 350px; height: 350px;">
@@ -20,7 +27,9 @@ export const genHTMLFile = (htmlStr, filename, cb) => {
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>NFT Animation URL</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@1,500&family=Noto+Sans+TC&display=swap" rel="stylesheet">
     </head>
     <body style="width: 350px; height: 350px; margin: 0;">
       ${htmlStr}
@@ -30,7 +39,8 @@ export const genHTMLFile = (htmlStr, filename, cb) => {
 
   const blob = new Blob([withDoctype], { type: 'text/html' })
   const file = new File([blob], filename, { type: 'text/html' })
-  if (cb) cb(file)
+  if (fileCB) fileCB(file)
+  if (previewCB) previewCB(withDoctype)
 }
 
 export const getAssets = (data: NFTParameters): Promise<Files> =>
@@ -39,7 +49,6 @@ export const getAssets = (data: NFTParameters): Promise<Files> =>
     dummyElem.id = 'nft-generation-placeholder'
     dummyElem.style.height = '0'
     dummyElem.style.width = '0'
-    dummyElem.style.visibility = 'hidden'
     dummyElem.style.overflow = 'hidden'
     document.body.append(dummyElem)
     ReactDOM.render(<CompsNFTMain data={data} assetsCB={resolve} />, dummyElem)

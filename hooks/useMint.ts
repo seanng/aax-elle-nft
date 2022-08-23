@@ -62,10 +62,16 @@ export function useMint() {
   const [files, setFiles] = useState<Files>({
     beforeOpenImage: null,
     beforeOpenHtml: null,
+    beforeOpenPreview: null,
+    beforeOpenDataURL: null,
     afterOpenImage: null,
     afterOpenHtml: null,
+    afterOpenPreview: null,
+    afterOpenDataURL: null,
     neverOpenedImage: null,
     neverOpenedHtml: null,
+    neverOpenedPreview: null,
+    neverOpenedDataURL: null,
   })
 
   const [ethToNtd, setEthToNtd] = useState<number | null>(null)
