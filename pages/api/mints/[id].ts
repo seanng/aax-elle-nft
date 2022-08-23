@@ -1,6 +1,8 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import sendgrid from 'lib/sendgrid'
 import * as service from 'backend/services/mints'
+import { makeS3 } from 'lib/aws'
+import { S3_BUCKET } from 'shared/constants'
 
 async function putHandler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query as { id: string }
@@ -29,8 +31,26 @@ async function unlockSecret(req: NextApiRequest, res: NextApiResponse) {
     }
 
     await service.update({ id }, { openedAt: new Date() })
-    // TODO: update image from here or frontend
-    res.status(200).send('Success')
+
+    // Update public NFT image
+    const s3 = await makeS3()
+    await s3
+      .copyObject({
+        Bucket: `${S3_BUCKET}/public`,
+        Key: `${data.messageTokenId}.html`,
+        CopySource: `${S3_BUCKET}/after/${data.messageTokenId}.html`,
+      })
+      .promise()
+
+    await s3
+      .copyObject({
+        Bucket: `${S3_BUCKET}/public`,
+        Key: `${data.messageTokenId}.png`,
+        CopySource: `${S3_BUCKET}/after/${data.messageTokenId}.png`,
+      })
+      .promise()
+
+    res.status(200).send({ success: 'ok' })
   } catch (error) {
     console.log('error in unlockSecret: ', error)
     res.status(500).send('Server error')
