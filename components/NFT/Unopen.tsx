@@ -22,32 +22,22 @@ interface Props {
   }
   setImage?: React.Dispatch<React.SetStateAction<null>>
   setHTML?: React.Dispatch<React.SetStateAction<null>>
-  setPreview?: React.Dispatch<React.SetStateAction<null>>
-  setDataURL?: React.Dispatch<React.SetStateAction<null>>
 }
 
 function CompsNFTUnopen({
   data: { background = '#000', gridIconColor, aroundText },
   setImage,
   setHTML,
-  setPreview,
-  setDataURL,
 }: Props) {
   const reference = useRef<HTMLDivElement>(null)
 
   const imageCB = () => {
-    reference.current &&
-      genImageFile(reference.current, 'unopen.png', setImage, setDataURL)
+    reference.current && genImageFile(reference.current, 'unopen.png', setImage)
   }
 
   const htmlCB = () => {
     reference.current &&
-      genHTMLFile(
-        reference.current.outerHTML,
-        'unopen.html',
-        setHTML,
-        setPreview
-      )
+      genHTMLFile(reference.current.outerHTML, 'unopen.html', setHTML)
   }
 
   return (

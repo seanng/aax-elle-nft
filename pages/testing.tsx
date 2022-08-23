@@ -18,49 +18,43 @@ const data = {
 }
 
 const TestPage: NextPage = () => {
-  const mode = 'assets' // "assets" or "comps"
+  // const mode = 'assets' // "assets" or "comps"
   const [files, setFiles] = useState<Files>({
     beforeOpenImage: null,
     beforeOpenHtml: null,
-    beforeOpenPreview: null,
-    beforeOpenDataURL: null,
     afterOpenImage: null,
     afterOpenHtml: null,
-    afterOpenPreview: null,
-    afterOpenDataURL: null,
     neverOpenedImage: null,
     neverOpenedHtml: null,
-    neverOpenedPreview: null,
-    neverOpenedDataURL: null,
   })
 
-  useEffect(() => {
-    if (mode === 'assets') {
-      const handler = async () => {
-        const assets = await getAssets(data)
-        setFiles(assets)
-        console.log(assets)
-        console.log(assets.beforeOpenPreview)
-      }
+  // useEffect(() => {
+  //   if (mode === 'assets') {
+  //     const handler = async () => {
+  //       const assets = await getAssets(data)
+  //       setFiles(assets)
+  //       console.log(assets)
+  //       console.log(assets.beforeOpenPreview)
+  //     }
 
-      handler()
-    }
-  }, [])
+  //     handler()
+  //   }
+  // }, [])
 
-  if (mode === 'comps')
-    return (
-      <CompsNFTMain
-        data={data}
-        assetsCB={(assets) => {
-          console.log(assets)
-          console.log(assets.beforeOpenPreview)
-        }}
-      />
-    )
+  // if (mode === 'comps')
+  //   return (
+  //     <CompsNFTMain
+  //       data={data}
+  //       assetsCB={(assets) => {
+  //         console.log(assets)
+  //         console.log(assets.beforeOpenPreview)
+  //       }}
+  //     />
+  //   )
 
   return (
     <div className="text-center">
-      {
+      {/* {
         // eslint-disable-next-line
         files.beforeOpenPreview && (
           <div dangerouslySetInnerHTML={{ __html: files.beforeOpenPreview }} />
@@ -151,7 +145,7 @@ const TestPage: NextPage = () => {
             Download Unopen HTML
           </a>
         </div>
-      )}
+      )} */}
     </div>
   )
 }
