@@ -78,7 +78,7 @@ export function MintConfirmationModal({
                     </p>
                   </div>
                   <div className="text-center mb-5">
-                    <PrimaryButton onClick={onMintClick}>
+                    <PrimaryButton onClick={onMintClick} type="button">
                       確定鑄造
                     </PrimaryButton>
                   </div>

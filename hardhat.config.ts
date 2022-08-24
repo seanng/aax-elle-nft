@@ -31,10 +31,13 @@ export default {
     },
     rinkeby: {
       url: process.env.ALCHEMY_API_URL,
-      from: process.env.METAMASK_ACCOUNT_ADDRESS, // owner address
+      from: process.env.WALLET_ADDRESS, // "owner" address
       accounts: [
-        process.env.METAMASK_ACCOUNT_PRIVATE_KEY, // owner private key
+        process.env.WALLET_PRIVATE_KEY, // "owner" private key
       ],
     },
+  },
+  paths: {
+    tests: './__tests__',
   },
 }

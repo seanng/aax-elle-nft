@@ -8,7 +8,7 @@ export const create = async (
     data: Prisma.validator<Prisma.MintCreateInput>()(input),
   })
 
-export const findAll = async (where: Prisma.MintWhereInput) =>
+export const findMany = async (where: Prisma.MintWhereInput) =>
   prisma.mint.findMany({ where })
 
 export const findUnique = async (where: Prisma.MintWhereUniqueInput) =>
