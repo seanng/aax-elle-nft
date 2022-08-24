@@ -37,7 +37,6 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
     if (messageTokenIdList.length === 0)
       return res.status(404).send('No Message Tokens Found')
 
-    // now get the passcodes.
     const data = await service.findMany({
       OR: messageTokenIdList.map((id) => ({ messageTokenId: id })),
     })
