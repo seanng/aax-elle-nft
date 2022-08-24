@@ -59,13 +59,13 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
   res.json(mint)
 }
 
+// getOneMint (based on slug). /open?slug=abc
 async function getHandler(req: NextApiRequest, res: NextApiResponse) {
-  const { mw: minterWallet, slug } = req.query
+  const { slug } = req.query
   const where = {
-    ...(typeof minterWallet === 'string' && { minterWallet }),
     ...(typeof slug === 'string' && { slug }),
   }
-  const mints = await service.findAll(where)
+  const mints = await service.findMany(where)
   res.json(mints)
 }
 

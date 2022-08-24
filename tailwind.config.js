@@ -22,6 +22,7 @@ module.exports = {
         tomato: '#FF003A',
         guava: '#FF66FF',
         orange: '#ff7a00',
+        cement: '#C4C4C4',
       },
       fontFamily: {
         sans: ['GenSenRounded', ...defaultTheme.fontFamily.sans],

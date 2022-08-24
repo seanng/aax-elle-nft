@@ -18,7 +18,7 @@ import { saleStatus } from 'utils/config'
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
 
 export function useMint() {
-  const { web3Provider } = useWeb3Context()
+  const { web3Provider, address } = useWeb3Context()
   const [mintGasFee, setMintGasFee] = useState<string>('')
 
   const contract = web3Provider
@@ -79,7 +79,7 @@ export function useMint() {
 
   const preSaleMint = async () => {
     const hasWhitelistToken = await contract?.callStatic.ownsWhitelistToken(
-      contract.address
+      address
     )
     if (!hasWhitelistToken) throw new Error(NO_WHITELIST_TOKEN)
     return executeMint(true)
@@ -90,7 +90,7 @@ export function useMint() {
   const executeMint = async (isPresale: boolean): Promise<MintResponseData> => {
     if (!contract) return
     const mintOpts = {
-      value: ethers.utils.parseEther(form.donationInEth.toString()),
+      value: ethers.utils.parseEther(form.donationInEth.toFixed(18)),
     }
 
     const mintMethod = isPresale ? 'preSaleMint' : 'publicSaleMint'
@@ -118,7 +118,7 @@ export function useMint() {
       isPresale,
       message: form.message,
       minterEmail: form.email,
-      minterWallet: contract.address,
+      minterWallet: address,
       ethDonated: form.donationInEth.toString(),
       passcode: form.passcode,
       mintedAt: new Date(),

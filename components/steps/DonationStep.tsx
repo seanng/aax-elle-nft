@@ -106,7 +106,7 @@ export function DonationStep({
       if (error.message === NO_WHITELIST_TOKEN) {
         setErrorType(NO_WHITELIST_TOKEN)
       }
-      if (error?.code === -32603) {
+      if (error.code === -32603) {
         console.log('Do something to show that donation is required!!! ')
       }
     }
