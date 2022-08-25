@@ -106,31 +106,29 @@ export function MessageStep({
 
   return (
     <>
-      <div className="flex flex-col items-center font-noto h-full pt-4">
-        <FormHeading className="italic mb-6 tracking-wide w-72 text-center font-mono">
-          Ready to share your Love?
-        </FormHeading>
-        <div className="flex w-80 mb-4">
-          <div className="flex-none bg-lime text-black font-mono p-2">
+      <div className="flex flex-col items-center font-noto h-full mt-4">
+        <FormHeading className="mb-6 md:mb-10">寫下你的告白秘密吧</FormHeading>
+        <div className="flex w-80 md:w-[642px] mb-4">
+          <div className="flex-none bg-lime text-black font-mono p-2 md:text-2xl">
             寄件人
           </div>
           <input
             id="senderName"
             name="senderName"
             type="text"
-            className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono"
+            className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono md:text-2xl"
             onChange={handleInputChange}
           />
         </div>
-        <div className="flex w-80 mb-6">
-          <div className="flex-none bg-lime text-black font-mono p-2">
+        <div className="flex w-80 md:w-[642px] mb-6">
+          <div className="flex-none bg-lime text-black font-mono p-2 md:text-2xl">
             收件人
           </div>
           <input
             id="receiverName"
             name="receiverName"
             type="text"
-            className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono"
+            className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono md:text-2xl"
             onChange={handleInputChange}
           />
         </div>
