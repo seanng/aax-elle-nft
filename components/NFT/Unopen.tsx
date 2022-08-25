@@ -13,9 +13,12 @@ const compsStyle = {
 
 interface Props {
   data: {
-    background?: string
-    gridIconColor: string
+    message: string
     aroundText: string
+    gridIconColor: string
+    background?: string
+    opacity?: string
+    messageColor?: string
   }
   setImage?: React.Dispatch<React.SetStateAction<null>>
   setHTML?: React.Dispatch<React.SetStateAction<null>>
@@ -29,7 +32,7 @@ function CompsNFTUnopen({
   const reference = useRef<HTMLDivElement>(null)
 
   const imageCB = () => {
-    genImageFile(reference.current, 'unopen.png', setImage)
+    reference.current && genImageFile(reference.current, 'unopen.png', setImage)
   }
 
   const htmlCB = () => {

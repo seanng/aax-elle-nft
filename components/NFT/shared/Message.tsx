@@ -5,10 +5,11 @@ const compStyle = {
   width: '350px',
   height: '350px',
   padding: '37.5px',
-  fontFamily: 'NotoSansTC',
+  fontFamily: '"Noto Sans TC", "NotoSansTC"',
   fontWeight: '400',
   fontSize: '26px',
   lineHeight: '140%',
+  boxSizing: 'border-box',
 } as React.CSSProperties
 
 const innerContainerStyle = {

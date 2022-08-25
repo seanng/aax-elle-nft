@@ -40,7 +40,7 @@ function CompsNFTOpened({
   const reference = useRef<HTMLDivElement>(null)
 
   const imageCB = () => {
-    genImageFile(reference.current, 'opened.png', setImage)
+    reference.current && genImageFile(reference.current, 'opened.png', setImage)
   }
 
   const htmlCB = () => {

@@ -2,8 +2,7 @@ import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import { Files } from 'shared/types'
 import { getAssets } from 'utils/nft'
-import CompsNFTUnopen from 'components/NFT/Unopen'
-// import { MintLayout } from 'components'
+import CompsNFTMain from 'components/NFT/Main'
 
 const data = {
   opacity: '0.25',
@@ -19,6 +18,7 @@ const data = {
 }
 
 const TestPage: NextPage = () => {
+  // const mode = 'assets' // "assets" or "comps"
   const [files, setFiles] = useState<Files>({
     beforeOpenImage: null,
     beforeOpenHtml: null,
@@ -27,37 +27,127 @@ const TestPage: NextPage = () => {
     neverOpenedImage: null,
     neverOpenedHtml: null,
   })
-  const [preview, setPreview] = useState<string | ArrayBuffer | null>(null) // eslint-disable-line
 
-  useEffect(() => {
-    const handler = async () => {
-      const assets = await getAssets(data)
-      setFiles(assets)
-      console.log(assets) // eslint-disable-line
-    }
+  // useEffect(() => {
+  //   if (mode === 'assets') {
+  //     const handler = async () => {
+  //       const assets = await getAssets(data)
+  //       setFiles(assets)
+  //       console.log(assets)
+  //       console.log(assets.beforeOpenPreview)
+  //     }
 
-    handler()
-  }, [])
+  //     handler()
+  //   }
+  // }, [])
 
-  useEffect(() => {
-    if (files.beforeOpenHtml) {
-      const reader = new FileReader()
+  // if (mode === 'comps')
+  //   return (
+  //     <CompsNFTMain
+  //       data={data}
+  //       assetsCB={(assets) => {
+  //         console.log(assets)
+  //         console.log(assets.beforeOpenPreview)
+  //       }}
+  //     />
+  //   )
 
-      reader.addEventListener(
-        'load',
-        () => {
-          setPreview(reader.result)
-        },
-        false
-      )
+  return (
+    <div className="text-center">
+      {/* {
+        // eslint-disable-next-line
+        files.beforeOpenPreview && (
+          <div dangerouslySetInnerHTML={{ __html: files.beforeOpenPreview }} />
+        )
+      }
+      {files.beforeOpenDataURL && (
+        <div>
+          <a
+            className="bg-blue-900 text-white p-3 inline-block"
+            href={files.beforeOpenDataURL}
+            download="unopened.png"
+          >
+            Download Before Open PNG
+          </a>
+        </div>
+      )}
+      {files.beforeOpenPreview && (
+        <div>
+          <a
+            className="bg-blue-900 text-white p-3 inline-block"
+            href={`data:text/html;charset=utf-8,${encodeURIComponent(
+              files.beforeOpenPreview
+            )}`}
+            download="unopened.html"
+          >
+            Download Before Open HTML
+          </a>
+        </div>
+      )}
 
-      reader.readAsText(files.beforeOpenHtml)
-    }
-  }, [files])
-  // return preview ? (
-  //   <div dangerouslySetInnerHTML={{ __html: preview as string }} />
-  // ) : null
-  return <CompsNFTUnopen data={data} />
+      {
+        // eslint-disable-next-line
+        files.afterOpenPreview && (
+          <div dangerouslySetInnerHTML={{ __html: files.afterOpenPreview }} />
+        )
+      }
+      {files.afterOpenDataURL && (
+        <div>
+          <a
+            className="bg-blue-900 text-white p-3 inline-block"
+            href={files.afterOpenDataURL}
+            download="opened.png"
+          >
+            Download Opened PNG
+          </a>
+        </div>
+      )}
+      {files.afterOpenPreview && (
+        <div>
+          <a
+            className="bg-blue-900 text-white p-3 inline-block"
+            href={`data:text/html;charset=utf-8,${encodeURIComponent(
+              files.afterOpenPreview
+            )}`}
+            download="opened.html"
+          >
+            Download Opened HTML
+          </a>
+        </div>
+      )}
+
+      {
+        // eslint-disable-next-line
+        files.neverOpenedPreview && (
+          <div dangerouslySetInnerHTML={{ __html: files.neverOpenedPreview }} />
+        )
+      }
+      {files.neverOpenedDataURL && (
+        <div>
+          <a
+            className="bg-blue-900 text-white p-3 inline-block"
+            href={files.neverOpenedDataURL}
+            download="neverOpened.png"
+          >
+            Download Unopen PNG
+          </a>
+        </div>
+      )}
+      {files.neverOpenedPreview && (
+        <div>
+          <a
+            className="bg-blue-900 text-white p-3 inline-block"
+            href={`data:text/html;charset=utf-8,${encodeURIComponent(
+              files.neverOpenedPreview
+            )}`}
+            download="neverOpened.html"
+          >
+            Download Unopen HTML
+          </a>
+        </div>
+      )} */}
+    </div>
+  )
 }
 
 export default TestPage

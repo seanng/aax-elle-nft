@@ -6,11 +6,11 @@ const compStyle = {
   position: 'absolute',
   width: '350px',
   height: '350px',
-  fontFamily: 'DMMono',
+  fontFamily: '"DM Mono", "DMMono"',
   fontWeight: '500',
   fontStyle: 'italic',
   fontSize: '22px',
-  lineHeight: '60px',
+  boxSizing: 'border-box',
   color: 'transparent',
 } as React.CSSProperties
 
@@ -29,6 +29,13 @@ const commonInnerContainerStyle = {
   overflow: 'hidden',
   boxSizing: 'content-box',
   paddingBottom: '37.5px',
+} as React.CSSProperties
+
+const commonTextContainerStyle = {
+  display: 'flex',
+  justifyContent: 'start',
+  alignItems: 'end',
+  height: '37.5px',
 } as React.CSSProperties
 
 const commonTextStyle = {
@@ -155,13 +162,13 @@ function CompsNFTAroundText({ color, aroundText, imageCB, htmlCB }) {
       if (imageCB) imageCB()
       setStartAnimation(true)
     }
-  }, [isFontReady, isReady])
+  }, [isFontReady, isReady]) // eslint-disable-line
 
   useEffect(() => {
-    if (startAnimation && htmlCB) {
-      htmlCB()
+    if (startAnimation) {
+      if (htmlCB) htmlCB()
     }
-  }, [startAnimation])
+  }, [startAnimation]) // eslint-disable-line
 
   const renderText = (key) => {
     if (!isReady) return null
@@ -172,17 +179,35 @@ function CompsNFTAroundText({ color, aroundText, imageCB, htmlCB }) {
 
     return (
       <div style={commonInnerContainerStyle}>
-        <span style={{ ...commonTextStyle, animation: animationCSS }}>
-          <span style={commonTextStyle}>{aroundText}</span>
+        <div
+          id={`${key}-${randomId}`}
+          style={{ ...commonTextContainerStyle, animation: animationCSS }}
+        >
           <span
             style={{
               ...commonTextStyle,
-              height: '37.5px',
+              lineHeight: startAnimation ? '16px' : '14px',
+            }}
+          >
+            {aroundText}
+          </span>
+          <span
+            style={{
+              ...commonTextStyle,
               width: `${transformValues.emptyWidth}px`,
+              minWidth: `${transformValues.emptyWidth}px`,
+              height: '37.5px',
             }}
           />
-          <span style={commonTextStyle}>{aroundText}</span>
-        </span>
+          <span
+            style={{
+              ...commonTextStyle,
+              lineHeight: startAnimation ? '16px' : '14px',
+            }}
+          >
+            {aroundText}
+          </span>
+        </div>
       </div>
     )
   }
@@ -192,6 +217,22 @@ function CompsNFTAroundText({ color, aroundText, imageCB, htmlCB }) {
     return (
       <style>
         {`
+            #top-${randomId} {
+              transform: translateX(${transformValues.top.start}px);
+            }
+
+            #right-${randomId} {
+              transform: translateX(${transformValues.right.start}px);
+            }
+
+            #bottom-${randomId} {
+              transform: translateX(${transformValues.bottom.start}px);
+            }
+
+            #left-${randomId} {
+              transform: translateX(${transformValues.left.start}px);
+            }
+
             @keyframes marquee-top-${randomId} {
               0% {
                 transform: translateX(${transformValues.top.start}px);
