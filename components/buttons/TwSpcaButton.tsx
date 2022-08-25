@@ -1,4 +1,3 @@
-import { classNames } from 'utils/helpers'
 import Image from 'next/image'
 
 export const TwSpcaButton = ({ className = '', ...props }) => {
@@ -10,16 +9,30 @@ export const TwSpcaButton = ({ className = '', ...props }) => {
       rel="noreferrer"
     >
       <button className="relative" type="button" {...props}>
-        <ButtonSvg />
-        <div className="absolute flex w-full top-2 left-3 items-center">
+        <ButtonSvgMobile className="md:hidden" />
+        <ButtonSvgDesktop className="hidden md:block" />
+        {/* MOBILE */}
+        <div className="absolute md:hidden flex w-full top-2 left-3 items-center">
           <Image
             layout="fixed"
             width={24}
             height={24}
             src="/images/taiwan-spca-dog-icon.png"
           />
-          <p className="text-lime ml-3 leading-150%">
-            認識SPCA台灣防止虐待動物協會
+          <p className="text-lime ml-3 text-sm leading-150%">
+            Taiwan SPCA 台灣防止虐待動物協會
+          </p>
+        </div>
+        {/* DESKTOP */}
+        <div className="hidden md:absolute md:flex w-full top-1 left-4 items-center">
+          <Image
+            layout="fixed"
+            width={40}
+            height={40}
+            src="/images/taiwan-spca-dog-icon.png"
+          />
+          <p className="text-lime ml-5 text-lg leading-150%">
+            Taiwan SPCA 台灣防止虐待動物協會
           </p>
         </div>
       </button>
@@ -27,7 +40,24 @@ export const TwSpcaButton = ({ className = '', ...props }) => {
   )
 }
 
-const ButtonSvg = ({ height = 44, width = 300, ...props }) => (
+const ButtonSvgDesktop = ({ width = 408, height = 64, ...props }) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox={`0 0 408 64`}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path stroke="#55F263" d="M.5.5h395v51H.5z" />
+    <path
+      fill="#55F263"
+      d="M4 52h2v6H4zM6 52h2v8H6zM8 52h2v10H8zM2 52h2v4H2zM0 52h2v2H0zM10 52h398v12H10zM396 10h12v42h-12zM396 8h10v2h-10zM396 4h6v2h-6zM396 6h8v2h-8zM396 0h2v2h-2zM396 2h4v2h-4z"
+    />
+  </svg>
+)
+
+const ButtonSvgMobile = ({ height = 44, width = 300, ...props }) => (
   <svg
     width={width}
     height={height}

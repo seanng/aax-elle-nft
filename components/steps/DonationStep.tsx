@@ -150,15 +150,15 @@ export function DonationStep({
 
   return (
     <>
-      <div className="flex flex-col items-center font-noto pt-8 w-[300px] mx-auto">
-        <FormHeading className="mb-3">你的愛能幫助受虐動物</FormHeading>
-        <p className="mb-4 text-center tracking-wide">
+      <div className="flex flex-col items-center font-noto mt-8 md:mt-12 mx-auto">
+        <FormHeading className="mb-3 md:mb-5">你的愛能幫助受虐動物</FormHeading>
+        <p className="text-center tracking-wide w-[300px] md:w-[672px] md:text-2xl mb-4 md:mb-6 leading-150%">
           你的愛不只轉動元宇宙，為你獨特的Impact
           NFT定價，費用全額將捐助SPCA台灣防止虐待動物協會 一起關心受虐動物
         </p>
-        <TwSpcaButton className="mb-2" />
-        <CaretDownIcon fill="#fff" className="mb-3" />
-        <div className="flex border border-lime mb-3 w-full">
+        <TwSpcaButton />
+        <CaretDownIcon fill="#fff" className="my-3 md:my-8" />
+        <div className="flex border border-lime mb-3 w-[300px] md:w-[408px]">
           {[1000, 5000, 10000].map((val, i) => (
             <DonationButton
               type="button"
@@ -172,7 +172,7 @@ export function DonationStep({
           ))}
         </div>
 
-        <div className="w-full border border-lime text-lime">
+        <div className="w-[300px] md:w-[408px] border border-lime text-lime ">
           <div className="border-b border-lime flex justify-between p-2">
             <div
               className="text-black text-5xl leading-120%"
@@ -192,13 +192,13 @@ export function DonationStep({
                 placeholder="0"
                 {...register('donationInput', { required: true })}
               />
-              <p className="text-xs">
+              <p className="text-xs md:text-sm">
                 (~ETH {donationInEth.toFixed(ETH_DECIMAL_PLACES)})
               </p>
             </div>
           </div>
           <div
-            className={`text-right text-xs font-mono p-2 ${
+            className={`text-right text-xs md:text-sm font-mono p-2 ${
               balanceNum < donationInEth || !address ? 'text-tomato' : ''
             }`}
           >
@@ -207,7 +207,7 @@ export function DonationStep({
               : '尚未連結錢包'}
           </div>
         </div>
-        <div className="flex space-x-8 mt-20">
+        <div className="flex space-x-8 mt-10">
           <SecondaryButton type="button" onClick={handleBackClick}>
             上一步
           </SecondaryButton>
