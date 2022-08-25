@@ -57,7 +57,6 @@ export { GreenLipsIcon } from './icons/GreenLipsIcon'
 export { ToastSuccessIcon } from './icons/ToastSuccessIcon'
 
 // buttons
-export { ConnectButton } from './buttons/ConnectButton'
 export { AddressOKButton } from './buttons/AddressOKButton'
 export { AddressErrorButton } from './buttons/AddressErrorButton'
 

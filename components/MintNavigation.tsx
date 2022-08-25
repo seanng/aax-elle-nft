@@ -5,9 +5,9 @@ import Link from 'next/link'
 import {
   HamburgerIcon,
   ModalCloseButton,
-  ConnectButton,
   AddressOKButton,
   DisconnectIcon,
+  PrimaryButton,
   AddressErrorButton,
 } from 'components'
 import { useWeb3Context } from 'context'
@@ -134,9 +134,9 @@ const Web3Button = () => {
       </Popover.Panel>
     </Popover>
   ) : (
-    <button type="button" onClick={() => openConnectModal()}>
-      <ConnectButton />
-    </button>
+    <PrimaryButton type="button" onClick={() => openConnectModal()}>
+      連結錢包
+    </PrimaryButton>
   )
 }
 // see https://github.com/codeSTACKr/hamburger-animation if you want to make an animated hamburger
