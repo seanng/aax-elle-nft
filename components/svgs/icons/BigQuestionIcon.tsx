@@ -1,10 +1,10 @@
-export const BigQuestionIcon = ({ width = 330, height = 330, ...props }) => (
+export const BigQuestionIcon = ({ width = 200, height = 200, ...props }) => (
   <svg
     width={width}
     height={height}
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    viewBox={`0 0 ${width} ${height}`}
+    viewBox="0 0 330 330"
     {...props}
   >
     <path
