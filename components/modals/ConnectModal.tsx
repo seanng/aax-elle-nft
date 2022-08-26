@@ -31,8 +31,8 @@ export function ConnectModal({ isOpen, closeModal, connect }) {
                   onClick={closeModal}
                   className="absolute right-5 -top-10"
                 />
-                <div className="h-4 w-72 md:w-[447px] bg-white" />
-                <div className="w-80 md:w-[495px] bg-white px-4 pt-6 md:pt-8 pb-20 text-center md:text-lg">
+                <div className="h-4 w-mobile-modal-top md:w-desktop-modal-top bg-white" />
+                <div className="w-mobile-modal-body md:w-desktop-modal-body bg-white px-4 pt-6 md:pt-8 pb-20 text-center md:text-lg">
                   <h4 className="text-2xl md:text-3xl mb-8">連結錢包</h4>
                   <div className="mb-4">
                     我還沒有錢包
@@ -56,7 +56,7 @@ export function ConnectModal({ isOpen, closeModal, connect }) {
                     />
                   </a>
                 </div>
-                <div className="h-4 w-72 md:w-[447px] bg-white" />
+                <div className="h-4 w-mobile-modal-top md:w-desktop-modal-top bg-white" />
               </Dialog.Panel>
             </TransitionChild>
           </div>

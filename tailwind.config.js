@@ -32,6 +32,10 @@ module.exports = {
       },
       spacing: {
         'navbar-height': '84px',
+        'mobile-modal-top': '300px',
+        'mobile-modal-body': '330px',
+        'desktop-modal-top': '447px',
+        'desktop-modal-body': '495px',
       },
       lineHeight: {
         '120%': '120%',

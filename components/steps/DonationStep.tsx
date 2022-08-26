@@ -152,12 +152,12 @@ export function DonationStep({
     <>
       <div className="flex flex-col items-center font-noto mt-8 md:mt-12 mx-auto">
         <FormHeading className="mb-3 md:mb-5">你的愛能幫助受虐動物</FormHeading>
-        <p className="text-center tracking-wide w-[300px] md:w-[672px] md:text-2xl mb-4 md:mb-6 leading-150%">
+        <p className="text-center tracking-wide w-[300px] md:w-[672px] md:text-xl mb-4 md:mb-6 leading-150%">
           你的愛不只轉動元宇宙，為你獨特的Impact
           NFT定價，費用全額將捐助SPCA台灣防止虐待動物協會 一起關心受虐動物
         </p>
         <TwSpcaButton />
-        <CaretDownIcon fill="#fff" className="my-3 md:my-8" />
+        <CaretDownIcon fill="#fff" className="my-3 md:my-6" />
         <div className="flex border border-lime mb-3 w-[300px] md:w-[408px]">
           {[1000, 5000, 10000].map((val, i) => (
             <DonationButton
@@ -239,8 +239,7 @@ export function DonationStep({
               <div className="bg-tomato flex px-4 py-4 space-x-4 mb-2">
                 <WarningStamp />
                 <div className="text-white">
-                  <p>錢包資產不足</p>
-                  <p>請到錢包購買以太幣</p>
+                  <p>錢包資產不足 請購買以太幣</p>
                   <a
                     href="https://www.aax.com/zh-TW/newbie/"
                     target="_blank"

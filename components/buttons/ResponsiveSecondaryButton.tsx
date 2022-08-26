@@ -6,7 +6,7 @@ export const ResponsiveSecondaryButton = ({ children, ...props }) => {
       <MobileSecondaryButton className="md:hidden" {...props}>
         {children}
       </MobileSecondaryButton>
-      <DesktopSecondaryButton className="hidden md:block" {...props}>
+      <DesktopSecondaryButton className="hidden md:inline-block" {...props}>
         {children}
       </DesktopSecondaryButton>
     </>

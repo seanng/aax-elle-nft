@@ -6,7 +6,7 @@ export const ResponsivePrimaryButton = ({ children, ...props }) => {
       <MobilePrimaryButton className="md:hidden" {...props}>
         {children}
       </MobilePrimaryButton>
-      <DesktopPrimaryButton className="hidden md:block" {...props}>
+      <DesktopPrimaryButton className="hidden md:inline-block" {...props}>
         {children}
       </DesktopPrimaryButton>
     </>
