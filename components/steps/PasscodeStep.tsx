@@ -30,8 +30,8 @@ export function PasscodeStep({ updateForm, ...wizard }: Props) {
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)}>
-      <div className="flex flex-col items-center font-noto mt-12">
-        <FormStamp className="mb-4 md:mb-7">2</FormStamp>
+      <div className="flex flex-col items-center font-noto">
+        <FormStamp className="mb-4 md:mb-7 mt-12">2</FormStamp>
         <FormHeading className="mb-2 md:mb-6">自訂專屬你們的密碼</FormHeading>
         <div className="w-full mb-10 flex flex-col items-center">
           <p className="text-center text-white md:text-2xl leading-150% mb-10 md:mb-20">
@@ -65,13 +65,14 @@ export function PasscodeStep({ updateForm, ...wizard }: Props) {
             )}
           </div>
         </div>
-        <div className="flex space-x-8">
+        <div className="flex">
           <ResponsiveSecondaryButton type="button" onClick={handleBackClick}>
             上一步
           </ResponsiveSecondaryButton>
           <ResponsivePrimaryButton
             disabled={!isValid || !isDirty}
             type="submit"
+            className="ml-8"
           >
             下一步
           </ResponsivePrimaryButton>

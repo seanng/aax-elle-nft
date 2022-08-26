@@ -109,8 +109,10 @@ export function MessageStep({
   // https://stackoverflow.com/a/65893635/6007700
 
   return (
-    <div className="flex flex-col items-center font-noto h-full mt-4">
-      <FormHeading className="mb-6 md:mb-10">寫下你的告白秘密吧</FormHeading>
+    <div className="flex flex-col items-center font-noto h-full">
+      <FormHeading className="mt-4 mb-6 md:mb-10">
+        寫下你的告白秘密吧
+      </FormHeading>
       <div className="flex w-80 md:w-[642px] mb-4">
         <div className="flex-none bg-lime text-black font-mono p-2 md:text-2xl">
           寄件人
@@ -142,16 +144,17 @@ export function MessageStep({
         onInput={handleTextareaChange}
         placeholder="寫下你的告白"
       />
-      <div className="flex space-x-8">
-        {/* <ResponsiveSecondaryButton
+      <div className="flex">
+        <ResponsiveSecondaryButton
           disabled={shouldDisableButtons}
           onClick={handleShareClick}
         >
           分享告白
-        </ResponsiveSecondaryButton> */}
+        </ResponsiveSecondaryButton>
         <ResponsivePrimaryButton
           disabled={shouldDisableButtons}
           onClick={handleMintClick}
+          className="ml-8"
         >
           鑄造告白
         </ResponsivePrimaryButton>

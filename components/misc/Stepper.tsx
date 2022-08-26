@@ -67,7 +67,7 @@ export function Stepper({
       </div>
 
       <nav
-        className="flex items-center justify-center h-10 md:h-14 md:my-8"
+        className="flex items-center justify-center h-10 md:h-14 md:mt-8"
         aria-label="Progress"
       >
         <div className="hidden xs:flex h-full w-11 bg-black justify-center items-center">

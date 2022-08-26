@@ -1,12 +1,23 @@
 import { DesktopPrimaryButton, MobilePrimaryButton } from 'components'
+import { classNames } from 'utils/helpers'
 
-export const ResponsivePrimaryButton = ({ children, ...props }) => {
+export const ResponsivePrimaryButton = ({
+  children,
+  className = '',
+  ...props
+}) => {
   return (
     <>
-      <MobilePrimaryButton className="md:hidden" {...props}>
+      <MobilePrimaryButton
+        className={classNames('md:hidden', className)}
+        {...props}
+      >
         {children}
       </MobilePrimaryButton>
-      <DesktopPrimaryButton className="hidden md:inline-block" {...props}>
+      <DesktopPrimaryButton
+        className={classNames('hidden md:inline-block', className)}
+        {...props}
+      >
         {children}
       </DesktopPrimaryButton>
     </>
