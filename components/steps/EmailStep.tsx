@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX } from 'shared/constants'
 import {
   FormErrorIcon,
-  SecondaryButton,
-  PrimaryButton,
+  ResponsiveSecondaryButton,
+  ResponsivePrimaryButton,
   FormHeading,
   FormStamp,
 } from 'components'
@@ -64,12 +64,15 @@ export function EmailStep({ updateForm, ...wizard }: Props) {
           </div>
         </div>
         <div className="flex space-x-8">
-          <SecondaryButton type="button" onClick={handleBackClick}>
+          <ResponsiveSecondaryButton type="button" onClick={handleBackClick}>
             上一步
-          </SecondaryButton>
-          <PrimaryButton disabled={!isValid || !isDirty} type="submit">
+          </ResponsiveSecondaryButton>
+          <ResponsivePrimaryButton
+            disabled={!isValid || !isDirty}
+            type="submit"
+          >
             下一步
-          </PrimaryButton>
+          </ResponsivePrimaryButton>
         </div>
       </div>
     </form>

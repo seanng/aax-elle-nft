@@ -3,7 +3,7 @@ import {
   GreenLockIcon,
   FormErrorIcon,
   MintLayout,
-  PrimaryButton,
+  ResponsivePrimaryButton,
   GreenUnlockIcon,
   SocialButtons,
   FormHeading,
@@ -99,7 +99,9 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
             />
             <Link href="/mint">
               <a>
-                <PrimaryButton type="button">我也要告白</PrimaryButton>
+                <ResponsivePrimaryButton type="button">
+                  我也要告白
+                </ResponsivePrimaryButton>
               </a>
             </Link>
           </div>
@@ -126,13 +128,13 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
                   <span className="ml-2 text-sm">{errorMsg}</span>
                 </div>
               )}
-              <PrimaryButton
+              <ResponsivePrimaryButton
                 className="mx-auto mt-5"
                 disabled={inputValue === ''}
                 type="submit"
               >
                 解鎖
-              </PrimaryButton>
+              </ResponsivePrimaryButton>
             </form>
           </div>
         )}

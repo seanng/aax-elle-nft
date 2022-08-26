@@ -7,8 +7,8 @@ import {
   DonationButton,
   MintConfirmationModal,
   TwSpcaButton,
-  SecondaryButton,
-  PrimaryButton,
+  ResponsiveSecondaryButton,
+  ResponsivePrimaryButton,
   FormHeading,
   CaretDownIcon,
 } from 'components'
@@ -208,15 +208,15 @@ export function DonationStep({
           </div>
         </div>
         <div className="flex space-x-8 mt-10">
-          <SecondaryButton type="button" onClick={handleBackClick}>
+          <ResponsiveSecondaryButton type="button" onClick={handleBackClick}>
             上一步
-          </SecondaryButton>
-          <PrimaryButton
+          </ResponsiveSecondaryButton>
+          <ResponsivePrimaryButton
             disabled={donationInput <= 0}
             onClick={handleNextClick}
           >
             下一步
-          </PrimaryButton>
+          </ResponsivePrimaryButton>
         </div>
       </div>
       <MintConfirmationModal

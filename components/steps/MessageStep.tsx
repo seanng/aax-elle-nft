@@ -1,5 +1,9 @@
 import { StepWizardChildProps } from 'react-step-wizard'
-import { PrimaryButton, FormHeading, SecondaryButton } from 'components'
+import {
+  ResponsivePrimaryButton,
+  FormHeading,
+  ResponsiveSecondaryButton,
+} from 'components'
 import { useState } from 'react'
 import { Files, MintForm } from 'shared/types'
 import { FINISHED, NOT_STARTED, PRESALE } from 'shared/constants'
@@ -140,18 +144,18 @@ export function MessageStep({
           placeholder="寫下你的告白"
         />
         <div className="flex space-x-8">
-          <SecondaryButton
+          <ResponsiveSecondaryButton
             disabled={shouldDisableButtons}
             onClick={handleShareClick}
           >
             分享告白
-          </SecondaryButton>
-          <PrimaryButton
+          </ResponsiveSecondaryButton>
+          <ResponsivePrimaryButton
             disabled={shouldDisableButtons}
             onClick={handleMintClick}
           >
             鑄造告白
-          </PrimaryButton>
+          </ResponsivePrimaryButton>
         </div>
       </div>
     </>

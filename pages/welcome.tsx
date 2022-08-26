@@ -3,7 +3,7 @@ import {
   MintHeroDesktop,
   MintHeroMobile,
   MintLayout,
-  PrimaryButton,
+  ResponsivePrimaryButton,
 } from 'components'
 import { saleStatus } from 'utils/config'
 import { useWeb3Context } from 'context'
@@ -63,7 +63,7 @@ const WelcomePage: NextPage = () => {
       <MintHeroDesktop className="hidden md:block mb-14 max-h-[700px]" />
       <Link href="/mint">
         <a>
-          <PrimaryButton>我要告白</PrimaryButton>
+          <ResponsivePrimaryButton>我要告白</ResponsivePrimaryButton>
         </a>
       </Link>
       <CaretDownButton className="mt-6" />

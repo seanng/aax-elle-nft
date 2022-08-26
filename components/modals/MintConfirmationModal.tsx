@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { ModalCloseButton, PrimaryButton } from 'components'
+import { ModalCloseButton, ResponsivePrimaryButton } from 'components'
 import Image from 'next/image'
 import { ReactNode, Fragment } from 'react'
 
@@ -78,9 +78,12 @@ export function MintConfirmationModal({
                     </p>
                   </div>
                   <div className="text-center mb-5">
-                    <PrimaryButton onClick={onMintClick} type="button">
+                    <ResponsivePrimaryButton
+                      onClick={onMintClick}
+                      type="button"
+                    >
                       確定鑄造
-                    </PrimaryButton>
+                    </ResponsivePrimaryButton>
                   </div>
                 </div>
                 <div className="h-4 w-[300px] bg-white" />

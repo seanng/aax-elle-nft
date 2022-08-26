@@ -4,7 +4,7 @@ import {
   LinkAndPasscode,
   MintLayout,
   PinkGiftIcon,
-  PrimaryButton,
+  MobilePrimaryButton,
   SpinningOverlay,
   WarningIcon,
 } from 'components'
@@ -109,7 +109,7 @@ const NoTokensView = () => {
       <p className="pb-12 text-cement">你目前還沒有任何秘密告白</p>
       <Link href="/mint">
         <a>
-          <PrimaryButton>我要告白</PrimaryButton>
+          <MobilePrimaryButton>我要告白</MobilePrimaryButton>
         </a>
       </Link>
     </>
@@ -126,7 +126,9 @@ const NotConnectedView = ({ openConnectModal }) => {
       <p className="text-cement tracking-wide mb-8">
         此頁面需要連結錢包才能瀏覽
       </p>
-      <PrimaryButton onClick={() => openConnectModal()}>連結錢包</PrimaryButton>
+      <MobilePrimaryButton onClick={() => openConnectModal()}>
+        連結錢包
+      </MobilePrimaryButton>
     </>
   )
 }
