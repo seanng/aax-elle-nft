@@ -34,7 +34,7 @@ export function MessageStep({
 }: Props) {
   const [values, setValues] = useState({
     message: '',
-    senderName: '',
+    minterName: '',
     receiverName: '',
   })
 
@@ -52,12 +52,12 @@ export function MessageStep({
   }
 
   const handleMintClick = async () => {
-    const { message, senderName, receiverName } = values
+    const { message, minterName, receiverName } = values
     setIsLoading(true)
     // TODO: Change after designs are confirmed.
     const files = await getAssets({
       message: message,
-      aroundText: `${senderName} wants to give you something, ${receiverName}!`,
+      aroundText: `${minterName} wants to give you something, ${receiverName}!`,
       aroundTextColor: 'blue',
       gridIconColor: 'blue',
     })
@@ -68,12 +68,12 @@ export function MessageStep({
   }
 
   const handleShareClick = async () => {
-    const { message, senderName, receiverName } = values
+    const { message, minterName, receiverName } = values
     setIsLoading(true)
     // TODO: Change config after designs are confirmed.
     const files = await getAssets({
       message: message,
-      aroundText: `${senderName} wants to give you something, ${receiverName}!`,
+      aroundText: `${minterName} wants to give you something, ${receiverName}!`,
       aroundTextColor: 'black',
       gridIconColor: 'blue',
     })
@@ -118,8 +118,8 @@ export function MessageStep({
           寄件人
         </div>
         <input
-          id="senderName"
-          name="senderName"
+          id="minterName"
+          name="minterName"
           type="text"
           className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono md:text-2xl"
           onChange={handleInputChange}

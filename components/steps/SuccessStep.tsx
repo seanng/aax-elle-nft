@@ -1,19 +1,17 @@
-import { MintResponseData } from 'shared/types'
+import { Files, MintResponseData } from 'shared/types'
 import { FormHeading, LinkAndPasscode, SocialButtons } from 'components'
 import { metadata } from 'utils/config'
 import Link from 'next/link'
+import { usePreviewHtml } from 'hooks'
 
 interface Props {
   data: MintResponseData
+  files: Files
 }
 
-export function SuccessStep({ data }: Props) {
+export function SuccessStep({ data, files }: Props) {
+  const preview = usePreviewHtml(files.beforeOpenHtml)
   const link = `${metadata.siteUrl}/open/${data?.slug}`
-
-  // TODO:
-  const handleDLClick = () => {}
-  // TODO:
-  const handleIGClick = () => {}
 
   return (
     <div className="flex flex-col font-noto pt-16 text-center">
@@ -21,19 +19,14 @@ export function SuccessStep({ data }: Props) {
         恭喜成功鑄造 Impact NFT！
       </FormHeading>
       <div className="text-center mx-auto">
-        <p className="w-64 md:w-full mb-4 md:text-lg mx-auto tracking-wide">
+        <p className="w-64 md:w-full mb-4 md:mb-7 md:text-xl mx-auto tracking-wide">
           這份愛的告白會永久保存在區塊鏈上也可以分享NFT到社群喔
         </p>
-        {/* NFT ANIMATION URL GOES HERE */}
-        <SocialButtons
-          onIGClick={handleIGClick}
-          onDLClick={handleDLClick}
-          className="mb-5"
-        />
+        <div dangerouslySetInnerHTML={{ __html: preview as string }} />
         <LinkAndPasscode
           link={link}
           passcode={data?.passcode ?? 'abc12'}
-          className="mb-5 md:mb-12"
+          className="mb-5 md:mb-9 mt-4"
         />
         <p className="w-64 md:w-full mx-auto md:text-lg tracking-wide mb-6 md:mb-8">
           我們已將上鎖密碼即連結寄到你的email，你可以稍後查看。

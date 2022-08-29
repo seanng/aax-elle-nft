@@ -92,7 +92,7 @@ const MintPage: NextPage = () => {
               setMintResponseData,
             }}
           />
-          <SuccessStep data={mintResponseData} />
+          <SuccessStep data={mintResponseData} files={files} />
         </StepWizard>
       </MintLayout>
       <SharingModal

@@ -1,3 +1,4 @@
+import { Mint } from '@prisma/client'
 import {
   ErrorScreen,
   GreenLockIcon,
@@ -12,6 +13,7 @@ import {
 } from 'components'
 import axios from 'lib/axios'
 import { GetServerSideProps, NextPage } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -19,7 +21,7 @@ import { S3_BASE_URL } from 'shared/constants'
 
 interface Props {
   slugExists: boolean
-  data: any
+  data: Mint
 }
 
 const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
@@ -90,12 +92,14 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
           <div className="w-80 flex flex-col items-center pt-5">
             <GreenUnlockIcon className="mb-3" />
             <FormHeading>解鎖秘密告白</FormHeading>
-            <p className="my-3 text-center w-[275px] leading-150% tracking-wide">
+            <p className="my-3 text-center w-[275px] md:mb-7 md:text-xl leading-150% tracking-wide">
               秘密 Impact NFT 已被解開
             </p>
-            <SocialButtons
-              onIGClick={handleIGClick}
-              onDLClick={handleDLClick}
+            <iframe
+              height={350}
+              width={350}
+              src={`${S3_BASE_URL}/public/${data.messageTokenId}.html?b`}
+              className="mb-6 md:mb-10"
             />
             <Link href="/mint">
               <a>
@@ -109,9 +113,15 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
           <div className="w-80 flex flex-col items-center pt-5">
             <GreenLockIcon height={50} width={50} className="mb-3" />
             <FormHeading>解鎖秘密告白</FormHeading>
-            <p className="my-3 text-center w-[275px] leading-150% tracking-wide">
-              你收到來自Demi More的秘密告白NFT，輸入密碼解鎖秘密！
+            <p className="my-3 md:mt-4 md:mb-7 text-center md:text-2xl w-[275px] leading-150% tracking-wide">
+              輸入密碼解鎖秘密！
             </p>
+            <iframe
+              height={350}
+              width={350}
+              src={`${S3_BASE_URL}/public/${data.messageTokenId}.html?a`}
+              className="mb-6 md:mb-10"
+            />
             <form onSubmit={handleSubmit} className="text-center w-full">
               <input
                 id="passcode"
@@ -119,7 +129,7 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
                 placeholder="輸入專屬密碼"
                 type="text"
                 value={inputValue}
-                className="text-black border-lime w-full font-mono placeholder-slate-500 bg-lime border-transparent focus:border-transparent focus:ring-0"
+                className="text-black border-lime w-full font-mono placeholder-slate-500 bg-lime border-transparent focus:border-transparent focus:ring-0 md:p-4 md:text-lg"
                 onChange={handleInputChange}
               />
               {errorMsg && (
@@ -129,7 +139,7 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
                 </div>
               )}
               <ResponsivePrimaryButton
-                className="mx-auto mt-5"
+                className="mx-auto mt-5 md:mt-12 mb-10"
                 disabled={inputValue === ''}
                 type="submit"
               >
@@ -151,11 +161,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const slug = context?.params?.slug
     if (!slug) throw new Error()
-    const { data } = await axios.get(`/api/mints?slug=${slug}`)
+    const { data: response } = (await axios.get(`/api/mints?slug=${slug}`)) as {
+      data: Mint[]
+    }
 
-    if (data.length === 0) throw new Error()
-
-    props.data = data[0]
+    if (response.length === 0) throw new Error()
+    props.data = response[0]
     props.slugExists = true
     return { props }
   } catch (error) {

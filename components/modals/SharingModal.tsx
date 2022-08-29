@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment } from 'react'
 import {
   SocialButtons,
   ToastMessage,
@@ -8,6 +8,7 @@ import {
 } from 'components'
 import { Files } from 'shared/types'
 import { toast } from 'react-toastify'
+import { usePreviewHtml } from 'hooks'
 
 interface Props {
   isOpen: boolean
@@ -16,21 +17,7 @@ interface Props {
 }
 
 export function SharingModal({ isOpen, closeModal, files }: Props) {
-  const [preview, setPreview] = useState<string | ArrayBuffer>('') // eslint-disable-line
-
-  useEffect(() => {
-    if (files.beforeOpenHtml) {
-      const reader = new FileReader()
-
-      reader.addEventListener(
-        'load',
-        () => setPreview(reader.result ?? ''),
-        false
-      )
-
-      reader.readAsText(files.beforeOpenHtml)
-    }
-  }, [files.beforeOpenHtml])
+  const preview = usePreviewHtml(files.beforeOpenHtml)
 
   const handleDLClick = () => {
     if (!files.beforeOpenImage) return
@@ -93,7 +80,6 @@ export function SharingModal({ isOpen, closeModal, files }: Props) {
                         鑄造告白才能得到彩色版 Impact NFT 並參加抽獎喔！
                       </p>
                     </div>
-
                     <div
                       dangerouslySetInnerHTML={{ __html: preview as string }}
                     />

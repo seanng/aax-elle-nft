@@ -21,11 +21,9 @@ const NOT_CONNECTED = 'NOT_CONNECTED'
 const NO_TOKENS = 'NO_TOKENS'
 const HAS_TOKENS = 'HAS_TOKENS'
 
-type MintWithHtml = Mint & { html: string }
-
 const CollectionPage: NextPage = () => {
   const [displayMode, setDisplayMode] = useState(LOADING)
-  const [data, setData] = useState<MintWithHtml[]>([])
+  const [data, setData] = useState<Mint[]>([])
   const { address, openConnectModal } = useWeb3Context()
 
   useEffect(() => {
@@ -39,16 +37,7 @@ const CollectionPage: NextPage = () => {
         const {
           data: { data },
         } = (await axios.get(`/api/collection?address=${address}`)) as {
-          data: { data: MintWithHtml[] }
-        }
-        for (const token of data) {
-          const { data: html } = await axios.get(
-            `/public/${token.messageTokenId}.html`,
-            {
-              baseURL: S3_BASE_URL,
-            }
-          )
-          token.html = html
+          data: { data: Mint[] }
         }
         setData(data)
         setDisplayMode(HAS_TOKENS)
@@ -137,7 +126,7 @@ const NotConnectedView = ({ openConnectModal }) => {
   )
 }
 
-const HasTokensView = ({ tokens }: { tokens: MintWithHtml[] }) => {
+const HasTokensView = ({ tokens }: { tokens: Mint[] }) => {
   return (
     <>
       <PinkGiftIcon />
@@ -147,7 +136,11 @@ const HasTokensView = ({ tokens }: { tokens: MintWithHtml[] }) => {
       <div className="flex flex-col items-center md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-14 xl:gap-20">
         {tokens.map((t, i) => (
           <div key={t.id} className="pb-10">
-            <div dangerouslySetInnerHTML={{ __html: t.html }} />
+            <iframe
+              height={350}
+              width={350}
+              src={`${S3_BASE_URL}/public/${t.messageTokenId}.html`}
+            />
             <LinkAndPasscode
               link={`${metadata.siteUrl}/open/${t.slug}`}
               passcode={t.passcode}
