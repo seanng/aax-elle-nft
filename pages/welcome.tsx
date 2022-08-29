@@ -49,12 +49,14 @@ const WelcomePage: NextPage = () => {
         <p className="marquee scroll-left">
           <span>
             Welcome to ELLEverse&nbsp;&nbsp;&nbsp;Welcome to
+            ELLEverse&nbsp;&nbsp;&nbsp;Welcome to
             ELLEverse&nbsp;&nbsp;&nbsp;Welcome to ELLEverse&nbsp;&nbsp;&nbsp;
           </span>
         </p>
         <p className="marquee scroll-left marquee-delayed">
           <span>
             Welcome to ELLEverse&nbsp;&nbsp;&nbsp;Welcome to
+            ELLEverse&nbsp;&nbsp;&nbsp;Welcome to
             ELLEverse&nbsp;&nbsp;&nbsp;Welcome to ELLEverse&nbsp;&nbsp;&nbsp;
           </span>
         </p>
