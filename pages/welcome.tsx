@@ -1,16 +1,16 @@
 import type { NextPage } from 'next'
 import {
-  LandingNavigation,
+  WelcomeNavigation,
   HeroSection,
   IntroSection,
   BodySection,
 } from 'components'
 import ReactFullpage from '@fullpage/react-fullpage'
 
-const HomePage: NextPage = () => {
+const WelcomePage: NextPage = () => {
   return (
     <>
-      <LandingNavigation />
+      <WelcomeNavigation />
       <ReactFullpage
         licenseKey="62K6J-PQ71H-00KVJ-7RJGJ-VYVZP"
         navigation
@@ -26,4 +26,4 @@ const HomePage: NextPage = () => {
   )
 }
 
-export default HomePage
+export default WelcomePage
