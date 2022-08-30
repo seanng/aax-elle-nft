@@ -11,7 +11,7 @@ import { CORRECT_HEX_CHAIN } from 'shared/constants'
 import { NetworkChangeModal, ConnectModal } from 'components'
 
 const Web3Context = createContext<
-  Web3ProviderState & { openConnectModal: (cb?: () => void) => void }
+  Web3ProviderState & { openConnectModal: () => void }
 >({
   openConnectModal: () => {},
   ...web3InitialState,
@@ -25,33 +25,22 @@ export const Web3ContextProvider = ({ children }: Props) => {
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false)
   const [isNetworkChangeModalOpen, setIsNetworkChangeModalOpen] =
     useState(false)
-  const [onConnect, setOnConnect] = useState<() => {}>(() => () => {})
   const web3ProviderState = useWeb3()
-  const { provider } = web3ProviderState
+  const { provider, address, connect } = web3ProviderState
 
   // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
   const handleChainChanged = async (_hexChainId: string) => {
     setIsNetworkChangeModalOpen(_hexChainId !== CORRECT_HEX_CHAIN)
   }
 
-  const openConnectModal = (cb = () => {}) => {
-    setIsConnectModalOpen(true)
-    setOnConnect(() => () => {
-      setIsConnectModalOpen(false)
-      cb()
-    })
-  }
+  const openConnectModal = () => setIsConnectModalOpen(true)
 
-  const closeConnectModal = () => {
-    setOnConnect(() => () => {})
-    setIsConnectModalOpen(false)
-  }
+  const closeConnectModal = () => setIsConnectModalOpen(false)
 
   const handleModalConnect = async () => {
-    const { connect, address } = web3ProviderState
     let connected = true
     if (!address) connected = await connect()
-    if (connected) onConnect()
+    if (connected) setIsConnectModalOpen(false)
   }
 
   const onChangeNetwork = async () => {

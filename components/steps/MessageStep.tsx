@@ -4,7 +4,7 @@ import {
   FormHeading,
   ResponsiveSecondaryButton,
 } from 'components'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Files, MintForm } from 'shared/types'
 import { FINISHED, NOT_STARTED, PRESALE } from 'shared/constants'
 import { saleStatus } from 'utils/config'
@@ -16,7 +16,7 @@ interface Props extends Partial<StepWizardChildProps> {
   updateForm: (formValues: Partial<MintForm>) => void
   setFiles: (files: Files) => void
   openSharingModal: () => void
-  openConnectModal: (cb: () => {}) => void
+  openConnectModal: () => void
   address?: string | null
   setIsLoading: (b: boolean) => void
   ownsWhitelistToken: (address: string) => Promise<boolean>
@@ -38,6 +38,8 @@ export function MessageStep({
     receiverName: '',
   })
 
+  const [isMinting, setIsMinting] = useState(false)
+
   const onWalletConnect = async () => {
     if (!address) return console.error('No Address Found...')
     if (saleStatus === PRESALE) {
@@ -48,13 +50,11 @@ export function MessageStep({
         return
       }
     }
-    wizard.nextStep && wizard.nextStep()
   }
 
   const handleMintClick = async () => {
     const { message, minterName, receiverName } = values
     setIsLoading(true)
-    // TODO: Change after designs are confirmed.
     const files = await getAssets({
       message: message,
       aroundText: `${minterName} wants to give you something, ${receiverName}!`,
@@ -64,7 +64,8 @@ export function MessageStep({
     setFiles(files)
     updateForm({ ...values, mintedAt: new Date() })
     setIsLoading(false)
-    address ? onWalletConnect() : openConnectModal(onWalletConnect)
+    setIsMinting(true)
+    address ? onWalletConnect() : openConnectModal()
   }
 
   const handleShareClick = async () => {
@@ -99,6 +100,14 @@ export function MessageStep({
       [name]: value,
     }))
   }
+
+  // isMinting is only called if wallet is not connected
+  useEffect(() => {
+    if (isMinting && address) {
+      setIsMinting(false)
+      wizard.nextStep && wizard.nextStep()
+    }
+  }, [address, isMinting])
 
   const shouldDisableButtons =
     values.message === '' ||
