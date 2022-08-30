@@ -4,7 +4,7 @@ import { NOT_STARTED } from 'shared/constants'
 export const saleStatus = process.env.NEXT_PUBLIC_SALE_STATUS || NOT_STARTED
 
 export const metadata = {
-  siteUrl: process.env.NEXT_PUBLIC_VERCEL_URL || 'https://elleverse.io',
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://elleverse.io',
   siteTitle: 'NFT Mintverse',
   siteDesc: 'Enter the stylish metaverse to shill you love.',
 }
