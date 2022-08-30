@@ -67,7 +67,7 @@ export function Stepper({
       </div>
 
       <nav
-        className="flex items-center justify-center h-10"
+        className="flex items-center justify-center h-10 md:h-14 md:mt-8"
         aria-label="Progress"
       >
         <div className="hidden xs:flex h-full w-11 bg-black justify-center items-center">
@@ -75,12 +75,12 @@ export function Stepper({
         </div>
         <ol
           role="list"
-          className="flex items-center space-x-3 bg-lime px-4 h-full"
+          className="flex items-center space-x-3 md:space-x-6 bg-lime px-4 md:px-6 md:mx-5 h-full"
         >
           {steps.map(({ name, step }, i) => (
-            <li key={name} className="flex items-center space-x-3">
+            <li key={name} className="flex items-center space-x-3 md:space-x-6">
               <span
-                className={`leading-150% text-lg font-noto ${
+                className={`leading-150% text-lg md:text-2xl font-noto ${
                   currentStep >= step ? 'text-black' : 'text-white'
                 }`}
               >

@@ -4,9 +4,9 @@ import {
   LinkAndPasscode,
   MintLayout,
   PinkGiftIcon,
-  PrimaryButton,
   SpinningOverlay,
   WarningIcon,
+  ResponsivePrimaryButton,
 } from 'components'
 import type { NextPage } from 'next'
 import axios from 'lib/axios'
@@ -21,11 +21,9 @@ const NOT_CONNECTED = 'NOT_CONNECTED'
 const NO_TOKENS = 'NO_TOKENS'
 const HAS_TOKENS = 'HAS_TOKENS'
 
-type MintWithHtml = Mint & { html: string }
-
 const CollectionPage: NextPage = () => {
   const [displayMode, setDisplayMode] = useState(LOADING)
-  const [data, setData] = useState<MintWithHtml[]>([])
+  const [data, setData] = useState<Mint[]>([])
   const { address, openConnectModal } = useWeb3Context()
 
   useEffect(() => {
@@ -39,16 +37,7 @@ const CollectionPage: NextPage = () => {
         const {
           data: { data },
         } = (await axios.get(`/api/collection?address=${address}`)) as {
-          data: { data: MintWithHtml[] }
-        }
-        for (const token of data) {
-          const { data: html } = await axios.get(
-            `/public/${token.messageTokenId}.html`,
-            {
-              baseURL: S3_BASE_URL,
-            }
-          )
-          token.html = html
+          data: { data: Mint[] }
         }
         setData(data)
         setDisplayMode(HAS_TOKENS)
@@ -80,7 +69,7 @@ const CollectionPage: NextPage = () => {
 const NoTokensView = () => {
   return (
     <>
-      <div className="pt-36 pb-6">
+      <div className="pt-36 pb-6 md:pb-10">
         <svg
           width="121"
           height="120"
@@ -106,10 +95,12 @@ const NoTokensView = () => {
           />
         </svg>
       </div>
-      <p className="pb-12 text-cement">你目前還沒有任何秘密告白</p>
+      <p className="pb-12 md:pb-16 text-cement md:text-xl">
+        你目前還沒有任何秘密告白
+      </p>
       <Link href="/mint">
         <a>
-          <PrimaryButton>我要告白</PrimaryButton>
+          <ResponsivePrimaryButton>我要告白</ResponsivePrimaryButton>
         </a>
       </Link>
     </>
@@ -122,24 +113,34 @@ const NotConnectedView = ({ openConnectModal }) => {
       <div className="pt-36 pb-6">
         <WarningIcon />
       </div>
-      <p className="text-cement text-2xl mb-3">請先連結錢包</p>
-      <p className="text-cement tracking-wide mb-8">
+      <p className="text-cement text-2xl md:text-3xl mb-3 md:mb-5">
+        請先連結錢包
+      </p>
+      <p className="text-cement md:text-xl tracking-wide mb-8 md:mb-12">
         此頁面需要連結錢包才能瀏覽
       </p>
-      <PrimaryButton onClick={() => openConnectModal()}>連結錢包</PrimaryButton>
+      <ResponsivePrimaryButton onClick={() => openConnectModal()}>
+        連結錢包
+      </ResponsivePrimaryButton>
     </>
   )
 }
 
-const HasTokensView = ({ tokens }: { tokens: MintWithHtml[] }) => {
+const HasTokensView = ({ tokens }: { tokens: Mint[] }) => {
   return (
     <>
       <PinkGiftIcon />
-      <p className="text-guava mt-3 mb-10">恭喜獲得抽獎機會！</p>
+      <p className="text-guava md:text-xl mt-3 md:mt-5 mb-10 md:mb-12">
+        恭喜獲得抽獎機會！
+      </p>
       <div className="flex flex-col items-center md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-14 xl:gap-20">
         {tokens.map((t, i) => (
           <div key={t.id} className="pb-10">
-            <div dangerouslySetInnerHTML={{ __html: t.html }} />
+            <iframe
+              height={350}
+              width={350}
+              src={`${S3_BASE_URL}/public/${t.messageTokenId}.html`}
+            />
             <LinkAndPasscode
               link={`${metadata.siteUrl}/open/${t.slug}`}
               passcode={t.passcode}
@@ -164,8 +165,32 @@ const HasTokensView = ({ tokens }: { tokens: MintWithHtml[] }) => {
           </div>
         ))}
       </div>
+      <div className="text-cement md:text-lg tracking-wide flex mb-16 px-8">
+        <InfoIcon className="mt-1 flex-none" />
+        <span className="ml-2">
+          時間內NFT未被打開圖片將產生變化，如果對方不解開這份愛，也請好好愛自己
+        </span>
+      </div>
     </>
   )
 }
+
+const InfoIcon = ({ width = 16, height = 17, ...props }) => (
+  <svg
+    width={width}
+    height={height}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 16 17"
+    {...props}
+  >
+    <path fill="#9D9D9D" d="M6 13.5v-2h4v2z" />
+    <path fill="#9D9D9D" d="M7 7.5h2v5H7z" />
+    <path
+      fill="#9D9D9D"
+      d="M6 8.5v-2h3v2zM6.5 3.5h2v2h-2zM0 2.5h2v12H0zM14 2.5h2v12h-2zM2 .5h12v2H2zM2 14.5h12v2H2z"
+    />
+  </svg>
+)
 
 export default CollectionPage

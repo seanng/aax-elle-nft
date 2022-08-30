@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX } from 'shared/constants'
 import {
   FormErrorIcon,
-  SecondaryButton,
-  PrimaryButton,
+  ResponsiveSecondaryButton,
+  ResponsivePrimaryButton,
   FormHeading,
   FormStamp,
 } from 'components'
@@ -31,41 +31,49 @@ export function EmailStep({ updateForm, ...wizard }: Props) {
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)}>
-      <div className="flex flex-col items-center font-noto pt-16">
-        <FormStamp className="mb-4">1</FormStamp>
-        <FormHeading className="mb-2">輸入你的 Email</FormHeading>
-        <div className="w-80 mb-10">
-          <p className="text-white mb-10 text-center">
-            噓...
-            為你的秘密加密上鎖，輸入他/她的email後，對方將會收到通知和你設定的專屬密碼，決定是否揭曉秘密。
+      <div className="flex flex-col items-center font-noto">
+        <FormStamp className="mb-4 md:mb-7 mt-12">1</FormStamp>
+        <FormHeading className="mb-2 md:mb-6">輸入你的 Email</FormHeading>
+        <div className="w-full mb-10 flex flex-col items-center">
+          <p className="text-center text-white md:text-2xl leading-150% mb-10 md:mb-20">
+            鑄造完畢後你會收到專屬Love Message
+            <br /> 也會不定時空投賦能資訊喔
           </p>
-          <input
-            id="email"
-            type="text"
-            placeholder="Your email"
-            className="text-black border-lime w-full mb-2 font-mono placeholder-slate-500 bg-lime border-transparent focus:border-transparent focus:ring-0"
-            {...register('email', {
-              required: true,
-              pattern: {
-                value: EMAIL_REGEX,
-                message: '!',
-              },
-            })}
-          />
-          {errors?.email?.message && (
-            <div className="flex items-center">
-              <FormErrorIcon />
-              <span className="ml-2 text-sm">Email 格式不正確</span>
-            </div>
-          )}
+          <div className="w-80 md:w-96 md:mb-20">
+            <input
+              id="email"
+              type="text"
+              placeholder="Your email"
+              className="text-black md:text-2xl border-lime font-mono placeholder-slate-500 bg-lime border-transparent focus:border-transparent focus:ring-0 w-full mb-2"
+              {...register('email', {
+                required: true,
+                pattern: {
+                  value: EMAIL_REGEX,
+                  message: '!',
+                },
+              })}
+            />
+            {errors?.email?.message && (
+              <div className="flex items-center">
+                <FormErrorIcon />
+                <span className="ml-2 text-sm md:text-base">
+                  Email 格式不正確
+                </span>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="flex space-x-8">
-          <SecondaryButton type="button" onClick={handleBackClick}>
+        <div className="flex">
+          <ResponsiveSecondaryButton type="button" onClick={handleBackClick}>
             上一步
-          </SecondaryButton>
-          <PrimaryButton disabled={!isValid || !isDirty} type="submit">
+          </ResponsiveSecondaryButton>
+          <ResponsivePrimaryButton
+            disabled={!isValid || !isDirty}
+            type="submit"
+            className="ml-8"
+          >
             下一步
-          </PrimaryButton>
+          </ResponsivePrimaryButton>
         </div>
       </div>
     </form>

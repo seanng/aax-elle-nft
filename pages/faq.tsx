@@ -25,19 +25,19 @@ const faqs = [
 const FaqPage: NextPage = () => {
   return (
     <MintLayout>
-      <div className="pt-10 mb-10 flex flex-col items-center">
+      <div className="pt-10 mb-10 md:mb-16 flex flex-col items-center">
         <BigQuestionIcon />
       </div>
-      <dl className="pr-4">
+      <dl className="pr-4 max-w-[968px] mx-auto">
         {faqs.map((faq) => (
           <Disclosure as="div" key={faq.question} className="!mt-0">
             {({ open }) => (
               <>
                 <dt className="py-3">
                   <Disclosure.Button className="text-left w-full flex justify-between text-lemon">
-                    <div className="flex">
+                    <div className="flex items-center">
                       <div className="bg-lemon h-4 w-4 mt-1 mr-4" />
-                      <p className="font-noto text-white text-xl leading-120%">
+                      <p className="font-noto text-white text-xl md:text-2xl leading-120%">
                         {faq.question}
                       </p>
                     </div>
@@ -47,7 +47,7 @@ const FaqPage: NextPage = () => {
                   </Disclosure.Button>
                 </dt>
                 <Disclosure.Panel as="dd" className="pt-2 pb-6 pl-8">
-                  <p className="font-noto text-lemon text-base leading-150%">
+                  <p className="font-noto text-lemon text-base md:text-lg leading-150%">
                     {faq.answer}
                   </p>
                 </Disclosure.Panel>

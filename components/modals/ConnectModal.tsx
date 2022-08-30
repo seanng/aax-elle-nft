@@ -31,9 +31,9 @@ export function ConnectModal({ isOpen, closeModal, connect }) {
                   onClick={closeModal}
                   className="absolute right-5 -top-10"
                 />
-                <div className="h-4 w-72 bg-white" />
-                <div className="w-80 bg-white px-4 pt-6 pb-20 text-center">
-                  <h4 className="font-medium text-2xl  mb-8">連結錢包</h4>
+                <div className="h-4 w-mobile-modal-top md:w-desktop-modal-top bg-white" />
+                <div className="w-mobile-modal-body md:w-desktop-modal-body bg-white px-4 pt-6 md:pt-8 pb-20 text-center md:text-lg">
+                  <h4 className="text-2xl md:text-3xl mb-8">連結錢包</h4>
                   <div className="mb-4">
                     我還沒有錢包
                     <a className="ml-2 underline text-cyan-600">
@@ -45,15 +45,18 @@ export function ConnectModal({ isOpen, closeModal, connect }) {
                     className="mb-8"
                     onClick={handleMetaMaskButtonClick}
                   />
-                  <Image
-                    src="/images/aax-modal-promotion.jpg"
-                    layout="fixed"
-                    objectFit="contain"
-                    width="284px"
-                    height="73px"
-                  />
+                  <p className="mb-4">下載AAX錢包獲得 50 USDT</p>
+                  <a target="__blank" href="https://aax.com">
+                    <Image
+                      src="/images/aax-modal-promotion.jpg"
+                      layout="fixed"
+                      objectFit="contain"
+                      width="288px"
+                      height="97px"
+                    />
+                  </a>
                 </div>
-                <div className="h-4 w-72 bg-white" />
+                <div className="h-4 w-mobile-modal-top md:w-desktop-modal-top bg-white" />
               </Dialog.Panel>
             </TransitionChild>
           </div>

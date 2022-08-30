@@ -40,5 +40,5 @@ export const NEVER = 'never'
 export const PUBLIC = 'public'
 
 export const S3_BASE_URL =
-  process.env.NEXT_PUBLIC_CLOUDFRONT_BASE_URL ??
-  'https://dzzdqphbq7oxj.cloudfront.net'
+  process.env.NEXT_PUBLIC_S3_BASE_URL ??
+  'https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com'

@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment } from 'react'
 import {
   SocialButtons,
   ToastMessage,
@@ -8,6 +8,7 @@ import {
 } from 'components'
 import { Files } from 'shared/types'
 import { toast } from 'react-toastify'
+import { usePreviewHtml } from 'hooks'
 
 interface Props {
   isOpen: boolean
@@ -16,21 +17,7 @@ interface Props {
 }
 
 export function SharingModal({ isOpen, closeModal, files }: Props) {
-  const [preview, setPreview] = useState<string | ArrayBuffer>('') // eslint-disable-line
-
-  useEffect(() => {
-    if (files.beforeOpenHtml) {
-      const reader = new FileReader()
-
-      reader.addEventListener(
-        'load',
-        () => setPreview(reader.result ?? ''),
-        false
-      )
-
-      reader.readAsText(files.beforeOpenHtml)
-    }
-  }, [files.beforeOpenHtml])
+  const preview = usePreviewHtml(files.beforeOpenHtml)
 
   const handleDLClick = () => {
     if (!files.beforeOpenImage) return
@@ -77,30 +64,33 @@ export function SharingModal({ isOpen, closeModal, files }: Props) {
           <div className="flex items-end sm:items-center justify-center min-h-full p-4 sm:p-0">
             <TransitionChild>
               <Dialog.Panel className="relative transition-all flex flex-col items-center">
-                <div className="h-4 w-[300px] bg-white" />
-                <div className="w-[330px] bg-white pt-7 text-center">
+                <div className="h-4 w-mobile-modal-top md:w-desktop-modal-top bg-white" />
+                <div className="w-mobile-modal-body md:w-desktop-modal-body bg-white pt-7 flex flex-col items-center">
                   <ModalCloseButton
                     onClick={closeModal}
                     className="absolute right-5 -top-10"
                   />
-                  <h1 className="text-xl mb-4">分享告白</h1>
-                  <div className="flex px-9 mb-6">
-                    <WarningIcon width={36} height={36} />
-                    <p className="text-orange text-lg text-left pl-2">
-                      鑄造告白才能得到彩色版 Impact NFT 並參加抽獎喔！
-                    </p>
+                  <div className="flex flex-col w-full max-w-[350px]">
+                    <h1 className="text-xl md:text-3xl mb-4 text-center">
+                      分享告白
+                    </h1>
+                    <div className="flex mb-6 px-3">
+                      <WarningIcon width={36} height={36} />
+                      <p className="text-orange text-lg text-left pl-2">
+                        鑄造告白才能得到彩色版 Impact NFT 並參加抽獎喔！
+                      </p>
+                    </div>
+                    <div
+                      dangerouslySetInnerHTML={{ __html: preview as string }}
+                    />
+                    <SocialButtons
+                      className="my-4"
+                      onDLClick={handleDLClick}
+                      onIGClick={handleIGClick}
+                    />
                   </div>
-
-                  <div
-                    dangerouslySetInnerHTML={{ __html: preview as string }}
-                  />
-                  <SocialButtons
-                    className="my-4"
-                    onDLClick={handleDLClick}
-                    onIGClick={handleIGClick}
-                  />
                 </div>
-                <div className="h-4 w-[300px] bg-white" />
+                <div className="h-4 w-mobile-modal-top md:w-desktop-modal-top bg-white" />
               </Dialog.Panel>
             </TransitionChild>
           </div>

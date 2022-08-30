@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { ModalCloseButton, PrimaryButton } from 'components'
+import { ModalCloseButton, ResponsivePrimaryButton } from 'components'
 import Image from 'next/image'
 import { ReactNode, Fragment } from 'react'
 
@@ -34,8 +34,8 @@ export function MintConfirmationModal({
           <div className="flex items-end sm:items-center justify-center min-h-full p-4 sm:p-0">
             <TransitionChild>
               <Dialog.Panel className="relative transition-all flex flex-col items-center">
-                <div className="h-4 w-[300px] bg-white" />
-                <div className="w-[330px] bg-white px-5 pt-9 text-left">
+                <div className="h-4 w-mobile-modal-top md:w-desktop-modal-top bg-white" />
+                <div className="w-mobile-modal-body md:w-desktop-modal-body bg-white px-5 md:px-20 pt-9 text-left">
                   <ModalCloseButton
                     onClick={closeModal}
                     className="absolute right-5 -top-10"
@@ -78,12 +78,15 @@ export function MintConfirmationModal({
                     </p>
                   </div>
                   <div className="text-center mb-5">
-                    <PrimaryButton onClick={onMintClick} type="button">
+                    <ResponsivePrimaryButton
+                      onClick={onMintClick}
+                      type="button"
+                    >
                       確定鑄造
-                    </PrimaryButton>
+                    </ResponsivePrimaryButton>
                   </div>
                 </div>
-                <div className="h-4 w-[300px] bg-white" />
+                <div className="h-4 w-mobile-modal-top md:w-desktop-modal-top bg-white" />
               </Dialog.Panel>
             </TransitionChild>
           </div>

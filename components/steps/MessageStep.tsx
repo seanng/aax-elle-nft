@@ -1,5 +1,9 @@
 import { StepWizardChildProps } from 'react-step-wizard'
-import { PrimaryButton, FormHeading, SecondaryButton } from 'components'
+import {
+  ResponsivePrimaryButton,
+  FormHeading,
+  ResponsiveSecondaryButton,
+} from 'components'
 import { useState } from 'react'
 import { Files, MintForm } from 'shared/types'
 import { FINISHED, NOT_STARTED, PRESALE } from 'shared/constants'
@@ -30,7 +34,7 @@ export function MessageStep({
 }: Props) {
   const [values, setValues] = useState({
     message: '',
-    senderName: '',
+    minterName: '',
     receiverName: '',
   })
 
@@ -48,12 +52,12 @@ export function MessageStep({
   }
 
   const handleMintClick = async () => {
-    const { message, senderName, receiverName } = values
+    const { message, minterName, receiverName } = values
     setIsLoading(true)
     // TODO: Change after designs are confirmed.
     const files = await getAssets({
       message: message,
-      aroundText: `${senderName} wants to give you something, ${receiverName}!`,
+      aroundText: `${minterName} wants to give you something, ${receiverName}!`,
       aroundTextColor: 'blue',
       gridIconColor: 'blue',
     })
@@ -64,12 +68,12 @@ export function MessageStep({
   }
 
   const handleShareClick = async () => {
-    const { message, senderName, receiverName } = values
+    const { message, minterName, receiverName } = values
     setIsLoading(true)
     // TODO: Change config after designs are confirmed.
     const files = await getAssets({
       message: message,
-      aroundText: `${senderName} wants to give you something, ${receiverName}!`,
+      aroundText: `${minterName} wants to give you something, ${receiverName}!`,
       aroundTextColor: 'black',
       gridIconColor: 'blue',
     })
@@ -105,57 +109,56 @@ export function MessageStep({
   // https://stackoverflow.com/a/65893635/6007700
 
   return (
-    <>
-      <div className="flex flex-col items-center font-noto h-full pt-4">
-        <FormHeading className="italic mb-6 tracking-wide w-72 text-center font-mono">
-          Ready to share your Love?
-        </FormHeading>
-        <div className="flex w-80 mb-4">
-          <div className="flex-none bg-lime text-black font-mono p-2">
-            寄件人
-          </div>
-          <input
-            id="senderName"
-            name="senderName"
-            type="text"
-            className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono"
-            onChange={handleInputChange}
-          />
+    <div className="flex flex-col items-center font-noto h-full">
+      <FormHeading className="mt-4 mb-6 md:mb-10">
+        寫下你的告白秘密吧
+      </FormHeading>
+      <div className="flex w-80 md:w-[642px] mb-4">
+        <div className="flex-none bg-lime text-black font-mono p-2 md:text-2xl">
+          寄件人
         </div>
-        <div className="flex w-80 mb-6">
-          <div className="flex-none bg-lime text-black font-mono p-2">
-            收件人
-          </div>
-          <input
-            id="receiverName"
-            name="receiverName"
-            type="text"
-            className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono"
-            onChange={handleInputChange}
-          />
-        </div>
-        <textarea
-          id="message"
-          rows={5}
-          className="shadow-sm block w-56 text-3xl border border-gray-300 rounded-md text-black p-4 mb-6 resize-none overflow-hidden"
-          onInput={handleTextareaChange}
-          placeholder="寫下你的告白"
+        <input
+          id="minterName"
+          name="minterName"
+          type="text"
+          className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono md:text-2xl"
+          onChange={handleInputChange}
         />
-        <div className="flex space-x-8">
-          <SecondaryButton
-            disabled={shouldDisableButtons}
-            onClick={handleShareClick}
-          >
-            分享告白
-          </SecondaryButton>
-          <PrimaryButton
-            disabled={shouldDisableButtons}
-            onClick={handleMintClick}
-          >
-            鑄造告白
-          </PrimaryButton>
-        </div>
       </div>
-    </>
+      <div className="flex w-80 md:w-[642px] mb-6">
+        <div className="flex-none bg-lime text-black font-mono p-2 md:text-2xl">
+          收件人
+        </div>
+        <input
+          id="receiverName"
+          name="receiverName"
+          type="text"
+          className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono md:text-2xl"
+          onChange={handleInputChange}
+        />
+      </div>
+      <textarea
+        id="message"
+        rows={5}
+        className="shadow-sm block w-56 text-3xl border border-gray-300 rounded-md text-black p-4 mb-6 resize-none overflow-hidden"
+        onInput={handleTextareaChange}
+        placeholder="寫下你的告白"
+      />
+      <div className="flex">
+        <ResponsiveSecondaryButton
+          disabled={shouldDisableButtons}
+          onClick={handleShareClick}
+        >
+          分享告白
+        </ResponsiveSecondaryButton>
+        <ResponsivePrimaryButton
+          disabled={shouldDisableButtons}
+          onClick={handleMintClick}
+          className="ml-8"
+        >
+          鑄造告白
+        </ResponsivePrimaryButton>
+      </div>
+    </div>
   )
 }

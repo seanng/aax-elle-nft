@@ -10,18 +10,19 @@ export function DonationButton({
   return (
     <button
       className={classNames(
-        'flex justify-between font-medium text-xl items-center w-1/3 p-2',
+        'flex justify-center font-medium font-mono text-xl md:text-3xl items-center w-1/3 p-2',
         isActive ? 'bg-lime text-black' : 'bg-transparent text-lime',
         className
       )}
       {...props}
     >
-      <Image
-        width={16}
-        height={22}
-        src={isActive ? '/images/bone-black.png' : '/images/bone-green.png'}
-      />
-      <span>{children}</span>
+      <div className="relative w-4 h-6">
+        <Image
+          layout="fill"
+          src={isActive ? '/images/bone-black.png' : '/images/bone-green.png'}
+        />
+      </div>
+      <span className="ml-2">{children}</span>
     </button>
   )
 }

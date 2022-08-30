@@ -52,7 +52,7 @@ export function useMint() {
     email: 'sean.ng@aax.com',
     message: 'Yo this is a test LOVE message. 愛愛愛',
     passcode: 'asdfasdf',
-    senderName: 'Sean',
+    minterName: 'Sean',
     receiverName: 'Patrick',
     mintedAt: new Date(),
     donationInput: 0,

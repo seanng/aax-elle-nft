@@ -7,8 +7,8 @@ import {
   DonationButton,
   MintConfirmationModal,
   TwSpcaButton,
-  SecondaryButton,
-  PrimaryButton,
+  ResponsiveSecondaryButton,
+  ResponsivePrimaryButton,
   FormHeading,
   CaretDownIcon,
 } from 'components'
@@ -150,15 +150,17 @@ export function DonationStep({
 
   return (
     <>
-      <div className="flex flex-col items-center font-noto pt-8 w-[300px] mx-auto">
-        <FormHeading className="mb-3">你的愛能幫助受虐動物</FormHeading>
-        <p className="mb-4 text-center tracking-wide">
+      <div className="flex flex-col items-center font-noto mx-auto">
+        <FormHeading className="mb-3 md:mb-5 mt-8 md:mt-12">
+          你的愛能幫助受虐動物
+        </FormHeading>
+        <p className="text-center tracking-wide w-[300px] md:w-[672px] md:text-xl mb-4 md:mb-6 leading-150%">
           你的愛不只轉動元宇宙，為你獨特的Impact
           NFT定價，費用全額將捐助SPCA台灣防止虐待動物協會 一起關心受虐動物
         </p>
-        <TwSpcaButton className="mb-2" />
-        <CaretDownIcon fill="#fff" className="mb-3" />
-        <div className="flex border border-lime mb-3 w-full">
+        <TwSpcaButton />
+        <CaretDownIcon fill="#fff" className="my-3 md:my-6" />
+        <div className="flex border border-lime mb-3 w-[300px] md:w-[408px]">
           {[1000, 5000, 10000].map((val, i) => (
             <DonationButton
               type="button"
@@ -172,7 +174,7 @@ export function DonationStep({
           ))}
         </div>
 
-        <div className="w-full border border-lime text-lime">
+        <div className="w-[300px] md:w-[408px] border border-lime text-lime ">
           <div className="border-b border-lime flex justify-between p-2">
             <div
               className="text-black text-5xl leading-120%"
@@ -192,13 +194,13 @@ export function DonationStep({
                 placeholder="0"
                 {...register('donationInput', { required: true })}
               />
-              <p className="text-xs">
+              <p className="text-xs md:text-sm">
                 (~ETH {donationInEth.toFixed(ETH_DECIMAL_PLACES)})
               </p>
             </div>
           </div>
           <div
-            className={`text-right text-xs font-mono p-2 ${
+            className={`text-right text-xs md:text-sm font-mono p-2 ${
               balanceNum < donationInEth || !address ? 'text-tomato' : ''
             }`}
           >
@@ -207,16 +209,17 @@ export function DonationStep({
               : '尚未連結錢包'}
           </div>
         </div>
-        <div className="flex space-x-8 mt-20">
-          <SecondaryButton type="button" onClick={handleBackClick}>
+        <div className="flex mt-10">
+          <ResponsiveSecondaryButton type="button" onClick={handleBackClick}>
             上一步
-          </SecondaryButton>
-          <PrimaryButton
+          </ResponsiveSecondaryButton>
+          <ResponsivePrimaryButton
             disabled={donationInput <= 0}
             onClick={handleNextClick}
+            className="ml-8"
           >
             下一步
-          </PrimaryButton>
+          </ResponsivePrimaryButton>
         </div>
       </div>
       <MintConfirmationModal
@@ -239,8 +242,7 @@ export function DonationStep({
               <div className="bg-tomato flex px-4 py-4 space-x-4 mb-2">
                 <WarningStamp />
                 <div className="text-white">
-                  <p>錢包資產不足</p>
-                  <p>請到錢包購買以太幣</p>
+                  <p>錢包資產不足 請購買以太幣</p>
                   <a
                     href="https://www.aax.com/zh-TW/newbie/"
                     target="_blank"

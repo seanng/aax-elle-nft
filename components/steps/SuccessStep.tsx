@@ -1,38 +1,34 @@
-import { MintResponseData } from 'shared/types'
+import { Files, MintResponseData } from 'shared/types'
 import { FormHeading, LinkAndPasscode, SocialButtons } from 'components'
 import { metadata } from 'utils/config'
 import Link from 'next/link'
+import { usePreviewHtml } from 'hooks'
 
 interface Props {
   data: MintResponseData
+  files: Files
 }
 
-export function SuccessStep({ data }: Props) {
+export function SuccessStep({ data, files }: Props) {
+  const preview = usePreviewHtml(files.beforeOpenHtml)
   const link = `${metadata.siteUrl}/open/${data?.slug}`
-
-  // TODO:
-  const handleDLClick = () => {}
-  // TODO:
-  const handleIGClick = () => {}
 
   return (
     <div className="flex flex-col font-noto pt-16 text-center">
-      <FormHeading className="mb-2">恭喜成功鑄造 Impact NFT！</FormHeading>
-      <div className="w-80 text-center mx-auto">
-        <p>這份愛的告白會永久保存在區塊鏈上</p>
-        <p className="mb-4">也可以分享NFT到社群喔</p>
-        {/* NFT ANIMATION URL GOES HERE */}
-        <SocialButtons
-          onIGClick={handleIGClick}
-          onDLClick={handleDLClick}
-          className="mb-5"
-        />
+      <FormHeading className="mb-2 md:mb-7">
+        恭喜成功鑄造 Impact NFT！
+      </FormHeading>
+      <div className="text-center mx-auto">
+        <p className="w-64 md:w-full mb-4 md:mb-7 md:text-xl mx-auto tracking-wide">
+          這份愛的告白會永久保存在區塊鏈上也可以分享NFT到社群喔
+        </p>
+        <div dangerouslySetInnerHTML={{ __html: preview as string }} />
         <LinkAndPasscode
           link={link}
           passcode={data?.passcode ?? 'abc12'}
-          className="mb-5"
+          className="mb-5 md:mb-9 mt-4"
         />
-        <p className="tracking-widest mb-6">
+        <p className="w-64 md:w-full mx-auto md:text-lg tracking-wide mb-6 md:mb-8">
           我們已將上鎖密碼即連結寄到你的email，你可以稍後查看。
         </p>
         <Link href="/collection">
@@ -60,7 +56,7 @@ const GoToCollectionButton = ({ width = 226, height = 42, ...props }) => (
       />
       <path fill="#EDFA00" d="M0 0h221v37H0z" />
     </svg>
-    <div className="absolute mx-auto text-black font-medium font-mono w-full h-full top-0 leading-[38px]">
+    <div className="absolute mx-auto text-black font-medium md:text-lg font-mono w-full h-full top-0 leading-[38px] md:leading-[40px]">
       前往我的秘密告白
     </div>
   </button>

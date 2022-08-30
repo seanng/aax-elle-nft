@@ -20,7 +20,7 @@ export interface MintForm {
   email: string
   message: string
   passcode: string
-  senderName: string
+  minterName: string
   receiverName: string
   mintedAt: Date
   donationInput: number
