@@ -45,36 +45,62 @@ const Navbar = () => (
 const Panel = () => (
   <Popover.Panel
     focus
-    className="h-full z-30 bg-black-rgba-70 backdrop-blur-3xl bg-repeat"
-    style={{
-      backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px)`,
-      backgroundSize: '40px 40px',
-    }}
+    className="h-full  z-30 bg-black-rgba-70 backdrop-blur-3xl flex flex-col"
   >
-    <div className="flex justify-end items-center px-4 h-navbar-height">
-      <Popover.Button
-        className="p-2"
-        width={25}
-        height={25}
-        as={ModalCloseButton}
-      />
+    {/* mobile */}
+    <div
+      className="md:hidden bg-repeat h-full w-full"
+      style={{
+        backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px)`,
+        backgroundSize: '40px 40px',
+      }}
+    >
+      <CloseButton />
+      <Nav />
     </div>
-    <div className="h-full flex flex-col bg-repeat py-2 pl-6 text-4xl text-lime font-bold font-noto leading-150% space-y-4">
-      <Link href="/welcome">
-        <a>ELLEverse</a>
-      </Link>
-      <a href="https://www.aax.com/zh-TW/newbie/">新手指南</a>
-      <Link href="/collections">
-        <a className="font-mono">我的秘密告白</a>
-      </Link>
-      <Link href="/">
-        <a className="font-mono">Instagram</a>
-      </Link>
-      <Link href="/">
-        <a className="font-mono">Facebook</a>
-      </Link>
+    {/* desktop */}
+    <div className="hidden md:flex flex-col h-[797px] self-end pr-10 w-[321px]">
+      <CloseButton />
+      <div
+        className="bg-repeat h-full"
+        style={{
+          backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.5) 0.1px, transparent 1px)`,
+          backgroundSize: '40px 40px',
+        }}
+      >
+        <Nav />
+      </div>
     </div>
   </Popover.Panel>
+)
+
+const CloseButton = () => (
+  <div className="flex justify-end items-center px-4 h-navbar-height">
+    <Popover.Button
+      className="p-2"
+      width={25}
+      height={25}
+      as={ModalCloseButton}
+    />
+  </div>
+)
+
+const Nav = () => (
+  <div className="h-full flex flex-col bg-repeat py-2 pl-6 text-4xl text-lime font-bold font-mono leading-150% space-y-4 md:space-y-7 md:pt-8">
+    <Link href="/welcome">
+      <a>ELLEverse</a>
+    </Link>
+    <a href="https://www.aax.com/zh-TW/newbie/">新手指南</a>
+    <Link href="/collections">
+      <a>我的秘密告白</a>
+    </Link>
+    <Link href="/">
+      <a>Instagram</a>
+    </Link>
+    <Link href="/">
+      <a>Facebook</a>
+    </Link>
+  </div>
 )
 
 const Logo = () => {
