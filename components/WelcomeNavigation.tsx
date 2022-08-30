@@ -1,11 +1,10 @@
-import { Fragment } from 'react'
 import Image from 'next/image'
 import { Popover, Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { IGIcon, TwitterIcon, FBIcon } from 'components'
 
-export function LandingNavigation() {
+export function WelcomeNavigation() {
   return (
     <Popover as="header" className="fixed left-0 right-0 z-10">
       <Navbar />

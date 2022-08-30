@@ -145,7 +145,7 @@ function Mobile() {
         <PoopSmall className="absolute bottom-0 right-0" />
         <PacManSmall className="absolute bottom-2 right-[27%]" />
         <div className="absolute top-[30%] left-0 right-0 mx-auto text-center">
-          <Link href="/welcome" passHref>
+          <Link href="/" passHref>
             <a>
               <TRCursorButton>我想說個祕密...</TRCursorButton>
             </a>

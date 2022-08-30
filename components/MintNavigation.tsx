@@ -60,7 +60,7 @@ const Panel = () => (
       />
     </div>
     <div className="h-full flex flex-col bg-repeat py-2 pl-6 text-4xl text-lime font-bold font-noto leading-150% space-y-4">
-      <Link href="/">
+      <Link href="/welcome">
         <a>ELLEverse</a>
       </Link>
       <a href="https://www.aax.com/zh-TW/newbie/">新手指南</a>
@@ -79,7 +79,7 @@ const Panel = () => (
 
 const Logo = () => {
   return (
-    <Link href="/welcome">
+    <Link href="/">
       <a>
         <Image
           priority
