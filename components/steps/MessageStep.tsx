@@ -58,8 +58,6 @@ export function MessageStep({
     const files = await getAssets({
       message: message,
       aroundText: `${minterName} wants to give you something, ${receiverName}!`,
-      aroundTextColor: 'blue',
-      gridIconColor: 'blue',
     })
     setFiles(files)
     updateForm({ ...values, mintedAt: new Date() })
@@ -75,8 +73,6 @@ export function MessageStep({
     const files = await getAssets({
       message: message,
       aroundText: `${minterName} wants to give you something, ${receiverName}!`,
-      aroundTextColor: 'black',
-      gridIconColor: 'blue',
     })
     setFiles(files)
     setIsLoading(false)

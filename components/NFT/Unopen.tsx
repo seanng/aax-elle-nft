@@ -1,8 +1,11 @@
-import React, { useRef } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { genImageFile, genHTMLFile } from 'utils/nft'
 import CompsNFTBackground from 'components/NFT/shared/Background'
-import CompsNFTGridV2 from 'components/NFT/shared/GridV2'
+import CompsNFTGrid from 'components/NFT/shared/Grid'
+import CompsNFTBlinkingIcons from 'components/NFT/shared/BlinkingIcons'
 import CompsNFTAroundText from 'components/NFT/shared/AroundText'
+import CompsNFTSignature from 'components/NFT/shared/Signature'
+import { NFTParameters } from 'shared/types'
 
 const compsStyle = {
   position: 'relative',
@@ -12,44 +15,112 @@ const compsStyle = {
 } as React.CSSProperties
 
 interface Props {
-  data: {
-    message: string
-    aroundText: string
-    gridIconColor: string
-    background?: string
-    opacity?: string
-    messageColor?: string
-  }
+  data: NFTParameters
   setImage?: React.Dispatch<React.SetStateAction<null>>
   setHTML?: React.Dispatch<React.SetStateAction<null>>
 }
 
 function CompsNFTUnopen({
-  data: { background = '#000', gridIconColor, aroundText },
+  data: {
+    aroundText,
+    backgroundStyle,
+    gridIconStyle1,
+    gridIconTemplate1,
+    aroundTextStyle,
+    signature,
+  },
   setImage,
   setHTML,
 }: Props) {
-  const reference = useRef<HTMLDivElement>(null)
+  const [compNode, setCompNode] = useState<any>(null)
+  const [isBackgroundReady, setIsBackgroundReady] = useState(false)
+  const [isGridReady, setIsGridReady] = useState(false)
+  const [isFontReady, setIsFontReady] = useState(false)
+  const [isDimensionReady, setIsDimensionReady] = useState(false)
+  const [isIconsReady, setIsIconsReady] = useState(false)
+  const [isSignatureReady, setIsSignatureReady] = useState(!signature)
+  const [isImageCaptured, setIsImageCaptured] = useState(false)
 
-  const imageCB = () => {
-    reference.current && genImageFile(reference.current, 'unopen.png', setImage)
-  }
+  // Set Comp Node
+  const compRef = useCallback((node) => {
+    if (node) setCompNode(node)
+  }, [])
 
-  const htmlCB = () => {
-    reference.current &&
-      genHTMLFile(reference.current.outerHTML, 'unopen.html', setHTML)
-  }
+  // Check Fonts are ready
+  useEffect(() => {
+    const checkFontsReady = async () => {
+      await document.fonts.ready
+      setIsFontReady(true)
+    }
+    checkFontsReady()
+  }, [])
+
+  // When all ready, capture image
+  useEffect(() => {
+    if (
+      compNode &&
+      isBackgroundReady &&
+      isGridReady &&
+      isFontReady &&
+      isDimensionReady &&
+      isIconsReady &&
+      isSignatureReady
+    ) {
+      const getImage = async () => {
+        await genImageFile(compNode, 'unopen.png', setImage)
+        setIsImageCaptured(true)
+      }
+      getImage()
+    }
+  }, [
+    compNode,
+    isBackgroundReady,
+    isGridReady,
+    isFontReady,
+    isDimensionReady,
+    isIconsReady,
+    isSignatureReady,
+    setImage,
+  ])
+
+  useEffect(() => {
+    if (isImageCaptured) {
+      return genHTMLFile(compNode.outerHTML, 'unopen.html', setHTML)
+    }
+  }, [compNode, isImageCaptured, setHTML])
 
   return (
-    <div style={compsStyle} ref={reference}>
-      <CompsNFTBackground background={background} />
-      <CompsNFTGridV2 color={gridIconColor} />
-      <CompsNFTAroundText
-        color={gridIconColor}
-        aroundText={aroundText}
-        imageCB={imageCB}
-        htmlCB={htmlCB}
+    <div style={compsStyle} ref={compRef}>
+      <CompsNFTBackground
+        backgroundStyle={backgroundStyle}
+        isCompReady={isBackgroundReady}
+        setIsCompReady={setIsBackgroundReady}
       />
+      <CompsNFTGrid
+        color={gridIconStyle1}
+        Template={gridIconTemplate1}
+        isCompReady={isGridReady}
+        setIsCompReady={setIsGridReady}
+      />
+      <CompsNFTBlinkingIcons
+        isImageCaptured={isImageCaptured}
+        isCompReady={isIconsReady}
+        setIsCompReady={setIsIconsReady}
+      />
+      <CompsNFTAroundText
+        color={aroundTextStyle}
+        aroundText={aroundText}
+        isImageCaptured={isImageCaptured}
+        isFontReady={isFontReady}
+        isCompReady={isDimensionReady}
+        setIsCompReady={setIsDimensionReady}
+      />
+      {signature && (
+        <CompsNFTSignature
+          url={signature}
+          setIsCompReady={setIsSignatureReady}
+        />
+      )}
     </div>
   )
 }
