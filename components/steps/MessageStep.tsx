@@ -4,13 +4,14 @@ import {
   FormHeading,
   ResponsiveSecondaryButton,
 } from 'components'
+import AroundText2 from 'components/NFT/shared/AroundText2'
 import { useEffect, useState } from 'react'
 import { Files, MintForm } from 'shared/types'
 import { FINISHED, NOT_STARTED, PRESALE } from 'shared/constants'
 import { saleStatus } from 'utils/config'
 import { getAssets } from 'utils/nft'
 
-const TEXTAREA_HEIGHT = 232
+const TEXTAREA_HEIGHT = 276
 
 interface Props extends Partial<StepWizardChildProps> {
   updateForm: (formValues: Partial<MintForm>) => void
@@ -85,6 +86,7 @@ export function MessageStep({
   }
 
   const handleTextareaChange = (e) => {
+    console.log(e.target.scrollHeight)
     if (e.target.scrollHeight <= TEXTAREA_HEIGHT) {
       setValues((prev) => ({
         ...prev,
@@ -146,13 +148,37 @@ export function MessageStep({
           onChange={handleInputChange}
         />
       </div>
-      <textarea
-        id="message"
-        rows={5}
-        className="shadow-sm block w-56 text-3xl border border-gray-300 rounded-md text-black p-4 mb-6 resize-none overflow-hidden"
-        onInput={handleTextareaChange}
-        placeholder="寫下你的告白"
-      />
+      <div className="w-80 h-[320px] md:w-[642px] md:h-[642px] mb-6 flex justify-center items-center">
+        <AroundText2
+          aroundText="Write down your secret..."
+          optClass="md:scale-[2]"
+        />
+        <textarea
+          id="message"
+          rows={7}
+          className="
+            relative
+            shadow-sm
+            block
+            md:scale-[2]
+            w-[275px]
+            h-[275px]
+            pt-[9px]
+            pb-[12px]
+            px-[12px]
+            text-[26px]
+            leading-[140%]
+            bg-transparent
+            border-0
+            rounded-none
+            resize-none
+            text-white
+          "
+          onInput={handleTextareaChange}
+          value={values.message}
+          placeholder="寫下你的告白"
+        />
+      </div>
       <div className="flex">
         <ResponsiveSecondaryButton
           disabled={shouldDisableButtons}

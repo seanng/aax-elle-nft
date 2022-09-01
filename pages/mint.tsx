@@ -101,7 +101,7 @@ const MintPage: NextPage = () => {
         files={files}
       />
       <SpinningOverlay isLoading={isLoading} />
-      {saleStatus === NOT_STARTED && (
+      {/* {saleStatus === NOT_STARTED && (
         <div className="fixed top-0 right-0 left-0 bottom-0 z-30 bg-black-rgba-70 backdrop-blur-sm text-center">
           <GreenLipsIcon className="mt-40 mb-10 mx-auto" />
           <div
@@ -114,7 +114,7 @@ const MintPage: NextPage = () => {
             活動尚未開始 請於10/1再來告白！
           </div>
         </div>
-      )}
+      )} */}
     </>
   )
 }
