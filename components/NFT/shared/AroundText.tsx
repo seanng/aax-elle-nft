@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 
 import { genRandomId } from 'utils/nft'
 
@@ -78,6 +78,16 @@ interface GetTransformValuesProps {
   tW: number
 }
 
+const initTransformValues = {
+  totalWidth: 0,
+  animationTime: '0',
+  emptyWidth: 0,
+  bottom: { start: 0, end: 0 },
+  left: { start: 0, end: 0 },
+  top: { start: 0, end: 0 },
+  right: { start: 0, end: 0 },
+}
+
 const getTransformValues = (widths: GetTransformValuesProps) => {
   const { cW, tW } = widths
 
@@ -119,61 +129,51 @@ const getTransformValues = (widths: GetTransformValuesProps) => {
   }
 }
 
-function CompsNFTAroundText({ color, aroundText, imageCB, htmlCB }) {
-  const containerReference = useRef<HTMLDivElement>(null)
-  const textReference = useRef<HTMLSpanElement>(null)
-  const [startAnimation, setStartAnimation] = useState(false)
-  const [isFontReady, setIsFontReady] = useState(false)
-  const [isReady, setIsReady] = useState(false)
-  const [transformValues, setTransformValues] = useState({
-    totalWidth: 0,
-    animationTime: '0',
-    emptyWidth: 0,
-    bottom: { start: 0, end: 0 },
-    left: { start: 0, end: 0 },
-    top: { start: 0, end: 0 },
-    right: { start: 0, end: 0 },
-  })
-  const [randomId] = useState(genRandomId())
+function CompsNFTAroundText({
+  color,
+  aroundText,
+  isImageCaptured,
+  isFontReady,
+  isCompReady,
+  setIsCompReady,
+}) {
+  // Random ID to prevent marquee from conflicting
+  const [randomId, setRandomId] = useState('')
 
-  useEffect(() => {
-    const checkFontsReady = async () => {
-      await document.fonts.ready
-      setIsFontReady(true)
-    }
+  // Animation time & positions
+  const [transformValues, setTransformValues] = useState(initTransformValues)
 
-    checkFontsReady()
+  // Node Refs
+  const [containerNode, setContainerNode] = useState<any>(null)
+  const [textNode, setTextNode] = useState<any>(null)
+  const containerRef = useCallback((node) => {
+    if (node) setContainerNode(node)
+  }, [])
+  const textRef = useCallback((node) => {
+    if (node) setTextNode(node)
   }, [])
 
   useEffect(() => {
-    if (containerReference.current && textReference.current && isFontReady) {
-      setIsReady(true)
+    setRandomId(genRandomId())
+  }, [])
+
+  // When all ready, set the dimension
+  useEffect(() => {
+    if (containerNode && textNode && isFontReady) {
       setTransformValues(
         getTransformValues({
-          cW: containerReference.current.offsetWidth,
-          tW: textReference.current.offsetWidth,
+          cW: containerNode.offsetWidth,
+          tW: textNode.offsetWidth,
         })
       )
+      setIsCompReady(true)
     }
-  }, [containerReference, textReference, isFontReady])
-
-  useEffect(() => {
-    if (isFontReady && isReady) {
-      if (imageCB) imageCB()
-      setStartAnimation(true)
-    }
-  }, [isFontReady, isReady]) // eslint-disable-line
-
-  useEffect(() => {
-    if (startAnimation) {
-      if (htmlCB) htmlCB()
-    }
-  }, [startAnimation]) // eslint-disable-line
+  }, [containerNode, textNode, isFontReady]) // eslint-disable-line
 
   const renderText = (key) => {
-    if (!isReady) return null
+    if (!isCompReady && !randomId) return null
 
-    const animationPlayState = startAnimation ? 'running' : 'paused'
+    const animationPlayState = isImageCaptured ? 'running' : 'paused'
     const animationDuration = transformValues.animationTime
     const animationCSS = `marquee-${key}-${randomId} ${animationDuration}s linear infinite ${animationPlayState}`
 
@@ -186,7 +186,7 @@ function CompsNFTAroundText({ color, aroundText, imageCB, htmlCB }) {
           <span
             style={{
               ...commonTextStyle,
-              lineHeight: startAnimation ? '16px' : '14px',
+              lineHeight: isImageCaptured ? '16px' : '14px',
             }}
           >
             {aroundText}
@@ -202,7 +202,7 @@ function CompsNFTAroundText({ color, aroundText, imageCB, htmlCB }) {
           <span
             style={{
               ...commonTextStyle,
-              lineHeight: startAnimation ? '16px' : '14px',
+              lineHeight: isImageCaptured ? '16px' : '14px',
             }}
           >
             {aroundText}
@@ -213,7 +213,7 @@ function CompsNFTAroundText({ color, aroundText, imageCB, htmlCB }) {
   }
 
   const renderStyles = () => {
-    if (!isReady) return null
+    if (!isCompReady && !randomId) return null
     return (
       <style>
         {`
@@ -277,14 +277,14 @@ function CompsNFTAroundText({ color, aroundText, imageCB, htmlCB }) {
     <div style={{ ...compStyle, WebkitTextStroke: `1px ${color}` }}>
       {/* Reference | Hidden */}
       <div
-        ref={containerReference}
+        ref={containerRef}
         style={{
           ...topContainerStyle,
           visibility: 'hidden',
           overflow: 'hidden',
         }}
       >
-        <span id="test" ref={textReference} style={commonTextStyle}>
+        <span id="test" ref={textRef} style={commonTextStyle}>
           {aroundText}
         </span>
       </div>

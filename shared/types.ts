@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { Mint } from '@prisma/client'
 
 export enum DisplayMode {
@@ -29,12 +30,22 @@ export interface MintForm {
 
 export type MintResponseData = Partial<Mint> | undefined
 
-export interface NFTParameters {
-  message: string
-  gridIconColor: string
-  aroundTextColor: string
+export interface NFTParametersBasic {
   aroundText: string
-  background?: string
-  messageColor?: string
+  message: string
+  kolKey?: string
+}
+
+export interface NFTParameters {
+  aroundText: string
+  message: string
+  backgroundStyle: string
+  gridIconStyle1: string
+  gridIconStyle2: string
+  gridIconTemplate1?: FC
+  gridIconTemplate2?: FC
+  aroundTextStyle: string
+  messageColor: string
   opacity?: string
+  signature?: string
 }

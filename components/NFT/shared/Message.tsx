@@ -9,19 +9,23 @@ const compStyle = {
   fontWeight: '400',
   fontSize: '26px',
   lineHeight: '140%',
-  boxSizing: 'border-box',
 } as React.CSSProperties
 
-const innerContainerStyle = {
-  width: '100%',
-  height: '100%',
-  padding: '13px',
+const innerWrapperStyle = {
+  width: '275px',
+  height: '275px',
+  padding: '9px 12px 12px',
+} as React.CSSProperties
+
+const imgStyle = {
+  width: '350px',
+  height: '350px',
 } as React.CSSProperties
 
 function CompsNFTMessage({ color, message }) {
   return (
     <div style={{ ...compStyle, color }}>
-      <div style={innerContainerStyle}>
+      <div style={innerWrapperStyle}>
         {message.split('\n').map((line, index) => (
           <div key={index}>{line}</div>
         ))}
