@@ -1,26 +1,28 @@
 import React, { useCallback, useState, useEffect } from 'react'
+import IconBubble from 'components/NFT/shared/misc-icons/bubble'
 
 import { genRandomId } from 'utils/nft'
 
 const compStyle = {
   position: 'absolute',
-  width: '350px',
-  height: '350px',
+  width: '320px',
+  height: '320px',
   fontFamily: '"DM Mono", "DMMono"',
   fontWeight: '500',
   fontStyle: 'italic',
-  fontSize: '22px',
+  fontSize: '14px',
   boxSizing: 'border-box',
-  color: 'transparent',
+  color: 'black',
 } as React.CSSProperties
 
 const commonOuterContainerStyle = {
   whiteSpace: 'nowrap',
-  width: 'calc(100% - 75px)',
-  height: '37.5px',
-  margin: '0 37.5px',
+  width: 'calc(100% - 45px)',
+  height: '22.5px',
+  margin: '0 22.5px',
   position: 'absolute',
   transformOrigin: 'top left',
+  background: '#55F263',
 } as React.CSSProperties
 
 const commonInnerContainerStyle = {
@@ -28,14 +30,14 @@ const commonInnerContainerStyle = {
   height: '100%',
   overflow: 'hidden',
   boxSizing: 'content-box',
-  paddingBottom: '37.5px',
+  paddingBottom: '22.5px',
 } as React.CSSProperties
 
 const commonTextContainerStyle = {
   display: 'flex',
   justifyContent: 'start',
-  alignItems: 'end',
-  height: '37.5px',
+  alignItems: 'center',
+  height: '22.5px',
 } as React.CSSProperties
 
 const commonTextStyle = {
@@ -54,7 +56,7 @@ const rightContainerStyle = {
   transformOrigin: 'bottom left',
   transform: 'rotate(90deg)',
   top: '0',
-  left: 'calc(100% - 75px)',
+  left: 'calc(100% - 45px)',
 } as React.CSSProperties
 
 const bottomContainerStyle = {
@@ -69,7 +71,7 @@ const leftContainerStyle = {
   ...commonOuterContainerStyle,
   transformOrigin: 'bottom left',
   transform: 'rotate(270deg)',
-  top: 'calc(100% - 75px)',
+  top: 'calc(100% - 45px)',
   left: '0',
 } as React.CSSProperties
 
@@ -82,63 +84,38 @@ const initTransformValues = {
   totalWidth: 0,
   animationTime: '0',
   emptyWidth: 0,
-  bottom: { start: 0, end: 0 },
-  left: { start: 0, end: 0 },
-  top: { start: 0, end: 0 },
-  right: { start: 0, end: 0 },
+  transform: { start: 0, end: 0 },
 }
 
 const getTransformValues = (widths: GetTransformValuesProps) => {
   const { cW, tW } = widths
 
-  // filledBoxes = amount of boxes filled | max 4, min 0
-  // emptyBoxes = amount of empty boxes | max 4, min 0
-  // extraSpace = spacing between end and start of text to prevent sticking
-  // textTakenSpace = Text spaces on last box | 0 boxes are filled
-  const velocityPerSecond = 100
-  const filledBoxes = Math.min(Math.floor(tW / cW), 4)
-  const emptyBoxes = 4 - filledBoxes
-  const extraSpace = emptyBoxes ? 0 : 50
-  const textTakenSpace = filledBoxes === 4 ? 0 : tW % cW
-
+  // velocityPerSecond = speed of translateX
   // emptyWidth = total width of empty spaces needed
   // totalWidth = total width of all 3 spans | tW + emptyWidth + tW
-  const emptyWidth = cW * emptyBoxes - textTakenSpace + extraSpace
+  const velocityPerSecond = 100
+  const emptyWidth = 10
   const totalWidth = tW * 2 + emptyWidth
 
   return {
     totalWidth,
     animationTime: (totalWidth / velocityPerSecond).toFixed(1),
     emptyWidth,
-    bottom: {
+    transform: {
       start: -(cW * 0),
       end: -(totalWidth - tW + cW * 0),
-    },
-    left: {
-      start: -(cW * 1),
-      end: -(totalWidth - tW + cW * 1),
-    },
-    top: {
-      start: -(cW * 2),
-      end: -(totalWidth - tW + cW * 2),
-    },
-    right: {
-      start: -(cW * 3),
-      end: -(totalWidth - tW + cW * 3),
     },
   }
 }
 
-function CompsNFTAroundText({
-  color,
-  aroundText,
-  isImageCaptured,
-  isFontReady,
-  isCompReady,
-  setIsCompReady,
-}) {
+function CompsNFTAroundText2({ aroundText, optClass }) {
+  // Flags
+  const [startAnimation, setStartAnimation] = useState(false)
+  const [isFontReady, setIsFontReady] = useState(false)
+  const [isReady, setIsReady] = useState(false)
+
   // Random ID to prevent marquee from conflicting
-  const [randomId, setRandomId] = useState('')
+  const [randomId] = useState(genRandomId())
 
   // Animation time & positions
   const [transformValues, setTransformValues] = useState(initTransformValues)
@@ -146,6 +123,7 @@ function CompsNFTAroundText({
   // Node Refs
   const [containerNode, setContainerNode] = useState<any>(null)
   const [textNode, setTextNode] = useState<any>(null)
+
   const containerRef = useCallback((node) => {
     if (node) setContainerNode(node)
   }, [])
@@ -154,28 +132,38 @@ function CompsNFTAroundText({
   }, [])
 
   useEffect(() => {
-    setRandomId(genRandomId())
+    const checkFontsReady = async () => {
+      await document.fonts.ready
+      setIsFontReady(true)
+    }
+
+    checkFontsReady()
   }, [])
 
-  // When all ready, set the dimension
   useEffect(() => {
     if (containerNode && textNode && isFontReady) {
+      setIsReady(true)
       setTransformValues(
         getTransformValues({
           cW: containerNode.offsetWidth,
           tW: textNode.offsetWidth,
         })
       )
-      setIsCompReady(true)
     }
-  }, [containerNode, textNode, isFontReady]) // eslint-disable-line
+  }, [containerNode, textNode, isFontReady])
+
+  useEffect(() => {
+    if (isFontReady && isReady) {
+      setStartAnimation(true)
+    }
+  }, [isFontReady, isReady])
 
   const renderText = (key) => {
-    if (!isCompReady && !randomId) return null
+    if (!isReady) return null
 
-    const animationPlayState = isImageCaptured ? 'running' : 'paused'
+    const animationPlayState = startAnimation ? 'running' : 'paused'
     const animationDuration = transformValues.animationTime
-    const animationCSS = `marquee-${key}-${randomId} ${animationDuration}s linear infinite ${animationPlayState}`
+    const animationCSS = `marquee-${randomId} ${animationDuration}s linear infinite ${animationPlayState}`
 
     return (
       <div style={commonInnerContainerStyle}>
@@ -186,7 +174,7 @@ function CompsNFTAroundText({
           <span
             style={{
               ...commonTextStyle,
-              lineHeight: isImageCaptured ? '16px' : '14px',
+              lineHeight: '16px',
             }}
           >
             {aroundText}
@@ -196,13 +184,29 @@ function CompsNFTAroundText({
               ...commonTextStyle,
               width: `${transformValues.emptyWidth}px`,
               minWidth: `${transformValues.emptyWidth}px`,
-              height: '37.5px',
+              height: '22.5px',
             }}
           />
           <span
             style={{
               ...commonTextStyle,
-              lineHeight: isImageCaptured ? '16px' : '14px',
+              lineHeight: '16px',
+            }}
+          >
+            {aroundText}
+          </span>
+          <span
+            style={{
+              ...commonTextStyle,
+              width: `${transformValues.emptyWidth}px`,
+              minWidth: `${transformValues.emptyWidth}px`,
+              height: '22.5px',
+            }}
+          />
+          <span
+            style={{
+              ...commonTextStyle,
+              lineHeight: '16px',
             }}
           >
             {aroundText}
@@ -213,68 +217,29 @@ function CompsNFTAroundText({
   }
 
   const renderStyles = () => {
-    if (!isCompReady && !randomId) return null
+    if (!isReady) return null
     return (
       <style>
         {`
-            #top-${randomId} {
-              transform: translateX(${transformValues.top.start}px);
-            }
+          #top-${randomId}, #right-${randomId}, #bottom-${randomId}, #left-${randomId} {
+            transform: translateX(${transformValues.transform.start}px);
+          }
 
-            #right-${randomId} {
-              transform: translateX(${transformValues.right.start}px);
+          @keyframes marquee-${randomId} {
+            0% {
+              transform: translateX(${transformValues.transform.start}px);
             }
-
-            #bottom-${randomId} {
-              transform: translateX(${transformValues.bottom.start}px);
+            100% {
+              transform: translateX(${transformValues.transform.end}px);
             }
-
-            #left-${randomId} {
-              transform: translateX(${transformValues.left.start}px);
-            }
-
-            @keyframes marquee-top-${randomId} {
-              0% {
-                transform: translateX(${transformValues.top.start}px);
-              }
-              100% {
-                transform: translateX(${transformValues.top.end}px);
-              }
-            }
-
-            @keyframes marquee-right-${randomId} {
-              0% {
-                transform: translateX(${transformValues.right.start}px);
-              }
-              100% {
-                transform: translateX(${transformValues.right.end}px);
-              }
-            }
-
-            @keyframes marquee-bottom-${randomId} {
-              0% {
-                transform: translateX(${transformValues.bottom.start}px);
-              }
-              100% {
-                transform: translateX(${transformValues.bottom.end}px);
-              }
-            }
-
-            @keyframes marquee-left-${randomId} {
-              0% {
-                transform: translateX(${transformValues.left.start}px);
-              }
-              100% {
-                transform: translateX(${transformValues.left.end}px);
-              }
-            }
-          `}
+          }
+        `}
       </style>
     )
   }
 
   return (
-    <div style={{ ...compStyle, WebkitTextStroke: `1px ${color}` }}>
+    <div className={optClass} style={compStyle}>
       {/* Reference | Hidden */}
       <div
         ref={containerRef}
@@ -288,6 +253,11 @@ function CompsNFTAroundText({
           {aroundText}
         </span>
       </div>
+
+      <IconBubble optClass="absolute top-0 left-0 h-[22.5px] w-[22.5px]" />
+      <IconBubble optClass="absolute top-0 right-0 h-[22.5px] w-[22.5px]" />
+      <IconBubble optClass="absolute bottom-0 left-0 h-[22.5px] w-[22.5px] scale-y-[-1]" />
+      <IconBubble optClass="absolute bottom-0 right-0 h-[22.5px] w-[22.5px] scale-y-[-1]" />
 
       {/* Top */}
       <div style={topContainerStyle}>{renderText('top')}</div>
@@ -306,4 +276,4 @@ function CompsNFTAroundText({
   )
 }
 
-export default CompsNFTAroundText
+export default CompsNFTAroundText2

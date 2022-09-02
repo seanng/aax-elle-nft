@@ -42,6 +42,7 @@ function CompsNFTMain({ data, assetsCB }: Props) {
     beforeOpenHTML,
     openedHTML,
     unopenHTML,
+    assetsCB,
   ])
 
   return (
@@ -51,7 +52,7 @@ function CompsNFTMain({ data, assetsCB }: Props) {
         setImage={setBeforeOpenImg}
         setHTML={setBeforeOpenHTML}
       />
-      <CompsNFTOpened
+      {/* <CompsNFTOpened
         data={data}
         setImage={setOpenedImg}
         setHTML={setOpenedHTML}
@@ -60,7 +61,7 @@ function CompsNFTMain({ data, assetsCB }: Props) {
         data={data}
         setImage={setUnopenImg}
         setHTML={setUnopenHTML}
-      />
+      /> */}
     </>
   )
 }

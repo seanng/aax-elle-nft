@@ -13,7 +13,7 @@ import React from 'react'
 //   </linearGradient>
 // </defs>
 
-function CompsNFTGridIconsDynamicable({ color, Definition }) {
+function CompsNFTgridIconStylesDynamicable({ color, Definition }) {
   return (
     <div style={{ position: 'absolute', margin: '37.5px' }}>
       <svg width="100%" height="100%" viewBox="0 0 274 274" fill={color} xmlns="http://www.w3.org/2000/svg">
@@ -36,4 +36,4 @@ function CompsNFTGridIconsDynamicable({ color, Definition }) {
   )
 }
 
-export default CompsNFTGridIconsDynamicable
+export default CompsNFTgridIconStylesDynamicable
