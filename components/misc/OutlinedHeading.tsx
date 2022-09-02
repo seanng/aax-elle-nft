@@ -1,6 +1,10 @@
 import { classNames } from 'utils/helpers'
 
-export function FormHeading({ className = '', children }) {
+export function OutlinedHeading({
+  className = '',
+  color = '#55F263',
+  children,
+}) {
   return (
     <h2
       className={classNames(
@@ -8,8 +12,7 @@ export function FormHeading({ className = '', children }) {
         className
       )}
       style={{
-        textShadow:
-          '-1px -1px 0 #55F263, 1px -1px 0 #55F263, -1px 1px 0 #55F263, 1px 1px 0 #55F263',
+        textShadow: `-1px -1px 0 ${color}, 1px -1px 0 ${color}, -1px 1px 0 ${color}, 1px 1px 0 ${color}`,
       }}
     >
       {children}

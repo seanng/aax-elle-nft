@@ -59,7 +59,7 @@ const data = [
   },
 ]
 
-export function FlipCardsSection() {
+export function FlipCardsSection({ className = '', ...props }) {
   const [isFlipped, setIsFlipped] = useState(Array(5).fill(false))
   const handleFlip = (idx) => {
     const flipped = isFlipped.slice()
@@ -68,7 +68,13 @@ export function FlipCardsSection() {
   }
 
   return (
-    <div className="mt-20 flex flex-col items-start w-[360px]">
+    <div
+      className={classNames(
+        className,
+        'mt-20 flex flex-col items-start w-[360px]'
+      )}
+      {...props}
+    >
       {data.map((props, i) => (
         <FlipCard
           isFlipped={isFlipped[i]}

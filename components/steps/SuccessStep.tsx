@@ -1,5 +1,5 @@
 import { Files, MintResponseData } from 'shared/types'
-import { FormHeading, LinkAndPasscode, SocialButtons } from 'components'
+import { OutlinedHeading, LinkAndPasscode } from 'components'
 import { metadata } from 'utils/config'
 import Link from 'next/link'
 import { usePreviewHtml } from 'hooks'
@@ -15,9 +15,9 @@ export function SuccessStep({ data, files }: Props) {
 
   return (
     <div className="flex flex-col font-noto pt-16 text-center">
-      <FormHeading className="mb-2 md:mb-7">
+      <OutlinedHeading className="mb-2 md:mb-7">
         恭喜成功鑄造 Impact NFT！
-      </FormHeading>
+      </OutlinedHeading>
       <div className="text-center mx-auto">
         <p className="w-64 md:w-full mb-4 md:mb-7 md:text-xl mx-auto tracking-wide">
           這份愛的告白會永久保存在區塊鏈上也可以分享NFT到社群喔

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import {
-  FormHeading,
+  OutlinedHeading,
   LinkAndPasscode,
   MintLayout,
   PinkGiftIcon,
@@ -52,7 +52,7 @@ const CollectionPage: NextPage = () => {
   return (
     <>
       <MintLayout className="flex flex-col items-center font-noto">
-        <FormHeading className="pt-6 mb-8">我的秘密告白</FormHeading>
+        <OutlinedHeading className="pt-6 mb-8">我的秘密告白</OutlinedHeading>
         {
           {
             [NO_TOKENS]: <NoTokensView />,

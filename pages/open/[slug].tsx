@@ -7,7 +7,7 @@ import {
   ResponsivePrimaryButton,
   GreenUnlockIcon,
   SocialButtons,
-  FormHeading,
+  OutlinedHeading,
   SpinningOverlay,
   ToastMessage,
 } from 'components'
@@ -91,7 +91,7 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
         {isOpened ? (
           <div className="w-80 flex flex-col items-center pt-5">
             <GreenUnlockIcon className="mb-3" />
-            <FormHeading>解鎖秘密告白</FormHeading>
+            <OutlinedHeading>解鎖秘密告白</OutlinedHeading>
             <p className="my-3 text-center w-[275px] md:mb-7 md:text-xl leading-150% tracking-wide">
               秘密 Impact NFT 已被解開
             </p>
@@ -112,7 +112,7 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
         ) : (
           <div className="w-80 flex flex-col items-center pt-5">
             <GreenLockIcon height={50} width={50} className="mb-3" />
-            <FormHeading>解鎖秘密告白</FormHeading>
+            <OutlinedHeading>解鎖秘密告白</OutlinedHeading>
             <p className="my-3 md:mt-4 md:mb-7 text-center md:text-2xl w-[275px] leading-150% tracking-wide">
               輸入密碼解鎖秘密！
             </p>

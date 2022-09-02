@@ -1,7 +1,7 @@
 export { Stepper } from './Stepper'
 export { FormStamp } from './FormStamp'
 export { ErrorScreen } from './ErrorScreen'
-export { FormHeading } from './FormHeading'
+export { OutlinedHeading } from './OutlinedHeading'
 export { LinkAndPasscode } from './LinkAndPasscode'
 export { ToastMessage } from './ToastMessage'
 export { MintLayout } from './MintLayout'
