@@ -2,13 +2,15 @@ import { classNames } from 'utils/helpers'
 
 export function OutlinedHeading({
   className = '',
+  fontSizeClass = 'text-[28px] md:text-5xl',
   color = '#55F263',
   children,
 }) {
   return (
     <h2
       className={classNames(
-        'text-black font-medium leading-150% text-[28px] md:text-5xl',
+        fontSizeClass,
+        'text-black font-medium leading-150%',
         className
       )}
       style={{

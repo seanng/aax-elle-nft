@@ -5,7 +5,7 @@ import {
   MintLayout,
   ResponsivePrimaryButton,
   FlipCardsSection,
-  OutlinedHeading,
+  HowToSection,
 } from 'components'
 import { saleStatus } from 'utils/config'
 import { useWeb3Context } from 'context'
@@ -16,8 +16,8 @@ import Link from 'next/link'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Autoplay } from 'swiper'
 import Image from 'next/image'
-import { classNames } from 'utils/helpers'
-// import dynamic from 'next/dynamic'
+
+// importq dynamic from 'next/dynamic'
 // import { useState } from 'react'
 
 // const Carousel = dynamic(() => import('react-spring-3d-carousel'), {
@@ -168,25 +168,7 @@ const WelcomePage: NextPage = () => {
         </Swiper>
       </div>
       <FlipCardsSection className="mb-10" />
-      <OutlinedHeading className="mb-3" color="#FF66FF">
-        具體來說怎麼玩？
-      </OutlinedHeading>
-      <div className="relative w-[375px] flex flex-col items-center border-x-2 border-dashed border-guava pb-12">
-        {/* TOP */}
-        <div className="flex">
-          <div className="absolute w-[30%] border-t-2 border-dashed border-guava top-0 left-0" />
-          <div className="-mt-2">Start</div>
-          <div className="absolute w-[30%] border-t-2 border-dashed border-guava top-0 right-0" />
-        </div>
-        {/* BODY */}
-        <div className="h-40"></div>
-      </div>
-      {/* BOTTOM */}
-      <div className="relative flex justify-center w-[375px] mb-10">
-        <div className="absolute w-[30%] border-t-2 border-dashed border-guava top-0 left-0" />
-        <div className="-mt-2">heartsign</div>
-        <div className="absolute w-[30%] border-t-2 border-dashed border-guava top-0 right-0" />
-      </div>
+      <HowToSection />
     </MintLayout>
   )
 }
