@@ -1,4 +1,4 @@
-import { MintNavigation } from 'components'
+import { MintNavigation, MintFooter } from 'components'
 import { classNames } from 'utils/helpers'
 
 export function MintLayout({ children, className = '' }) {
@@ -17,6 +17,7 @@ export function MintLayout({ children, className = '' }) {
       >
         {children}
       </div>
+      <MintFooter />
     </>
   )
 }

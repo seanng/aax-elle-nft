@@ -1,7 +1,7 @@
-export const IGIcon = (props) => (
+export const IGIcon = ({ width = 109, height = 109, ...props }) => (
   <svg
-    width="109"
-    height="109"
+    width={width}
+    height={height}
     viewBox="0 0 109 109"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

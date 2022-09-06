@@ -1,5 +1,3 @@
-export { WelcomeNavigation } from './WelcomeNavigation'
-export { MintNavigation } from './MintNavigation'
 export { SpinningOverlay } from './SpinningOverlay'
 export * from './buttons'
 export * from './svgs'
