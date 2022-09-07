@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import {
   FormErrorIcon,
   ResponsiveSecondaryButton,
-  FormHeading,
+  OutlinedHeading,
   ResponsivePrimaryButton,
   FormStamp,
 } from 'components'
@@ -32,7 +32,9 @@ export function PasscodeStep({ updateForm, ...wizard }: Props) {
     <form onSubmit={handleSubmit(handleFormSubmit)}>
       <div className="flex flex-col items-center font-noto">
         <FormStamp className="mb-4 md:mb-7 mt-12">2</FormStamp>
-        <FormHeading className="mb-2 md:mb-6">自訂專屬你們的密碼</FormHeading>
+        <OutlinedHeading className="mb-2 md:mb-6">
+          自訂專屬你們的密碼
+        </OutlinedHeading>
         <div className="w-full mb-10 flex flex-col items-center">
           <p className="text-center text-white md:text-2xl leading-150% mb-10 md:mb-20">
             噓… 先幫這份愛加密上鎖，分享給對方

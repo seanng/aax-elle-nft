@@ -127,13 +127,13 @@
   }
 }
 
-/* SWIPER */
+/* WELCOME MOBILE SWIPER */
 
-.swiper-slide {
+#welcome-carousel-mobile .swiper-slide {
   opacity: 0.2;
 }
 
-.swiper-slide-active {
+#welcome-carousel-mobile .swiper-slide-active {
   opacity: 1;
 }
 
@@ -221,4 +221,26 @@
 /* TOAST */
 .Toastify__toast-icon {
   width: 32px;
+}
+
+/* LANDING MOBILE SWIPER */
+#landing-carousel-mobile .swiper-slide {
+  width: 350px;
+}
+
+#landing-carousel-mobile .swiper-pagination {
+  margin-top: 30px;
+}
+
+#landing-carousel-mobile .swiper-pagination-bullet {
+  width: 15px;
+  height: 15px;
+  background-color: white;
+  border-radius: 0px;
+  opacity: 1;
+  margin-left: 15px;
+}
+
+#landing-carousel-mobile .swiper-pagination-bullet-active {
+  background-color: #edfa00;
 }

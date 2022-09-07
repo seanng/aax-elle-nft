@@ -1,7 +1,7 @@
 import { StepWizardChildProps } from 'react-step-wizard'
 import {
   ResponsivePrimaryButton,
-  FormHeading,
+  OutlinedHeading,
   ResponsiveSecondaryButton,
 } from 'components'
 import AroundText2 from 'components/NFT/shared/AroundText2'
@@ -117,9 +117,9 @@ export function MessageStep({
 
   return (
     <div className="flex flex-col items-center font-noto h-full">
-      <FormHeading className="mt-4 mb-6 md:mb-10">
+      <OutlinedHeading className="mt-4 mb-6 md:mb-10">
         寫下你的告白秘密吧
-      </FormHeading>
+      </OutlinedHeading>
       <div className="flex w-80 md:w-[642px] mb-4">
         <div className="flex-none bg-lime text-black font-mono p-2 md:text-2xl">
           寄件人

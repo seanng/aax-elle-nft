@@ -9,7 +9,7 @@ import {
   TwSpcaButton,
   ResponsiveSecondaryButton,
   ResponsivePrimaryButton,
-  FormHeading,
+  OutlinedHeading,
   CaretDownIcon,
 } from 'components'
 import {
@@ -151,9 +151,9 @@ export function DonationStep({
   return (
     <>
       <div className="flex flex-col items-center font-noto mx-auto">
-        <FormHeading className="mb-3 md:mb-5 mt-8 md:mt-12">
+        <OutlinedHeading className="mb-3 md:mb-5 mt-8 md:mt-12">
           你的愛能幫助受虐動物
-        </FormHeading>
+        </OutlinedHeading>
         <p className="text-center tracking-wide w-[300px] md:w-[672px] md:text-xl mb-4 md:mb-6 leading-150%">
           你的愛不只轉動元宇宙，為你獨特的Impact
           NFT定價，費用全額將捐助SPCA台灣防止虐待動物協會 一起關心受虐動物

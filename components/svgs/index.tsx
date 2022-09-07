@@ -40,6 +40,7 @@ export { TeamFlower } from './team/TeamFlower'
 // icons
 export { FBIcon } from './icons/FBIcon'
 export { IGIcon } from './icons/IGIcon'
+export { YTIcon } from './icons/YTIcon'
 export { TwitterIcon } from './icons/TwitterIcon'
 export { HamburgerIcon } from './icons/HamburgerIcon'
 export { BigQuestionIcon } from './icons/BigQuestionIcon'
@@ -63,6 +64,15 @@ export { AddressErrorButton } from './buttons/AddressErrorButton'
 // form
 export { FormErrorIcon } from './form/FormErrorIcon'
 
-// welcome
+// new landing
 export { MintHeroDesktop } from './new-landing/MintHeroDesktop'
 export { MintHeroMobile } from './new-landing/MintHeroMobile'
+export { FlipCard1 } from './new-landing/FlipCard1'
+export { FlipCard2 } from './new-landing/FlipCard2'
+export { FlipCard3 } from './new-landing/FlipCard3'
+export { FlipCard4 } from './new-landing/FlipCard4'
+export { FlipCard5 } from './new-landing/FlipCard5'
+export { HowToHeartIcon } from './new-landing/HowToHeartIcon'
+export { ActiveRightIcon } from './new-landing/ActiveRightIcon'
+export { ActiveLeftIcon } from './new-landing/ActiveLeftIcon'
+export { BlingIcon } from './new-landing/BlingIcon'

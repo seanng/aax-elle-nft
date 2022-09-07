@@ -1,18 +1,12 @@
-// import { HERO_CANVAS_HEIGHT, HERO_CANVAS_WIDTH } from 'shared/constants'
 import { getWidthHeightPercentages } from 'utils/helpers'
 
 const [width, height] = [1512, 1008]
-// const MAX_HEIGHT = 1000;
 
 export const MintHeroDesktop = (props) => (
   <svg
     viewBox="0 0 1512 1008"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    // style={{
-    //   maxHeight: `calc(${HERO_CANVAS_HEIGHT} / ${HERO_CANVAS_WIDTH} * 100vw)`,
-    //   maxWidth: `calc(${HERO_CANVAS_HEIGHT} / ${HERO_CANVAS_WIDTH} * 100vw)`,
-    // }}
     {...getWidthHeightPercentages(width, height)}
     {...props}
   >

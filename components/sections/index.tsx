@@ -1,0 +1,8 @@
+export { HeroSection } from './HeroSection'
+export { IntroSection } from './IntroSection'
+export { BodySection } from './BodySection'
+export { FlipCardsSection } from './FlipCardsSection'
+export { HowToSection } from './HowToSection'
+export { WelcomeNavigation } from './WelcomeNavigation'
+export { MintNavigation } from './MintNavigation'
+export { MintFooter } from './MintFooter'

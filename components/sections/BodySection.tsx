@@ -127,7 +127,7 @@ export function BodySection() {
           <GreenDialog className="absolute -top-[125%] left-[56%] md:left-[62%] w-[35px] h-[21px] md:w-[111px] md:h-[65px]" />
         </div>
         {/* Mobile Carousel */}
-        <div className="md:hidden">
+        <div className="md:hidden" id="welcome-carousel-mobile">
           <Swiper
             effect="coverflow"
             grabCursor

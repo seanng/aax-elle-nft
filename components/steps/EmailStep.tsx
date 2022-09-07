@@ -5,7 +5,7 @@ import {
   FormErrorIcon,
   ResponsiveSecondaryButton,
   ResponsivePrimaryButton,
-  FormHeading,
+  OutlinedHeading,
   FormStamp,
 } from 'components'
 
@@ -33,7 +33,9 @@ export function EmailStep({ updateForm, ...wizard }: Props) {
     <form onSubmit={handleSubmit(handleFormSubmit)}>
       <div className="flex flex-col items-center font-noto">
         <FormStamp className="mb-4 md:mb-7 mt-12">1</FormStamp>
-        <FormHeading className="mb-2 md:mb-6">輸入你的 Email</FormHeading>
+        <OutlinedHeading className="mb-2 md:mb-6">
+          輸入你的 Email
+        </OutlinedHeading>
         <div className="w-full mb-10 flex flex-col items-center">
           <p className="text-center text-white md:text-2xl leading-150% mb-10 md:mb-20">
             鑄造完畢後你會收到專屬Love Message
