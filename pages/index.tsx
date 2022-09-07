@@ -18,10 +18,10 @@ import Link from 'next/link'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Autoplay } from 'swiper'
 import Image from 'next/image'
-
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
+// @ts-ignore
 const Carousel = dynamic(() => import('react-spring-3d-carousel'), {
   ssr: false,
 })
@@ -31,15 +31,25 @@ function getImageUrl(type, useDefault = undefined) {
 }
 const imageUrl = getImageUrl('WHITE')
 
-const TniCard = () => {
-  return (
-    <div>
-      <img src={imageUrl} height="250" width="250" className="max-w-none" />
-    </div>
-  )
-}
-
 const carouselItems = [
+  {
+    src: '/test/artboard-88.jpg',
+  },
+  {
+    src: '/test/artboard-88.jpg',
+  },
+  {
+    src: '/test/artboard-88.jpg',
+  },
+  {
+    src: '/test/artboard-88.jpg',
+  },
+  {
+    src: '/test/artboard-88.jpg',
+  },
+  {
+    src: '/test/artboard-88.jpg',
+  },
   {
     src: '/test/artboard-88.jpg',
   },
@@ -56,34 +66,11 @@ const WelcomePage: NextPage = () => {
   const { address, connect } = useWeb3Context()
   const router = useRouter()
 
-  const slides = [
-    {
-      key: 'a',
-      content: <TniCard />,
-    },
-    {
-      key: 'b',
-      content: <TniCard />,
-    },
-    {
-      key: 'c',
-      content: <TniCard />,
-    },
-    {
-      key: 'd',
-      content: <TniCard />,
-    },
-    {
-      key: 'e',
-      content: <TniCard />,
-    },
-    {
-      key: 'f',
-      content: <TniCard />,
-    },
-  ].map((slide, index) => {
-    return { ...slide, onClick: () => setGoToSlide(index) }
-  })
+  const slides = carouselItems
+    .map(({ src }) => ({ content: <DesktopCarouselItem src={src} /> }))
+    .map((slide, index) => {
+      return { ...slide, key: index, onClick: () => setGoToSlide(index) }
+    })
 
   const handleCtaClick = async () => {
     if (saleStatus === PUBLIC_SALE) {
@@ -149,38 +136,42 @@ const WelcomePage: NextPage = () => {
           <ResponsivePrimaryButton>我要告白</ResponsivePrimaryButton>
         </a>
       </Link>
-      <CaretDownButton className="my-6 md:mt-12 md:mb-14" />
-      {/* TODO: deleteme. */}
+      {/* <CaretDownButton className="my-6 md:mt-12 md:mb-14" /> */}
+      {/* Desktop Carousel */}
       <div className="h-[500px] w-[600px] mx-auto my-0 hidden md:block">
         <Carousel
           showNavigation={false}
           slides={slides}
           goToSlide={goToSlide}
-          offsetRadius={2}
+          offsetRadius={3}
           animationConfig={{}}
         />
       </div>
       {/* Mobile Carousel */}
-      <div className="md:hidden w-full mb-10" id="landing-carousel-mobile">
+      <div className="md:hidden w-full my-10" id="landing-carousel-mobile">
         <Swiper
+          modules={[Pagination, Autoplay]}
           grabCursor
           loop
           slidesPerView={'auto'}
           pagination={{
+            el: '.my-custom-pagination-div',
             clickable: true,
+            // dynamicBullets: true,
+            // dynamicMainBullets: 3,
           }}
           autoplay={{
             delay: 2500,
             disableOnInteraction: false,
           }}
-          modules={[Pagination, Autoplay]}
         >
           {carouselItems.map(({ src }, i) => (
             <SwiperSlide key={i}>
-              <CarouselItem src={src} />
+              <MobileCarouselItem src={src} />
             </SwiperSlide>
           ))}
         </Swiper>
+        <div className="my-custom-pagination-div mt-8 ml-4" />
       </div>
       <OutlinedHeading
         fontSizeClass="text-[22px] md:text-5xl"
@@ -220,7 +211,7 @@ const WelcomePage: NextPage = () => {
   )
 }
 
-const CarouselItem = ({ src }) => (
+const MobileCarouselItem = ({ src }) => (
   <div className="flex flex-col items-center">
     <div className="h-4 w-mobile-modal-top bg-white" />
     <div className="bg-white w-mobile-modal-body text-center">
@@ -229,5 +220,13 @@ const CarouselItem = ({ src }) => (
     <div className="h-4 w-mobile-modal-top bg-white" />
   </div>
 )
+
+const DesktopCarouselItem = ({ src }) => {
+  return (
+    <div>
+      <img src={src} height="300" width="300" className="max-w-none" />
+    </div>
+  )
+}
 
 export default WelcomePage

@@ -77,12 +77,14 @@ function Step({
   const ref = useRef<HTMLDivElement | null>(null)
   const entry = useIntersectionObserver(ref, {
     threshold: 1,
-    rootMargin: '0px 0px -100px 0px',
+    rootMargin: '0px 0px -250px 0px',
   })
   const isVisible = !!entry?.isIntersecting
 
   useEffect(() => {
-    setActiveStepIdx(isVisible ? idx : idx - 1)
+    let newIdx = isVisible ? idx : idx - 1
+    if (newIdx < 0) newIdx = 0
+    setActiveStepIdx(newIdx)
   }, [isVisible])
 
   return (

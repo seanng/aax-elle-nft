@@ -227,3 +227,20 @@
 #landing-carousel-mobile .swiper-slide {
   width: 350px;
 }
+
+#landing-carousel-mobile .swiper-pagination {
+  margin-top: 30px;
+}
+
+#landing-carousel-mobile .swiper-pagination-bullet {
+  width: 15px;
+  height: 15px;
+  background-color: white;
+  border-radius: 0px;
+  opacity: 1;
+  margin-left: 15px;
+}
+
+#landing-carousel-mobile .swiper-pagination-bullet-active {
+  background-color: #edfa00;
+}
