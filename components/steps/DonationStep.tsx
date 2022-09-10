@@ -17,7 +17,7 @@ import {
   INSUFFICIENT_WALLET_BALANCE,
   NO_ADDRESS_FOUND,
   NO_WHITELIST_TOKEN,
-  PRESALE,
+  PRIVATE_SALE,
   PUBLIC_SALE,
 } from 'shared/constants'
 import { MintForm, MintResponseData } from 'shared/types'
@@ -33,7 +33,7 @@ interface Props extends Partial<StepWizardChildProps> {
     donationInput: number
     donationInEth: number
   }) => void
-  preSaleMint: () => Promise<Partial<Mint> | undefined>
+  privateSaleMint: () => Promise<Partial<Mint> | undefined>
   publicSaleMint: () => Promise<Partial<Mint> | undefined>
   calcMintGasFee: () => Promise<void>
   contract: ethers.Contract | null
@@ -58,7 +58,7 @@ export function DonationStep({
   ethToNtd,
   contract,
   balance,
-  preSaleMint,
+  privateSaleMint,
   publicSaleMint,
   setMintResponseData,
   updateForm,
@@ -92,8 +92,8 @@ export function DonationStep({
     setIsLoading(true)
     let mintResponseData: MintResponseData
     try {
-      if (saleStatus === PRESALE) {
-        mintResponseData = await preSaleMint()
+      if (saleStatus === PRIVATE_SALE) {
+        mintResponseData = await privateSaleMint()
       }
       if (saleStatus === PUBLIC_SALE) {
         mintResponseData = await publicSaleMint()

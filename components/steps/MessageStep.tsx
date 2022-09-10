@@ -7,7 +7,7 @@ import {
 import AroundText2 from 'components/NFT/shared/AroundText2'
 import { useEffect, useState } from 'react'
 import { Files, MintForm } from 'shared/types'
-import { FINISHED, NOT_STARTED, PRESALE } from 'shared/constants'
+import { FINISHED, NOT_STARTED, PRIVATE_SALE } from 'shared/constants'
 import { saleStatus } from 'utils/config'
 import { getAssets } from 'utils/nft'
 
@@ -43,7 +43,7 @@ export function MessageStep({
 
   const onWalletConnect = async () => {
     if (!address) return console.error('No Address Found...')
-    if (saleStatus === PRESALE) {
+    if (saleStatus === PRIVATE_SALE) {
       const hasWhitelistToken = await ownsWhitelistToken(address)
       if (!hasWhitelistToken) {
         // If address does not contain whitelist token, display Sorry modal.

@@ -18,7 +18,7 @@ model Mint {
   ethDonated     String // eth
   openedAt       DateTime?
   mintedAt       DateTime?
-  isPresale      Boolean   @default(false)
+  isPrivateSale  Boolean   @default(false)
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 }

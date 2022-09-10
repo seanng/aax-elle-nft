@@ -23,7 +23,7 @@ export const CORRECT_HEX_CHAIN =
 
 export const NOT_STARTED = 'not started'
 export const PUBLIC_SALE = 'public sale'
-export const PRESALE = 'presale'
+export const PRIVATE_SALE = 'private sale'
 export const FINISHED = 'finished'
 
 // error types

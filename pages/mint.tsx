@@ -33,7 +33,7 @@ const MintPage: NextPage = () => {
   const [mintResponseData, setMintResponseData] = useState<MintResponseData>()
   const { calcBalance, balance, openConnectModal, address } = useWeb3Context()
   const {
-    preSaleMint,
+    privateSaleMint,
     publicSaleMint,
     calcEthToNtd,
     ethToNtd,
@@ -76,7 +76,7 @@ const MintPage: NextPage = () => {
           <PasscodeStep updateForm={updateForm} />
           <DonationStep
             {...{
-              preSaleMint,
+              privateSaleMint,
               publicSaleMint,
               ethToNtd,
               calcEthToNtd,

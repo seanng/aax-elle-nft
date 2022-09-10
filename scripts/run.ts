@@ -22,7 +22,7 @@ async function main() {
   const contract = new ethers.Contract(CONTRACT_ADDRESS, contractABI.abi, owner)
 
   const txn1 = await contract.setPublicSaleState(true)
-  const txn2 = await contract.setPreSaleState(false)
+  const txn2 = await contract.setPrivateSaleState(false)
   // console.log('txn mined: ', txn)
 }
 

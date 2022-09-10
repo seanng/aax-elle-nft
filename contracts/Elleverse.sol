@@ -6,10 +6,15 @@ import '@openzeppelin/contracts/access/Ownable.sol';
 import './ERC721BQueryable.sol';
 
 contract Elleverse is ERC721BQueryable, Ownable {
+  string private NOT_STARTED_PHASE = 'NOT STARTED';
+  string private PRIVATE_SALE_PHASE = 'PRIVATE SALE';
+  string private PUBLIC_SALE_PHASE = 'PUBLIC SALE';
+  string private EVENT_OVER_PHASE = 'EVENT OVER';
+
+  string public SALE_PHASE = NOT_STARTED_PHASE;
   uint256 public TOTAL_MINT_LIMIT = 6226;
-  uint256 public PRESALE_MINT_LIMIT = 1000;
-  bool public isPreSale = false;
-  bool public isPublicSale = false;
+  uint256 public PRIVATE_SALE_MINT_LIMIT = 1000;
+
   string public _baseContractURI;
   // TODO: change to production base token uri
   string private _baseTokenURI =
@@ -31,6 +36,15 @@ contract Elleverse is ERC721BQueryable, Ownable {
   // =============================================================
   //                      HELPERS
   // =============================================================
+  function _isStringEqual(string memory a, string memory b)
+    private
+    pure
+    returns (bool)
+  {
+    return (keccak256(abi.encodePacked((a))) ==
+      keccak256(abi.encodePacked((b))));
+  }
+
   function ownsWhitelistToken(address _owner) public view returns (bool) {
     if (balanceOf(_owner) >= 1) {
       for (uint256 i = 1; i < _nextTokenId(); i += 2) {
@@ -50,32 +64,41 @@ contract Elleverse is ERC721BQueryable, Ownable {
     _baseTokenURI = baseURI;
   }
 
+  function setNotStartedPhase() public onlyOwner {
+    SALE_PHASE = NOT_STARTED_PHASE;
+  }
+
+  function setPrivateSalePhase() public onlyOwner {
+    SALE_PHASE = PRIVATE_SALE_PHASE;
+  }
+
+  function setPublicSalePhase() public onlyOwner {
+    SALE_PHASE = PUBLIC_SALE_PHASE;
+  }
+
+  function setEventOverPhase() public onlyOwner {
+    SALE_PHASE = EVENT_OVER_PHASE;
+  }
+
   function setTotalMintLimit(uint256 _newTotalMintLimit) external onlyOwner {
     TOTAL_MINT_LIMIT = _newTotalMintLimit;
   }
 
-  function setPreSaleMintLimit(uint256 _newPreSaleMintLimit)
-    external
-    onlyOwner
-  {
-    PRESALE_MINT_LIMIT = _newPreSaleMintLimit;
-  }
-
-  function setPreSaleState(bool _state) public onlyOwner {
-    isPreSale = _state;
-  }
-
-  function setPublicSaleState(bool _state) public onlyOwner {
-    isPublicSale = _state;
+  function setPrivateSaleMintLimit(uint256 _newLimit) external onlyOwner {
+    PRIVATE_SALE_MINT_LIMIT = _newLimit;
   }
 
   // =============================================================
   //                      MINTS & TRANSACTIONS
   // =============================================================
 
+  /**
+   * @dev Function used to airdrop tokens to KOL and Winning Fans.
+   * The _to addresses must be passed in correct order to display correct NFT image.
+   */
   function airdropBothTokens(address[] calldata _to) external onlyOwner {
     require(
-      TOTAL_MINT_LIMIT >= _to.length * 2 + _nextTokenId(),
+      TOTAL_MINT_LIMIT >= totalSupply() + (_to.length * 2),
       "Can't mint - Max mint limit will be exceeded."
     );
     if (_nextTokenId() % 2 != 0) _incrementIndex(1);
@@ -84,27 +107,33 @@ contract Elleverse is ERC721BQueryable, Ownable {
     }
   }
 
+  /**
+   * @dev Function used to airdrop only WL tokens to fans that responded.
+   */
   function airdropWhitelistTokens(address[] calldata _to) external onlyOwner {
     require(
-      TOTAL_MINT_LIMIT >= _to.length * 2 + _nextTokenId(),
+      TOTAL_MINT_LIMIT >= totalSupply() + (_to.length * 2),
       "Can't mint - Max mint limit will be exceeded."
     );
     require(
-      isPublicSale == false,
-      'Cannot airdrop whitelist tokens during public sale'
+      _isStringEqual(SALE_PHASE, NOT_STARTED_PHASE),
+      'Can only airdrop whitelist tokens before private sale phase has started.'
     );
-    if (_nextTokenId() % 2 == 0) _incrementIndex(1);
     for (uint256 i; i < _to.length; i++) {
+      if (_nextTokenId() % 2 == 0) _incrementIndex(1);
       // mint whitelist token to owner
       _safeMint(_to[i], 1);
     }
   }
 
-  function preSaleMint() external payable callerIsUser returns (uint256) {
-    require(isPreSale == true, "Can't mint - Not in Pre Sale Phase");
+  function privateSaleMint() external payable callerIsUser returns (uint256) {
     require(
-      PRESALE_MINT_LIMIT > _nextTokenId() + 1, // because mint 2 at a time
-      "Can't mint - mints will exceed presale mint limit."
+      _isStringEqual(SALE_PHASE, PRIVATE_SALE_PHASE),
+      "Can't mint - Not in private sale phase"
+    );
+    require(
+      PRIVATE_SALE_MINT_LIMIT >= totalSupply() + 2, // because mint 2 at a time
+      "Can't mint - mints will exceed private sale mint limit."
     );
     require(
       ownsWhitelistToken(msg.sender) == true,
@@ -118,9 +147,12 @@ contract Elleverse is ERC721BQueryable, Ownable {
   }
 
   function publicSaleMint() external payable callerIsUser returns (uint256) {
-    require(isPublicSale == true, "Can't mint - Not in Public Sale Phase");
     require(
-      TOTAL_MINT_LIMIT > _nextTokenId() + 1, // because mint 2 at a time
+      _isStringEqual(SALE_PHASE, PUBLIC_SALE_PHASE),
+      "Can't mint - Not in public sale phase"
+    );
+    require(
+      TOTAL_MINT_LIMIT >= totalSupply() + 2, // because mint 2 at a time
       "Can't mint - mints will exceed total mint limit."
     );
     require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
@@ -150,10 +182,9 @@ contract Elleverse is ERC721BQueryable, Ownable {
   //                      BURNS
   // =============================================================
   function burnMultiple(uint256[] calldata _tokenIds) external onlyOwner {
-    require(isPreSale == false, "Can't burn tokens during presale phase");
     require(
-      isPublicSale == false,
-      "Can't burn tokens during public sale phase"
+      _isStringEqual(SALE_PHASE, EVENT_OVER_PHASE),
+      "Can't burn - not in completed phase."
     );
     for (uint256 i; i < _tokenIds.length; i++) {
       _burn(_tokenIds[i]);

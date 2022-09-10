@@ -24,14 +24,6 @@ describe('Elleverse', function () {
       expect(await contract.treasury()).toEqual(owner.address)
     })
   })
-  describe('setTreasury', () => {
-    test('treasury should transfer to new address', async function () {
-      const [owner, newTreasurer] = signers
-      expect(await contract.treasury()).toEqual(owner.address)
-      await contract.setTreasury(newTreasurer.address)
-      expect(await contract.treasury()).toEqual(newTreasurer.address)
-    })
-  })
 
   describe('publicSaleMint', () => {
     it('can only mint during public sale phase', async function () {
@@ -42,13 +34,13 @@ describe('Elleverse', function () {
 
       await connection.publicSaleMint({ value: donation }).catch(spy1)
       expect(spy1).toHaveBeenCalled()
-      await contract.setPublicSaleState(true)
+      await contract.setPublicSalePhase()
       await connection.publicSaleMint({ value: donation }).catch(spy2)
       expect(spy2).not.toHaveBeenCalled()
     })
     it('assigns 2 tokens to sender per mint', async function () {
       const [, sender] = signers
-      await contract.setPublicSaleState(true)
+      await contract.setPublicSalePhase()
       await contract.connect(sender).publicSaleMint({ value: donation })
       const token0Owner = await contract.connect(sender).ownerOf(0)
       const token1Owner = await contract.connect(sender).ownerOf(1)
@@ -61,7 +53,7 @@ describe('Elleverse', function () {
         await provider.getBalance(contract.address)
       )
       expect(Number(oldContractBalance)).toEqual(0)
-      await contract.setPublicSaleState(true)
+      await contract.setPublicSalePhase()
       await contract.connect(signers[1]).publicSaleMint({ value: donation })
       const newContractBalance = ethers.utils.formatEther(
         await provider.getBalance(contract.address)
@@ -75,7 +67,7 @@ describe('Elleverse', function () {
       const newBaseURI = 'https://newBaseURI.com/metadata/'
       const [_, sender] = signers
       await contract.setBaseURI(newBaseURI)
-      await contract.setPublicSaleState(true)
+      await contract.setPublicSalePhase()
       await contract.connect(sender).publicSaleMint({ value: donation })
       const token0Uri = await contract.connect(sender).tokenURI(0)
       expect(token0Uri).toBe('https://newBaseURI.com/metadata/0')
@@ -146,7 +138,7 @@ describe('Elleverse', function () {
 
   describe('withdraw', () => {
     beforeEach(async () => {
-      await contract.setPublicSaleState(true)
+      await contract.setPublicSalePhase()
       await contract.connect(signers[1]).publicSaleMint({ value: donation })
     })
     it('withdraws all money from address balance', async () => {
@@ -175,6 +167,45 @@ describe('Elleverse', function () {
     })
   })
 
+  describe('setTreasury', () => {
+    test('setTreasury should set the correct treasury account', async function () {
+      const [owner, newTreasurer] = signers
+      expect(await contract.treasury()).toEqual(owner.address)
+      await contract.setTreasury(newTreasurer.address)
+      expect(await contract.treasury()).toEqual(newTreasurer.address)
+    })
+    it('withdraws to the new treasury address', async function () {
+      const [owner, minter, treasurer] = signers
+      await contract.setPublicSalePhase()
+      await contract.connect(minter).publicSaleMint({ value: donation })
+
+      expect(await contract.treasury()).toEqual(owner.address)
+
+      // Set treasurer as treasury
+      await contract.setTreasury(treasurer.address)
+
+      const oldTreasurerBalance = await treasurer.getBalance()
+      const oldOwnerBalance = await owner.getBalance()
+
+      // It is the owner that is calling the withdraw function.
+      await contract.withdraw()
+      const newTreasurerBalance = await treasurer.getBalance()
+      const newOwnerBalance = await owner.getBalance()
+
+      const ownerDiffInEth = Number(
+        ethers.utils.formatEther(newOwnerBalance.sub(oldOwnerBalance))
+      )
+
+      const treasurerDiffInEth = Number(
+        ethers.utils.formatEther(newTreasurerBalance.sub(oldTreasurerBalance))
+      )
+
+      // owner balance should be the diff in gas fee.
+      expect(ownerDiffInEth).toBeLessThan(0)
+      expect(treasurerDiffInEth).toEqual(0.1)
+    })
+  })
+
   describe('tokensOfOwner', () => {
     beforeEach(async () => {
       const [, sender1, __, sender3] = signers
@@ -193,6 +224,7 @@ describe('Elleverse', function () {
 
   describe('airdropWhitelistTokens', () => {
     beforeEach(async () => {
+      await contract.setNotStartedPhase()
       const [, sender1, sender2, sender3, sender4] = signers
       await contract.airdropWhitelistTokens([
         sender1.address,
@@ -218,6 +250,33 @@ describe('Elleverse', function () {
       const [, _, sender2] = signers
       const tokensOfSender2 = await contract.tokensOfOwner(sender2.address)
       expect(tokensOfSender2.map((bn) => bn.toNumber())).toEqual([3])
+    })
+  })
+
+  describe('burnMultiple', () => {
+    beforeEach(async () => {
+      const [, sender1, sender2, sender3, sender4] = signers
+      await contract.airdropBothTokens([
+        sender1.address,
+        sender2.address,
+        sender3.address,
+        sender4.address,
+      ])
+      await contract.setEventOverPhase()
+    })
+
+    it('burns the correct tokens at once.', async function () {
+      const preBurnErrorCallback = jest.fn()
+      const postBurnErrorCallback = jest.fn()
+      const notBurnedTokenErrorCallback = jest.fn()
+      const tokenIdsToBurn = [1, 5]
+      await contract.ownerOf(1).catch(preBurnErrorCallback)
+      await contract.burnMultiple(tokenIdsToBurn)
+      await contract.ownerOf(1).catch(postBurnErrorCallback) // throws after burning.
+      await contract.ownerOf(3).catch(notBurnedTokenErrorCallback) // throws after burning.
+      expect(notBurnedTokenErrorCallback).not.toHaveBeenCalled()
+      expect(preBurnErrorCallback).not.toHaveBeenCalled()
+      expect(postBurnErrorCallback).toHaveBeenCalled()
     })
   })
 })

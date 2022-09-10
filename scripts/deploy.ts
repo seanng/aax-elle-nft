@@ -1,7 +1,5 @@
 import { ethers, network } from 'hardhat'
 
-// const SAMPLE_TOKEN_URI = 'https://jsonkeeper.com/b/RUUS'
-
 async function main() {
   const ContractFactory = await ethers.getContractFactory('Elleverse')
   if (!network.config.from)
