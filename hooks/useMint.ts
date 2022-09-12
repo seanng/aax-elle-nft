@@ -13,12 +13,12 @@ import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
 import { useState } from 'react'
 import { Files, MintForm, MintResponseData } from 'shared/types'
 import { useWeb3Context } from 'context'
-import { saleStatus } from 'utils/config'
+import { salePhase } from 'utils/config'
 
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
 
 export function useMint() {
-  const { web3Provider, address } = useWeb3Context()
+  const { web3Provider, address, balance } = useWeb3Context()
   const [mintGasFee, setMintGasFee] = useState<string>('')
 
   const contract = web3Provider
@@ -33,9 +33,9 @@ export function useMint() {
     if (contract && web3Provider) {
       try {
         const mintMethod =
-          saleStatus === PUBLIC_SALE ? 'publicSaleMint' : 'preSaleMint'
+          salePhase === PUBLIC_SALE ? 'publicSaleMint' : 'privateSaleMint'
         const functionFee = await contract.estimateGas[mintMethod]({
-          value: ethers.utils.parseEther('0.1'),
+          value: ethers.utils.parseEther((Number(balance) * 0.95).toString()),
         })
         const feeData = await web3Provider.getFeeData()
         const estGasFeeBN = feeData.maxFeePerGas?.mul(functionFee)
@@ -77,7 +77,7 @@ export function useMint() {
     setEthToNtd(Number(data.data?.rates?.TWD))
   }
 
-  const preSaleMint = async () => {
+  const privateSaleMint = async () => {
     const hasWhitelistToken = await contract?.callStatic.ownsWhitelistToken(
       address
     )
@@ -87,16 +87,19 @@ export function useMint() {
 
   const publicSaleMint = () => executeMint(false)
 
-  const executeMint = async (isPresale: boolean): Promise<MintResponseData> => {
+  const executeMint = async (
+    isPrivateSale: boolean
+  ): Promise<MintResponseData> => {
     if (!contract) return
     const mintOpts = {
       value: ethers.utils.parseEther(form.donationInEth.toFixed(18)),
     }
 
-    const mintMethod = isPresale ? 'preSaleMint' : 'publicSaleMint'
-    const contractStatusMethod = isPresale ? 'isPreSale' : 'isPublicSale'
+    const mintMethod = isPrivateSale ? 'privateSaleMint' : 'publicSaleMint'
+    const contractPhase = isPrivateSale ? 'PRIVATE SALE' : 'PUBLIC SALE'
 
-    const statusIsConsistent = await contract[contractStatusMethod]()
+    const statusIsConsistent =
+      (await contract['SALE_PHASE']()) === contractPhase
     if (!statusIsConsistent) throw new Error(INCONSISTENT_CONTRACT_STATUS)
 
     const tokenIdBN = await contract.callStatic[mintMethod](mintOpts)
@@ -115,7 +118,7 @@ export function useMint() {
 
     const { data: mintData } = await axios.post(`/api/mints`, {
       messageTokenId,
-      isPresale,
+      isPrivateSale,
       message: form.message,
       minterEmail: form.email,
       minterWallet: address,
@@ -155,7 +158,7 @@ export function useMint() {
   }
 
   return {
-    preSaleMint,
+    privateSaleMint,
     publicSaleMint,
     calcEthToNtd,
     ethToNtd,

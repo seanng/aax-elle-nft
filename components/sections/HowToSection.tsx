@@ -52,8 +52,8 @@ export function HowToSection() {
             key={i}
             {...props}
             idx={i}
-            highlighted={highlightedStepIdx === i}
-            setActiveStepIdx={setHighlightedStepIdx}
+            highlightedStepIdx={highlightedStepIdx}
+            setHighlightedStepIdx={setHighlightedStepIdx}
           />
         ))}
       </div>
@@ -71,8 +71,8 @@ function Step({
   idx = 0,
   heading = '',
   body = '',
-  highlighted = false,
-  setActiveStepIdx,
+  highlightedStepIdx,
+  setHighlightedStepIdx,
 }) {
   const ref = useRef<HTMLDivElement | null>(null)
   const entry = useIntersectionObserver(ref, {
@@ -80,26 +80,33 @@ function Step({
     rootMargin: '0px 0px -250px 0px',
   })
   const isVisible = !!entry?.isIntersecting
+  const isHighlighted = highlightedStepIdx === idx
 
   useEffect(() => {
-    let newIdx = isVisible ? idx : idx - 1
-    if (newIdx < 0) newIdx = 0
-    setActiveStepIdx(newIdx)
-  }, [isVisible])
+    // scroll down
+    if (isVisible && idx - highlightedStepIdx === 1) {
+      setHighlightedStepIdx(idx)
+    }
+
+    // scroll up
+    if (!isVisible && highlightedStepIdx === idx) {
+      setHighlightedStepIdx(idx - 1)
+    }
+  }, [isVisible, highlightedStepIdx])
 
   return (
     <div ref={ref} className="flex justify-center items-center mb-4 md:-mr-2">
-      <ActiveLeftIcon className={highlighted ? '' : 'hidden'} />
+      <ActiveLeftIcon className={isHighlighted ? '' : 'hidden'} />
       <div
         className={classNames(
           'flex w-[270px] md:w-[630px]',
-          highlighted ? 'border-2 border-lime' : 'border border-dark-gray'
+          isHighlighted ? 'border-2 border-lime' : 'border border-dark-gray'
         )}
       >
         <div
           className={classNames(
             'flex flex-none items-center justify-center border-r w-16 text-[28px] font-mono italic',
-            highlighted
+            isHighlighted
               ? 'border-lime bg-lime'
               : 'border-dark-gray text-dark-gray'
           )}
@@ -109,13 +116,13 @@ function Step({
         <div className="block p-2 md:p-4">
           <OutlinedHeading
             fontSizeClass="text-[22px] md:text-3xl md:mb-2"
-            color={highlighted ? 'white' : '#7D7676'}
+            color={isHighlighted ? 'white' : '#7D7676'}
           >
             {heading}
           </OutlinedHeading>
           <p
             className={classNames(
-              highlighted ? 'text-white' : 'text-dark-gray',
+              isHighlighted ? 'text-white' : 'text-dark-gray',
               'leading-150% md:text-lg'
             )}
           >
@@ -123,7 +130,7 @@ function Step({
           </p>
         </div>
       </div>
-      <ActiveRightIcon className={highlighted ? '' : 'hidden'} />
+      <ActiveRightIcon className={isHighlighted ? '' : 'hidden'} />
     </div>
   )
 }
