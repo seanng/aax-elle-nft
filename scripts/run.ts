@@ -21,8 +21,7 @@ async function main() {
   const owner = await ethers.getSigner(network.config.from)
   const contract = new ethers.Contract(CONTRACT_ADDRESS, contractABI.abi, owner)
 
-  const txn1 = await contract.setPublicSaleState(true)
-  const txn2 = await contract.setPrivateSaleState(false)
+  const txn1 = await contract.setPublicSalePhase()
   // console.log('txn mined: ', txn)
 }
 
