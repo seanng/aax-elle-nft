@@ -7,14 +7,20 @@ import {
   web3InitialState,
   web3Reducer,
 } from 'reducers'
-import { CORRECT_HEX_CHAIN, CORRECT_NETWORK } from 'shared/constants'
+import {
+  CORRECT_HEX_CHAIN,
+  CORRECT_NETWORK,
+  isTestingLocalhostNode,
+} from 'shared/constants'
 
 const web3ModalNetwork =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
     ? 'mainnet'
-    : process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
-    ? 'rinkeby'
-    : 'localhost'
+    : isTestingLocalhostNode
+    ? process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
+      ? 'rinkeby'
+      : 'localhost'
+    : 'rinkeby'
 
 let web3Modal: Web3Modal | null
 

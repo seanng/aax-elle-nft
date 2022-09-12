@@ -126,11 +126,17 @@ export function DonationStep({
         EXCHANGE_RATE_REQUEST_INTERVAL
       )
       calcEthToNtd()
-      calcBalance()
-      calcMintGasFee()
       return () => window.clearInterval(interval)
     }
   }, [wizard.isActive])
+
+  useEffect(() => {
+    if (wizard.isActive) calcBalance()
+  }, [wizard.isActive, address])
+
+  useEffect(() => {
+    if (wizard.isActive) calcMintGasFee()
+  }, [wizard.isActive, balance])
 
   useEffect(() => {
     if (ethToNtd && ethToNtd > 0)
@@ -222,60 +228,63 @@ export function DonationStep({
           </ResponsivePrimaryButton>
         </div>
       </div>
-      <MintConfirmationModal
-        form={form}
-        isOpen={isConfirmModalOpen}
-        closeModal={() => setIsConfirmModalOpen(false)}
-        onMintClick={handleModalConfirmClick}
-        errorComponent={
-          {
-            [NO_WHITELIST_TOKEN]: (
-              <div className="bg-tomato flex px-4 py-4 space-x-4 mb-2">
-                <WarningStamp />
-                <div className="text-white">
-                  <p>你的錢包內沒有 white list token</p>
-                  <p>公開鑄造時間將會在10/15開始</p>
+      {wizard.isActive && (
+        <MintConfirmationModal
+          form={form}
+          isOpen={isConfirmModalOpen}
+          closeModal={() => setIsConfirmModalOpen(false)}
+          onMintClick={handleModalConfirmClick}
+          mintGasFee={mintGasFee ?? '0.0002'}
+          errorComponent={
+            {
+              [NO_WHITELIST_TOKEN]: (
+                <div className="bg-tomato flex px-4 py-4 space-x-4 mb-2">
+                  <WarningStamp />
+                  <div className="text-white">
+                    <p>你的錢包內沒有 white list token</p>
+                    <p>公開鑄造時間將會在10/15開始</p>
+                  </div>
                 </div>
-              </div>
-            ),
-            [INSUFFICIENT_WALLET_BALANCE]: (
-              <div className="bg-tomato flex px-4 py-4 space-x-4 mb-2">
-                <WarningStamp />
-                <div className="text-white">
-                  <p>錢包資產不足 請購買以太幣</p>
-                  <a
-                    href="https://www.aax.com/zh-TW/newbie/"
-                    target="_blank"
-                    className="underline"
-                    rel="noreferrer"
-                  >
-                    如何買幣？
-                  </a>
+              ),
+              [INSUFFICIENT_WALLET_BALANCE]: (
+                <div className="bg-tomato flex px-4 py-4 space-x-4 mb-2">
+                  <WarningStamp />
+                  <div className="text-white">
+                    <p>錢包資產不足 請購買以太幣</p>
+                    <a
+                      href="https://www.aax.com/zh-TW/newbie/"
+                      target="_blank"
+                      className="underline"
+                      rel="noreferrer"
+                    >
+                      如何買幣？
+                    </a>
+                  </div>
                 </div>
-              </div>
-            ),
-            [NO_ADDRESS_FOUND]: (
-              <div className="bg-tomato flex px-4 py-4 space-x-4 mb-2">
-                <WarningStamp />
-                <div className="text-white">
-                  <p>尚未連結錢包</p>
-                  <p>請先連結錢包以繼續鑄造</p>
+              ),
+              [NO_ADDRESS_FOUND]: (
+                <div className="bg-tomato flex px-4 py-4 space-x-4 mb-2">
+                  <WarningStamp />
+                  <div className="text-white">
+                    <p>尚未連結錢包</p>
+                    <p>請先連結錢包以繼續鑄造</p>
+                  </div>
                 </div>
-              </div>
-            ),
-            [INCONSISTENT_CONTRACT_STATUS]: (
-              <div className="bg-tomato flex px-4 py-4 space-x-4 mb-2">
-                <WarningStamp />
-                <div className="text-white">
-                  <p>Unable to mint.</p>
-                  <p>Please contact AAX quoting Error 96.</p>
+              ),
+              [INCONSISTENT_CONTRACT_STATUS]: (
+                <div className="bg-tomato flex px-4 py-4 space-x-4 mb-2">
+                  <WarningStamp />
+                  <div className="text-white">
+                    <p>Unable to mint.</p>
+                    <p>Please contact AAX quoting Error 96.</p>
+                  </div>
                 </div>
-              </div>
-            ),
-            '': <div />,
-          }[errorType]
-        }
-      />
+              ),
+              '': <div />,
+            }[errorType]
+          }
+        />
+      )}
     </>
   )
 }

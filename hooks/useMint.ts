@@ -18,7 +18,7 @@ import { salePhase } from 'utils/config'
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
 
 export function useMint() {
-  const { web3Provider, address } = useWeb3Context()
+  const { web3Provider, address, balance } = useWeb3Context()
   const [mintGasFee, setMintGasFee] = useState<string>('')
 
   const contract = web3Provider
@@ -35,7 +35,7 @@ export function useMint() {
         const mintMethod =
           salePhase === PUBLIC_SALE ? 'publicSaleMint' : 'privateSaleMint'
         const functionFee = await contract.estimateGas[mintMethod]({
-          value: ethers.utils.parseEther('0.1'),
+          value: ethers.utils.parseEther((Number(balance) * 0.95).toString()),
         })
         const feeData = await web3Provider.getFeeData()
         const estGasFeeBN = feeData.maxFeePerGas?.mul(functionFee)

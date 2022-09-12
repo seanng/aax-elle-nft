@@ -82,7 +82,6 @@ export function MessageStep({
   }
 
   const handleTextareaChange = (e) => {
-    console.log(e.target.scrollHeight)
     if (e.target.scrollHeight <= TEXTAREA_HEIGHT) {
       setValues((prev) => ({
         ...prev,

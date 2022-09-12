@@ -14,7 +14,7 @@ export const CORRECT_NETWORK =
     ? 'rinkeby'
     : 'localhost'
 
-const isTestingLocalhostNode = false // if false, we directly test rinkeby.
+export const isTestingLocalhostNode = false // if false, we directly test rinkeby.
 
 export const CORRECT_HEX_CHAIN =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
