@@ -8,7 +8,7 @@ export function MintLayout({ children, className = '' }) {
       <div
         className={classNames(
           className,
-          'bg-black min-h-screen pt-navbar-height text-white bg-repeat'
+          'bg-black min-h-screen pt-navbar-height pb-10 md:pb-20 text-white bg-repeat'
         )}
         style={{
           backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.3) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.3) 0.1px, transparent 1px)`,

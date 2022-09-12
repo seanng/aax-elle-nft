@@ -7,7 +7,7 @@ import CompsNFTMain from 'components/NFT/Main'
 import IconsV1 from 'components/NFT/shared/icons-template/v1'
 import IconsV2 from 'components/NFT/shared/icons-template/v2'
 
-const IMAGE_DEBUG = true
+const IMAGE_DEBUG = false
 const HTML_DEBUG = false
 
 const BG_COLORS = [

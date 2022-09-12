@@ -15,12 +15,14 @@ interface Props {
   onMintClick: () => Promise<void>
   closeModal: () => void
   errorComponent?: ReactNode
+  mintGasFee: string
 }
 
 export function MintConfirmationModal({
   isOpen,
   closeModal,
   onMintClick,
+  mintGasFee,
   errorComponent = <div />,
   form,
 }: Props) {
@@ -73,8 +75,8 @@ export function MintConfirmationModal({
                       className="flex-none"
                     />
                     <p className="text-gray-400 font-mono text-xs leading-150%">
-                      ETH已包含 gas fee of
-                      ~0.00023ETH，台幣金額會依據ETH的浮動匯率而改變
+                      ETH已包含 gas fee of ~ETH {Number(mintGasFee).toFixed(5)}
+                      ，台幣金額會依據ETH的浮動匯率而改變
                     </p>
                   </div>
                   <div className="text-center mb-5">

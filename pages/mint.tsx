@@ -17,7 +17,7 @@ import Animate from 'styles/animate.module.css'
 import { useMint } from 'hooks'
 import { NOT_STARTED } from 'shared/constants'
 import { useWeb3Context } from 'context'
-import { saleStatus } from 'utils/config'
+import { salePhase } from 'utils/config'
 import { MintResponseData } from 'shared/types'
 
 const transitions = {
@@ -101,7 +101,7 @@ const MintPage: NextPage = () => {
         files={files}
       />
       <SpinningOverlay isLoading={isLoading} />
-      {saleStatus === NOT_STARTED && (
+      {salePhase === NOT_STARTED && (
         <div className="fixed top-0 right-0 left-0 bottom-0 z-30 bg-black-rgba-70 backdrop-blur-sm text-center">
           <GreenLipsIcon className="mt-40 mb-10 mx-auto" />
           <div

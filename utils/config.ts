@@ -1,7 +1,7 @@
 import { NOT_STARTED } from 'shared/constants'
 
 // Manually update.
-export const saleStatus = process.env.NEXT_PUBLIC_SALE_STATUS || NOT_STARTED
+export const salePhase = process.env.NEXT_PUBLIC_SALE_PHASE || NOT_STARTED
 
 export const metadata = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://elleverse.io',
