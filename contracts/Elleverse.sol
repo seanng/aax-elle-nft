@@ -13,7 +13,7 @@ contract Elleverse is ERC721BQueryable, Ownable {
 
   string public SALE_PHASE = NOT_STARTED_PHASE;
   uint256 public TOTAL_MINT_LIMIT = 6226;
-  uint256 public PRIVATE_SALE_MINT_LIMIT = 1000;
+  uint256 public PRIVATE_SALE_MINT_LIMIT = 6226;
 
   string public _baseContractURI;
   // TODO: change to production base token uri
