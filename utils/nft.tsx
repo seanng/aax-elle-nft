@@ -117,7 +117,7 @@ export const getNFTSettings = (texts, kolKey?: any) => {
   }
 }
 
-export const genImageFile = (element, filename, imageCB) => {
+export const genImageFile = (element, filename, imageCB, opts = {}) => {
   return new Promise((resolve) => {
     html2canvas(element, {
       useCORS: true,
@@ -127,6 +127,7 @@ export const genImageFile = (element, filename, imageCB) => {
       windowWidth: 350,
       windowHeight: 350,
       backgroundColor: 'transparent',
+      ...opts,
     }).then((canvas) => {
       if (IMAGE_DEBUG) console.log(canvas.toDataURL('image/png'))
       canvas.toBlob((blob) => {
@@ -168,6 +169,7 @@ export const getAssets = ({
   message,
   aroundText,
   kolKey,
+  Comps = CompsNFTMain,
 }: NFTParametersBasic): Promise<Files> =>
   new Promise((resolve) => {
     const dummyElem = document.createElement('div')
@@ -178,7 +180,7 @@ export const getAssets = ({
     document.body.append(dummyElem)
 
     const data = getNFTSettings({ message, aroundText }, kolKey)
-    ReactDOM.render(<CompsNFTMain data={data} assetsCB={resolve} />, dummyElem)
+    ReactDOM.render(<Comps data={data} assetsCB={resolve} />, dummyElem)
   })
 
 export const genRandomId = () =>
