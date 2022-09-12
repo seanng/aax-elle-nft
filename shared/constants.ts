@@ -14,13 +14,18 @@ export const CORRECT_NETWORK =
     ? 'rinkeby'
     : 'localhost'
 
+const isTestingLocalhostNode = false // if false, we directly test rinkeby.
+
 export const CORRECT_HEX_CHAIN =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
     ? '0x1'
-    : process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
-    ? '0x4'
-    : '0x539'
+    : isTestingLocalhostNode
+    ? process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
+      ? '0x4'
+      : '0x539'
+    : '0x4'
 
+// sale phases
 export const NOT_STARTED = 'not started'
 export const PUBLIC_SALE = 'public sale'
 export const PRIVATE_SALE = 'private sale'

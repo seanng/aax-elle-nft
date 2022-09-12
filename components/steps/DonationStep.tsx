@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { StepWizardChildProps } from 'react-step-wizard'
-import { saleStatus } from 'utils/config'
+import { salePhase } from 'utils/config'
 import { ethers } from 'ethers'
 import { useForm } from 'react-hook-form'
 import {
@@ -92,10 +92,10 @@ export function DonationStep({
     setIsLoading(true)
     let mintResponseData: MintResponseData
     try {
-      if (saleStatus === PRIVATE_SALE) {
+      if (salePhase === PRIVATE_SALE) {
         mintResponseData = await privateSaleMint()
       }
-      if (saleStatus === PUBLIC_SALE) {
+      if (salePhase === PUBLIC_SALE) {
         mintResponseData = await publicSaleMint()
       }
       // Do something on success? Here or in Donation Step.

@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 
 // Get from deploy script
-const CONTRACT_ADDRESS = '0x5FbDB2315678afecb367f032d93F642f64180aa3'
+const CONTRACT_ADDRESS = '0xdE32B5AfC6bB356AcD8F9FEd07b420c84bFEE7db'
 
 async function main() {
   if (!network.config.from)
@@ -20,9 +20,9 @@ async function main() {
   const contractABI = JSON.parse(fs.readFileSync(contractABIPath, 'utf-8'))
   const owner = await ethers.getSigner(network.config.from)
   const contract = new ethers.Contract(CONTRACT_ADDRESS, contractABI.abi, owner)
-
-  const txn1 = await contract.setPublicSaleState(true)
-  const txn2 = await contract.setPrivateSaleState(false)
+  await contract.callStatic.setPublicSalePhase()
+  console.log('Method exists.')
+  await contract.setPublicSalePhase()
   // console.log('txn mined: ', txn)
 }
 

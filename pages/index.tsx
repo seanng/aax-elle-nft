@@ -9,7 +9,7 @@ import {
   OutlinedHeading,
   BlingIcon,
 } from 'components'
-import { saleStatus } from 'utils/config'
+import { salePhase } from 'utils/config'
 import { useWeb3Context } from 'context'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -73,11 +73,11 @@ const WelcomePage: NextPage = () => {
     })
 
   const handleCtaClick = async () => {
-    if (saleStatus === PUBLIC_SALE) {
+    if (salePhase === PUBLIC_SALE) {
       router.push('/mint')
       return
     }
-    if (saleStatus === PRIVATE_SALE) {
+    if (salePhase === PRIVATE_SALE) {
       // Open connect wallet modal.
       let connected = true
       if (!address) connected = await connect()
