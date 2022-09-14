@@ -34,6 +34,7 @@ export interface NFTParametersBasic {
   aroundText: string
   message: string
   kolKey?: string
+  Comps?: any
 }
 
 export interface NFTParameters {

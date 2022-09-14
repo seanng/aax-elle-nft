@@ -17,11 +17,13 @@ export function LinkAndPasscode({ link = '', passcode = '', className = '' }) {
           </a>
         </CopyToClipboard>
       </div>
-      <div className={classNames('flex items-center text-lime', className)}>
-        <GreenLockIcon />
-        <span className="ml-2">解鎖密碼：</span>
-        <span className="underline">{passcode}</span>
-      </div>
+      {passcode && (
+        <div className={classNames('flex items-center text-lime', className)}>
+          <GreenLockIcon />
+          <span className="ml-2">解鎖密碼：</span>
+          <span className="underline">{passcode}</span>
+        </div>
+      )}
     </div>
   )
 }

@@ -75,7 +75,7 @@ export const genRandomKolGI2Template = () => {
 // messageColor | hex
 // opacity | '0.0' to '1.0' | optional
 // signature | link | currently uses png link, modification to component will be need for svg comps
-export const getNFTSettings = (texts, kolKey?: any): NFTParameters => {
+export const getNFTSettings = (texts, kolKey?: any) => {
   if (!kolKey) {
     const bgColor = genRandomBGColor()
     const tgiColor = genRandomTGIColor()
@@ -90,7 +90,7 @@ export const getNFTSettings = (texts, kolKey?: any): NFTParameters => {
       gridIconTemplate2: i2Template,
       aroundTextColor: tgiColor,
       messageColor: '#000000',
-    }
+    } as NFTParameters
   }
 
   // Mapping KOL keys
@@ -117,7 +117,12 @@ export const getNFTSettings = (texts, kolKey?: any): NFTParameters => {
   }
 }
 
-export const genImageFile = (element, filename, imageCB) => {
+export const genImageFile = (
+  element,
+  filename,
+  imageCB = (f) => {},
+  opts = {}
+) => {
   return new Promise((resolve) => {
     html2canvas(element, {
       useCORS: true,
@@ -127,6 +132,7 @@ export const genImageFile = (element, filename, imageCB) => {
       windowWidth: 350,
       windowHeight: 350,
       backgroundColor: 'transparent',
+      ...opts,
     }).then((canvas) => {
       if (IMAGE_DEBUG) console.log(canvas.toDataURL('image/png'))
       canvas.toBlob((blob) => {
@@ -168,7 +174,8 @@ export const getAssets = ({
   message,
   aroundText,
   kolKey,
-}: NFTParametersBasic): Promise<Files> =>
+  Comps = CompsNFTMain,
+}: NFTParametersBasic): Promise<any> =>
   new Promise((resolve) => {
     const dummyElem = document.createElement('div')
     dummyElem.id = 'nft-generation-placeholder'
@@ -178,7 +185,7 @@ export const getAssets = ({
     document.body.append(dummyElem)
 
     const data = getNFTSettings({ message, aroundText }, kolKey)
-    ReactDOM.render(<CompsNFTMain data={data} assetsCB={resolve} />, dummyElem)
+    ReactDOM.render(<Comps data={data} assetsCB={resolve} />, dummyElem)
   })
 
 export const genRandomId = () =>
