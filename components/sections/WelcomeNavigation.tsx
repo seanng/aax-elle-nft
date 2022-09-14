@@ -6,7 +6,7 @@ import { IGIcon, TwitterIcon, FBIcon } from 'components'
 
 export function WelcomeNavigation() {
   return (
-    <Popover as="header" className="fixed left-0 right-0 z-10">
+    <Popover as="header" className="fixed left-0 right-0 z-10 font-gensen">
       <Navbar />
       <Transition
         className="absolute top-0 h-screen w-full"

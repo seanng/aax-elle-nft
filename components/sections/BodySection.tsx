@@ -81,7 +81,7 @@ const teamMembers = [
 
 export function BodySection() {
   return (
-    <div className="section bg-black w-full overflow-x-clip">
+    <div className="section bg-black w-full overflow-x-clip font-gensen">
       {/* Features */}
       <div className="w-full flex flex-col items-center px-8 py-20 lg:py-24">
         <div className="w-[365px] h-[299px] md:w-[730px] md:h-[598px] lg:w-[914px] lg:h-[749px] relative">
