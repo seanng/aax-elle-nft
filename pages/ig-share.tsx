@@ -152,7 +152,9 @@ function useNftImageSource() {
       // Randomizing the query param force-fetches the image from source
       const randomQuery = randomstring.generate({ length: 6 })
       if (id >= 0 && id < 3113)
-        setImageSource(`${S3_BASE_URL}/public/${id}.png?${randomQuery}`)
+        fetch(`${S3_BASE_URL}/public/${id}.png?${randomQuery}`)
+          .then((response) => response.blob())
+          .then((imageBlob) => setImageSource(URL.createObjectURL(imageBlob)))
       return
     }
 
