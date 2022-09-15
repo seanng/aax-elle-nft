@@ -161,7 +161,11 @@ export function MessageStep({
         />
       </div>
       <div className="flex">
-        <a target="__blank" href={`/ig-share?aroundtext=${aroundText}`}>
+        <a
+          className="leading-[0]"
+          target="__blank"
+          href={`/ig-share?aroundtext=${aroundText}`}
+        >
           <ResponsiveSecondaryButton disabled={shouldDisableButtons}>
             分享告白
           </ResponsiveSecondaryButton>

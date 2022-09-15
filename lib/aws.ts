@@ -1,9 +1,9 @@
 import aws from 'aws-sdk'
 
 const sts = new aws.STS({
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_ACCESS_SECRET,
-  region: process.env.AWS_REGION,
+  accessKeyId: process.env.AMAZON_ACCESS_KEY,
+  secretAccessKey: process.env.AMAZON_ACCESS_SECRET,
+  region: process.env.AMAZON_REGION,
   signatureVersion: 'v4',
 })
 
