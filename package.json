@@ -33,6 +33,7 @@
     "@walletconnect/web3-provider": "^1.7.8",
     "aws-sdk": "^2.1137.0",
     "axios": "^0.27.2",
+    "crypto-js": "^4.1.1",
     "dotenv": "^16.0.0",
     "dotenv-cli": "^5.1.0",
     "erc721a": "^4.1.0",

@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import { decrypt } from 'lib/crypto'
 import { useRouter } from 'next/router'
 import { OutlinedHeading, WarningIcon, IgShareInstructions } from 'components'
 import CompsNFTBeforeOpen from 'components/NFT/BeforeOpen'
@@ -158,11 +159,11 @@ function useNftImageSource() {
       return
     }
 
-    if (router.query.aroundtext) {
+    if (router.query.at) {
       ;(async () => {
         const imageFile = await getAssets({
           message: '',
-          aroundText: (router.query.aroundtext as string) ?? '',
+          aroundText: decrypt(router.query.at as string) ?? '',
           Comps: CompsNFTSingle,
         })
 
