@@ -65,7 +65,7 @@ function Mobile() {
     getWidthHeightPercentages(w, h, MOBILE_WIDTH, MOBILE_CANVAS_HEIGHT)
 
   return (
-    <div className="flex flex-col items-center justify-between w-full h-full pt-[142px] md:hidden">
+    <div className="flex flex-col items-center justify-between w-full h-full pt-[142px] md:hidden font-gensen">
       <div className="relative w-[206px] h-[82px] mb-10">
         <Image
           priority

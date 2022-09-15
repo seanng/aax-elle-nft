@@ -34,6 +34,7 @@ export interface NFTParametersBasic {
   aroundText: string
   message: string
   kolKey?: string
+  Comps?: any
 }
 
 export interface NFTParameters {
@@ -44,7 +45,7 @@ export interface NFTParameters {
   gridIconStyle2: string
   gridIconTemplate1?: FC
   gridIconTemplate2?: FC
-  aroundTextStyle: string
+  aroundTextColor: string
   messageColor: string
   opacity?: string
   signature?: string

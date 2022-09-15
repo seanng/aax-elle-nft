@@ -26,7 +26,7 @@ function CompsNFTBeforeOpen({
     backgroundStyle,
     gridIconStyle1,
     gridIconTemplate1,
-    aroundTextStyle,
+    aroundTextColor,
     signature,
   },
   setImage,
@@ -108,7 +108,7 @@ function CompsNFTBeforeOpen({
         setIsCompReady={setIsIconsReady}
       />
       <CompsNFTAroundText
-        color={aroundTextStyle}
+        color={aroundTextColor}
         aroundText={aroundText}
         isImageCaptured={isImageCaptured}
         isFontReady={isFontReady}

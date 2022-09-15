@@ -67,20 +67,6 @@ export function MessageStep({
     address ? onWalletConnect() : openConnectModal()
   }
 
-  const handleShareClick = async () => {
-    const { message, minterName, receiverName } = values
-    setIsLoading(true)
-    // TODO: Change config after designs are confirmed.
-    const files = await getAssets({
-      message: message,
-      aroundText: `${minterName} wants to give you something, ${receiverName}!`,
-    })
-    setFiles(files)
-    setIsLoading(false)
-    // Open social media sharing modal and show the image, with buttons.
-    openSharingModal()
-  }
-
   const handleTextareaChange = (e) => {
     if (e.target.scrollHeight <= TEXTAREA_HEIGHT) {
       setValues((prev) => ({
@@ -111,6 +97,8 @@ export function MessageStep({
 
   // https://stackoverflow.com/a/46118025/6007700
   // https://stackoverflow.com/a/65893635/6007700
+
+  const aroundText = `Hi ${values.receiverName}, ${values.minterName} wants to give you this...`
 
   return (
     <div className="flex flex-col items-center font-noto h-full">
@@ -173,12 +161,11 @@ export function MessageStep({
         />
       </div>
       <div className="flex">
-        <ResponsiveSecondaryButton
-          disabled={shouldDisableButtons}
-          onClick={handleShareClick}
-        >
-          分享告白
-        </ResponsiveSecondaryButton>
+        <a target="__blank" href={`/ig-share?aroundtext=${aroundText}`}>
+          <ResponsiveSecondaryButton disabled={shouldDisableButtons}>
+            分享告白
+          </ResponsiveSecondaryButton>
+        </a>
         <ResponsivePrimaryButton
           disabled={shouldDisableButtons}
           onClick={handleMintClick}

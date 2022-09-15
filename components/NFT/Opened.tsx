@@ -27,7 +27,7 @@ function CompsNFTOpened({
     backgroundStyle,
     gridIconStyle2,
     gridIconTemplate2,
-    aroundTextStyle,
+    aroundTextColor,
     messageColor,
     opacity = '0.25',
     signature,
@@ -104,7 +104,7 @@ function CompsNFTOpened({
         setIsCompReady={setIsGridReady}
       />
       <CompsNFTAroundText
-        color={aroundTextStyle}
+        color={aroundTextColor}
         aroundText={aroundText}
         isImageCaptured={isImageCaptured}
         isFontReady={isFontReady}

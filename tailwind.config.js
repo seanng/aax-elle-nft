@@ -28,10 +28,10 @@ module.exports = {
         'dark-gray': '#7D7676',
       },
       fontFamily: {
-        sans: ['GenSenRounded', ...defaultTheme.fontFamily.sans],
+        gensen: 'GenSenRounded',
         english: 'MplusRounded',
         mono: 'DMMono',
-        noto: 'NotoSansTC',
+        noto: 'NotoSans',
       },
       spacing: {
         'navbar-height': '84px',

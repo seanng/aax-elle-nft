@@ -71,8 +71,8 @@ export const genRandomKolGI2Template = () => {
 // gridIconStyle2 | hex, gradient, link | color/png for afterOpen
 // gridIconTemplate1 | FC | required if gridIconStyle1 is hex or gradient | IconSet for beforeOpen & neverOpened
 // gridIconTemplate2 | FC | required if gridIconStyle2 is hex or gradient | IconSet for afterOpen
-// aroundTextStyle | hex
-// messageStyle | hex
+// aroundTextColor | hex
+// messageColor | hex
 // opacity | '0.0' to '1.0' | optional
 // signature | link | currently uses png link, modification to component will be need for svg comps
 export const getNFTSettings = (texts, kolKey?: any) => {
@@ -88,7 +88,7 @@ export const getNFTSettings = (texts, kolKey?: any) => {
       gridIconStyle2: tgiColor,
       gridIconTemplate1: i1Template,
       gridIconTemplate2: i2Template,
-      aroundTextStyle: tgiColor,
+      aroundTextColor: tgiColor,
       messageColor: '#000000',
     } as NFTParameters
   }
@@ -109,7 +109,7 @@ export const getNFTSettings = (texts, kolKey?: any) => {
         gridIconStyle2: '#1919FF',
         gridIconTemplate1: i1Template,
         gridIconTemplate2: i2Template,
-        aroundTextStyle: '#1919FF',
+        aroundTextColor: '#1919FF',
         messageColor: '#000000',
         signature: 'https://i.imgur.com/Zp4A6e4.png',
       }
@@ -117,7 +117,12 @@ export const getNFTSettings = (texts, kolKey?: any) => {
   }
 }
 
-export const genImageFile = (element, filename, imageCB) => {
+export const genImageFile = (
+  element,
+  filename,
+  imageCB = (f) => {},
+  opts = {}
+) => {
   return new Promise((resolve) => {
     html2canvas(element, {
       useCORS: true,
@@ -127,6 +132,7 @@ export const genImageFile = (element, filename, imageCB) => {
       windowWidth: 350,
       windowHeight: 350,
       backgroundColor: 'transparent',
+      ...opts,
     }).then((canvas) => {
       if (IMAGE_DEBUG) console.log(canvas.toDataURL('image/png'))
       canvas.toBlob((blob) => {
@@ -168,7 +174,8 @@ export const getAssets = ({
   message,
   aroundText,
   kolKey,
-}: NFTParametersBasic): Promise<Files> =>
+  Comps = CompsNFTMain,
+}: NFTParametersBasic): Promise<any> =>
   new Promise((resolve) => {
     const dummyElem = document.createElement('div')
     dummyElem.id = 'nft-generation-placeholder'
@@ -178,7 +185,7 @@ export const getAssets = ({
     document.body.append(dummyElem)
 
     const data = getNFTSettings({ message, aroundText }, kolKey)
-    ReactDOM.render(<CompsNFTMain data={data} assetsCB={resolve} />, dummyElem)
+    ReactDOM.render(<Comps data={data} assetsCB={resolve} />, dummyElem)
   })
 
 export const genRandomId = () =>

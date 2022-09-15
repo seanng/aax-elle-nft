@@ -130,8 +130,8 @@ const getTransformValues = (widths: GetTransformValuesProps) => {
 }
 
 function CompsNFTAroundText({
-  color,
-  aroundText,
+  color = '#fff',
+  aroundText = '',
   isImageCaptured,
   isFontReady,
   isCompReady,

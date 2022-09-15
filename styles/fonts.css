@@ -83,37 +83,45 @@
 }
 
 @font-face {
-  font-family: 'NotoSansTC';
-  src: url('/fonts/NotoSansTC-Thin.otf') format('opentype');
-  font-weight: 100;
-}
-
-@font-face {
-  font-family: 'NotoSansTC';
-  src: url('/fonts/NotoSansTC-Light.otf') format('opentype');
+  font-family: 'NotoSans';
+  src: url('/fonts/NotoSans-Light.ttf') format('truetype');
   font-weight: 300;
 }
 
 @font-face {
-  font-family: 'NotoSansTC';
-  src: url('/fonts/NotoSansTC-Regular.otf') format('opentype');
+  font-family: 'NotoSans';
+  src: url('/fonts/NotoSans-Regular.ttf') format('truetype');
   font-weight: 400;
 }
 
 @font-face {
-  font-family: 'NotoSansTC';
-  src: url('/fonts/NotoSansTC-Medium.otf') format('opentype');
+  font-family: 'NotoSans';
+  src: url('/fonts/NotoSans-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'NotoSans';
+  src: url('/fonts/NotoSans-Medium.ttf') format('truetype');
   font-weight: 500;
 }
 
 @font-face {
-  font-family: 'NotoSansTC';
-  src: url('/fonts/NotoSansTC-Bold.otf') format('opentype');
+  font-family: 'NotoSans';
+  src: url('/fonts/NotoSans-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'NotoSans';
+  src: url('/fonts/NotoSans-Bold.ttf') format('truetype');
   font-weight: 700;
 }
 
 @font-face {
-  font-family: 'NotoSansTC';
-  src: url('/fonts/NotoSansTC-Black.otf') format('opentype');
-  font-weight: 800;
+  font-family: 'NotoSans';
+  src: url('/fonts/NotoSans-Black.ttf') format('truetype');
+  font-weight: 900;
 }

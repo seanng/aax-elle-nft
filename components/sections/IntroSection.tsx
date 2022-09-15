@@ -22,7 +22,7 @@ const text = {
 
 export function IntroSection(): JSX.Element {
   return (
-    <div className="section h-full w-full bg-black">
+    <div className="section h-full w-full bg-black font-gensen">
       <Desktop />
       <Mobile />
     </div>
