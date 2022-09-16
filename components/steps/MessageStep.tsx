@@ -46,6 +46,7 @@ export function MessageStep({
     if (!address) return console.error('No Address Found...')
     if (salePhase === PRIVATE_SALE) {
       const hasWhitelistToken = await ownsWhitelistToken(address)
+      console.log('hasWhitelistToken: ', hasWhitelistToken)
       if (!hasWhitelistToken) {
         // If address does not contain whitelist token, display Sorry modal.
         console.log('User does not have whitelist token')
@@ -94,7 +95,7 @@ export function MessageStep({
   }, [address, isMinting])
 
   const shouldDisableButtons =
-    values.message === '' || salePhase === NOT_STARTED || salePhase === FINISHED
+    values.message === '' || [NOT_STARTED, FINISHED].includes(salePhase)
 
   // https://stackoverflow.com/a/46118025/6007700
   // https://stackoverflow.com/a/65893635/6007700
@@ -157,6 +158,8 @@ export function MessageStep({
             rounded-none
             resize-none
             text-white
+            focus:border-transparent 
+            focus:ring-0
           "
           onInput={handleTextareaChange}
           value={values.message}
@@ -165,7 +168,7 @@ export function MessageStep({
       </div>
       <div className="flex">
         <a
-          className="leading-[0]"
+          className="leading-0"
           target="__blank"
           href={`/ig-share?at=${aroundText}`}
         >

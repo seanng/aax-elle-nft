@@ -3,17 +3,15 @@ import {
   ErrorScreen,
   GreenLockIcon,
   FormErrorIcon,
-  MintLayout,
   ResponsivePrimaryButton,
   GreenUnlockIcon,
-  SocialButtons,
   OutlinedHeading,
   SpinningOverlay,
   ToastMessage,
+  MobilePrimaryButton,
 } from 'components'
 import axios from 'lib/axios'
 import { GetServerSideProps, NextPage } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -48,13 +46,6 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
     document.body.removeChild(a)
   }
 
-  const handleIGClick = () => {
-    // Open a new NextJS Page (_target=blank) that renders the IG image + instructions.
-    // Page must instruct the user how to save the image to his/her phone.
-    // For instance on iOS, user must hold down the image in order to save photo to phone.
-    // Page can have a button that directs the user to instagram://story-camera (see: https://stackoverflow.com/a/65893635) photo is saved.
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (inputValue === '') return
@@ -87,24 +78,34 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
 
   return (
     <>
-      <MintLayout className="flex flex-col items-center">
+      <div
+        className="bg-black min-h-screen pt-navbar-height pb-10 md:pb-20 text-white bg-repeat flex flex-col items-center"
+        style={{
+          backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.3) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.3) 0.1px, transparent 1px)`,
+          backgroundSize: '40px 40px',
+        }}
+      >
         {isOpened ? (
           <div className="w-80 flex flex-col items-center pt-5">
-            <GreenUnlockIcon className="mb-3" />
-            <OutlinedHeading>解鎖秘密告白</OutlinedHeading>
-            <p className="my-3 text-center w-[275px] md:mb-7 md:text-xl leading-150% tracking-wide">
-              秘密 Impact NFT 已被解開
-            </p>
-            <iframe
-              height={350}
-              width={350}
-              src={`${S3_BASE_URL}/public/${data.messageTokenId}.html?b`}
-              className="mb-6 md:mb-10"
-            />
-            <Link href="/mint">
+            <GreenUnlockIcon className="mb-3 md:mb-7" />
+            <OutlinedHeading className="mb-16 md:mb-20">
+              告白已解開
+            </OutlinedHeading>
+            <div className="text-center mb-20">
+              <iframe
+                height={350}
+                width={350}
+                src={`${S3_BASE_URL}/public/${data.messageTokenId}.html?b`}
+                className="mb-6 md:mb-10"
+              />
+              <a target="__blank" className="leading-0">
+                <MobilePrimaryButton type="button">分享</MobilePrimaryButton>
+              </a>
+            </div>
+            <Link href="/">
               <a>
                 <ResponsivePrimaryButton type="button">
-                  我也要告白
+                  體驗鑄造告白
                 </ResponsivePrimaryButton>
               </a>
             </Link>
@@ -148,7 +149,7 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
             </form>
           </div>
         )}
-      </MintLayout>
+      </div>
       <SpinningOverlay isLoading={isLoading} />
     </>
   )

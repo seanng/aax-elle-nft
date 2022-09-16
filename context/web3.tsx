@@ -33,10 +33,6 @@ export const Web3ContextProvider = ({ children }: Props) => {
     setIsNetworkChangeModalOpen(_hexChainId !== CORRECT_HEX_CHAIN)
   }
 
-  const openConnectModal = () => setIsConnectModalOpen(true)
-
-  const closeConnectModal = () => setIsConnectModalOpen(false)
-
   const handleModalConnect = async () => {
     let connected = true
     if (!address) connected = await connect()
@@ -66,7 +62,7 @@ export const Web3ContextProvider = ({ children }: Props) => {
     <>
       <Web3Context.Provider
         value={{
-          openConnectModal,
+          openConnectModal: () => setIsConnectModalOpen(true),
           ...web3ProviderState,
         }}
       >
@@ -80,7 +76,7 @@ export const Web3ContextProvider = ({ children }: Props) => {
       <ConnectModal
         isOpen={isConnectModalOpen}
         connect={handleModalConnect}
-        closeModal={closeConnectModal}
+        closeModal={() => setIsConnectModalOpen(false)}
       />
     </>
   )

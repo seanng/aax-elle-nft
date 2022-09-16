@@ -41,6 +41,7 @@ module.exports = {
         'desktop-modal-body': '495px',
       },
       lineHeight: {
+        0: '0',
         '120%': '120%',
         '150%': '150%',
       },

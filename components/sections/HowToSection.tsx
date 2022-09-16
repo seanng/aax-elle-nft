@@ -1,14 +1,38 @@
 import {
   OutlinedHeading,
   ActiveLeftIcon,
+  MobilePrimaryButton,
   ActiveRightIcon,
   HowToHeartIcon,
 } from 'components'
 import { useEffect, useRef, useState } from 'react'
+import { salePhase } from 'utils/config'
 import { useIntersectionObserver } from 'hooks'
 import { classNames } from 'utils/helpers'
+import { NOT_STARTED, PRIVATE_SALE } from 'shared/constants'
+import Link from 'next/link'
 
-const steps = [
+// const salePhase = PRIVATE_SALE
+
+const privateSaleSteps = [
+  {
+    body: '從偶像的Instagram找到或由此連結進入填寫愛的訊息',
+  },
+  {
+    body: '填寫訊息後將獲得白名單NFT',
+  },
+  {
+    body: '將白名單NFT鑄造成Impact NFT會再獲得一張白名單NFT',
+  },
+  {
+    body: '白名單NFT可以分享給朋友，讓他們鑄造屬於自己的Impact NFT',
+  },
+  {
+    body: '分享Impact NFT的畫面至社群',
+  },
+]
+
+const defaultSteps = [
   {
     heading: '寫下告白',
     body: '寫下愛並決定愛的價值，連結電子錢包，透過公益捐款救助受虐毛小孩',
@@ -29,6 +53,11 @@ const steps = [
 
 export function HowToSection() {
   const [highlightedStepIdx, setHighlightedStepIdx] = useState(-1)
+
+  const steps = [PRIVATE_SALE, NOT_STARTED].includes(salePhase)
+    ? privateSaleSteps
+    : defaultSteps
+
   return (
     <>
       <OutlinedHeading className="mb-10 md:mb-16" color="#FF66FF">
@@ -81,6 +110,7 @@ function Step({
   })
   const isVisible = !!entry?.isIntersecting
   const isHighlighted = highlightedStepIdx === idx
+  const shouldShowCta = idx === 0 && salePhase === PRIVATE_SALE
 
   useEffect(() => {
     // scroll down
@@ -114,12 +144,15 @@ function Step({
           {`0${idx + 1}`}
         </div>
         <div className="block p-2 md:p-4">
-          <OutlinedHeading
-            fontSizeClass="text-[22px] md:text-3xl md:mb-2"
-            color={isHighlighted ? 'white' : '#7D7676'}
-          >
-            {heading}
-          </OutlinedHeading>
+          {heading && (
+            <OutlinedHeading
+              className="md:mb-2"
+              fontSizeClass="text-[22px] md:text-3xl"
+              color={isHighlighted ? 'white' : '#7D7676'}
+            >
+              {heading}
+            </OutlinedHeading>
+          )}
           <p
             className={classNames(
               isHighlighted ? 'text-white' : 'text-dark-gray',
@@ -128,6 +161,13 @@ function Step({
           >
             {body}
           </p>
+          {shouldShowCta && (
+            <div className="mt-2 md:mt-4 w-full text-center">
+              <Link href="/mint">
+                <MobilePrimaryButton>填寫表單</MobilePrimaryButton>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
       <ActiveRightIcon className={isHighlighted ? '' : 'hidden'} />

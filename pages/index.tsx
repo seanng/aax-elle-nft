@@ -1,5 +1,4 @@
 import {
-  CaretDownButton,
   MintHeroDesktop,
   MintHeroMobile,
   MintLayout,
@@ -8,12 +7,11 @@ import {
   HowToSection,
   OutlinedHeading,
   BlingIcon,
+  ButtonTooltip,
 } from 'components'
 import { salePhase } from 'utils/config'
-import { useWeb3Context } from 'context'
 import type { NextPage } from 'next'
-import { useRouter } from 'next/router'
-import { PRIVATE_SALE, PUBLIC_SALE } from 'shared/constants'
+import { NOT_STARTED, PRIVATE_SALE } from 'shared/constants'
 import Link from 'next/link'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Autoplay } from 'swiper'
@@ -25,11 +23,6 @@ import { useEffect, useState } from 'react'
 const Carousel = dynamic(() => import('react-spring-3d-carousel'), {
   ssr: false,
 })
-
-function getImageUrl(type, useDefault = undefined) {
-  return 'https://s.conceptjs.com/tni/' + type + '.png'
-}
-const imageUrl = getImageUrl('WHITE')
 
 const carouselItems = [
   {
@@ -63,32 +56,12 @@ const carouselItems = [
 
 const WelcomePage: NextPage = () => {
   const [goToSlide, setGoToSlide] = useState(0)
-  const { address, connect } = useWeb3Context()
-  const router = useRouter()
 
   const slides = carouselItems
     .map(({ src }) => ({ content: <DesktopCarouselItem src={src} /> }))
     .map((slide, index) => {
       return { ...slide, key: index, onClick: () => setGoToSlide(index) }
     })
-
-  const handleCtaClick = async () => {
-    if (salePhase === PUBLIC_SALE) {
-      router.push('/mint')
-      return
-    }
-    if (salePhase === PRIVATE_SALE) {
-      // Open connect wallet modal.
-      let connected = true
-      if (!address) connected = await connect()
-      if (connected) {
-        // Open loading modal to display Loading.
-        // Check if address contains whitelist token
-        // If address does not contain whitelist token, display Sorry modal.
-        // If address contains whitelist token, continue to Mint (wizard.nextStep())
-      }
-    }
-  }
 
   // Autoplay Slides.
   const AUTOPLAY_TIMER = 3000
@@ -103,7 +76,7 @@ const WelcomePage: NextPage = () => {
   }, [goToSlide])
 
   return (
-    <MintLayout className="flex flex-col items-center overflow-hidden w-full pb-14 md:pb-52">
+    <MintLayout className="relative flex flex-col items-center overflow-hidden w-full pb-14 md:pb-52">
       <div className="font-mono font-medium text-xl text-center text-white bg-guava py-2 w-full">
         Limited time offer till 8/15
       </div>
@@ -157,8 +130,6 @@ const WelcomePage: NextPage = () => {
           pagination={{
             el: '.my-custom-pagination-div',
             clickable: true,
-            // dynamicBullets: true,
-            // dynamicMainBullets: 3,
           }}
           autoplay={{
             delay: 2500,
@@ -200,13 +171,29 @@ const WelcomePage: NextPage = () => {
         鑄造愛的秘密工坊
       </OutlinedHeading>
 
-      <FlipCardsSection className="mb-28" />
+      <FlipCardsSection className="mb-16" />
+      <div className="pb-4 mb-navbar-height" id="how-to" />
       <HowToSection />
       <Link href="/mint">
         <a>
           <ResponsivePrimaryButton>我要告白</ResponsivePrimaryButton>
         </a>
       </Link>
+      {[PRIVATE_SALE, NOT_STARTED].includes(salePhase) && (
+        <div className="fixed bottom-4 right-4 flex flex-col items-center z-10">
+          <ButtonTooltip />
+          <div className="absolute text-black top-3 text-sm font-noto">
+            跟偶像告白?
+          </div>
+          <a href="#how-to">
+            <Image
+              width="80"
+              height="80"
+              src="/images/private-sale-sticky.png"
+            />
+          </a>
+        </div>
+      )}
     </MintLayout>
   )
 }
