@@ -31,7 +31,13 @@ const MintPage: NextPage = () => {
   const [isSharingModalOpen, setIsSharingModalOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [mintResponseData, setMintResponseData] = useState<MintResponseData>()
-  const { calcBalance, balance, openConnectModal, address } = useWeb3Context()
+  const {
+    calcBalance,
+    balance,
+    openConnectModal,
+    isConnectModalOpen,
+    address,
+  } = useWeb3Context()
   const {
     privateSaleMint,
     publicSaleMint,
@@ -50,12 +56,8 @@ const MintPage: NextPage = () => {
     setForm({ ...form, ...formValues })
   }
 
-  const ownsWhitelistToken = async (address: string) => {
-    setIsLoading(true)
-    const hasToken = await contract?.callStatic.ownsWhitelistToken(address)
-    setIsLoading(false)
-    return hasToken
-  }
+  const ownsWhitelistToken = async (address: string) =>
+    contract?.callStatic.ownsWhitelistToken(address)
 
   return (
     <>
@@ -66,6 +68,7 @@ const MintPage: NextPage = () => {
               address,
               updateForm,
               openConnectModal,
+              isConnectModalOpen,
               ownsWhitelistToken,
               setFiles,
               setIsLoading,
@@ -100,7 +103,7 @@ const MintPage: NextPage = () => {
         closeModal={() => setIsSharingModalOpen(false)}
         files={files}
       />
-      <SpinningOverlay isLoading={isLoading} />
+      {isLoading && <SpinningOverlay />}
       {salePhase === NOT_STARTED && (
         <div className="fixed top-0 right-0 left-0 bottom-0 z-30 bg-black-rgba-70 backdrop-blur-sm text-center">
           <GreenLipsIcon className="mt-40 mb-10 mx-auto" />

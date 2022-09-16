@@ -13,6 +13,7 @@ import 'swiper/css/pagination'
 
 const toastClass = {
   success: 'bg-lime text-black',
+  warning: 'bg-orange text-white',
   default: 'bg-white',
 }
 

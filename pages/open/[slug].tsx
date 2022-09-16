@@ -150,7 +150,7 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
           </div>
         )}
       </div>
-      <SpinningOverlay isLoading={isLoading} />
+      {isLoading && <SpinningOverlay />}
     </>
   )
 }

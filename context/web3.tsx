@@ -11,9 +11,13 @@ import { CORRECT_HEX_CHAIN } from 'shared/constants'
 import { NetworkChangeModal, ConnectModal } from 'components'
 
 const Web3Context = createContext<
-  Web3ProviderState & { openConnectModal: () => void }
+  Web3ProviderState & {
+    openConnectModal: () => void
+    isConnectModalOpen: boolean
+  }
 >({
   openConnectModal: () => {},
+  isConnectModalOpen: false,
   ...web3InitialState,
 })
 
@@ -63,6 +67,7 @@ export const Web3ContextProvider = ({ children }: Props) => {
       <Web3Context.Provider
         value={{
           openConnectModal: () => setIsConnectModalOpen(true),
+          isConnectModalOpen,
           ...web3ProviderState,
         }}
       >

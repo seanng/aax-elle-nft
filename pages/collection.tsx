@@ -61,7 +61,7 @@ const CollectionPage: NextPage = () => {
           }[displayMode ?? NOT_CONNECTED]
         }
       </MintLayout>
-      <SpinningOverlay isLoading={displayMode === LOADING} />
+      {displayMode === LOADING && <SpinningOverlay />}
     </>
   )
 }

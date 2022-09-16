@@ -1,6 +1,8 @@
 import { StepWizardChildProps } from 'react-step-wizard'
 import {
   ResponsivePrimaryButton,
+  ToastMessage,
+  WarningIcon,
   OutlinedHeading,
   ResponsiveSecondaryButton,
 } from 'components'
@@ -11,6 +13,7 @@ import { Files, MintForm } from 'shared/types'
 import { FINISHED, NOT_STARTED, PRIVATE_SALE } from 'shared/constants'
 import { salePhase } from 'utils/config'
 import { getAssets } from 'utils/nft'
+import { toast } from 'react-toastify'
 
 const TEXTAREA_HEIGHT = 276
 
@@ -21,7 +24,8 @@ interface Props extends Partial<StepWizardChildProps> {
   openConnectModal: () => void
   address?: string | null
   setIsLoading: (b: boolean) => void
-  ownsWhitelistToken: (address: string) => Promise<boolean>
+  ownsWhitelistToken: (a?: string | null) => Promise<boolean>
+  isConnectModalOpen: boolean
 }
 
 export function MessageStep({
@@ -31,6 +35,7 @@ export function MessageStep({
   ownsWhitelistToken,
   openConnectModal,
   setIsLoading,
+  isConnectModalOpen,
   address,
   ...wizard
 }: Props) {
@@ -39,35 +44,57 @@ export function MessageStep({
     minterName: '',
     receiverName: '',
   })
+  const [isProcessingMint, setIsProcessingMint] = useState(false)
 
-  const [isMinting, setIsMinting] = useState(false)
-
-  const onWalletConnect = async () => {
-    if (!address) return console.error('No Address Found...')
+  const onWalletConnect = async (address: string) => {
+    setIsLoading(true)
     if (salePhase === PRIVATE_SALE) {
       const hasWhitelistToken = await ownsWhitelistToken(address)
-      console.log('hasWhitelistToken: ', hasWhitelistToken)
       if (!hasWhitelistToken) {
-        // If address does not contain whitelist token, display Sorry modal.
-        console.log('User does not have whitelist token')
+        // If address does not contain whitelist token, display Sorry modal. Do not proceed.
+        toast.warn(
+          <ToastMessage
+            heading="你的錢包內沒有白名單NFT"
+            body="公開鑄造時間將會在11/20開始"
+          />,
+          {
+            icon: <WarningIcon height={32} width={32} color="white" />,
+          }
+        )
+        setIsLoading(false)
         return
       }
     }
-  }
 
-  const handleMintClick = async () => {
+    // Set Data
     const { message, minterName, receiverName } = values
-    setIsLoading(true)
     const files = await getAssets({
       message: message,
       aroundText: `${minterName} wants to give you something, ${receiverName}!`,
     })
     setFiles(files)
     updateForm({ ...values, mintedAt: new Date() })
+    wizard.nextStep && wizard.nextStep()
     setIsLoading(false)
-    setIsMinting(true)
-    address ? onWalletConnect() : openConnectModal()
   }
+
+  const handleMintClick = async () => {
+    // If no address, connect to wallet and call onWalletConnect when address is updated (in useEffect)
+    setIsProcessingMint(true)
+    if (!address) openConnectModal()
+  }
+
+  // On modal connect.
+  useEffect(() => {
+    if (isProcessingMint && address) {
+      setIsProcessingMint(false)
+      onWalletConnect(address)
+    }
+    // stop process when user closes modal
+    if (isProcessingMint && !isConnectModalOpen) {
+      setIsProcessingMint(false)
+    }
+  }, [address, isProcessingMint, isConnectModalOpen])
 
   const handleTextareaChange = (e) => {
     if (e.target.scrollHeight <= TEXTAREA_HEIGHT) {
@@ -85,14 +112,6 @@ export function MessageStep({
       [name]: value,
     }))
   }
-
-  // isMinting is only called if wallet is not connected
-  useEffect(() => {
-    if (isMinting && address) {
-      setIsMinting(false)
-      wizard.nextStep && wizard.nextStep()
-    }
-  }, [address, isMinting])
 
   const shouldDisableButtons =
     values.message === '' || [NOT_STARTED, FINISHED].includes(salePhase)
@@ -177,6 +196,7 @@ export function MessageStep({
           </ResponsiveSecondaryButton>
         </a>
         <ResponsivePrimaryButton
+          type="button"
           disabled={shouldDisableButtons}
           onClick={handleMintClick}
           className="ml-8"

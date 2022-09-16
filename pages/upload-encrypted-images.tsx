@@ -121,7 +121,7 @@ const UploadImagesPage: NextPage = () => {
           />
         ))}
       </div>
-      <SpinningOverlay isLoading={isUploading} />
+      {isUploading && <SpinningOverlay />}
     </div>
   ) : (
     <div>Access Restricted</div>
