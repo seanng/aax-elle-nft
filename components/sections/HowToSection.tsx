@@ -105,7 +105,7 @@ function Step({
 }) {
   const ref = useRef<HTMLDivElement | null>(null)
   const entry = useIntersectionObserver(ref, {
-    threshold: 1,
+    threshold: [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
     rootMargin: '0px 0px -250px 0px',
   })
   const isVisible = !!entry?.isIntersecting
