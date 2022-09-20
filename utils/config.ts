@@ -1,6 +1,7 @@
 import { NOT_STARTED } from 'shared/constants'
 
 // Manually update.
+// export const salePhase = 'private sale'
 export const salePhase = process.env.NEXT_PUBLIC_SALE_PHASE || NOT_STARTED
 
 export const metadata = {

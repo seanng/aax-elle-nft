@@ -13,6 +13,7 @@ const compStyle = {
   fontSize: '14px',
   boxSizing: 'border-box',
   color: 'black',
+  WebkitFilter: 'blur(0px)',
 } as React.CSSProperties
 
 const commonOuterContainerStyle = {
@@ -142,6 +143,8 @@ function CompsNFTAroundText2({ aroundText, optClass }) {
 
   useEffect(() => {
     if (containerNode && textNode && isFontReady) {
+      console.log('aroundText containerNode: ', containerNode.offsetWidth)
+      console.log('aroundText textNode: ', textNode.offsetWidth)
       setIsReady(true)
       setTransformValues(
         getTransformValues({

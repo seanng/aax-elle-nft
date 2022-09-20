@@ -1,5 +1,10 @@
 import { StepWizardChildProps } from 'react-step-wizard'
-import { StepperArrowRight, PinkLockIcon } from 'components'
+import {
+  OutlinedHeading,
+  Marquee,
+  StepperArrowRight,
+  PinkLockIcon,
+} from 'components'
 import { salePhase } from 'utils/config'
 import { FINISHED } from 'shared/constants'
 
@@ -43,28 +48,18 @@ export function Stepper({
 
   return (
     <>
-      <div
-        className="relative h-11 bg-guava text-guava font-mono font-medium italic text-4xl w-full leading-120% overflow-x-hidden"
-        style={{
-          textShadow:
-            '-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black',
-        }}
-      >
-        <p className="marquee scroll-left">
-          <span>
-            Ready to tell your Secret?&nbsp;&nbsp;&nbsp;Ready to tell your
-            Secret?&nbsp;&nbsp;&nbsp;Ready to tell your
-            Secret?&nbsp;&nbsp;&nbsp;
-          </span>
-        </p>
-        <p className="marquee scroll-left marquee-delayed">
-          <span>
-            Ready to tell your Secret?&nbsp;&nbsp;&nbsp;Ready to tell your
-            Secret?&nbsp;&nbsp;&nbsp;Ready to tell your
-            Secret?&nbsp;&nbsp;&nbsp;
-          </span>
-        </p>
-      </div>
+      <Marquee>
+        <div
+          className="h-11 bg-guava text-guava font-mono font-medium italic text-4xl leading-120%"
+          style={{
+            textShadow:
+              '-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black',
+          }}
+        >
+          Ready to tell your Secret?&nbsp;&nbsp;&nbsp;Ready to tell your
+          Secret?&nbsp;&nbsp;&nbsp;Ready to tell your Secret?&nbsp;&nbsp;&nbsp;
+        </div>
+      </Marquee>
 
       <nav
         className="flex items-center justify-center h-10 md:h-14 md:mt-8"
