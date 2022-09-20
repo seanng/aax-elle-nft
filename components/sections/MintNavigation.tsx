@@ -91,7 +91,7 @@ const Nav = () => (
       <a>ELLEverse</a>
     </Link>
     <a href="https://www.aax.com/zh-TW/newbie/">新手指南</a>
-    <Link href="/collections">
+    <Link href="/collection">
       <a>我的秘密告白</a>
     </Link>
     <Link href="/">

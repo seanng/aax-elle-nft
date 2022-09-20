@@ -155,11 +155,14 @@ export function MessageStep({
       <div className="w-80 h-[320px] md:w-[642px] md:h-[642px] mb-6 flex justify-center items-center">
         <AroundText2
           aroundText="Write down your secret..."
-          optClass="md:scale-[2]"
+          optClass="md:scale-[2] md:hover:scale-[2]"
         />
         <textarea
           id="message"
           rows={7}
+          style={{
+            WebkitFilter: 'blur(0px)',
+          }}
           className="
             relative
             shadow-sm

@@ -13,6 +13,7 @@ const compStyle = {
   fontSize: '14px',
   boxSizing: 'border-box',
   color: 'black',
+  WebkitFilter: 'blur(0px)',
 } as React.CSSProperties
 
 const commonOuterContainerStyle = {

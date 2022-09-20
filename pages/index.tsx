@@ -8,6 +8,7 @@ import {
   OutlinedHeading,
   BlingIcon,
   ButtonTooltip,
+  Marquee,
 } from 'components'
 import { salePhase } from 'utils/config'
 import type { NextPage } from 'next'
@@ -80,28 +81,18 @@ const WelcomePage: NextPage = () => {
       <div className="font-mono font-medium text-xl text-center text-white bg-guava py-2 w-full">
         Limited time offer till 8/15
       </div>
-      <div
-        className="relative text-black font-mono font-medium italic text-6xl w-full leading-120% h-20 overflow-x-hidden"
-        style={{
-          textShadow:
-            '-1px -1px 0 #C3FA08, 1px -1px 0 #C3FA08, -1px 1px 0 #C3FA08, 1px 1px 0 #C3FA08',
-        }}
-      >
-        <p className="marquee scroll-left">
-          <span>
-            Welcome to ELLEverse&nbsp;&nbsp;&nbsp;Welcome to
-            ELLEverse&nbsp;&nbsp;&nbsp;Welcome to
-            ELLEverse&nbsp;&nbsp;&nbsp;Welcome to ELLEverse&nbsp;&nbsp;&nbsp;
-          </span>
-        </p>
-        <p className="marquee scroll-left marquee-delayed">
-          <span>
-            Welcome to ELLEverse&nbsp;&nbsp;&nbsp;Welcome to
-            ELLEverse&nbsp;&nbsp;&nbsp;Welcome to
-            ELLEverse&nbsp;&nbsp;&nbsp;Welcome to ELLEverse&nbsp;&nbsp;&nbsp;
-          </span>
-        </p>
-      </div>
+
+      <Marquee velocity={400}>
+        <OutlinedHeading
+          color="#C3FA08"
+          fontSizeClass="text-6xl font-mono italic leading-120%"
+        >
+          Welcome to ELLEverse&nbsp;&nbsp;&nbsp;Welcome to
+          ELLEverse&nbsp;&nbsp;&nbsp;Welcome to
+          ELLEverse&nbsp;&nbsp;&nbsp;Welcome to ELLEverse&nbsp;&nbsp;&nbsp;
+        </OutlinedHeading>
+      </Marquee>
+
       <MintHeroMobile className="md:hidden mb-14" />
       <MintHeroDesktop className="hidden md:block mb-14 max-h-[700px]" />
       <Link href="/mint">

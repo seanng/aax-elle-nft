@@ -1,7 +1,7 @@
 import {
   BLCursorButton,
   GreenDialog,
-  PoopSmall,
+  Marquee,
   PinkSunflower,
   TeamFlower,
   PoopStraight,
@@ -167,24 +167,14 @@ export function BodySection() {
       {/* Marquee */}
       <div className="mb-14 md:mb-48 font-english max-w-full overflow-x-hidden -rotate-3 font-extrabold text-4xl md:text-[168px] leading-[48px] md:leading-[224px]">
         <div className="relative text-black bg-lime h-12 md:h-56">
-          <p className="marquee scroll-left">
-            <span>
-              SHHHH.......&nbsp;&nbsp;&nbsp;SHHHH.......&nbsp;&nbsp;&nbsp;
-            </span>
-          </p>
-          <p className="marquee scroll-left marquee-delayed">
-            <span>
-              SHHHH.......&nbsp;&nbsp;&nbsp;SHHHH.......&nbsp;&nbsp;&nbsp;
-            </span>
-          </p>
+          <Marquee velocity={200}>
+            SHHHH.......&nbsp;&nbsp;&nbsp;SHHHH.......&nbsp;&nbsp;&nbsp;
+          </Marquee>
         </div>
         <div className="relative text-black bg-[#EDFA00] h-12 md:h-56">
-          <p className="marquee scroll-right">
-            <span>TELL YOU A SECRET ____&nbsp;&nbsp;</span>
-          </p>
-          <p className="marquee scroll-right marquee-delayed">
-            <span>TELL YOU A SECRET ____&nbsp;&nbsp;</span>
-          </p>
+          <Marquee velocity={200} direction="right">
+            TELL YOU A SECRET ____&nbsp;&nbsp;TELL YOU A SECRET ____&nbsp;&nbsp;
+          </Marquee>
         </div>
       </div>
       {/* FAQ */}
