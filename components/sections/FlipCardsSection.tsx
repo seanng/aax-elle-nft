@@ -96,7 +96,7 @@ export function FlipCardsSection({ className = '', ...props }) {
     <div
       className={classNames(
         className,
-        'mt-20 flex flex-col items-start w-[360px] md:w-[700px]'
+        'mt-20 flex flex-col items-start w-[360px] md:w-[670px]'
       )}
       {...props}
     >

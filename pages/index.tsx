@@ -9,6 +9,10 @@ import {
   BlingIcon,
   ButtonTooltip,
   Marquee,
+  TinyPinkCat,
+  TinyPinkSmiley,
+  TinyPinkThumb,
+  HowToHeartIcon,
 } from 'components'
 import { salePhase } from 'utils/config'
 import type { NextPage } from 'next'
@@ -141,7 +145,7 @@ const WelcomePage: NextPage = () => {
       >
         你是不是也有以下症狀?
       </OutlinedHeading>
-      <p className="text-lg md:text-2xl font-noto text-center mb-20 md:mb-32 md:leading-[36px]">
+      <p className="text-lg md:text-2xl font-noto text-center mb-20 md:mb-28 md:leading-[36px]">
         好想說出<mark className="bg-lime">喜歡你</mark>
         <br />
         有個<mark className="bg-lime">秘密</mark>藏在心裡好久了{' '}
@@ -162,7 +166,40 @@ const WelcomePage: NextPage = () => {
         鑄造愛的秘密工坊
       </OutlinedHeading>
 
-      <FlipCardsSection className="mb-16" />
+      <FlipCardsSection className="mb-16 md:mb-40" />
+
+      <div className="hidden md:flex space-x-8 mb-8">
+        <HowToHeartIcon width={50} height={50} />
+        <TinyPinkSmiley width={50} height={50} />
+        <TinyPinkThumb width={50} height={50} />
+        <TinyPinkCat width={50} height={50} />
+      </div>
+      <div className="flex md:hidden space-x-8 mb-4">
+        <HowToHeartIcon width={24} height={24} />
+        <TinyPinkSmiley />
+        <TinyPinkThumb />
+        <TinyPinkCat />
+      </div>
+      <OutlinedHeading
+        color="#FF66FF"
+        className="mb-4 text-center tracking-widest leading-150% md:leading-150% font-bold"
+      >
+        想與喜愛的偶像共同
+        <br />
+        擁有最特別的紀念物？
+      </OutlinedHeading>
+      <OutlinedHeading
+        fontSizeClass="text-base md:text-2xl text-center tracking-widest"
+        color="#FFD3EE"
+        className="-mb-10 md:mb-4"
+      >
+        偶像會從粉絲寫的訊息中選出最愛留言
+        <br />
+        並回信，偶像的回信將被鑄造為NFT
+        <br />
+        <br />
+        只要照著以下流程就有機會擁有
+      </OutlinedHeading>
       <div className="pb-4 mb-navbar-height" id="how-to" />
       <HowToSection />
       <Link href="/mint">

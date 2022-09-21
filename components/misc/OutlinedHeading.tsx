@@ -10,8 +10,8 @@ export function OutlinedHeading({
   return (
     <h2
       className={classNames(
-        fontSizeClass,
         'text-black font-medium leading-150%',
+        fontSizeClass,
         className
       )}
       style={{
