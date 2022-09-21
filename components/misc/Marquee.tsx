@@ -18,7 +18,7 @@ const getTransformValues = (
 
   // velocity = speed of translateX
   // emptyWidth = total width of empty spaces needed
-  // totalWidth = total width of all 3 spans | tW + emptyWidth + tW
+  // totalWidth = total width of 2 text spans
   const totalWidth = tW * 2
 
   const leftStart = 0
@@ -120,7 +120,7 @@ export function Marquee({
     <div
       className={classNames(
         className,
-        'w-full overflow-hidden whitespace-nowrap'
+        'relative whitespace-nowrap overflow-hidden'
       )}
     >
       {/* Reference | Hidden */}

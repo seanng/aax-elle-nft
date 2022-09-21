@@ -59,7 +59,7 @@ const carouselItems = [
   },
 ]
 
-const WelcomePage: NextPage = () => {
+const LandingPage: NextPage = () => {
   const [goToSlide, setGoToSlide] = useState(0)
 
   const slides = carouselItems
@@ -244,4 +244,4 @@ const DesktopCarouselItem = ({ src }) => {
   )
 }
 
-export default WelcomePage
+export default LandingPage
