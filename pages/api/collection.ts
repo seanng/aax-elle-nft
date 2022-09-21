@@ -4,16 +4,20 @@ import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
 import { CORRECT_NETWORK } from 'shared/constants'
 import { Contract, providers, Wallet, Signer } from 'ethers'
 
+const defaultGetSigner = () =>
+  new Wallet(
+    process.env.WALLET_PRIVATE_KEY as string,
+    providers.getDefaultProvider(CORRECT_NETWORK, {
+      etherscan: process.env.ETHERSCAN_API_KEY,
+      infura: process.env.INFURA_PROJECT_KEY,
+    })
+  )
+
 const getSigner: () => Signer = {
   localhost: () => new providers.JsonRpcProvider().getSigner(),
-  default: () =>
-    new Wallet(
-      process.env.WALLET_PRIVATE_KEY as string,
-      providers.getDefaultProvider(CORRECT_NETWORK, {
-        etherscan: process.env.ETHERSCAN_API_KEY,
-        infura: process.env.INFURA_PROJECT_KEY,
-      })
-    ),
+  rinkeby: defaultGetSigner,
+  homestead: defaultGetSigner,
+  default: defaultGetSigner,
 }[CORRECT_NETWORK ?? 'default']
 
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
@@ -43,6 +47,7 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
 
     res.status(200).json({ data })
   } catch (error) {
+    console.log('error: ', error)
     if (error.code === 'INVALID_ARGUMENT')
       return res.status(422).send('Invalid Address')
 

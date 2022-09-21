@@ -8,11 +8,7 @@ export const INTRO_CANVAS_WIDTH = 1920
 export const INTRO_CANVAS_HEIGHT = 1080
 
 export const CORRECT_NETWORK =
-  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-    ? 'homestead'
-    : process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
-    ? 'rinkeby'
-    : 'localhost'
+  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? 'homestead' : 'rinkeby'
 
 export const isTestingLocalhostNode = false // if false, we directly test rinkeby.
 
