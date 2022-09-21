@@ -14,46 +14,60 @@ const withClass = (custom = '') => classNames('absolute w-full', custom)
 const data = [
   {
     Svg: FlipCard1,
-    front: <div className={withClass('text-lime top-10')}>what is nft</div>,
+    front: (
+      <div className={withClass('text-lime top-20')}>什麼是Impact NFT？</div>
+    ),
     back: (
-      <div className={withClass('text-black top-20')}>
-        its the most wonderful nft in the world
+      <div className={withClass('text-black top-20 px-8')}>
+        非營利、連結公益慈善的NFT
       </div>
     ),
   },
   {
     Svg: FlipCard2,
-    front: <div className={withClass('text-guava top-10')}>what is nft</div>,
+    front: (
+      <div className={withClass('text-guava top-16 px-7')}>
+        ELLE的Impact NFT有什麼特別？
+      </div>
+    ),
     back: (
-      <div className={withClass('text-black top-20')}>
-        its the most wonderful nft in the world
+      <div className={withClass('text-black top-14 px-7')}>
+        每個NFT都是自己設計、獨一無二 首創互動式NFT 愛的告白永遠保存
       </div>
     ),
   },
   {
     Svg: FlipCard3,
-    front: <div className={withClass('text-lemon top-10')}>what is nft</div>,
+    front: (
+      <div className={withClass('text-lemon top-20 px-10')}>
+        為什麼愛的告白可以永恆？
+      </div>
+    ),
     back: (
-      <div className={withClass('text-black top-20')}>
-        its the most wonderful nft in the world
+      <div className={withClass('text-black top-20 px-8')}>
+        透過NFT上鏈後，愛可以永恆於區塊鏈上
       </div>
     ),
   },
   {
     Svg: FlipCard4,
-    front: <div className={withClass('text-mandarin top-10')}>what is nft</div>,
+    front: (
+      <div className={withClass('text-mandarin top-16')}>大家都能擁有嗎？</div>
+    ),
     back: (
-      <div className={withClass('text-black top-20')}>
-        its the most wonderful nft in the world
+      <div className={withClass('text-black top-12 px-7 ')}>
+        ELLE Impact NFT限量3,113個 (3113倒過來就是ELLE喔)
       </div>
     ),
   },
   {
     Svg: FlipCard5,
-    front: <div className={withClass('text-steel top-10')}>what is nft</div>,
+    front: (
+      <div className={withClass('text-steel top-28')}>什麼是互動式NFT?</div>
+    ),
     back: (
-      <div className={withClass('text-black top-20')}>
-        its the most wonderful nft in the world
+      <div className={withClass('text-black top-24 px-8')}>
+        寄件者寫完愛的告白後，需要寄給某人+密碼才能打開
       </div>
     ),
   },
