@@ -24,14 +24,14 @@ export function SuccessStep({ data, files }: Props) {
         </p>
         <div dangerouslySetInnerHTML={{ __html: preview as string }} />
         <div className="mt-6 mb-4">
-          <Link href={`/ig-share?id=${data?.messageTokenId}`}>
-            <a>
+          <Link href={`/ig-share?id=${data?.messageTokenId}`} passHref>
+            <a target="__blank">
               <IgShareButton />
             </a>
           </Link>
         </div>
-        <Link href="/collection">
-          <a>
+        <Link href="/collection" passHref>
+          <a target="__blank">
             <GoToCollectionButton />
           </a>
         </Link>
