@@ -83,7 +83,7 @@ const MintPage: NextPage = () => {
     <>
       <MintLayout className="overflow-y-hidden">
         <StepWizard transitions={transitions} nav={<Stepper />}>
-          <SuccessStep data={mintResponseData} files={files} />
+          {/* <SuccessStep data={mintResponseData} files={files} /> */}
 
           <MessageStep
             {...{
