@@ -11,10 +11,11 @@ import {
 import type { NextPage } from 'next'
 import axios from 'lib/axios'
 import { Mint } from '@prisma/client'
-import { useWeb3Context } from 'context'
+import { useDetectionContext, useWeb3Context } from 'context'
 import Link from 'next/link'
-import { S3_BASE_URL } from 'shared/constants'
+import { S3_BASE_URL, SAFARI } from 'shared/constants'
 import { metadata } from 'utils/config'
+import { useRouter } from 'next/router'
 
 const LOADING = 'LOADING'
 const NOT_CONNECTED = 'NOT_CONNECTED'
@@ -25,6 +26,26 @@ const CollectionPage: NextPage = () => {
   const [displayMode, setDisplayMode] = useState(LOADING)
   const [data, setData] = useState<Mint[]>([])
   const { address, openConnectModal } = useWeb3Context()
+  const {
+    browser,
+    setIsWrongBrowserModalOpen,
+    setIsProcessingCloseClick,
+    isProcessingCloseClick,
+  } = useDetectionContext()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (browser === SAFARI) {
+      setIsWrongBrowserModalOpen(true)
+    }
+  }, [browser])
+
+  useEffect(() => {
+    if (isProcessingCloseClick) {
+      setIsProcessingCloseClick(false)
+      router.replace('/')
+    }
+  }, [isProcessingCloseClick])
 
   useEffect(() => {
     async function getTokensOfWallet() {

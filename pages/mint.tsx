@@ -75,7 +75,7 @@ const MintPage: NextPage = () => {
   useEffect(() => {
     if (isProcessingCloseClick) {
       setIsProcessingCloseClick(false)
-      router.back()
+      router.replace('/')
     }
   }, [isProcessingCloseClick])
 
