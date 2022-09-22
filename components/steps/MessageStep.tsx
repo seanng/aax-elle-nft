@@ -20,7 +20,6 @@ const TEXTAREA_HEIGHT = 276
 interface Props extends Partial<StepWizardChildProps> {
   updateForm: (formValues: Partial<MintForm>) => void
   setFiles: (files: Files) => void
-  openSharingModal: () => void
   openConnectModal: () => void
   address?: string | null
   setIsLoading: (b: boolean) => void
@@ -31,7 +30,6 @@ interface Props extends Partial<StepWizardChildProps> {
 export function MessageStep({
   updateForm,
   setFiles,
-  openSharingModal,
   ownsWhitelistToken,
   openConnectModal,
   setIsLoading,
@@ -125,7 +123,7 @@ export function MessageStep({
 
   return (
     <div className="flex flex-col items-center font-noto h-full">
-      <OutlinedHeading className="mt-4 mb-6 md:mb-10">
+      <OutlinedHeading className="mt-6 mb-6 md:mb-10">
         寫下你的告白秘密吧
       </OutlinedHeading>
       <div className="flex w-80 md:w-[642px] mb-4">
