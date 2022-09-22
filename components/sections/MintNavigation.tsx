@@ -10,13 +10,19 @@ import {
   MobilePrimaryButton,
   AddressErrorButton,
 } from 'components'
-import { useWeb3Context } from 'context'
-import { CORRECT_HEX_CHAIN } from 'shared/constants'
+import { useDetectionContext, useWeb3Context } from 'context'
+import { CORRECT_HEX_CHAIN, SAFARI } from 'shared/constants'
 
 export function MintNavigation() {
   return (
     <Popover as="header" className="fixed left-0 right-0 z-10">
-      <Navbar />
+      <div className="flex justify-between items-center px-4 h-navbar-height bg-black">
+        <Logo />
+        <div className="flex items-center space-x-4">
+          <Web3Button />
+          <Hamburger />
+        </div>
+      </div>
       <Transition
         className="absolute top-0 h-screen w-full"
         enter="transition-all duration-1000 ease-out"
@@ -32,20 +38,10 @@ export function MintNavigation() {
   )
 }
 
-const Navbar = () => (
-  <div className="flex justify-between items-center px-4 h-navbar-height bg-black">
-    <Logo />
-    <div className="flex items-center space-x-4">
-      <Web3Button />
-      <Hamburger />
-    </div>
-  </div>
-)
-
 const Panel = () => (
   <Popover.Panel
     focus
-    className="h-full  z-30 bg-black-rgba-70 backdrop-blur-3xl flex flex-col"
+    className="h-full z-30 bg-black-rgba-70 backdrop-blur-3xl flex flex-col"
   >
     {/* mobile */}
     <div
@@ -132,6 +128,27 @@ const Web3Button = () => {
   const { web3Provider, address, openConnectModal, disconnect, provider } =
     useWeb3Context()
   const [walletHasError, setWalletHasError] = useState(false)
+  const {
+    browser,
+    setIsWrongBrowserModalOpen,
+    isProcessingCloseClick,
+    setIsProcessingCloseClick,
+  } = useDetectionContext()
+
+  const handleConnectClick = () => {
+    if (browser === SAFARI) {
+      setIsWrongBrowserModalOpen(true)
+      return
+    }
+    openConnectModal()
+  }
+
+  useEffect(() => {
+    if (isProcessingCloseClick) {
+      setIsProcessingCloseClick(false)
+      setIsWrongBrowserModalOpen(false)
+    }
+  }, [isProcessingCloseClick])
 
   useEffect(() => {
     if (provider?.on) {
@@ -160,7 +177,7 @@ const Web3Button = () => {
       </Popover.Panel>
     </Popover>
   ) : (
-    <MobilePrimaryButton type="button" onClick={() => openConnectModal()}>
+    <MobilePrimaryButton type="button" onClick={handleConnectClick}>
       連結錢包
     </MobilePrimaryButton>
   )

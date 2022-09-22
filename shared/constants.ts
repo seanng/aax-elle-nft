@@ -43,3 +43,13 @@ export const PUBLIC = 'public'
 export const S3_BASE_URL =
   process.env.NEXT_PUBLIC_S3_BASE_URL ??
   'https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com'
+
+// devices
+export const ANDROID = 'android'
+export const IOS = 'ios'
+export const DESKTOP = 'desktop'
+
+// browsers
+export const CHROME = 'chrome'
+export const SAFARI = 'safari'
+export const OTHER_BROWSER = 'other browser'

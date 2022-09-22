@@ -1,5 +1,5 @@
 import SEO from 'components/SEO'
-import { Web3ContextProvider } from 'context'
+import { DetectionContextProvider, Web3ContextProvider } from 'context'
 import { ToastContainer } from 'react-toastify'
 import { ToastSuccessIcon } from 'components'
 
@@ -21,9 +21,11 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <SEO />
-      <Web3ContextProvider>
-        <Component {...pageProps} />
-      </Web3ContextProvider>
+      <DetectionContextProvider>
+        <Web3ContextProvider>
+          <Component {...pageProps} />
+        </Web3ContextProvider>
+      </DetectionContextProvider>
       <ToastContainer
         hideProgressBar
         position="top-center"

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import StepWizard from 'react-step-wizard'
 import type { NextPage } from 'next'
 import {
@@ -6,7 +6,6 @@ import {
   PasscodeStep,
   MessageStep,
   DonationStep,
-  SharingModal,
   SuccessStep,
   Stepper,
   SpinningOverlay,
@@ -15,10 +14,11 @@ import {
 } from 'components'
 import Animate from 'styles/animate.module.css'
 import { useMint } from 'hooks'
-import { NOT_STARTED } from 'shared/constants'
-import { useWeb3Context } from 'context'
+import { NOT_STARTED, SAFARI } from 'shared/constants'
+import { useDetectionContext, useWeb3Context } from 'context'
 import { salePhase } from 'utils/config'
 import { MintResponseData } from 'shared/types'
+import { useRouter } from 'next/router'
 
 const transitions = {
   enterRight: `${Animate.animated} ${Animate.fadeInRight}`,
@@ -28,9 +28,9 @@ const transitions = {
 }
 
 const MintPage: NextPage = () => {
-  const [isSharingModalOpen, setIsSharingModalOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [mintResponseData, setMintResponseData] = useState<MintResponseData>()
+  const router = useRouter()
   const {
     calcBalance,
     balance,
@@ -52,6 +52,13 @@ const MintPage: NextPage = () => {
     mintGasFee,
   } = useMint()
 
+  const {
+    browser,
+    setIsWrongBrowserModalOpen,
+    setIsProcessingCloseClick,
+    isProcessingCloseClick,
+  } = useDetectionContext()
+
   const updateForm = (formValues) => {
     setForm({ ...form, ...formValues })
   }
@@ -59,10 +66,25 @@ const MintPage: NextPage = () => {
   const ownsWhitelistToken = async (address: string) =>
     contract?.callStatic.ownsWhitelistToken(address)
 
+  useEffect(() => {
+    if (browser === SAFARI) {
+      setIsWrongBrowserModalOpen(true)
+    }
+  }, [browser])
+
+  useEffect(() => {
+    if (isProcessingCloseClick) {
+      setIsProcessingCloseClick(false)
+      router.back()
+    }
+  }, [isProcessingCloseClick])
+
   return (
     <>
       <MintLayout className="overflow-y-hidden">
         <StepWizard transitions={transitions} nav={<Stepper />}>
+          <SuccessStep data={mintResponseData} files={files} />
+
           <MessageStep
             {...{
               address,
@@ -72,7 +94,6 @@ const MintPage: NextPage = () => {
               ownsWhitelistToken,
               setFiles,
               setIsLoading,
-              openSharingModal: () => setIsSharingModalOpen(true),
             }}
           />
           <EmailStep updateForm={updateForm} />
@@ -98,11 +119,6 @@ const MintPage: NextPage = () => {
           <SuccessStep data={mintResponseData} files={files} />
         </StepWizard>
       </MintLayout>
-      <SharingModal
-        isOpen={isSharingModalOpen}
-        closeModal={() => setIsSharingModalOpen(false)}
-        files={files}
-      />
       {isLoading && <SpinningOverlay />}
       {salePhase === NOT_STARTED && (
         <div className="fixed top-0 right-0 left-0 bottom-0 z-30 bg-black-rgba-70 backdrop-blur-sm text-center">

@@ -56,7 +56,6 @@ const IgSharePage: NextPage = () => {
         <OutlinedHeading className="mb-10">
           如何儲存分享Impact NFT？
         </OutlinedHeading>
-
         <IgShareInstructions />
         <div className="flex justify-center w-80 md:w-[650px] text-orange space-x-2 mb-4 md:mb-16">
           <WarningIcon className="mt-1" width={16} height={16} />

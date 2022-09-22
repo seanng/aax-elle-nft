@@ -1,5 +1,7 @@
 import { LinkAndPasscode, WarningIcon } from 'components'
+import { useDetectionContext } from 'context'
 import { useEffect, useState } from 'react'
+import { ANDROID, CHROME, DESKTOP, IOS, SAFARI } from 'shared/constants'
 
 const DESKTOP_BROWSER = 'Desktop'
 const INCOMPATIBLE_MOBILE_BROWSER = 'Mobile Wrong'
@@ -8,22 +10,18 @@ const COMPATIBLE_MOBILE_BROWSER = 'Mobile Correct'
 export function IgShareInstructions() {
   const [viewMode, setViewMode] = useState<string | null>(null)
 
+  const { browser, device } = useDetectionContext()
+
   useEffect(() => {
-    const ua = navigator.userAgent
-
-    const isDesktop = !/iPhone|iPad|Android/i.test(ua)
-    if (isDesktop) return setViewMode(DESKTOP_BROWSER)
-
-    const isAndroidAndChrome = /Android/i.test(ua) && /Chrome/i.test(ua)
-    const isIosAndSafari =
-      /iPhone|iPad/i.test(ua) && !!ua.match(/WebKit/i) && !ua.match(/CriOS/i)
-
+    if (browser === DESKTOP) return setViewMode(DESKTOP_BROWSER)
+    const isAndroidAndChrome = browser === CHROME && device === ANDROID
+    const isIosAndSafari = browser === SAFARI && device === IOS
     setViewMode(
       isAndroidAndChrome || isIosAndSafari
         ? COMPATIBLE_MOBILE_BROWSER
         : INCOMPATIBLE_MOBILE_BROWSER
     )
-  }, [])
+  }, [browser, device])
 
   if (!viewMode) return null
 
