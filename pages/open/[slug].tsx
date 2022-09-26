@@ -8,7 +8,8 @@ import {
   OutlinedHeading,
   SpinningOverlay,
   ToastMessage,
-  MobilePrimaryButton,
+  ResponsiveSecondaryButton,
+  SquareShareButton,
 } from 'components'
 import axios from 'lib/axios'
 import { GetServerSideProps, NextPage } from 'next'
@@ -79,36 +80,38 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
   return (
     <>
       <div
-        className="bg-black min-h-screen pt-navbar-height pb-10 md:pb-20 text-white bg-repeat flex flex-col items-center"
+        className="bg-black min-h-screen pt-navbar-height pb-10 md:pb-20 text-white bg-repeat flex flex-col items-center overflow-x-hidden"
         style={{
           backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.3) 0.1px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.3) 0.1px, transparent 1px)`,
           backgroundSize: '40px 40px',
         }}
       >
         {isOpened ? (
-          <div className="w-80 flex flex-col items-center pt-5">
+          <div className="flex flex-col items-center pt-5 w-full text-center">
             <GreenUnlockIcon className="mb-3 md:mb-7" />
             <OutlinedHeading className="mb-16 md:mb-20">
               告白已解開
             </OutlinedHeading>
-            <div className="text-center mb-20">
+            <div className="flex flex-col mb-20 md:mb-28 w-full items-center">
               <iframe
-                height={350}
-                width={350}
                 src={`${S3_BASE_URL}/public/${data.messageTokenId}.html?b`}
-                className="mb-6 md:mb-10"
+                className="mb-6 md:mb-10 scale-100 md:scale-[1.5] h-[350px] w-[350px] md:h-[525px] md:w-[525px] origin-top-left max-w-full"
               />
-              <a target="__blank" className="leading-0">
-                <MobilePrimaryButton type="button">分享</MobilePrimaryButton>
-              </a>
             </div>
-            <Link href="/">
-              <a>
-                <ResponsivePrimaryButton type="button">
-                  體驗鑄造告白
-                </ResponsivePrimaryButton>
-              </a>
-            </Link>
+            <div className="flex items-center space-x-3 md:space-x-4">
+              <Link href="/" passHref>
+                <a target="__blank" className="leading-0">
+                  <ResponsiveSecondaryButton type="button">
+                    體驗鑄造
+                  </ResponsiveSecondaryButton>
+                </a>
+              </Link>
+              <Link href={`/ig-share?id=${data.messageTokenId}&lol`} passHref>
+                <a target="__blank" className="leading-0">
+                  <SquareShareButton />
+                </a>
+              </Link>
+            </div>
           </div>
         ) : (
           <div className="w-80 flex flex-col items-center pt-5">

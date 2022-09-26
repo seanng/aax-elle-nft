@@ -166,7 +166,7 @@ const LandingPage: NextPage = () => {
         鑄造愛的秘密工坊
       </OutlinedHeading>
 
-      <FlipCardsSection className="mb-16 md:mb-40" />
+      <FlipCardsSection className="mb-navbar-height" />
       {[NOT_STARTED, PRIVATE_SALE].includes(salePhase) ?? (
         <>
           <div className="hidden md:flex space-x-8 mb-8">
@@ -185,22 +185,20 @@ const LandingPage: NextPage = () => {
             color="#FF66FF"
             className="mb-4 text-center tracking-widest leading-150% md:leading-150% font-bold"
           >
-            想與喜愛的偶像共同
+            想與喜愛的偶像共同擁有
             <br />
-            擁有最特別的紀念物？
+            最特別的數位紀念品嗎？
           </OutlinedHeading>
-          <OutlinedHeading
-            fontSizeClass="text-base md:text-2xl text-center tracking-widest"
-            color="#FFD3EE"
-            className="-mb-10 md:mb-4"
-          >
-            偶像會從粉絲寫的訊息中選出最愛留言
+          <p className="mt-4 md:mt-10 text-white md:text-2xl text-center tracking-wider leading-150% font-noto">
+            偶像會從粉絲寫的訊息中選出
             <br />
-            並回信，偶像的回信將被鑄造為NFT
+            最愛留言並回信給粉絲！
             <br />
             <br />
-            只要照著以下流程就有機會擁有
-          </OutlinedHeading>
+            偶像的回信將被鑄造為Special Impact NFT
+            <br />
+            永存偶像對你的愛
+          </p>
         </>
       )}
       <div className="pb-4 mb-navbar-height" id="how-to" />

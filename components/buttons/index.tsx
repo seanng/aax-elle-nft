@@ -3,9 +3,7 @@ export { BLCursorButton } from './BLCursorButton'
 export { DonationButton } from './DonationButton'
 export { TwSpcaButton } from './TwSpcaButton'
 export { CaretDownButton } from './CaretDownButton'
-export { SquareIGButton } from './SquareIGButton'
-export { SquareDLButton } from './SquareDLButton'
-export { SquareFBButton } from './SquareFBButton'
+export { SquareShareButton } from './SquareShareButton'
 export { ModalCloseButton } from './ModalCloseButton'
 
 // Primary Buttons
