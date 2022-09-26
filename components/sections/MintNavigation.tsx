@@ -11,7 +11,8 @@ import {
   AddressErrorButton,
 } from 'components'
 import { useDetectionContext, useWeb3Context } from 'context'
-import { CORRECT_HEX_CHAIN, SAFARI } from 'shared/constants'
+import { CORRECT_HEX_CHAIN } from 'utils/config'
+import { SAFARI } from 'shared/constants'
 
 export function MintNavigation() {
   return (

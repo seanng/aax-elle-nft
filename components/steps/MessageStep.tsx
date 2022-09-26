@@ -173,7 +173,7 @@ export function MessageStep({
             px-[12px]
             text-[26px]
             leading-[140%]
-            bg-transparent
+            bg-black
             border-0
             rounded-none
             resize-none

@@ -7,20 +7,6 @@ export const HERO_CANVAS_HEIGHT = 1030
 export const INTRO_CANVAS_WIDTH = 1920
 export const INTRO_CANVAS_HEIGHT = 1080
 
-export const CORRECT_NETWORK =
-  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? 'homestead' : 'rinkeby'
-
-export const isTestingLocalhostNode = false // if false, we directly test rinkeby.
-
-export const CORRECT_HEX_CHAIN =
-  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-    ? '0x1'
-    : isTestingLocalhostNode
-    ? process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
-      ? '0x4'
-      : '0x539'
-    : '0x4'
-
 // sale phases
 export const NOT_STARTED = 'not started'
 export const PUBLIC_SALE = 'public sale'
@@ -53,3 +39,8 @@ export const DESKTOP = 'desktop'
 export const CHROME = 'chrome'
 export const SAFARI = 'safari'
 export const OTHER_BROWSER = 'other browser'
+
+// networks
+export const HOMESTEAD = 'homestead'
+export const LOCALHOST = 'localhost'
+export const RINKEBY = 'rinkeby'

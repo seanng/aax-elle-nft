@@ -151,7 +151,7 @@ const LandingPage: NextPage = () => {
         有個<mark className="bg-lime">秘密</mark>藏在心裡好久了{' '}
         到了嘴邊總說不出口
         <br />
-        雖然分隔兩地 那些曾經有好多回憶<mark className="bg-lime">回憶</mark>
+        雖然分隔兩地 那些曾經有好多<mark className="bg-lime">回憶</mark>
         <br />
         好想寫點東西給<mark className="bg-lime">未來</mark>的自己
       </p>

@@ -13,9 +13,7 @@ import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
 import { useState } from 'react'
 import { Files, MintForm, MintResponseData } from 'shared/types'
 import { useWeb3Context } from 'context'
-import { salePhase } from 'utils/config'
-
-const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
+import { salePhase, CONTRACT_ADDRESS } from 'utils/config'
 
 export function useMint() {
   const { web3Provider, address, balance } = useWeb3Context()
@@ -23,7 +21,7 @@ export function useMint() {
 
   const contract = web3Provider
     ? new ethers.Contract(
-        contractAddress as string,
+        CONTRACT_ADDRESS as string,
         contractABI.abi,
         web3Provider.getSigner()
       )
@@ -77,18 +75,20 @@ export function useMint() {
     setEthToNtd(Number(data.data?.rates?.TWD))
   }
 
-  const privateSaleMint = async () => {
+  const privateSaleMint = async (onMetamaskConfirm: () => void) => {
     const hasWhitelistToken = await contract?.callStatic.ownsWhitelistToken(
       address
     )
     if (!hasWhitelistToken) throw new Error(NO_WHITELIST_TOKEN)
-    return executeMint(true)
+    return executeMint(true, onMetamaskConfirm)
   }
 
-  const publicSaleMint = () => executeMint(false)
+  const publicSaleMint = (onMetamaskConfirm: () => void) =>
+    executeMint(false, onMetamaskConfirm)
 
   const executeMint = async (
-    isPrivateSale: boolean
+    isPrivateSale: boolean,
+    onMetamaskConfirm: () => void
   ): Promise<MintResponseData> => {
     if (!contract) return
     const mintOpts = {
@@ -105,6 +105,7 @@ export function useMint() {
     const tokenIdBN = await contract.callStatic[mintMethod](mintOpts)
     const messageTokenId = Number(tokenIdBN.toString())
     await contract[mintMethod](mintOpts)
+    onMetamaskConfirm()
 
     // TODO: Upload images & HTMLs to S3
     await uploadOneFile(PUBLIC, `${messageTokenId}.png`, files.beforeOpenImage)

@@ -29,6 +29,8 @@ const transitions = {
 
 const MintPage: NextPage = () => {
   const [isLoading, setIsLoading] = useState(false)
+  const [showsSpinner, setShowsSpinner] = useState(false)
+  const [spinnerText, setSpinnerText] = useState('')
   const [mintResponseData, setMintResponseData] = useState<MintResponseData>()
   const router = useRouter()
   const {
@@ -66,6 +68,15 @@ const MintPage: NextPage = () => {
   const ownsWhitelistToken = async (address: string) =>
     contract?.callStatic.ownsWhitelistToken(address)
 
+  const onMetamaskConfirm = () => {
+    setShowsSpinner(true)
+    setSpinnerText('')
+  }
+
+  useEffect(() => {
+    return () => setShowsSpinner(false)
+  }, [])
+
   useEffect(() => {
     if (browser === SAFARI) {
       setIsWrongBrowserModalOpen(true)
@@ -100,8 +111,8 @@ const MintPage: NextPage = () => {
           <PasscodeStep updateForm={updateForm} />
           <DonationStep
             {...{
-              privateSaleMint,
-              publicSaleMint,
+              privateSaleMint: () => privateSaleMint(onMetamaskConfirm),
+              publicSaleMint: () => publicSaleMint(onMetamaskConfirm),
               ethToNtd,
               calcEthToNtd,
               calcMintGasFee,
@@ -114,12 +125,15 @@ const MintPage: NextPage = () => {
               mintGasFee,
               contract,
               setMintResponseData,
+              setSpinnerText,
             }}
           />
           <SuccessStep data={mintResponseData} files={files} />
         </StepWizard>
       </MintLayout>
-      {isLoading && <SpinningOverlay />}
+      {isLoading && (
+        <SpinningOverlay showsSpinner={showsSpinner} text={spinnerText} />
+      )}
       {salePhase === NOT_STARTED && (
         <div className="fixed top-0 right-0 left-0 bottom-0 z-30 bg-black-rgba-70 backdrop-blur-sm text-center">
           <GreenLipsIcon className="mt-40 mb-10 mx-auto" />

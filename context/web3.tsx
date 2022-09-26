@@ -7,7 +7,7 @@ import {
 } from 'react'
 import { useWeb3 } from 'hooks'
 import { Web3ProviderState, web3InitialState } from 'reducers'
-import { CORRECT_HEX_CHAIN } from 'shared/constants'
+import { CORRECT_HEX_CHAIN } from 'utils/config'
 import { NetworkChangeModal, ConnectModal } from 'components'
 
 const Web3Context = createContext<

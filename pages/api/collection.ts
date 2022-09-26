@@ -1,7 +1,7 @@
 import * as service from 'backend/services/mints'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
-import { CORRECT_NETWORK } from 'shared/constants'
+import { CORRECT_NETWORK } from 'utils/config'
 import { Contract, providers, Wallet, Signer } from 'ethers'
 
 const defaultGetSigner = () =>

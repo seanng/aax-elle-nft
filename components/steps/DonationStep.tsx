@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { StepWizardChildProps } from 'react-step-wizard'
 import { salePhase } from 'utils/config'
 import { ethers } from 'ethers'
@@ -45,6 +45,7 @@ interface Props extends Partial<StepWizardChildProps> {
   form: MintForm
   setIsLoading: (b: boolean) => void
   setMintResponseData: (data: MintResponseData) => void
+  setSpinnerText: Dispatch<SetStateAction<string>>
 }
 
 export function DonationStep({
@@ -62,6 +63,7 @@ export function DonationStep({
   publicSaleMint,
   setMintResponseData,
   updateForm,
+  setSpinnerText,
   ...wizard
 }: Props) {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
@@ -90,6 +92,7 @@ export function DonationStep({
     }
 
     setIsLoading(true)
+    setSpinnerText('請在MetaMask裡確認鑄造')
     let mintResponseData: MintResponseData
     try {
       if (salePhase === PRIVATE_SALE) {
