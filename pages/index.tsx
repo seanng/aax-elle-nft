@@ -167,39 +167,42 @@ const LandingPage: NextPage = () => {
       </OutlinedHeading>
 
       <FlipCardsSection className="mb-16 md:mb-40" />
-
-      <div className="hidden md:flex space-x-8 mb-8">
-        <HowToHeartIcon width={50} height={50} />
-        <TinyPinkSmiley width={50} height={50} />
-        <TinyPinkThumb width={50} height={50} />
-        <TinyPinkCat width={50} height={50} />
-      </div>
-      <div className="flex md:hidden space-x-8 mb-4">
-        <HowToHeartIcon width={24} height={24} />
-        <TinyPinkSmiley />
-        <TinyPinkThumb />
-        <TinyPinkCat />
-      </div>
-      <OutlinedHeading
-        color="#FF66FF"
-        className="mb-4 text-center tracking-widest leading-150% md:leading-150% font-bold"
-      >
-        想與喜愛的偶像共同
-        <br />
-        擁有最特別的紀念物？
-      </OutlinedHeading>
-      <OutlinedHeading
-        fontSizeClass="text-base md:text-2xl text-center tracking-widest"
-        color="#FFD3EE"
-        className="-mb-10 md:mb-4"
-      >
-        偶像會從粉絲寫的訊息中選出最愛留言
-        <br />
-        並回信，偶像的回信將被鑄造為NFT
-        <br />
-        <br />
-        只要照著以下流程就有機會擁有
-      </OutlinedHeading>
+      {[NOT_STARTED, PRIVATE_SALE].includes(salePhase) ?? (
+        <>
+          <div className="hidden md:flex space-x-8 mb-8">
+            <HowToHeartIcon width={50} height={50} />
+            <TinyPinkSmiley width={50} height={50} />
+            <TinyPinkThumb width={50} height={50} />
+            <TinyPinkCat width={50} height={50} />
+          </div>
+          <div className="flex md:hidden space-x-8 mb-4">
+            <HowToHeartIcon width={24} height={24} />
+            <TinyPinkSmiley />
+            <TinyPinkThumb />
+            <TinyPinkCat />
+          </div>
+          <OutlinedHeading
+            color="#FF66FF"
+            className="mb-4 text-center tracking-widest leading-150% md:leading-150% font-bold"
+          >
+            想與喜愛的偶像共同
+            <br />
+            擁有最特別的紀念物？
+          </OutlinedHeading>
+          <OutlinedHeading
+            fontSizeClass="text-base md:text-2xl text-center tracking-widest"
+            color="#FFD3EE"
+            className="-mb-10 md:mb-4"
+          >
+            偶像會從粉絲寫的訊息中選出最愛留言
+            <br />
+            並回信，偶像的回信將被鑄造為NFT
+            <br />
+            <br />
+            只要照著以下流程就有機會擁有
+          </OutlinedHeading>
+        </>
+      )}
       <div className="pb-4 mb-navbar-height" id="how-to" />
       <HowToSection />
       <Link href="/mint">
