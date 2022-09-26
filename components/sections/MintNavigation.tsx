@@ -97,6 +97,9 @@ const Nav = () => (
     <Link href="/">
       <a>Facebook</a>
     </Link>
+    <Link href="/faq">
+      <a>FAQ</a>
+    </Link>
   </div>
 )
 
