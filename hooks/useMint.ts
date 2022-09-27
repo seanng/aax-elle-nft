@@ -52,7 +52,6 @@ export function useMint() {
     passcode: 'asdfasdf',
     minterName: 'Sean',
     receiverName: 'Patrick',
-    mintedAt: new Date(),
     donationInput: 0,
     donationInEth: 0,
   })
@@ -125,7 +124,6 @@ export function useMint() {
       minterWallet: address,
       ethDonated: form.donationInEth.toString(),
       passcode: form.passcode,
-      mintedAt: new Date(),
     })
 
     return mintData

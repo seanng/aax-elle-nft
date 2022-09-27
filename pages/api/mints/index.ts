@@ -13,7 +13,6 @@ interface PostHandlerRequest extends NextApiRequest {
     ethDonated: string
     passcode: string
     messageTokenId: number
-    mintedAt: string
   }
 }
 
@@ -25,7 +24,6 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
       check('minterWallet').exists(),
       check('ethDonated').exists(),
       check('passcode').exists(),
-      check('mintedAt').exists(),
       check('messageTokenId').exists().isNumeric(),
     ])(req, res))
   )
@@ -49,7 +47,6 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
     minterWallet: req.body.minterWallet,
     ethDonated: req.body.ethDonated,
     passcode: req.body.passcode,
-    mintedAt: req.body.mintedAt,
     messageTokenId: req.body.messageTokenId,
   })
 

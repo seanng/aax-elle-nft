@@ -71,7 +71,7 @@ export function MessageStep({
       aroundText: `${minterName} wants to give you something, ${receiverName}!`,
     })
     setFiles(files)
-    updateForm({ ...values, mintedAt: new Date() })
+    updateForm(values)
     wizard.nextStep && wizard.nextStep()
     setIsLoading(false)
   }

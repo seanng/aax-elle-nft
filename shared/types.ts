@@ -23,7 +23,6 @@ export interface MintForm {
   passcode: string
   minterName: string
   receiverName: string
-  mintedAt: Date
   donationInput: number
   donationInEth: number
 }

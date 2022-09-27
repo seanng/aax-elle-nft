@@ -6,7 +6,6 @@ import * as mintsService from 'backend/services/mints'
 const validRequestBody = {
   minterEmail: 'abc@def.com' as any,
   minterWallet: 'abcd',
-  mintedAt: new Date(),
   passcode: '',
   message: 'test message' as any,
   ethDonated: '0.000123' as any,
