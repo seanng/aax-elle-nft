@@ -6,7 +6,8 @@ const compStyle = {
   position: 'absolute',
   width: '350px',
   height: '350px',
-  padding: '37.5px',
+  padding: '35px',
+  boxSizing: 'border-box',
 } as React.CSSProperties
 
 const innerWrapperStyle = {
