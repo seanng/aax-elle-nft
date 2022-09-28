@@ -39,15 +39,15 @@ export interface NFTParametersBasic {
 export interface NFTParameters {
   aroundText: string
   message: string
-  backgroundStyle: string
-  gridIconStyle1: string
-  gridIconStyle2: string
-  gridIconTemplate1?: FC
-  gridIconTemplate2?: FC
-  aroundTextColor: string
   messageColor: string
-  opacity?: string
+  gridIconTemplate?: FC
+  backgroundStyle: string
+  gridStyle: string
+  aroundTextColor: string
+  iconOutlineColor?: string
+  iconFillColor?: string
   signature?: string
+  opacity?: string
 }
 
 export interface KolDropdownListItem {

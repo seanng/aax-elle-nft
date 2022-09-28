@@ -25,8 +25,7 @@ function CompsNFTOpened({
     aroundText,
     message,
     backgroundStyle,
-    gridIconStyle2,
-    gridIconTemplate2,
+    gridStyle,
     aroundTextColor,
     messageColor,
     opacity = '0.25',
@@ -97,8 +96,7 @@ function CompsNFTOpened({
         setIsCompReady={setIsBackgroundReady}
       />
       <CompsNFTGrid
-        color={gridIconStyle2}
-        Template={gridIconTemplate2}
+        color={gridStyle}
         opacity={opacity}
         isCompReady={isGridReady}
         setIsCompReady={setIsGridReady}
