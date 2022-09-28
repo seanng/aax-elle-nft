@@ -23,10 +23,12 @@ interface Props {
 function CompsNFTUnopen({
   data: {
     aroundText,
+    gridIconTemplate,
     backgroundStyle,
-    gridIconStyle1,
-    gridIconTemplate1,
+    gridStyle,
     aroundTextColor,
+    iconOutlineColor,
+    iconFillColor,
     signature,
   },
   setImage,
@@ -97,8 +99,10 @@ function CompsNFTUnopen({
         setIsCompReady={setIsBackgroundReady}
       />
       <CompsNFTGrid
-        color={gridIconStyle1}
-        Template={gridIconTemplate1}
+        color={gridStyle}
+        iconOutlineColor={iconOutlineColor}
+        iconFillColor={iconFillColor}
+        Template={gridIconTemplate}
         isCompReady={isGridReady}
         setIsCompReady={setIsGridReady}
       />
