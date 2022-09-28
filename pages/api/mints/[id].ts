@@ -2,7 +2,8 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import sendgrid from 'lib/sendgrid'
 import * as service from 'backend/services/mints'
 import { makeS3 } from 'lib/aws'
-import { S3_BUCKET } from 'shared/constants'
+import { FROM_EMAIL, S3_BUCKET, S3_BASE_URL } from 'shared/constants'
+import { emailTemplateIds } from 'utils/config'
 
 async function putHandler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query as { id: string }
@@ -30,7 +31,7 @@ async function unlockSecret(req: NextApiRequest, res: NextApiResponse) {
       return res.status(401).send('Invalid Passcode')
     }
 
-    await service.update({ id }, { openedAt: new Date() })
+    const mint = await service.update({ id }, { openedAt: new Date() })
 
     // Update public NFT image
     const s3 = await makeS3()
@@ -49,6 +50,17 @@ async function unlockSecret(req: NextApiRequest, res: NextApiResponse) {
         CopySource: `${S3_BUCKET}/after/${data.messageTokenId}.png`,
       })
       .promise()
+
+    if (mint.minterEmail) {
+      await sendgrid.send({
+        templateId: emailTemplateIds.RECEIVER_OPEN,
+        dynamicTemplateData: {
+          image_url: `${S3_BASE_URL}/public/${req.body.messageTokenId}.png`,
+        },
+        to: mint.minterEmail,
+        from: FROM_EMAIL,
+      })
+    }
 
     res.status(200).send({ success: 'ok' })
   } catch (error) {
