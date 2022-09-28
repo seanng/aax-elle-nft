@@ -9,7 +9,7 @@ const compStyle = {
 } as React.CSSProperties
 
 const imgStyle = {
-  height: '37.5px',
+  height: '35px',
   width: 'auto',
 }
 
