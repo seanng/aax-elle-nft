@@ -6,7 +6,7 @@ if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 const NEW_BASE_URI =
   'https://aax-elle-nft-git-dev-seanng.vercel.app/api/metadata/'
 
-async function setSalePhase() {
+async function setBaseTokenURI() {
   if (!network.config.from)
     throw new Error(`no from address configured in ${network.name}!`)
 
@@ -17,7 +17,7 @@ async function setSalePhase() {
   await contract.setBaseURI(NEW_BASE_URI)
 }
 
-setSalePhase()
+setBaseTokenURI()
   .then(() => process.exit(0))
   .catch((error) => {
     console.error(error)
