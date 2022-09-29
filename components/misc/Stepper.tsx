@@ -33,7 +33,7 @@ export function Stepper({
   if (salePhase === FINISHED) {
     return (
       <div
-        className="relative h-11 bg-tomato text-tomato font-mono font-medium italic text-4xl w-full leading-120% overflow-x-hidden px-6"
+        className="relative text-center h-11 bg-tomato text-tomato font-mono font-medium italic text-4xl w-full leading-120% overflow-hidden px-6 "
         style={{
           textShadow:
             '-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black',

@@ -82,8 +82,6 @@ const UploadImagesPage: NextPage = () => {
     }
   }, [files])
 
-  // if (isUploading) return
-
   return canAccess ? (
     <div className="flex-col p-4">
       <div>
