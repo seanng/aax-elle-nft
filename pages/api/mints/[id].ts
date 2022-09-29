@@ -55,7 +55,7 @@ async function unlockSecret(req: NextApiRequest, res: NextApiResponse) {
       await sendgrid.send({
         templateId: emailTemplateIds.RECEIVER_OPEN,
         dynamicTemplateData: {
-          image_url: `${S3_BASE_URL}/public/${req.body.messageTokenId}.png`,
+          image_url: `${S3_BASE_URL}/public/${mint.messageTokenId}.png?ello`,
         },
         to: mint.minterEmail,
         from: FROM_EMAIL,

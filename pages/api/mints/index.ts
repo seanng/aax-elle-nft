@@ -82,6 +82,7 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
       templateId,
       dynamicTemplateData: {
         unlock_url: `${metadata.siteUrl}/open/${slug}`,
+        passcode: req.body.passcode,
         opensea_url: `${openseaBaseUrl}/${CONTRACT_ADDRESS}/${req.body.messageTokenId}`,
         KOL_name: req.body.kolName ?? '你喜歡的藝人',
         image_url: imgUrl,
