@@ -3,6 +3,9 @@ import { createMocks, RequestMethod } from 'node-mocks-http'
 import randomstring from 'randomstring'
 import * as mintsService from 'backend/services/mints'
 
+jest.mock('lib/sendgrid')
+jest.mock('@sendgrid/mail')
+
 const validRequestBody = {
   minterEmail: 'abc@def.com' as any,
   minterWallet: 'abcd',

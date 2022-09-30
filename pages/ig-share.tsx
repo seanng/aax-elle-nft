@@ -59,7 +59,10 @@ const IgSharePage: NextPage = () => {
         <IgShareInstructions />
         <div className="flex justify-center w-80 md:w-[650px] text-orange space-x-2 mb-4 md:mb-16">
           <WarningIcon className="mt-1" width={16} height={16} />
-          <div>鑄造告白才能得到彩色版 Impact NFT 並參加抽獎喔！</div>
+          <div>
+            你的告白完成到一半摟！想要把你心中的愛真正分享給愛的收件者並獲得抽獎資格嗎？趕緊去鑄造一張Impact
+            NFT吧！
+          </div>
         </div>
 
         {previewImage ? (

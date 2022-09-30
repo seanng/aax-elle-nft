@@ -10,13 +10,15 @@ import {
   ToastMessage,
   ResponsiveSecondaryButton,
   SquareShareButton,
+  WarningIcon,
 } from 'components'
 import axios from 'lib/axios'
 import { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { S3_BASE_URL } from 'shared/constants'
+import { FINISHED, S3_BASE_URL } from 'shared/constants'
+import { salePhase } from 'utils/config'
 
 interface Props {
   slugExists: boolean
@@ -115,41 +117,53 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
           </div>
         ) : (
           <div className="w-80 flex flex-col items-center pt-5">
-            <GreenLockIcon height={50} width={50} className="mb-3" />
-            <OutlinedHeading>解鎖秘密告白</OutlinedHeading>
-            <p className="my-3 md:mt-4 md:mb-7 text-center md:text-2xl w-[275px] leading-150% tracking-wide">
-              輸入密碼解鎖秘密！
-            </p>
+            {salePhase === FINISHED && (
+              <div className="bg-orange p-4 flex text-white space-x-4 mb-8 items-center">
+                <WarningIcon color="white" width={32} height={32} />
+                <p className="font-medium md:text-xl">活動已結束</p>
+              </div>
+            )}
+            <>
+              <GreenLockIcon height={50} width={50} className="mb-3" />
+              <OutlinedHeading>解鎖秘密告白</OutlinedHeading>
+              {salePhase !== FINISHED && (
+                <p className="mt-5 md:mt-8 text-center md:text-2xl w-[275px] leading-150% tracking-wide">
+                  輸入密碼解鎖秘密！
+                </p>
+              )}
+            </>
             <iframe
               height={350}
               width={350}
               src={`${S3_BASE_URL}/public/${data.messageTokenId}.html?a`}
-              className="mb-6 md:mb-10"
+              className="mb-6 mt-5 md:mt-8 md:mb-10"
             />
-            <form onSubmit={handleSubmit} className="text-center w-full">
-              <input
-                id="passcode"
-                name="passcode"
-                placeholder="輸入專屬密碼"
-                type="text"
-                value={inputValue}
-                className="text-black border-lime w-full font-mono placeholder-slate-500 bg-lime border-transparent focus:border-transparent focus:ring-0 md:p-4 md:text-lg"
-                onChange={handleInputChange}
-              />
-              {errorMsg && (
-                <div className="w-full flex items-center mt-3">
-                  <FormErrorIcon />
-                  <span className="ml-2 text-sm">{errorMsg}</span>
-                </div>
-              )}
-              <ResponsivePrimaryButton
-                className="mx-auto mt-5 md:mt-12 mb-10"
-                disabled={inputValue === ''}
-                type="submit"
-              >
-                解鎖
-              </ResponsivePrimaryButton>
-            </form>
+            {salePhase !== FINISHED && (
+              <form onSubmit={handleSubmit} className="text-center w-full">
+                <input
+                  id="passcode"
+                  name="passcode"
+                  placeholder="輸入專屬密碼"
+                  type="text"
+                  value={inputValue}
+                  className="text-black border-lime w-full font-mono placeholder-slate-500 bg-lime border-transparent focus:border-transparent focus:ring-0 md:p-4 md:text-lg"
+                  onChange={handleInputChange}
+                />
+                {errorMsg && (
+                  <div className="w-full flex items-center mt-3">
+                    <FormErrorIcon />
+                    <span className="ml-2 text-sm">{errorMsg}</span>
+                  </div>
+                )}
+                <ResponsivePrimaryButton
+                  className="mx-auto mt-5 md:mt-12 mb-10"
+                  disabled={inputValue === ''}
+                  type="submit"
+                >
+                  解鎖
+                </ResponsivePrimaryButton>
+              </form>
+            )}
           </div>
         )}
       </div>

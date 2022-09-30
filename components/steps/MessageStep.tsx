@@ -23,6 +23,7 @@ interface Props extends Partial<StepWizardChildProps> {
   openConnectModal: () => void
   address?: string | null
   setIsLoading: (b: boolean) => void
+  setShowsSpinner: (b: boolean) => void
   ownsWhitelistToken: (a?: string | null) => Promise<boolean>
   isConnectModalOpen: boolean
 }
@@ -33,6 +34,7 @@ export function MessageStep({
   ownsWhitelistToken,
   openConnectModal,
   setIsLoading,
+  setShowsSpinner,
   isConnectModalOpen,
   address,
   ...wizard
@@ -45,7 +47,9 @@ export function MessageStep({
   const [isProcessingMint, setIsProcessingMint] = useState(false)
 
   const onWalletConnect = async (address: string) => {
+    setShowsSpinner(true)
     setIsLoading(true)
+    // @ts-ignore
     if (salePhase === PRIVATE_SALE) {
       const hasWhitelistToken = await ownsWhitelistToken(address)
       if (!hasWhitelistToken) {
@@ -73,6 +77,7 @@ export function MessageStep({
     setFiles(files)
     updateForm(values)
     wizard.nextStep && wizard.nextStep()
+    setShowsSpinner(false)
     setIsLoading(false)
   }
 

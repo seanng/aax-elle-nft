@@ -9,8 +9,8 @@ export const INTRO_CANVAS_HEIGHT = 1080
 
 // sale phases
 export const NOT_STARTED = 'not started'
-export const PUBLIC_SALE = 'public sale'
 export const PRIVATE_SALE = 'private sale'
+export const PUBLIC_SALE = 'public sale'
 export const FINISHED = 'finished'
 
 // error types
@@ -44,3 +44,11 @@ export const OTHER_BROWSER = 'other browser'
 export const HOMESTEAD = 'homestead'
 export const LOCALHOST = 'localhost'
 export const RINKEBY = 'rinkeby'
+
+// airdrop recipient
+export const PARTICIPANT = 'participant'
+export const WINNER = 'winner'
+export const KOL = 'key opinion leader'
+
+// email service
+export const FROM_EMAIL = 'notify@elleverse.io'
