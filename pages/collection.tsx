@@ -13,8 +13,13 @@ import axios from 'lib/axios'
 import { Mint } from '@prisma/client'
 import { useDetectionContext, useWeb3Context } from 'context'
 import Link from 'next/link'
-import { S3_BASE_URL, SAFARI } from 'shared/constants'
-import { metadata } from 'utils/config'
+import { SAFARI } from 'shared/constants'
+import {
+  contractAddress,
+  metadata,
+  openseaBaseUrl,
+  s3BaseUrl,
+} from 'utils/config'
 import { useRouter } from 'next/router'
 
 const LOADING = 'LOADING'
@@ -160,15 +165,22 @@ const HasTokensView = ({ tokens }: { tokens: Mint[] }) => {
             <iframe
               height={350}
               width={350}
-              src={`${S3_BASE_URL}/public/${t.messageTokenId}.html`}
+              src={`${s3BaseUrl}/public/${t.messageTokenId}.html`}
             />
             <LinkAndPasscode
               link={`${metadata.siteUrl}/open/${t.slug}`}
               passcode={t.passcode}
-              className="mt-6 mb-10"
+              className="my-6"
             />
+            <a
+              href={`${openseaBaseUrl}/${contractAddress}/${t.messageTokenId}`}
+              target="__blank"
+              className="font-bold text-[#2081E2]"
+            >
+              前往 OpenSea
+            </a>
             {i < tokens.length - 1 && (
-              <div className="flex flex-col items-center md:hidden">
+              <div className="flex flex-col items-center md:hidden mt-10">
                 <svg
                   width="48"
                   height="48"

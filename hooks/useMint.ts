@@ -13,7 +13,7 @@ import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
 import { useState } from 'react'
 import { Files, MintForm, MintResponseData } from 'shared/types'
 import { useWeb3Context } from 'context'
-import { salePhase, CONTRACT_ADDRESS } from 'utils/config'
+import { contractAddress, salePhase } from 'utils/config'
 
 export function useMint() {
   const { web3Provider, address, balance } = useWeb3Context()
@@ -21,7 +21,7 @@ export function useMint() {
 
   const contract = web3Provider
     ? new ethers.Contract(
-        CONTRACT_ADDRESS as string,
+        contractAddress as string,
         contractABI.abi,
         web3Provider.getSigner()
       )
@@ -31,6 +31,7 @@ export function useMint() {
     if (contract && web3Provider) {
       try {
         const mintMethod =
+          // @ts-ignore
           salePhase === PUBLIC_SALE ? 'publicSaleMint' : 'privateSaleMint'
         const functionFee = await contract.estimateGas[mintMethod]({
           value: ethers.utils.parseEther((Number(balance) * 0.95).toString()),

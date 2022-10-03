@@ -135,10 +135,6 @@ export function MessageStep({
   // https://stackoverflow.com/a/46118025/6007700
   // https://stackoverflow.com/a/65893635/6007700
 
-  const aroundText = encrypt(
-    `Hi ${values.receiverName}, ${values.minterName} wants to give you this...`
-  )
-
   return (
     <div className="flex flex-col items-center font-noto h-full">
       <OutlinedHeading className="mt-6 mb-6 md:mb-10">
@@ -217,7 +213,9 @@ export function MessageStep({
         <a
           className="leading-0"
           target="__blank"
-          {...(!shouldDisableButtons && { href: `/ig-share?at=${frameText}` })}
+          {...(!shouldDisableButtons && {
+            href: `/ig-share?at=${encrypt(frameText)}`,
+          })}
         >
           <ResponsiveSecondaryButton disabled={shouldDisableButtons}>
             分享告白

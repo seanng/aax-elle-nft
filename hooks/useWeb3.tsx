@@ -7,11 +7,11 @@ import {
   web3InitialState,
   web3Reducer,
 } from 'reducers'
-import { CORRECT_HEX_CHAIN, CORRECT_NETWORK } from 'utils/config'
+import { correctHexChain, correctNetwork } from 'utils/config'
 import { HOMESTEAD } from 'shared/constants'
 
 const web3ModalNetwork =
-  CORRECT_NETWORK === HOMESTEAD ? 'mainnet' : CORRECT_NETWORK
+  correctNetwork === HOMESTEAD ? 'mainnet' : correctNetwork
 
 let web3Modal: Web3Modal | null
 
@@ -40,10 +40,10 @@ export function useWeb3() {
       const network = await web3Provider.getNetwork()
       // If network is not Mainnet (prod), localhost (dev), Rinkeby (preview), prompt user to swap to correct network
 
-      if (window.ethereum && network.name !== CORRECT_NETWORK) {
+      if (window.ethereum && network.name !== correctNetwork) {
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: CORRECT_HEX_CHAIN }],
+          params: [{ chainId: correctHexChain }],
         })
       }
 

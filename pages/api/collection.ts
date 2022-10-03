@@ -1,13 +1,13 @@
 import * as service from 'backend/services/mints'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
-import { CORRECT_NETWORK } from 'utils/config'
+import { correctNetwork, contractAddress } from 'utils/config'
 import { Contract, providers, Wallet, Signer } from 'ethers'
 
 const defaultGetSigner = () =>
   new Wallet(
     process.env.WALLET_PRIVATE_KEY as string,
-    providers.getDefaultProvider(CORRECT_NETWORK, {
+    providers.getDefaultProvider(correctNetwork, {
       etherscan: process.env.ETHERSCAN_API_KEY,
       infura: process.env.INFURA_PROJECT_KEY,
     })
@@ -18,9 +18,7 @@ const getSigner: () => Signer = {
   rinkeby: defaultGetSigner,
   homestead: defaultGetSigner,
   default: defaultGetSigner,
-}[CORRECT_NETWORK ?? 'default']
-
-const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
+}[correctNetwork ?? 'default']
 
 async function getHandler(req: NextApiRequest, res: NextApiResponse) {
   const { address } = req.query

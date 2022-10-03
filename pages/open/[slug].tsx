@@ -17,8 +17,8 @@ import { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { FINISHED, S3_BASE_URL } from 'shared/constants'
-import { salePhase } from 'utils/config'
+import { FINISHED } from 'shared/constants'
+import { salePhase, s3BaseUrl } from 'utils/config'
 
 interface Props {
   slugExists: boolean
@@ -40,7 +40,7 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
   const handleDLClick = () => {
     const a = document.createElement('a')
     document.body.appendChild(a)
-    a.href = `${S3_BASE_URL}/public/${data.messageTokenId}.png`
+    a.href = `${s3BaseUrl}/public/${data.messageTokenId}.png`
     a.download = 'My_Secret.png'
     a.click()
     toast.success(
@@ -96,7 +96,7 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
             </OutlinedHeading>
             <div className="flex flex-col mb-20 md:mb-28 w-full items-center">
               <iframe
-                src={`${S3_BASE_URL}/public/${data.messageTokenId}.html?b`}
+                src={`${s3BaseUrl}/public/${data.messageTokenId}.html?b`}
                 className="mb-6 md:mb-10 scale-100 md:scale-[1.5] h-[350px] w-[350px] md:h-[525px] md:w-[525px] origin-top-left max-w-full"
               />
             </div>
@@ -135,7 +135,7 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
             <iframe
               height={350}
               width={350}
-              src={`${S3_BASE_URL}/public/${data.messageTokenId}.html?a`}
+              src={`${s3BaseUrl}/public/${data.messageTokenId}.html?a`}
               className="mb-6 mt-5 md:mt-8 md:mb-10"
             />
             {salePhase !== FINISHED && (

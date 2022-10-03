@@ -1,16 +1,11 @@
-import {
-  NOT_STARTED,
-  HOMESTEAD,
-  RINKEBY,
-  LOCALHOST,
-  PRIVATE_SALE,
-  FINISHED,
-} from 'shared/constants'
+/**
+ * This file contains app-wide configuration options.
+ */
+
+import { HOMESTEAD, LOCALHOST, NOT_STARTED, RINKEBY } from 'shared/constants'
 import { KolDropdownListItem } from 'shared/types'
 
-export const salePhase = PRIVATE_SALE
-// export const salePhase = FINISHED
-// export const salePhase = process.env.NEXT_PUBLIC_SALE_PHASE ?? NOT_STARTED
+export const salePhase = process.env.NEXT_PUBLIC_SALE_PHASE ?? NOT_STARTED
 
 export const emailTemplateIds = {
   PRIVATE_SALE_MINT: 'd-0ba6a6e9fcfc428f85116aee8a0eb368',
@@ -23,75 +18,55 @@ export const emailTemplateIds = {
 }
 
 export const metadata = {
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://elleverse.io',
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://elleverse.io',
   siteTitle: 'NFT Mintverse',
   siteDesc: 'Enter the stylish metaverse to shill you love.',
 }
-
-export const CORRECT_HEX_CHAIN =
-  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-    ? '0x1' // homestead
-    : process.env.NEXT_PUBLIC_VERCEL_ENV
-    ? '0x4' // rinkeby
-    : process.env.NEXT_PUBLIC_USES_LOCALHOST_NETWORK
-    ? '0x539' // localhost
-    : '0x4' // rinkeby
-
-export const CORRECT_NETWORK =
-  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-    ? HOMESTEAD
-    : process.env.NEXT_PUBLIC_VERCEL_ENV
-    ? RINKEBY
-    : process.env.NEXT_PUBLIC_USES_LOCALHOST_NETWORK
-    ? LOCALHOST
-    : RINKEBY
-
-export const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
 
 export const kolDropdownList = [
   {
     id: 1,
     name: '鄧紫棋',
-    frameText: '我的每一次心跳 你是否听见',
+    frameText:
+      'A long, long time ago... I can still remember How that music used to make me smile.',
   },
   {
     id: 2,
     name: 'WeiBird',
     frameText:
-      '妳的聲音 解開了故事的謎語 落下一萬年的約定 大樹下的妳 紅色圍巾 手心裡捧的雨 哭了笑了 除了妳還是妳',
+      "And I knew if I had my chance That I could make those people dance And, maybe, they'd be happy for a while.",
   },
   {
     id: 3,
     name: 'EggPlantEgg',
-    frameText:
-      '倒佇故鄉街市的中央 笑看世界咧轉踅 你是我 烏暗的心唯一的光 親像是眼前的燈火',
+    frameText: "But february made me shiver With every paper I'd deliver.",
   },
   {
     id: 4,
     name: '動力火車',
-    frameText: '難以置信 我沒被放棄 還有個妳 等在結局',
+    frameText: "Bad news on the doorstep; I couldn't take one more step.",
   },
   {
     id: 5,
     name: '黃明志',
     frameText:
-      '對不起是我太任性 講真話總讓人傷心 或許不該太直白 超直白 I’m So Sorry 又讓你森七七',
+      "I can't remember if I cried When I read about his widowed bride,",
   },
   {
     id: 6,
     name: '許光漢',
-    frameText: '還記得嗎 那場煙火 它見證我們倒數愛情時 特別冷漠',
+    frameText: 'But something touched me deep inside The day the music died.',
   },
   {
     id: 7,
     name: '蔡健雅',
-    frameText: '傷口 都平復 只是不確定 敢不敢再投入   才逞強說 習慣獨立自主',
+    frameText:
+      'So bye-bye, miss american pie. Drove my chevy to the levee, But the levee was dry.',
   },
   {
     id: 8,
     name: '盧廣仲',
-    frameText:
-      '今天 又是雨時多雲偶陣晴 潮濕的風景 愛情不合時宜 我想 我能夠為你淋一場雨 慶祝 哪一天 我擁抱著你',
+    frameText: `And them good old boys were drinkin' whiskey and rye Singin', "this'll be the day that I die. "this'll be the day that I die."`,
   },
   {
     id: 9,
@@ -102,6 +77,39 @@ export const kolDropdownList = [
   {
     id: 10,
     name: '吳青峰',
-    frameText: '寂寞的太空人，當你回到陸地，回到平凡而不凡的生活裡',
+    frameText: `If the Bible tells you so? Do you believe in rock 'n roll, Can music save your mortal soul, And can you teach me how to dance real slow?`,
   },
 ] as KolDropdownListItem[]
+
+export const s3BaseUrl =
+  process.env.NEXT_PUBLIC_S3_BASE_URL ??
+  'https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com'
+
+export const openseaBaseUrl =
+  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+    ? 'https://opensea.io/assets/ethereum'
+    : 'https://testnets.opensea.io/assets/rinkeby'
+
+export const correctHexChain =
+  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+    ? '0x1' // homestead
+    : process.env.NEXT_PUBLIC_VERCEL_ENV
+    ? '0x4' // rinkeby
+    : process.env.NEXT_PUBLIC_USES_LOCALHOST_NETWORK
+    ? '0x539' // localhost
+    : '0x4' // rinkeby
+
+export const correctNetwork =
+  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+    ? HOMESTEAD
+    : process.env.NEXT_PUBLIC_VERCEL_ENV
+    ? RINKEBY
+    : process.env.NEXT_PUBLIC_USES_LOCALHOST_NETWORK
+    ? LOCALHOST
+    : RINKEBY
+
+export const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
+
+export const fromEmail = 'notify@elleverse.io'
+
+export const s3Bucket = process.env.S3_BUCKET ?? 'elle-nft-dev'

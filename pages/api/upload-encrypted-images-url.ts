@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { makeS3 } from 'lib/aws'
+import { s3Bucket } from 'utils/config'
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,7 +11,7 @@ export default async function handler(
   const isHtml = req.query.file.slice(-5) === '.html'
 
   const post = await s3.createPresignedPost({
-    Bucket: process.env.S3_BUCKET,
+    Bucket: s3Bucket,
     Expires: 60, // seconds
     Fields: {
       key: req.query.file,

@@ -7,7 +7,7 @@ import {
 } from 'react'
 import { useWeb3 } from 'hooks'
 import { Web3ProviderState, web3InitialState } from 'reducers'
-import { CORRECT_HEX_CHAIN } from 'utils/config'
+import { correctHexChain } from 'utils/config'
 import { NetworkChangeModal, ConnectModal } from 'components'
 
 const Web3Context = createContext<
@@ -34,7 +34,7 @@ export const Web3ContextProvider = ({ children }: Props) => {
 
   // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
   const handleChainChanged = async (_hexChainId: string) => {
-    setIsNetworkChangeModalOpen(_hexChainId !== CORRECT_HEX_CHAIN)
+    setIsNetworkChangeModalOpen(_hexChainId !== correctHexChain)
   }
 
   const handleModalConnect = async () => {
@@ -47,7 +47,7 @@ export const Web3ContextProvider = ({ children }: Props) => {
     if (window.ethereum) {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: CORRECT_HEX_CHAIN }],
+        params: [{ chainId: correctHexChain }],
       })
     }
   }
