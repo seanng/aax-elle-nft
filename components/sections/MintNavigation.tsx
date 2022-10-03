@@ -11,7 +11,7 @@ import {
   AddressErrorButton,
 } from 'components'
 import { useDetectionContext, useWeb3Context } from 'context'
-import { CORRECT_HEX_CHAIN } from 'utils/config'
+import { correctHexChain } from 'utils/config'
 import { SAFARI } from 'shared/constants'
 
 export function MintNavigation() {
@@ -157,7 +157,7 @@ const Web3Button = () => {
   useEffect(() => {
     if (provider?.on) {
       provider?.on('chainChanged', (_hexChainId: string) => {
-        setWalletHasError(_hexChainId !== CORRECT_HEX_CHAIN)
+        setWalletHasError(_hexChainId !== correctHexChain)
       })
     }
   }, [provider])

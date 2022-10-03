@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { genImageFile, getAssets } from 'utils/nft'
 import randomstring from 'randomstring'
 import Image from 'next/image'
-import { S3_BASE_URL } from 'shared/constants'
+import { s3BaseUrl } from 'utils/config'
 
 const html2canvasOpts = {
   height: 534,
@@ -155,7 +155,7 @@ function useNftImageSource() {
       // Randomizing the query param force-fetches the image from source
       const randomQuery = randomstring.generate({ length: 6 })
       if (id >= 0 && id < 3113)
-        fetch(`${S3_BASE_URL}/public/${id}.png?${randomQuery}`)
+        fetch(`${s3BaseUrl}/public/${id}.png?${randomQuery}`)
           .then((response) => response.blob())
           .then((imageBlob) => setImageSource(URL.createObjectURL(imageBlob)))
       return

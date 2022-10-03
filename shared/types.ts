@@ -49,3 +49,9 @@ export interface NFTParameters {
   opacity?: string
   signature?: string
 }
+
+export interface KolDropdownListItem {
+  id: number
+  name: string
+  frameText: string
+}

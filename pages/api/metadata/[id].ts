@@ -1,6 +1,6 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
-import { NOT_STARTED, PRIVATE_SALE, S3_BASE_URL } from 'shared/constants'
-import { salePhase } from 'utils/config'
+import { NOT_STARTED, PRIVATE_SALE } from 'shared/constants'
+import { salePhase, s3BaseUrl } from 'utils/config'
 
 async function getHandler(req: NextApiRequest, res: NextApiResponse) {
   let { id: fileName } = req.query as { id: string }
@@ -15,8 +15,8 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
 
   res.json({
     name: isIdEven ? 'Message Token' : prizeTokenName,
-    image: `${S3_BASE_URL}/public/${fileName}.png`,
-    animation_url: `${S3_BASE_URL}/public/${fileName}.html`,
+    image: `${s3BaseUrl}/public/${fileName}.png`,
+    animation_url: `${s3BaseUrl}/public/${fileName}.html`,
   })
 }
 

@@ -4,7 +4,7 @@ import { useRestrictAccess } from 'hooks'
 import { SpinningOverlay } from 'components'
 import { toast } from 'react-toastify'
 import axios from 'lib/axios'
-import { S3_BASE_URL } from 'shared/constants'
+import { s3BaseUrl } from 'utils/config'
 
 const Img = (props) => {
   const [dimensions, setDimensions] = useState(['100px', '100px'])
@@ -61,7 +61,7 @@ const UploadImagesPage: NextPage = () => {
           return
         }
 
-        const s3Url = `${S3_BASE_URL}/${folderName}/${filename}`
+        const s3Url = `${s3BaseUrl}/${folderName}/${filename}`
         await axios.post('/api/encrypted-images', { urls: [s3Url] })
 
         setFiles((prev) => {

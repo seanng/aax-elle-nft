@@ -3,14 +3,17 @@ import sendgrid from 'lib/sendgrid'
 import randomstring from 'randomstring'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import { validate } from 'lib/middlewares'
-import { CONTRACT_ADDRESS, metadata, emailTemplateIds } from 'utils/config'
+import {
+  metadata,
+  emailTemplateIds,
+  s3BaseUrl,
+  fromEmail,
+  openseaBaseUrl,
+} from 'utils/config'
 import { check } from 'express-validator'
-import { KOL, WINNER, S3_BASE_URL, FROM_EMAIL } from 'shared/constants'
+import { KOL, WINNER } from 'shared/constants'
 
-const openseaBaseUrl =
-  process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-    ? 'https://opensea.io/assets/ethereum'
-    : 'https://testnets.opensea.io/assets/rinkeby'
+const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
 
 interface PostHandlerRequest extends NextApiRequest {
   body: {
@@ -62,7 +65,7 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
 
   // Send Email
   if (req.body.minterEmail) {
-    const imgUrl = `${S3_BASE_URL}/public/${req.body.messageTokenId}.png`
+    const imgUrl = `${s3BaseUrl}/public/${req.body.messageTokenId}.png`
     const { PRIVATE_SALE_MINT, PUBLIC_SALE_MINT, KOL_AIRDROP, WINNER_AIRDROP } =
       emailTemplateIds
 
@@ -83,14 +86,14 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
       dynamicTemplateData: {
         unlock_url: `${metadata.siteUrl}/open/${slug}`,
         passcode: req.body.passcode,
-        opensea_url: `${openseaBaseUrl}/${CONTRACT_ADDRESS}/${req.body.messageTokenId}`,
+        opensea_url: `${openseaBaseUrl}/${contractAddress}/${req.body.messageTokenId}`,
         KOL_name: req.body.kolName ?? '你喜歡的藝人',
         image_url: imgUrl,
         image2_url: req.body.isPrivateSale
-          ? `${S3_BASE_URL}/public/whitelist.png`
-          : `${S3_BASE_URL}/public/prize.png`,
+          ? `${s3BaseUrl}/public/whitelist.png`
+          : `${s3BaseUrl}/public/prize.png`,
       },
-      from: FROM_EMAIL,
+      from: fromEmail,
       to: req.body.minterEmail,
     })
   }

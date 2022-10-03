@@ -2,8 +2,7 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import sendgrid from 'lib/sendgrid'
 import * as service from 'backend/services/mints'
 import { makeS3 } from 'lib/aws'
-import { FROM_EMAIL, S3_BUCKET, S3_BASE_URL } from 'shared/constants'
-import { emailTemplateIds } from 'utils/config'
+import { emailTemplateIds, s3BaseUrl, s3Bucket, fromEmail } from 'utils/config'
 
 async function putHandler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query as { id: string }
@@ -37,17 +36,17 @@ async function unlockSecret(req: NextApiRequest, res: NextApiResponse) {
     const s3 = await makeS3()
     await s3
       .copyObject({
-        Bucket: `${S3_BUCKET}/public`,
+        Bucket: `${s3Bucket}/public`,
         Key: `${data.messageTokenId}.html`,
-        CopySource: `${S3_BUCKET}/after/${data.messageTokenId}.html`,
+        CopySource: `${s3Bucket}/after/${data.messageTokenId}.html`,
       })
       .promise()
 
     await s3
       .copyObject({
-        Bucket: `${S3_BUCKET}/public`,
+        Bucket: `${s3Bucket}/public`,
         Key: `${data.messageTokenId}.png`,
-        CopySource: `${S3_BUCKET}/after/${data.messageTokenId}.png`,
+        CopySource: `${s3Bucket}/afts3Bucketr/${data.messageTokenId}.png`,
       })
       .promise()
 
@@ -55,10 +54,10 @@ async function unlockSecret(req: NextApiRequest, res: NextApiResponse) {
       await sendgrid.send({
         templateId: emailTemplateIds.RECEIVER_OPEN,
         dynamicTemplateData: {
-          image_url: `${S3_BASE_URL}/public/${mint.messageTokenId}.png?ello`,
+          image_url: `${s3BaseUrl}/public/${mint.messageTokenId}.png?ello`,
         },
         to: mint.minterEmail,
-        from: FROM_EMAIL,
+        from: fromEmail,
       })
     }
 

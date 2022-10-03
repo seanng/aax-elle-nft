@@ -20,15 +20,10 @@ export const INSUFFICIENT_WALLET_BALANCE = 'INSUFFICIENT_WALLET_BALANCE'
 export const NO_ADDRESS_FOUND = 'no address found'
 
 // s3 folders
-export const S3_BUCKET = process.env.S3_BUCKET ?? 'elle-nft-dev'
 export const BEFORE = 'before'
 export const AFTER = 'after'
 export const NEVER = 'never'
 export const PUBLIC = 'public'
-
-export const S3_BASE_URL =
-  process.env.NEXT_PUBLIC_S3_BASE_URL ??
-  'https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com'
 
 // devices
 export const ANDROID = 'android'
@@ -49,6 +44,3 @@ export const RINKEBY = 'rinkeby'
 export const PARTICIPANT = 'participant'
 export const WINNER = 'winner'
 export const KOL = 'key opinion leader'
-
-// email service
-export const FROM_EMAIL = 'notify@elleverse.io'

@@ -142,7 +142,7 @@ function CompsNFTAroundText2({ aroundText, optClass }) {
   }, [])
 
   useEffect(() => {
-    if (containerNode && textNode && isFontReady) {
+    if (containerNode && textNode && isFontReady && aroundText) {
       setIsReady(true)
       setTransformValues(
         getTransformValues({
@@ -151,7 +151,7 @@ function CompsNFTAroundText2({ aroundText, optClass }) {
         })
       )
     }
-  }, [containerNode, textNode, isFontReady])
+  }, [containerNode, textNode, isFontReady, aroundText])
 
   useEffect(() => {
     if (isFontReady && isReady) {
