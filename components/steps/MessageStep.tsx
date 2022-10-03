@@ -4,12 +4,13 @@ import {
   ToastMessage,
   WarningIcon,
   OutlinedHeading,
+  KolSelectDropdown,
   ResponsiveSecondaryButton,
 } from 'components'
 import AroundText2 from 'components/NFT/shared/AroundText2'
 import { useEffect, useState } from 'react'
 import { encrypt } from 'lib/crypto'
-import { Files, MintForm } from 'shared/types'
+import { Files, KolDropdownListItem, MintForm } from 'shared/types'
 import { FINISHED, NOT_STARTED, PRIVATE_SALE } from 'shared/constants'
 import { salePhase } from 'utils/config'
 import { getAssets } from 'utils/nft'
@@ -45,6 +46,18 @@ export function MessageStep({
     receiverName: '',
   })
   const [isProcessingMint, setIsProcessingMint] = useState(false)
+  const [selectedKol, setSelectedKol] = useState<KolDropdownListItem>({
+    id: 1,
+    name: '',
+    frameText: '',
+  })
+  const [frameText, setFrameText] = useState('Write down your secret...')
+
+  useEffect(() => {
+    if (selectedKol.frameText) {
+      setFrameText(selectedKol?.frameText)
+    }
+  }, [selectedKol])
 
   const onWalletConnect = async (address: string) => {
     setShowsSpinner(true)
@@ -155,9 +168,18 @@ export function MessageStep({
           onChange={handleInputChange}
         />
       </div>
+      {salePhase === PRIVATE_SALE && (
+        <div className="flex w-80 md:w-[642px] mb-6">
+          <KolSelectDropdown
+            selectedPerson={selectedKol}
+            setSelectedPerson={setSelectedKol}
+          />
+        </div>
+      )}
+
       <div className="w-80 h-[320px] md:w-[642px] md:h-[642px] mb-6 flex justify-center items-center">
         <AroundText2
-          aroundText="Write down your secret..."
+          aroundText={frameText}
           optClass="md:scale-[2] md:hover:scale-[2]"
         />
         <textarea
@@ -195,7 +217,7 @@ export function MessageStep({
         <a
           className="leading-0"
           target="__blank"
-          href={`/ig-share?at=${aroundText}`}
+          {...(!shouldDisableButtons && { href: `/ig-share?at=${frameText}` })}
         >
           <ResponsiveSecondaryButton disabled={shouldDisableButtons}>
             分享告白
