@@ -17,7 +17,7 @@ export function SpinningOverlay({ showsSpinner = true, text = '' }) {
           width={104}
         />
       )}
-      <div className="text-white font-noto md:text-2xl tracking-wider mt-8">
+      <div className="text-white font-noto md:text-2xl tracking-wider mt-8 whitespace-pre-line">
         {text}
       </div>
     </div>
