@@ -13,7 +13,7 @@ export function IgShareInstructions() {
   const { browser, device } = useDetectionContext()
 
   useEffect(() => {
-    if (browser === DESKTOP) return setViewMode(DESKTOP_BROWSER)
+    if (device === DESKTOP) return setViewMode(DESKTOP_BROWSER)
     const isAndroidAndChrome = browser === CHROME && device === ANDROID
     const isIosAndSafari = browser === SAFARI && device === IOS
     setViewMode(
