@@ -39,7 +39,6 @@ function CompsNFTUnopen({
   const [isGridReady, setIsGridReady] = useState(false)
   const [isFontReady, setIsFontReady] = useState(false)
   const [isDimensionReady, setIsDimensionReady] = useState(false)
-  const [isIconsReady, setIsIconsReady] = useState(false)
   const [isSignatureReady, setIsSignatureReady] = useState(!signature)
   const [isImageCaptured, setIsImageCaptured] = useState(false)
 
@@ -65,7 +64,6 @@ function CompsNFTUnopen({
       isGridReady &&
       isFontReady &&
       isDimensionReady &&
-      isIconsReady &&
       isSignatureReady
     ) {
       const getImage = async () => {
@@ -80,7 +78,6 @@ function CompsNFTUnopen({
     isGridReady,
     isFontReady,
     isDimensionReady,
-    isIconsReady,
     isSignatureReady,
     setImage,
   ])
@@ -105,11 +102,6 @@ function CompsNFTUnopen({
         Template={gridIconTemplate}
         isCompReady={isGridReady}
         setIsCompReady={setIsGridReady}
-      />
-      <CompsNFTBlinkingIcons
-        isImageCaptured={isImageCaptured}
-        isCompReady={isIconsReady}
-        setIsCompReady={setIsIconsReady}
       />
       <CompsNFTAroundText
         color={aroundTextColor}
