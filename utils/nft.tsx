@@ -115,8 +115,8 @@ export const genRandomKolGI2Template = () => {
 // iconOutlineColor | hex
 // iconFillColor | hex
 // messageColor | hex
-// signature | link | currently uses png link, modification to component will be need for svg comps
-// opacity | '0.0' to '1.0' | optional
+// signature? | link | currently uses png link, modification to component will be need for svg comps | optional
+// opacity? | '0.0' to '1.0' | optional
 export const getNFTSettings = (texts, kolKey?: any) => {
   if (!kolKey) {
     const gridIconTemplate = genRandomNormalGITemplate()
