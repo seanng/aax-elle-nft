@@ -67,11 +67,11 @@ const innerWrapperStyle = {
 
 const ROWS = 7
 const COLS = 7
-const GROUPS = 16
-const ICONS_PER_GROUP = 3
+const GROUPS = 49
+const ICONS_PER_GROUP = 1
 const OFFSET_PERCENTAGE = 0.01
-const BLINKS_ANIMATION_AMOUNT = 3
-const GROUP_ANIMATION_DURATION = 2
+const BLINKS_ANIMATION_AMOUNT = 1
+const GROUP_ANIMATION_DURATION = 0.3
 const TOTAL_ANIMATION_DURATION = GROUPS * GROUP_ANIMATION_DURATION
 
 const iconProps = {
@@ -251,7 +251,7 @@ function CompsNFTBlinkingIcons({
 
                       return `
                         ${groupShowTime}% { opacity: 1; }
-                        ${groupHideTime}% { opacity: 0; }
+                        ${groupHideTime}% { opacity: 1; }
                       `
                     })
                     .join('')}
