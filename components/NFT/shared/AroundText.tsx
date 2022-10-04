@@ -9,7 +9,7 @@ const compStyle = {
   fontFamily: '"DM Mono", "DMMono"',
   fontWeight: '500',
   fontStyle: 'italic',
-  fontSize: '22px',
+  fontSize: '25px',
   boxSizing: 'border-box',
   color: 'transparent',
 } as React.CSSProperties
@@ -186,7 +186,7 @@ function CompsNFTAroundText({
           <span
             style={{
               ...commonTextStyle,
-              lineHeight: isImageCaptured ? '16px' : '14px',
+              lineHeight: isImageCaptured ? '18px' : '16px',
             }}
           >
             {aroundText}
@@ -202,7 +202,7 @@ function CompsNFTAroundText({
           <span
             style={{
               ...commonTextStyle,
-              lineHeight: isImageCaptured ? '16px' : '14px',
+              lineHeight: isImageCaptured ? '18px' : '16px',
             }}
           >
             {aroundText}
