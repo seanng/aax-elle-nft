@@ -110,19 +110,19 @@ const getTransformValues = (widths: GetTransformValuesProps) => {
     totalWidth,
     animationTime: (totalWidth / velocityPerSecond).toFixed(1),
     emptyWidth,
-    bottom: {
+    top: {
       start: -(cW * 0),
       end: -(totalWidth - tW + cW * 0),
     },
-    left: {
+    right: {
       start: -(cW * 1),
       end: -(totalWidth - tW + cW * 1),
     },
-    top: {
+    bottom: {
       start: -(cW * 2),
       end: -(totalWidth - tW + cW * 2),
     },
-    right: {
+    left: {
       start: -(cW * 3),
       end: -(totalWidth - tW + cW * 3),
     },
