@@ -30,6 +30,7 @@ interface PostHandlerRequest extends NextApiRequest {
 }
 
 async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
+  console.log('Received POST request. Validating...')
   if (
     !(await validate([
       check('message').exists(),
@@ -42,6 +43,8 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
   )
     return
 
+  console.log('Validation success! Processing the POST..')
+
   let isSlugUnique = false
   let slug = 'abcde'
 
@@ -53,6 +56,8 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
     isSlugUnique = !(await service.findUnique({ slug }))
   }
 
+  console.log('Creating new Mint in DB.')
+
   const mint = await service.create({
     slug,
     message: req.body.message,
@@ -62,9 +67,11 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
     passcode: req.body.passcode,
     messageTokenId: req.body.messageTokenId,
   })
+  console.log('Mint Create Success!')
 
   // Send Email
   if (req.body.minterEmail) {
+    console.log(`Sending Email to ${req.body.minterEmail}`)
     const imgUrl = `${s3BaseUrl}/public/${req.body.messageTokenId}.png`
     const { PRIVATE_SALE_MINT, PUBLIC_SALE_MINT, KOL_AIRDROP, WINNER_AIRDROP } =
       emailTemplateIds
@@ -97,6 +104,7 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
       to: req.body.minterEmail,
     })
   }
+  console.log('Email sent.')
 
   res.json(mint)
 }
