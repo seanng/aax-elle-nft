@@ -46,7 +46,7 @@ async function unlockSecret(req: NextApiRequest, res: NextApiResponse) {
       .copyObject({
         Bucket: `${s3Bucket}/public`,
         Key: `${data.messageTokenId}.png`,
-        CopySource: `${s3Bucket}/afts3Bucketr/${data.messageTokenId}.png`,
+        CopySource: `${s3Bucket}/after/${data.messageTokenId}.png`,
       })
       .promise()
 
