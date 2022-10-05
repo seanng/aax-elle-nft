@@ -33,7 +33,7 @@ import Icon25 from 'components/NFT/shared/background-icons/25'
 const IMAGE_DEBUG = false
 const HTML_DEBUG = false
 
-const BG_COLORS = [
+export const BG_COLORS = [
   '#449649',
   '#81E87B',
   '#C6BB9F',
@@ -49,7 +49,7 @@ export const genRandomAColor = () => {
   return BG_COLORS[Math.floor(Math.random() * BG_COLORS.length)]
 }
 
-const TGI_Colors = [
+export const TGI_Colors = [
   '#24573D',
   '#4282D8',
   '#5DC9F9',

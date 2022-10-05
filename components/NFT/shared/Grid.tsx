@@ -42,6 +42,7 @@ function CompsNFTGrid({
   }, [])
 
   useEffect(() => {
+    if (!setIsCompReady) return
     if (!isCompReady && randomId) {
       if (isColorLink) {
         const image = new Image()

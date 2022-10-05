@@ -8,6 +8,12 @@ const compStyle = {
   height: '350px',
 } as React.CSSProperties
 
+interface Props {
+  backgroundStyle: string
+  isCompReady?: boolean
+  setIsCompReady?: boolean
+}
+
 function CompsNFTBackground({ backgroundStyle, isCompReady, setIsCompReady }) {
   const [randomId, setRandomId] = useState('')
   const [isBackgroundLink] = useState(urlRegex.test(backgroundStyle))
@@ -17,6 +23,8 @@ function CompsNFTBackground({ backgroundStyle, isCompReady, setIsCompReady }) {
   }, [])
 
   useEffect(() => {
+    if (!setIsCompReady) return
+
     if (!isCompReady && randomId) {
       if (isBackgroundLink) {
         const image = new Image()
