@@ -47,9 +47,6 @@ export function SuccessStep({ data, files }: Props) {
           passcode={data?.passcode ?? 'abc12'}
           className="mb-5 md:mb-9 mt-8"
         />
-        <p className="w-64 md:w-full mx-auto md:text-lg tracking-wide mb-6 md:mb-8">
-          我們已將上鎖密碼即連結寄到你的email，你可以稍後查看。
-        </p>
       </div>
     </div>
   )
