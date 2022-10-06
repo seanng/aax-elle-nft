@@ -48,7 +48,6 @@ export const KOL = 'key opinion leader'
 // airtable
 export const CONTRACT_NAME = 'Elleverse'
 export const AIRTABLE_BASE_ID = 'appEJkckJzqTTk6II'
-export const KOL_TABLE_NAME = '(Testing) - KOL NFT Generation' // TODO: CHANGEME
 export const WALLET_FIELD = 'Wallet Address'
 export const EMAIL_FIELD = 'Email'
 export const KOL_NAME_FIELD = 'Email'

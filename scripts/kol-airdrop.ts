@@ -4,7 +4,6 @@ import axios from '../lib/axios'
 import dotenv from 'dotenv'
 import Airtable from 'airtable'
 import {
-  KOL_TABLE_NAME,
   CONTRACT_NAME,
   AIRTABLE_BASE_ID,
   NFT_MESSAGE_FIELD,
@@ -15,6 +14,7 @@ import {
 } from '../shared/constants'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 
+const KOL_TABLE_NAME = '(Testing) - KOL NFT Generation' // TODO: CHANGEME
 const STARTING_ID = 0
 
 const airtable = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
