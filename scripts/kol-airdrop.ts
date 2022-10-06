@@ -21,7 +21,6 @@ const airtable = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
   AIRTABLE_BASE_ID
 )(KOL_TABLE_NAME)
 
-// TODO: Test on LOCALHOST node, before Mainnet.
 async function kolAirdrop() {
   if (!network.config.from)
     throw new Error(`no from address configured in ${network.name}!`)

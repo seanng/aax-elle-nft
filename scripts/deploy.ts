@@ -11,7 +11,7 @@ async function main() {
 }
 
 // Rinkeby Contract deployed on 12 Sep: 0xdE32B5AfC6bB356AcD8F9FEd07b420c84bFEE7db
-// Localhost Contract deployed on 27 Jul: 0x5FbDB2315678afecb367f032d93F642f64180aa3
+// Localhost Contract deployed on 6 Oct: 0x5FbDB2315678afecb367f032d93F642f64180aa3
 
 main()
   .then(() => process.exit(0))
