@@ -1,4 +1,4 @@
-import * as service from 'backend/services/mints'
+import * as service from 'backend/services/message-tokens'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
 import { correctNetwork, contractAddress } from 'utils/config'
@@ -15,7 +15,7 @@ const defaultGetSigner = () =>
 
 const getSigner: () => Signer = {
   localhost: () => new providers.JsonRpcProvider().getSigner(),
-  rinkeby: defaultGetSigner,
+  goerli: defaultGetSigner,
   homestead: defaultGetSigner,
   default: defaultGetSigner,
 }[correctNetwork ?? 'default']
@@ -40,7 +40,7 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
       return res.status(404).send('No Message Tokens Found')
 
     const data = await service.findMany({
-      OR: messageTokenIdList.map((id) => ({ messageTokenId: id })),
+      OR: messageTokenIdList.map((id) => ({ tokenId: id })),
     })
 
     res.status(200).json({ data })

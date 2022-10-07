@@ -217,7 +217,7 @@ export function BodySection() {
                         as="dd"
                         className="py-2 md:py-6 lg:py-8 pr-12 border-t-2 md:border-t-4 border-lemon "
                       >
-                        <p className="font-extralight text-gray-100 text-xs md:text-3xl lg:text-5xl">
+                        <p className="font-light text-gray-100 text-xs md:text-3xl lg:text-5xl">
                           {faq.answer}
                         </p>
                       </Disclosure.Panel>

@@ -38,7 +38,7 @@ export const OTHER_BROWSER = 'other browser'
 // networks
 export const HOMESTEAD = 'homestead'
 export const LOCALHOST = 'localhost'
-export const RINKEBY = 'rinkeby'
+export const GOERLI = 'goerli'
 
 // airdrop recipient
 export const PARTICIPANT = 'participant'

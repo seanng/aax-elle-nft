@@ -14,7 +14,7 @@ interface Props {
   isOpen: boolean
   onMintClick: () => Promise<void>
   closeModal: () => void
-  errorComponent?: ReactNode
+  errorComponent?: ReactNode | null
   mintGasFee: string
 }
 
@@ -23,7 +23,7 @@ export function MintConfirmationModal({
   closeModal,
   onMintClick,
   mintGasFee,
-  errorComponent = <div />,
+  errorComponent = null,
   form,
 }: Props) {
   return (
@@ -83,6 +83,7 @@ export function MintConfirmationModal({
                     <ResponsivePrimaryButton
                       onClick={onMintClick}
                       type="button"
+                      disabled={errorComponent}
                     >
                       確定鑄造
                     </ResponsivePrimaryButton>

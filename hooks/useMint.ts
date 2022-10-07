@@ -13,7 +13,7 @@ import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
 import { useState } from 'react'
 import { Files, MintForm, MintResponseData } from 'shared/types'
 import { useWeb3Context } from 'context'
-import { contractAddress, salePhase } from 'utils/config'
+import { contractAddress, salePhase, emailTemplateIds } from 'utils/config'
 
 export function useMint() {
   const { web3Provider, address, balance } = useWeb3Context()
@@ -117,8 +117,11 @@ export function useMint() {
     await uploadOneFile(NEVER, `${messageTokenId}.png`, files.neverOpenedImage)
     await uploadOneFile(NEVER, `${messageTokenId}.html`, files.neverOpenedHtml)
 
-    const { data: mintData } = await axios.post(`/api/mints`, {
-      messageTokenId,
+    const { PRIVATE_SALE_MINT, PUBLIC_SALE_MINT } = emailTemplateIds
+
+    const { data: mintData } = await axios.post(`/api/message-tokens`, {
+      emailTemplateId: isPrivateSale ? PRIVATE_SALE_MINT : PUBLIC_SALE_MINT,
+      tokenId: messageTokenId,
       isPrivateSale,
       message: form.message,
       minterEmail: form.email,
@@ -126,6 +129,15 @@ export function useMint() {
       ethDonated: form.donationInEth.toString(),
       passcode: form.passcode,
     })
+
+    // TODO: If WLT can become Prize Token, we remove this condition.
+    if (salePhase === PUBLIC_SALE) {
+      await axios.post('/api/prize-tokens', {
+        tokenId: messageTokenId + 1,
+        minterEmail: form.email,
+        minterWallet: address,
+      })
+    }
 
     return mintData
   }
