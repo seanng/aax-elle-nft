@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Mint } from '@prisma/client'
+import { MessageToken } from '@prisma/client'
 
 export enum DisplayMode {
   initial,
@@ -27,7 +27,7 @@ export interface MintForm {
   donationInEth: number
 }
 
-export type MintResponseData = Partial<Mint> | undefined
+export type MintResponseData = Partial<MessageToken> | undefined
 
 export interface NFTParametersBasic {
   aroundText: string

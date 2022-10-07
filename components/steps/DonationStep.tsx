@@ -22,7 +22,7 @@ import {
   PUBLIC_SALE,
 } from 'shared/constants'
 import { MintForm, MintResponseData } from 'shared/types'
-import { Mint } from '@prisma/client'
+import { MessageToken } from '@prisma/client'
 
 const EXCHANGE_RATE_REQUEST_INTERVAL = 5000
 const ETH_DECIMAL_PLACES = 5
@@ -33,8 +33,8 @@ interface Props extends Partial<StepWizardChildProps> {
     donationInput: number
     donationInEth: number
   }) => void
-  privateSaleMint: () => Promise<Partial<Mint> | undefined>
-  publicSaleMint: () => Promise<Partial<Mint> | undefined>
+  privateSaleMint: () => Promise<Partial<MessageToken> | undefined>
+  publicSaleMint: () => Promise<Partial<MessageToken> | undefined>
   calcMintGasFee: () => Promise<void>
   contract: ethers.Contract | null
   calcEthToNtd: () => Promise<void>
@@ -283,7 +283,7 @@ export function DonationStep({
                   </div>
                 </div>
               ),
-              '': <div />,
+              '': null,
             }[errorType]
           }
         />

@@ -29,7 +29,7 @@ export default {
     localhost: {
       from: '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266', // owner address from npx hardhat node
     },
-    rinkeby: {
+    goerli: {
       url: process.env.ALCHEMY_API_URL,
       from: process.env.WALLET_ADDRESS, // "owner" address
       accounts: [
