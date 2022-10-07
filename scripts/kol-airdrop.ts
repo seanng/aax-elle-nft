@@ -3,6 +3,7 @@ import randomstring from 'randomstring'
 import axios from '../lib/axios'
 import dotenv from 'dotenv'
 import Airtable from 'airtable'
+import { emailTemplateIds } from '../utils/config'
 import {
   CONTRACT_NAME,
   AIRTABLE_BASE_ID,
@@ -10,7 +11,6 @@ import {
   WALLET_FIELD,
   EMAIL_FIELD,
   KOL_NAME_FIELD,
-  KOL,
 } from '../shared/constants'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 
@@ -51,16 +51,23 @@ async function kolAirdrop() {
 
   for (let i = 0; i < records.length; i++) {
     const record = records[i]
-    await axios.post('/api/mints', {
-      airdropReceiver: KOL,
+    await axios.post('/api/message-tokens', {
       message: record[NFT_MESSAGE_FIELD] ?? 'N/A',
       minterEmail: record[EMAIL_FIELD],
       minterWallet: record[WALLET_FIELD],
+      emailTemplateId: emailTemplateIds.KOL_AIRDROP,
       passcode: randomstring.generate({ length: 6 }),
       ethDonated: '0',
-      messageTokenId: STARTING_ID + i * 2,
+      tokenId: STARTING_ID + i * 2,
       isPrivateSale: true,
     })
+
+    // TODO: Uncomment if WLT change into Prize Tokens.
+    // await axios.post('/api/prize-tokens', {
+    //   tokenId: STARTING_ID + i * 2 + 1,
+    //   minterEmail: record[EMAIL_FIELD],
+    //   minterWallet: record[WALLET_FIELD],
+    // })
   }
 
   console.log('POST success')

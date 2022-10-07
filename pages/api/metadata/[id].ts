@@ -7,9 +7,11 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
   const isIdEven = Number(fileName) % 2 === 0
   const isWhitelistPhase = [NOT_STARTED, PRIVATE_SALE].includes(salePhase)
 
+  // TODO: Update logic if WLTs do not become Prize Tokens
   const prizeTokenName = isWhitelistPhase ? 'Whitelist Token' : 'Prize Token'
 
   if (!isIdEven) {
+    // TODO: Update logic if WLTs do not become Prize Tokens
     fileName = isWhitelistPhase ? 'whitelist' : 'prize'
   }
 

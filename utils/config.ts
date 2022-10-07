@@ -2,7 +2,7 @@
  * This file contains app-wide configuration options.
  */
 
-import { HOMESTEAD, LOCALHOST, NOT_STARTED, RINKEBY } from 'shared/constants'
+import { GOERLI, HOMESTEAD, LOCALHOST, NOT_STARTED } from 'shared/constants'
 import { KolDropdownListItem } from 'shared/types'
 
 export const salePhase = process.env.NEXT_PUBLIC_SALE_PHASE ?? NOT_STARTED
@@ -88,25 +88,25 @@ export const s3BaseUrl =
 export const openseaBaseUrl =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
     ? 'https://opensea.io/assets/ethereum'
-    : 'https://testnets.opensea.io/assets/rinkeby'
+    : 'https://testnets.opensea.io/assets/goerli'
 
 export const correctHexChain =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
     ? '0x1' // homestead
     : process.env.NEXT_PUBLIC_VERCEL_ENV
-    ? '0x4' // rinkeby
+    ? '0x5' // goerli
     : process.env.NEXT_PUBLIC_USES_LOCALHOST_NETWORK
     ? '0x539' // localhost
-    : '0x4' // rinkeby
+    : '0x5' // goerli
 
 export const correctNetwork =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
     ? HOMESTEAD
     : process.env.NEXT_PUBLIC_VERCEL_ENV
-    ? RINKEBY
+    ? GOERLI
     : process.env.NEXT_PUBLIC_USES_LOCALHOST_NETWORK
     ? LOCALHOST
-    : RINKEBY
+    : GOERLI
 
 export const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
 

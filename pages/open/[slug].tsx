@@ -1,4 +1,4 @@
-import { Mint } from '@prisma/client'
+import { MessageToken } from '@prisma/client'
 import {
   ErrorScreen,
   GreenLockIcon,
@@ -7,7 +7,6 @@ import {
   GreenUnlockIcon,
   OutlinedHeading,
   SpinningOverlay,
-  ToastMessage,
   ResponsiveSecondaryButton,
   SquareShareButton,
   WarningIcon,
@@ -16,13 +15,12 @@ import axios from 'lib/axios'
 import { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
 import { useState } from 'react'
-import { toast } from 'react-toastify'
 import { FINISHED } from 'shared/constants'
 import { salePhase, s3BaseUrl } from 'utils/config'
 
 interface Props {
   slugExists: boolean
-  data: Mint
+  data: MessageToken
 }
 
 const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
@@ -37,18 +35,6 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
     setInputValue(value)
   }
 
-  const handleDLClick = () => {
-    const a = document.createElement('a')
-    document.body.appendChild(a)
-    a.href = `${s3BaseUrl}/public/${data.messageTokenId}.png`
-    a.download = 'My_Secret.png'
-    a.click()
-    toast.success(
-      <ToastMessage heading="成功下載告白圖片" body="請至手機相簿瀏覽" />
-    )
-    document.body.removeChild(a)
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (inputValue === '') return
@@ -56,7 +42,7 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
     const passcode = inputValue
 
     try {
-      await axios.post(`/api/mints/${data.id}`, { passcode })
+      await axios.post(`/api/message-tokens/${data.id}`, { passcode })
 
       // TODO: Update S3 public folder (from here or backend?)
 
@@ -96,7 +82,7 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
             </OutlinedHeading>
             <div className="flex flex-col mb-20 md:mb-28 w-full items-center">
               <iframe
-                src={`${s3BaseUrl}/public/${data.messageTokenId}.html?b`}
+                src={`${s3BaseUrl}/public/${data.tokenId}.html?b`}
                 className="mb-6 md:mb-10 scale-100 md:scale-[1.5] h-[350px] w-[350px] md:h-[525px] md:w-[525px] origin-top-left max-w-full"
               />
             </div>
@@ -108,7 +94,7 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
                   </ResponsiveSecondaryButton>
                 </a>
               </Link>
-              <Link href={`/ig-share?id=${data.messageTokenId}&lol`} passHref>
+              <Link href={`/ig-share?id=${data.tokenId}&lol`} passHref>
                 <a target="__blank" className="leading-0">
                   <SquareShareButton />
                 </a>
@@ -135,7 +121,7 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
             <iframe
               height={350}
               width={350}
-              src={`${s3BaseUrl}/public/${data.messageTokenId}.html?a`}
+              src={`${s3BaseUrl}/public/${data.tokenId}.html?a`}
               className="mb-6 mt-5 md:mt-8 md:mb-10"
             />
             {salePhase !== FINISHED && (
@@ -179,8 +165,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const slug = context?.params?.slug
     if (!slug) throw new Error()
-    const { data: response } = (await axios.get(`/api/mints?slug=${slug}`)) as {
-      data: Mint[]
+    const { data: response } = (await axios.get(
+      `/api/message-tokens?slug=${slug}`
+    )) as {
+      data: MessageToken[]
     }
 
     if (response.length === 0) throw new Error()

@@ -1,30 +1,17 @@
-import * as service from 'backend/services/mints'
+import * as service from 'backend/services/message-tokens'
 import sendgrid from 'lib/sendgrid'
 import randomstring from 'randomstring'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
+import { MessageToken } from '@prisma/client'
 import { validate } from 'lib/middlewares'
-import {
-  metadata,
-  emailTemplateIds,
-  s3BaseUrl,
-  fromEmail,
-  openseaBaseUrl,
-} from 'utils/config'
+import { metadata, s3BaseUrl, fromEmail, openseaBaseUrl } from 'utils/config'
 import { check } from 'express-validator'
-import { KOL, WINNER } from 'shared/constants'
 
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
 
 interface PostHandlerRequest extends NextApiRequest {
-  body: {
-    message: string
-    minterEmail: string
-    minterWallet: string
-    ethDonated: string
-    passcode: string
-    messageTokenId: number
-    isPrivateSale?: string
-    airdropReceiver?: string
+  body: MessageToken & {
+    emailTemplateId?: string
     kolName?: string
   }
 }
@@ -38,7 +25,7 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
       check('minterWallet').exists(),
       check('ethDonated').exists(),
       check('passcode').exists(),
-      check('messageTokenId').exists().isNumeric(),
+      check('tokenId').exists().isNumeric(),
     ])(req, res))
   )
     return
@@ -56,7 +43,7 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
     isSlugUnique = !(await service.findUnique({ slug }))
   }
 
-  console.log('Creating new Mint in DB.')
+  console.log('Storing MessageToken in DB.')
 
   const mint = await service.create({
     slug,
@@ -65,35 +52,21 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
     minterWallet: req.body.minterWallet,
     ethDonated: req.body.ethDonated,
     passcode: req.body.passcode,
-    messageTokenId: req.body.messageTokenId,
+    tokenId: req.body.tokenId,
   })
   console.log('Mint Create Success!')
 
   // Send Email
-  if (req.body.minterEmail) {
+  if (req.body.minterEmail && req.body.emailTemplateId) {
     console.log(`Sending Email to ${req.body.minterEmail}`)
-    const imgUrl = `${s3BaseUrl}/public/${req.body.messageTokenId}.png`
-    const { PRIVATE_SALE_MINT, PUBLIC_SALE_MINT, KOL_AIRDROP, WINNER_AIRDROP } =
-      emailTemplateIds
-
-    let templateId = req.body.isPrivateSale
-      ? PRIVATE_SALE_MINT
-      : PUBLIC_SALE_MINT
-
-    if (req.body.airdropReceiver) {
-      templateId =
-        {
-          [KOL]: KOL_AIRDROP,
-          [WINNER]: WINNER_AIRDROP,
-        }[req.body.airdropReceiver] ?? templateId
-    }
+    const imgUrl = `${s3BaseUrl}/public/${req.body.tokenId}.png`
 
     await sendgrid.send({
-      templateId,
+      templateId: req.body.emailTemplateId,
       dynamicTemplateData: {
         unlock_url: `${metadata.siteUrl}/open/${slug}`,
         passcode: req.body.passcode,
-        opensea_url: `${openseaBaseUrl}/${contractAddress}/${req.body.messageTokenId}`,
+        opensea_url: `${openseaBaseUrl}/${contractAddress}/${req.body.tokenId}`,
         KOL_name: req.body.kolName ?? '你喜歡的藝人',
         image_url: imgUrl,
         image2_url: req.body.isPrivateSale

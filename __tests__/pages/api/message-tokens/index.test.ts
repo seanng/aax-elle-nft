@@ -1,7 +1,7 @@
-import handler from 'pages/api/mints'
+import handler from 'pages/api/message-tokens'
 import { createMocks, RequestMethod } from 'node-mocks-http'
 import randomstring from 'randomstring'
-import * as mintsService from 'backend/services/mints'
+import * as service from 'backend/services/message-tokens'
 
 jest.mock('lib/sendgrid')
 jest.mock('@sendgrid/mail')
@@ -12,7 +12,7 @@ const validRequestBody = {
   passcode: '',
   message: 'test message' as any,
   ethDonated: '0.000123' as any,
-  messageTokenId: 123,
+  tokenId: 123,
 }
 
 const mintData = {
@@ -23,8 +23,8 @@ const mintData = {
   updatedAt: new Date(),
 }
 
-jest.mock('backend/services/mints', () => {
-  const originalModule = jest.requireActual('backend/services/mints')
+jest.mock('backend/services/message-tokens', () => {
+  const originalModule = jest.requireActual('backend/services/message-tokens')
   return {
     __esModule: true,
     ...originalModule,
@@ -35,7 +35,7 @@ jest.mock('backend/services/mints', () => {
 
 randomstring.generate = jest.fn().mockResolvedValue('123as')
 
-describe('api/mints', () => {
+describe('api/message-tokens', () => {
   let httpMockedData = {
     method: 'POST' as RequestMethod,
     body: validRequestBody,
@@ -45,11 +45,11 @@ describe('api/mints', () => {
   })
 
   describe('POST', () => {
-    it('successfully calls mints.create', async () => {
+    it('successfully calls message-tokens.create', async () => {
       const { req, res } = createMocks(httpMockedData)
 
       const createMintFn = jest
-        .spyOn(mintsService, 'create')
+        .spyOn(service, 'create')
         .mockResolvedValue(mintData)
 
       await handler(req, res)

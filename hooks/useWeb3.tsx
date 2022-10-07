@@ -38,7 +38,7 @@ export function useWeb3() {
       const signer = web3Provider.getSigner()
       const address = await signer.getAddress()
       const network = await web3Provider.getNetwork()
-      // If network is not Mainnet (prod), localhost (dev), Rinkeby (preview), prompt user to swap to correct network
+      // If network is not Mainnet (prod), localhost (dev), Goerli (preview), prompt user to swap to correct network
 
       if (window.ethereum && network.name !== correctNetwork) {
         await window.ethereum.request({
