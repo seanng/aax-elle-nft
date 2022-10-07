@@ -10,6 +10,7 @@ import {
   EMAIL_FIELD,
   WINNER,
 } from '../shared/constants'
+import { emailTemplateIds } from '../utils/config'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 
 const WINNERS_TABLE = '(Testing) - Winners NFT Generation' // TODO: CHANGEME
@@ -41,12 +42,20 @@ async function airdropWinners() {
       airdropReceiver: WINNER,
       message: record[NFT_MESSAGE_FIELD] ?? 'N/A',
       minterEmail: record[EMAIL_FIELD],
+      emailTemplateId: emailTemplateIds.WINNER_AIRDROP,
       minterWallet: record[WALLET_FIELD],
       passcode: randomstring.generate({ length: 6 }),
       ethDonated: '0',
       messageTokenId: STARTING_ID + i * 2,
       isPrivateSale: true,
     })
+
+    // TODO: Uncomment if WLT change into Prize Tokens.
+    // await axios.post('/api/prize-tokens', {
+    //   tokenId: STARTING_ID + i * 2 + 1,
+    //   minterEmail: record[EMAIL_FIELD],
+    //   minterWallet: record[WALLET_FIELD],
+    // })
   }
 
   console.log('POST success')
