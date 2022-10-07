@@ -8,26 +8,26 @@ datasource db {
 }
 
 model MessageToken {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  tokenId        Int // should be even. 
-  message        String
-  minterEmail    String
-  minterWallet   String
-  slug           String    @unique
-  passcode       String
-  ethDonated     String // eth
-  openedAt       DateTime?
-  isPrivateSale  Boolean   @default(false)
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  tokenId       Int // should be even. 
+  message       String
+  minterEmail   String
+  minterWallet  String
+  slug          String    @unique
+  passcode      String
+  ethDonated    String // eth
+  openedAt      DateTime?
+  isPrivateSale Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model PrizeToken {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  tokenId        Int // should be odd. 
-  minterEmail    String
-  minterWallet   String
-  openedAt       DateTime?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  tokenId      Int // should be odd. 
+  minterEmail  String
+  minterWallet String
+  openedAt     DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
