@@ -5,7 +5,14 @@ import {
   ActiveRightIcon,
   HowToHeartIcon,
 } from 'components'
-import { useEffect, useRef, useState } from 'react'
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { salePhase } from 'utils/config'
 import { useIntersectionObserver } from 'hooks'
 import { classNames } from 'utils/helpers'
@@ -16,19 +23,33 @@ import Link from 'next/link'
 
 const privateSaleSteps = [
   {
-    body: '從偶像的Instagram找到或由此連結進入填寫愛的訊息',
+    body: '從名人的社群連結進入後，填寫你對他的愛',
   },
   {
-    body: '填寫訊息後將獲得白名單NFT',
+    body: (
+      <span>
+        輸入虛擬錢包，就可獲得Impact NFT白名單，
+        <a
+          target="__blank"
+          className="text-blue-600 underline"
+          href="https://www.aax.com/zh-TW/newbie/"
+        >
+          為什麼需要虛擬錢包？
+        </a>
+      </span>
+    ),
   },
   {
-    body: '將白名單NFT鑄造成Impact NFT會再獲得一張白名單NFT',
+    body: '在官網輸入錢包驗證白名單，就能鑄造名人邊框版NFT',
   },
   {
-    body: '白名單NFT可以分享給朋友，讓他們鑄造屬於自己的Impact NFT',
+    body: '進入 My Love Secret 就能看到你的 Impact NFT，並獲得一張能夠搶先鑄造的白名單NFT',
   },
   {
-    body: '分享Impact NFT的畫面至社群',
+    body: '轉傳白名單 NFT 給朋友，讓他也能優先鑄造屬於自己的Impact NFT',
+  },
+  {
+    body: '分享你的 Impact NFT 圖片到社群',
   },
 ]
 
@@ -60,9 +81,11 @@ export function HowToSection() {
 
   return (
     <>
-      <OutlinedHeading className="mb-10 md:mb-16" color="#FF66FF">
-        具體來說怎麼玩？
-      </OutlinedHeading>
+      {[PRIVATE_SALE, NOT_STARTED].includes(salePhase) ? null : (
+        <OutlinedHeading className="mb-10 md:mb-16" color="#FF66FF">
+          具體來說怎麼玩？
+        </OutlinedHeading>
+      )}
       <div className="relative w-[340px] md:w-[700px] flex flex-col items-center border-x-2 border-dashed border-guava pb-12">
         {/* TOP */}
         <div className="flex pb-2">
@@ -96,13 +119,21 @@ export function HowToSection() {
   )
 }
 
+interface StepProps {
+  idx?: number
+  heading?: string | ReactNode
+  body?: string | ReactNode
+  highlightedStepIdx: number
+  setHighlightedStepIdx: Dispatch<SetStateAction<number>>
+}
+
 function Step({
   idx = 0,
   heading = '',
   body = '',
   highlightedStepIdx,
   setHighlightedStepIdx,
-}) {
+}: StepProps) {
   const ref = useRef<HTMLDivElement | null>(null)
   const entry = useIntersectionObserver(ref, {
     threshold: [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
@@ -137,13 +168,13 @@ function Step({
           className={classNames(
             'flex flex-none items-center justify-center border-r w-16 text-[28px] font-mono italic',
             isHighlighted
-              ? 'border-lime bg-lime'
+              ? 'border-lime bg-lime text-black'
               : 'border-dark-gray text-dark-gray'
           )}
         >
           {`0${idx + 1}`}
         </div>
-        <div className="block p-2 md:p-4">
+        <div className="block p-2 md:p-4 w-full">
           {heading && (
             <OutlinedHeading
               className="md:mb-2"
