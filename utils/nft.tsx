@@ -33,7 +33,7 @@ import Icon25 from 'components/NFT/shared/background-icons/25'
 const IMAGE_DEBUG = false
 const HTML_DEBUG = false
 
-const BG_COLORS = [
+const PALETTE_A = [
   '#449649',
   '#81E87B',
   '#C6BB9F',
@@ -46,10 +46,10 @@ const BG_COLORS = [
   '#FFFFFF',
 ]
 export const genRandomAColor = () => {
-  return BG_COLORS[Math.floor(Math.random() * BG_COLORS.length)]
+  return PALETTE_A[Math.floor(Math.random() * PALETTE_A.length)]
 }
 
-const TGI_Colors = [
+const PALETTE_B = [
   '#24573D',
   '#4282D8',
   '#5DC9F9',
@@ -62,7 +62,30 @@ const TGI_Colors = [
   '#F9DE6B',
 ]
 export const genRandomBColor = () => {
-  return TGI_Colors[Math.floor(Math.random() * TGI_Colors.length)]
+  return PALETTE_B[Math.floor(Math.random() * PALETTE_B.length)]
+}
+
+const COMBINATION_EXCLUSIONS = {
+  '#449649': ['#4282D8', '#8F78F0'],
+  '#81E87B': ['#DBDBDB'],
+  '#C6BB9F': ['#5DC9F9', '#78BBD5', '#F09D9B'],
+  '#D7F850': ['#DBDBDB', '#F9DE6B'],
+  '#EC72F7': ['#F09D9B'],
+}
+const KOL_EXCLUSIONS = ['#FFFD89', '#FFFFFF']
+
+export const genColorPair = (isKol) => {
+  const colorA = genRandomAColor()
+  const colorB = genRandomBColor()
+
+  const isExcluded = COMBINATION_EXCLUSIONS[colorA]?.includes(colorB)
+  const isKolExcluded = isKol && KOL_EXCLUSIONS.includes(colorA)
+
+  if (isExcluded || isKolExcluded) {
+    return genColorPair(isKol)
+  }
+
+  return [colorA, colorB]
 }
 
 const NORMAL_GI_TEMPLATES = [
@@ -98,14 +121,9 @@ export const genRandomNormalGITemplate = () => {
   ]
 }
 
-const KOL_GI1_TEMPLATES = [Icon01]
+const KOL_GI_TEMPLATES = [Icon01]
 export const genRandomKolGI1Template = () => {
-  return KOL_GI1_TEMPLATES[Math.floor(Math.random() * KOL_GI1_TEMPLATES.length)]
-}
-
-const KOL_GI2_TEMPLATES = [Icon01]
-export const genRandomKolGI2Template = () => {
-  return KOL_GI2_TEMPLATES[Math.floor(Math.random() * KOL_GI2_TEMPLATES.length)]
+  return KOL_GI_TEMPLATES[Math.floor(Math.random() * KOL_GI_TEMPLATES.length)]
 }
 
 // gridIconTemplate | FC | required if gridStyle is hex or gradient | IconSet for beforeOpen & neverOpened
@@ -117,43 +135,26 @@ export const genRandomKolGI2Template = () => {
 // messageColor | hex
 // signature? | link | currently uses png link, modification to component will be need for svg comps | optional
 // opacity? | '0.0' to '1.0' | optional
-export const getNFTSettings = (texts, kolKey?: any) => {
-  if (!kolKey) {
-    const gridIconTemplate = genRandomNormalGITemplate()
-    const bgColor = genRandomAColor()
-    const tgColor = genRandomBColor()
-    const iOColor = genRandomBColor()
-    const iIColor = genRandomAColor()
+export const getNFTSettings = (settings) => {
+  const { isKol, ...otherSettings } = settings
+  const [bgColor, tgColor] = genColorPair(isKol)
+  const [iIColor, iOColor] = genColorPair(isKol)
 
-    return {
-      ...texts,
-      messageColor: '#000000',
-      gridIconTemplate,
-      backgroundStyle: bgColor,
-      gridStyle: tgColor,
-      aroundTextColor: tgColor,
-      iconOutlineColor: iOColor,
-      iconFillColor: iIColor,
-    } as NFTParameters
-  }
-
-  // Mapping KOL keys
-  switch (kolKey) {
-    default: {
-      const i1Template = genRandomKolGI1Template()
-      return {
-        ...texts,
-        backgroundStyle: 'https://i.imgur.com/4q7eRSU.png',
-        gridStyle: 'https://i.imgur.com/3meuTyr.png', // the exported png have extra space on the right
-        messageColor: '#000000',
-        gridIconTemplate: i1Template,
-        // backgroundStyle:
-        //   'radial-gradient(60.05% 60.05% at 50.55% 55.01%, #FFFF00 3%, #FFFF00 24%, #33FF99 100%)',
-        // gridStyle: '#1919FF',
-        aroundTextColor: '#1919FF',
-        signature: 'https://i.imgur.com/Zp4A6e4.png',
-      }
-    }
+  // ? Other Configurable Settings
+  // backgroundStyle: 'https://i.imgur.com/4q7eRSU.png',
+  // backgroundStyle: 'radial-gradient(60.05% 60.05% at 50.55% 55.01%, #FFFF00 3%, #FFFF00 24%, #33FF99 100%)',
+  // gridStyle: 'https://i.imgur.com/3meuTyr.png', // the exported png have extra space on the right
+  // gridStyle: '#1919FF',
+  // signature: 'https://i.imgur.com/Zp4A6e4.png',
+  return {
+    messageColor: '#000000',
+    backgroundStyle: bgColor,
+    gridStyle: tgColor,
+    aroundTextColor: tgColor,
+    iconOutlineColor: iOColor,
+    iconFillColor: iIColor,
+    gridIconTemplate: genRandomNormalGITemplate(),
+    ...otherSettings,
   }
 }
 
@@ -218,10 +219,8 @@ export const genHTMLFile = (htmlStr, filename, fileCB) => {
 }
 
 export const getAssets = ({
-  message,
-  aroundText,
-  kolKey,
   Comps = CompsNFTMain,
+  ...settings
 }: NFTParametersBasic): Promise<any> =>
   new Promise((resolve) => {
     const dummyElem = document.createElement('div')
@@ -231,7 +230,7 @@ export const getAssets = ({
     dummyElem.style.overflow = 'hidden'
     document.body.append(dummyElem)
 
-    const data = getNFTSettings({ message, aroundText }, kolKey)
+    const data = getNFTSettings(settings)
     ReactDOM.render(<Comps data={data} assetsCB={resolve} />, dummyElem)
   })
 

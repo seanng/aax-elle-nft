@@ -32,7 +32,7 @@ export type MintResponseData = Partial<MessageToken> | undefined
 export interface NFTParametersBasic {
   aroundText: string
   message: string
-  kolKey?: string
+  isKol?: boolean
   Comps?: any
 }
 
