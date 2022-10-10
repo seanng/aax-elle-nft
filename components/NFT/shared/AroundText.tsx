@@ -10,6 +10,7 @@ const compStyle = {
   fontWeight: '500',
   fontStyle: 'italic',
   fontSize: '25px',
+  letterSpacing: '0.01em',
   boxSizing: 'border-box',
   color: 'transparent',
 } as React.CSSProperties
@@ -186,7 +187,7 @@ function CompsNFTAroundText({
           <span
             style={{
               ...commonTextStyle,
-              lineHeight: isImageCaptured ? '18px' : '16px',
+              lineHeight: isImageCaptured ? '18px' : '14px',
             }}
           >
             {aroundText}
@@ -202,7 +203,7 @@ function CompsNFTAroundText({
           <span
             style={{
               ...commonTextStyle,
-              lineHeight: isImageCaptured ? '18px' : '16px',
+              lineHeight: isImageCaptured ? '18px' : '14px',
             }}
           >
             {aroundText}

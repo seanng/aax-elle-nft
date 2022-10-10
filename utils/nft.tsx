@@ -197,6 +197,13 @@ export const genHTMLFile = (htmlStr, filename, fileCB) => {
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@1,500&family=Noto+Sans+TC&display=swap" rel="stylesheet">
+      <style>
+      @font-face {
+        font-family: 'Cubic11';
+        src: url('https://elle-nft-prod.s3.ap-southeast-1.amazonaws.com/assets/Cubic_11_1.013_R.woff2 ') format('woff2');
+        font-weight: 400;
+      }
+      </style>
     </head>
     <body style="width: 350px; height: 350px; margin: 0;">
       ${htmlStr}

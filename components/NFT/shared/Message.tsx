@@ -6,16 +6,17 @@ const compStyle = {
   height: '350px',
   padding: '35px',
   boxSizing: 'border-box',
-  fontFamily: '"Noto Sans TC", "NotoSansTC"',
+  fontFamily: 'Cubic11',
   fontWeight: '400',
   fontSize: '26px',
-  lineHeight: '140%',
+  lineHeight: '150%',
+  letterSpacing: '0.01em',
 } as React.CSSProperties
 
 const innerWrapperStyle = {
   width: '275px',
   height: '275px',
-  padding: '9px 12px 12px',
+  padding: '5.5px',
 } as React.CSSProperties
 
 const imgStyle = {
