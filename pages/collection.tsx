@@ -10,7 +10,7 @@ import {
 } from 'components'
 import type { NextPage } from 'next'
 import axios from 'lib/axios'
-import { Mint } from '@prisma/client'
+import { MessageToken } from '@prisma/client'
 import { useDetectionContext, useWeb3Context } from 'context'
 import Link from 'next/link'
 import { SAFARI } from 'shared/constants'
@@ -29,7 +29,7 @@ const HAS_TOKENS = 'HAS_TOKENS'
 
 const CollectionPage: NextPage = () => {
   const [displayMode, setDisplayMode] = useState(LOADING)
-  const [data, setData] = useState<Mint[]>([])
+  const [data, setData] = useState<MessageToken[]>([])
   const { address, openConnectModal } = useWeb3Context()
   const {
     browser,
@@ -63,7 +63,7 @@ const CollectionPage: NextPage = () => {
         const {
           data: { data },
         } = (await axios.get(`/api/collection?address=${address}`)) as {
-          data: { data: Mint[] }
+          data: { data: MessageToken[] }
         }
         setData(data)
         setDisplayMode(HAS_TOKENS)
@@ -152,7 +152,7 @@ const NotConnectedView = ({ openConnectModal }) => {
   )
 }
 
-const HasTokensView = ({ tokens }: { tokens: Mint[] }) => {
+const HasTokensView = ({ tokens }: { tokens: MessageToken[] }) => {
   return (
     <>
       <PinkGiftIcon />
@@ -165,7 +165,7 @@ const HasTokensView = ({ tokens }: { tokens: Mint[] }) => {
             <iframe
               height={350}
               width={350}
-              src={`${s3BaseUrl}/public/${t.messageTokenId}.html`}
+              src={`${s3BaseUrl}/public/${t.tokenId}.html`}
             />
             <LinkAndPasscode
               link={`${metadata.siteUrl}/open/${t.slug}`}
@@ -173,7 +173,7 @@ const HasTokensView = ({ tokens }: { tokens: Mint[] }) => {
               className="my-6"
             />
             <a
-              href={`${openseaBaseUrl}/${contractAddress}/${t.messageTokenId}`}
+              href={`${openseaBaseUrl}/${contractAddress}/${t.tokenId}`}
               target="__blank"
               className="font-bold text-[#2081E2]"
             >

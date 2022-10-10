@@ -82,8 +82,8 @@ const LandingPage: NextPage = () => {
 
   return (
     <MintLayout className="relative flex flex-col items-center overflow-hidden w-full pb-14 md:pb-52">
-      <div className="font-mono font-medium text-xl text-center text-white bg-guava py-2 w-full">
-        Limited time offer till 8/15
+      <div className="font-mono font-medium text-xl text-center text-black bg-guava py-2 w-full">
+        Impact NFT 限量預發7天，預售階段將在11/11截止!
       </div>
 
       <Marquee velocity={400}>
@@ -167,7 +167,7 @@ const LandingPage: NextPage = () => {
       </OutlinedHeading>
 
       <FlipCardsSection className="mb-navbar-height" />
-      {[NOT_STARTED, PRIVATE_SALE].includes(salePhase) ?? (
+      {[NOT_STARTED, PRIVATE_SALE].includes(salePhase) && (
         <>
           <div className="hidden md:flex space-x-8 mb-8">
             <HowToHeartIcon width={50} height={50} />
@@ -189,15 +189,14 @@ const LandingPage: NextPage = () => {
             <br />
             最特別的數位紀念品嗎？
           </OutlinedHeading>
-          <p className="mt-4 md:mt-10 text-white md:text-2xl text-center tracking-wider leading-150% font-noto">
-            偶像會從粉絲寫的訊息中選出
+          <p className="mt-4 md:mt-10 text-white md:text-2xl text-center tracking-wider leading-150% md:leading-150% font-noto">
+            名人的一句話是特別框
             <br />
-            最愛留言並回信給粉絲！
+            他的回信將被鑄造為
             <br />
+            Special Impact NFT
             <br />
-            偶像的回信將被鑄造為Special Impact NFT
-            <br />
-            永存偶像對你的愛
+            永存對彼此的愛
           </p>
         </>
       )}
