@@ -88,6 +88,10 @@ contract Elleverse is ERC721BQueryable, Ownable {
     PRIVATE_SALE_MINT_LIMIT = _newLimit;
   }
 
+  function getNextTokenId() external view onlyOwner returns (uint256) {
+    return _nextTokenId();
+  }
+
   // =============================================================
   //                      MINTS & TRANSACTIONS
   // =============================================================
