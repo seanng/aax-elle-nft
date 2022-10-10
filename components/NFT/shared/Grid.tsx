@@ -13,6 +13,7 @@ const compStyle = {
 const innerWrapperStyle = {
   width: '100%',
   height: '100%',
+  backgroundSize: '100% 100%',
 } as React.CSSProperties
 
 interface Props {
@@ -65,7 +66,7 @@ function CompsNFTGrid({
         <div
           style={{
             ...innerWrapperStyle,
-            background: `url(${color}?randomId=${randomId})`,
+            backgroundImage: `url(${color}?randomId=${randomId})`,
           }}
         />
       </div>

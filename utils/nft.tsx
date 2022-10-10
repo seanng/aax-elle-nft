@@ -143,13 +143,13 @@ export const getNFTSettings = (texts, kolKey?: any) => {
       const i1Template = genRandomKolGI1Template()
       return {
         ...texts,
-        // backgroundStyle: 'https://i.imgur.com/4q7eRSU.png',
-        // gridStyle: 'https://i.imgur.com/3meuTyr.png', // the exported png have extra space on the right
+        backgroundStyle: 'https://i.imgur.com/4q7eRSU.png',
+        gridStyle: 'https://i.imgur.com/3meuTyr.png', // the exported png have extra space on the right
         messageColor: '#000000',
         gridIconTemplate: i1Template,
-        backgroundStyle:
-          'radial-gradient(60.05% 60.05% at 50.55% 55.01%, #FFFF00 3%, #FFFF00 24%, #33FF99 100%)',
-        gridStyle: '#1919FF',
+        // backgroundStyle:
+        //   'radial-gradient(60.05% 60.05% at 50.55% 55.01%, #FFFF00 3%, #FFFF00 24%, #33FF99 100%)',
+        // gridStyle: '#1919FF',
         aroundTextColor: '#1919FF',
         signature: 'https://i.imgur.com/Zp4A6e4.png',
       }
