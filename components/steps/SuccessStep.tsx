@@ -36,7 +36,7 @@ export function SuccessStep({ data, files }: Props) {
               </ResponsiveSecondaryButton>
             </a>
           </Link>
-          <Link href={`/ig-share?id=${data?.messageTokenId}&lol`} passHref>
+          <Link href={`/ig-share?id=${data?.tokenId}&lol`} passHref>
             <a target="__blank" className="leading-0">
               <SquareShareButton />
             </a>
