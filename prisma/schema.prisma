@@ -27,6 +27,7 @@ model PrizeToken {
   tokenId      Int // should be odd. 
   minterEmail  String
   minterWallet String
+  isPrivateSale Boolean   @default(false)
   openedAt     DateTime?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt

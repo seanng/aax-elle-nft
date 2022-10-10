@@ -14,7 +14,6 @@ import { emailTemplateIds } from '../utils/config'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 
 const WINNERS_TABLE = '(Testing) - Winners NFT Generation' // TODO: CHANGEME
-const STARTING_ID = 0
 
 async function airdropWinners() {
   if (!network.config.from)
@@ -23,6 +22,8 @@ async function airdropWinners() {
   const contract = (await ethers.getContractFactory(CONTRACT_NAME)).attach(
     process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as string
   )
+
+  const nextTokenId = (await contract.callStatic.getNextTokenId()).toNumber()
 
   const data = await airtable(WINNERS_TABLE).select().firstPage()
 
@@ -46,16 +47,16 @@ async function airdropWinners() {
       minterWallet: record[WALLET_FIELD],
       passcode: randomstring.generate({ length: 6 }),
       ethDonated: '0',
-      messageTokenId: STARTING_ID + i * 2,
+      messageTokenId: nextTokenId + i * 2,
       isPrivateSale: true,
     })
 
-    // TODO: Uncomment if WLT change into Prize Tokens.
-    // await axios.post('/api/prize-tokens', {
-    //   tokenId: STARTING_ID + i * 2 + 1,
-    //   minterEmail: record[EMAIL_FIELD],
-    //   minterWallet: record[WALLET_FIELD],
-    // })
+    await axios.post('/api/prize-tokens', {
+      tokenId: nextTokenId + i * 2 + 1,
+      minterEmail: record[EMAIL_FIELD],
+      minterWallet: record[WALLET_FIELD],
+      isPrivateSale: true,
+    })
   }
 
   console.log('POST success')

@@ -14,7 +14,6 @@ import {
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 
 const KOL_TABLE = '(Testing) - KOL NFT Generation' // TODO: CHANGEME
-const STARTING_ID = 0
 
 async function airdropKols() {
   if (!network.config.from)
@@ -23,6 +22,8 @@ async function airdropKols() {
   const contract = (await ethers.getContractFactory(CONTRACT_NAME)).attach(
     process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as string
   )
+
+  const nextTokenId = (await contract.callStatic.getNextTokenId()).toNumber()
 
   const data = await airtable(KOL_TABLE)
     .select({
@@ -52,16 +53,16 @@ async function airdropKols() {
       emailTemplateId: emailTemplateIds.KOL_AIRDROP,
       passcode: randomstring.generate({ length: 6 }),
       ethDonated: '0',
-      messageTokenId: STARTING_ID + i * 2,
+      messageTokenId: nextTokenId + i * 2,
       isPrivateSale: true,
     })
 
-    // TODO: Uncomment if WLT change into Prize Tokens.
-    // await axios.post('/api/prize-tokens', {
-    //   tokenId: STARTING_ID + i * 2 + 1,
-    //   minterEmail: record[EMAIL_FIELD],
-    //   minterWallet: record[WALLET_FIELD],
-    // })
+    await axios.post('/api/prize-tokens', {
+      tokenId: nextTokenId + i * 2 + 1,
+      isPrivateSale: true,
+      minterEmail: record[EMAIL_FIELD],
+      minterWallet: record[WALLET_FIELD],
+    })
   }
 
   console.log('POST success')
