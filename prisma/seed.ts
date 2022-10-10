@@ -18,7 +18,7 @@ const prisma = new PrismaClient()
 // ]
 
 async function dropCollections() {
-  await prisma.mint.deleteMany()
+  await prisma.messageToken.deleteMany()
 }
 
 async function main() {
