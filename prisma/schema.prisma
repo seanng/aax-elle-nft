@@ -23,12 +23,12 @@ model MessageToken {
 }
 
 model PrizeToken {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId
-  tokenId      Int // should be odd. 
-  minterEmail  String
-  minterWallet String
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  tokenId       Int // should be odd. 
+  minterEmail   String
+  minterWallet  String
   isPrivateSale Boolean   @default(false)
-  openedAt     DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  openedAt      DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
