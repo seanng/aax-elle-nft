@@ -33,6 +33,8 @@ export interface NFTParametersBasic {
   aroundText: string
   message: string
   isKol?: boolean
+  signature?: string
+  gridIconTemplate?: FC
   Comps?: any
 }
 

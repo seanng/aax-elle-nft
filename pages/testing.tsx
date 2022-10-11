@@ -1,5 +1,10 @@
 import type { NextPage } from 'next'
-import { getAssets, getNFTSettings } from 'utils/nft'
+import {
+  genKolAssets,
+  getAssets,
+  getNFTSettings,
+  genRandomKolGITemplate,
+} from 'utils/nft'
 import CompsNFTMain from 'components/NFT/Main'
 import { NFTParameters } from 'shared/types'
 import { useEffect } from 'react'
@@ -19,12 +24,21 @@ const TestPage: NextPage = () => {
   //   test()
   // }, [])
 
+  // ? Enable below to test genKolAssets function
+  useEffect(() => {
+    genKolAssets().then((assets) => {
+      console.log(assets)
+    })
+  }, [])
+
+  return null
+
   return (
     <CompsNFTMain
       data={getNFTSettings({
         isKol: true,
         signature: 'https://i.imgur.com/Qpji4ZS.png',
-        // gridIconTemplate: genRandomKolGI1Template()
+        gridIconTemplate: genRandomKolGITemplate(),
         aroundText:
           'AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCFDDDDDDDDDDDDDDDDDDEE',
         message:
