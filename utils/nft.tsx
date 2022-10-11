@@ -126,6 +126,7 @@ export const genRandomKolGI1Template = () => {
   return KOL_GI_TEMPLATES[Math.floor(Math.random() * KOL_GI_TEMPLATES.length)]
 }
 
+// ? Settings
 // gridIconTemplate | FC | required if gridStyle is hex or gradient | IconSet for beforeOpen & neverOpened
 // backgroundStyle | hex, gradient, link
 // gridStyle | hex, gradient, link | color/png for beforeOpen & neverOpened & afterOpen
