@@ -33,11 +33,17 @@ export function useWeb3() {
       return false
     }
     try {
+      console.log('1')
       const provider = await web3Modal.connect()
+      console.log('2')
       const web3Provider = new ethers.providers.Web3Provider(provider)
+      console.log('3')
       const signer = web3Provider.getSigner()
+      console.log('4')
       const address = await signer.getAddress()
+      console.log('5')
       const network = await web3Provider.getNetwork()
+      console.log('6')
       // If network is not Mainnet (prod), localhost (dev), Goerli (preview), prompt user to swap to correct network
 
       if (window.ethereum && network.name !== correctNetwork) {
