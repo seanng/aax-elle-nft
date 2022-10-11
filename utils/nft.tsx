@@ -470,6 +470,7 @@ export const urlRegex = new RegExp(
   /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i
 )
 
+// ! This is a temporary solution, will need to change argument
 export const genKolAssets = async (amount = 5) => {
   const assets: any[] = []
   const availableIcons = [...KOL_GI_TEMPLATES]
@@ -483,6 +484,7 @@ export const genKolAssets = async (amount = 5) => {
       message: 'message',
       aroundText: 'aroundText',
     })
+    // ! Add await upload function here
     assets.push(kol)
   }
 

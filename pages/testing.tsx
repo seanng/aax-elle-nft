@@ -24,14 +24,32 @@ const TestPage: NextPage = () => {
   //   test()
   // }, [])
 
-  // ? Enable below to test genKolAssets function
-  useEffect(() => {
-    genKolAssets().then((assets) => {
-      console.log(assets)
-    })
-  }, [])
+  const downloadFile = (file) => {
+    const link = document.createElement('a')
+    const url = URL.createObjectURL(file)
 
-  return null
+    link.href = url
+    link.download = file.name
+    document.body.appendChild(link)
+    link.click()
+
+    document.body.removeChild(link)
+    window.URL.revokeObjectURL(url)
+  }
+
+  const genKOL = () => {
+    genKolAssets(1).then((assets) => {
+      console.log(assets)
+
+      assets.forEach((asset) => {
+        Object.values(asset).forEach((file) => {
+          downloadFile(file)
+        })
+      })
+    })
+  }
+
+  return <button onClick={genKOL}>Gen Kol Assets</button>
 
   return (
     <CompsNFTMain
