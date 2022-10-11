@@ -26,7 +26,7 @@ const TestPage: NextPage = () => {
         signature: 'https://i.imgur.com/Qpji4ZS.png',
         // gridIconTemplate: genRandomKolGI1Template()
         aroundText:
-          'AAAAAAAAAA BBBBBBBBBB CCCCCCCCC DDDDDDDDD gpqy EEEEEEEEEE FFFFFFFFFF GGGGGGGGGG HHHHHHHHHH',
+          'AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCFDDDDDDDDDDDDDDDDDDEE',
         message:
           '在旅途中，\n小王子思考愛的真諦明白馴養的意義。\n小王子思考愛的真諦明白馴養的意義。\nI love you.\n我愛你。',
       })}
