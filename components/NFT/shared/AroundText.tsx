@@ -9,16 +9,17 @@ const compStyle = {
   fontFamily: '"DM Mono", "DMMono"',
   fontWeight: '500',
   fontStyle: 'italic',
-  fontSize: '22px',
+  fontSize: '25px',
+  letterSpacing: '0.01em',
   boxSizing: 'border-box',
   color: 'transparent',
 } as React.CSSProperties
 
 const commonOuterContainerStyle = {
   whiteSpace: 'nowrap',
-  width: 'calc(100% - 75px)',
-  height: '37.5px',
-  margin: '0 37.5px',
+  width: 'calc(100% - 70px)',
+  height: '35px',
+  margin: '0 35px',
   position: 'absolute',
   transformOrigin: 'top left',
 } as React.CSSProperties
@@ -28,14 +29,14 @@ const commonInnerContainerStyle = {
   height: '100%',
   overflow: 'hidden',
   boxSizing: 'content-box',
-  paddingBottom: '37.5px',
+  paddingBottom: '35px',
 } as React.CSSProperties
 
 const commonTextContainerStyle = {
   display: 'flex',
   justifyContent: 'start',
   alignItems: 'end',
-  height: '37.5px',
+  height: '35px',
 } as React.CSSProperties
 
 const commonTextStyle = {
@@ -54,7 +55,7 @@ const rightContainerStyle = {
   transformOrigin: 'bottom left',
   transform: 'rotate(90deg)',
   top: '0',
-  left: 'calc(100% - 75px)',
+  left: 'calc(100% - 70px)',
 } as React.CSSProperties
 
 const bottomContainerStyle = {
@@ -62,14 +63,14 @@ const bottomContainerStyle = {
   transformOrigin: 'top right',
   transform: 'rotate(180deg)',
   top: '100%',
-  left: '-275px',
+  left: '-280px',
 } as React.CSSProperties
 
 const leftContainerStyle = {
   ...commonOuterContainerStyle,
   transformOrigin: 'bottom left',
   transform: 'rotate(270deg)',
-  top: 'calc(100% - 75px)',
+  top: 'calc(100% - 70px)',
   left: '0',
 } as React.CSSProperties
 
@@ -110,19 +111,19 @@ const getTransformValues = (widths: GetTransformValuesProps) => {
     totalWidth,
     animationTime: (totalWidth / velocityPerSecond).toFixed(1),
     emptyWidth,
-    bottom: {
+    top: {
       start: -(cW * 0),
       end: -(totalWidth - tW + cW * 0),
     },
-    left: {
+    right: {
       start: -(cW * 1),
       end: -(totalWidth - tW + cW * 1),
     },
-    top: {
+    bottom: {
       start: -(cW * 2),
       end: -(totalWidth - tW + cW * 2),
     },
-    right: {
+    left: {
       start: -(cW * 3),
       end: -(totalWidth - tW + cW * 3),
     },
@@ -186,7 +187,7 @@ function CompsNFTAroundText({
           <span
             style={{
               ...commonTextStyle,
-              lineHeight: isImageCaptured ? '16px' : '14px',
+              lineHeight: isImageCaptured ? '18px' : '14px',
             }}
           >
             {aroundText}
@@ -196,13 +197,13 @@ function CompsNFTAroundText({
               ...commonTextStyle,
               width: `${transformValues.emptyWidth}px`,
               minWidth: `${transformValues.emptyWidth}px`,
-              height: '37.5px',
+              height: '35px',
             }}
           />
           <span
             style={{
               ...commonTextStyle,
-              lineHeight: isImageCaptured ? '16px' : '14px',
+              lineHeight: isImageCaptured ? '18px' : '14px',
             }}
           >
             {aroundText}
