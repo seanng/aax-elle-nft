@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import html2canvas from 'html2canvas'
+import { format } from 'date-fns'
 
 import type { Files, NFTParameters, NFTParametersBasic } from 'shared/types'
 import CompsNFTMain from 'components/NFT/Main'
@@ -143,6 +144,12 @@ import KolIcon110 from 'components/NFT/shared/kol-icons/110'
 import KolIcon111 from 'components/NFT/shared/kol-icons/111'
 import KolIcon112 from 'components/NFT/shared/kol-icons/112'
 import KolIcon113 from 'components/NFT/shared/kol-icons/113'
+import {
+  FRAME_PHRASE,
+  FRAME_RECEIVER,
+  FRAME_SENDER,
+  NFT_MESSAGE_FIELD,
+} from 'shared/constants'
 
 const IMAGE_DEBUG = false
 const HTML_DEBUG = false
@@ -470,23 +477,38 @@ export const urlRegex = new RegExp(
   /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i
 )
 
-// ! This is a temporary solution, will need to change argument
-export const genKolAssets = async (amount = 5) => {
+export const genKolAssets = async (records) => {
   const assets: any[] = []
   const availableIcons = [...KOL_GI_TEMPLATES]
 
-  for (let i = 0; i < amount; i++) {
+  for (let i = 0; i < records.length; i++) {
+    const rec = records[i]
     const randomIndex = Math.floor(Math.random() * availableIcons.length)
     const kol = await getAssets({
       isKol: true,
       signature: 'https://i.imgur.com/Qpji4ZS.png',
       gridIconTemplate: availableIcons.splice(randomIndex, 1)[0],
-      message: 'message',
-      aroundText: 'aroundText',
+      message: rec[NFT_MESSAGE_FIELD] as string,
+      aroundText: genNftFrameTextMsg(
+        rec[FRAME_SENDER],
+        rec[FRAME_RECEIVER],
+        rec[FRAME_PHRASE] as string
+      ),
     })
-    // ! Add await upload function here
     assets.push(kol)
   }
 
   return assets
+}
+
+export const genNftFrameTextMsg = (sender, receiver, kolMsg = ''): string => {
+  const formattedDate = format(new Date(), 'LLL.dd.yyyy E. HH:mm:ss')
+  const receiverNotifier = `${receiver}! ${sender} sent you a LOVE message. Love, ELLEverse.`
+  const fillerText = 'In ELLEverse, you are special & stylish.'
+
+  return kolMsg
+    ? // Private Sale Text
+      `${kolMsg} ${formattedDate} ${receiverNotifier} ${fillerText}`
+    : // Public Sale Text
+      `${receiverNotifier} ${formattedDate} ${fillerText} Shhh… Keep Secret, Keep Stylish.`
 }

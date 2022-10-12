@@ -12,6 +12,7 @@ import {
 import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
 import { useState } from 'react'
 import { Files, MintForm, MintResponseData } from 'shared/types'
+import { uploadOneFile } from 'utils/helpers'
 import { useWeb3Context } from 'context'
 import { contractAddress, salePhase, emailTemplateIds } from 'utils/config'
 
@@ -107,7 +108,6 @@ export function useMint() {
     await contract[mintMethod](mintOpts)
     onMetamaskConfirm()
 
-    // TODO: Upload images & HTMLs to S3
     await uploadOneFile(PUBLIC, `${messageTokenId}.png`, files.beforeOpenImage)
     await uploadOneFile(PUBLIC, `${messageTokenId}.html`, files.beforeOpenHtml)
     await uploadOneFile(BEFORE, `${messageTokenId}.png`, files.beforeOpenImage)
@@ -140,33 +140,6 @@ export function useMint() {
     }
 
     return mintData
-  }
-
-  const uploadOneFile = async (
-    folder: string,
-    key: string,
-    file: File | null
-  ) => {
-    if (!file) throw new Error('No File in uploadOneFile')
-    // Get presigned post fields
-    const res = await fetch(
-      `/api/upload-encrypted-images-url?file=${folder}/${key}`
-    )
-    const { url, fields } = await res.json()
-    const formData = new FormData()
-
-    Object.entries({ ...fields, file }).forEach(([key, value]) => {
-      formData.append(key, value as string)
-    })
-
-    // Upload to S3.
-    const upload = await fetch(url, {
-      method: 'POST',
-      body: formData,
-    })
-    if (!upload.ok) {
-      // WHAT DO WE DO IF THE UPLOAD FAILS!? >_<
-    }
   }
 
   return {

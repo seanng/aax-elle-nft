@@ -15,3 +15,30 @@ export function getWidthHeightPercentages(
     width: `${(w / cvWidth) * 100}%`,
   }
 }
+
+export const uploadOneFile = async (
+  folder: string,
+  key: string,
+  file: File | null
+) => {
+  if (!file) throw new Error('No File in uploadOneFile')
+  // Get presigned post fields
+  const res = await fetch(
+    `/api/upload-encrypted-images-url?file=${folder}/${key}`
+  )
+  const { url, fields } = await res.json()
+  const formData = new FormData()
+
+  Object.entries({ ...fields, file }).forEach(([key, value]) => {
+    formData.append(key, value as string)
+  })
+
+  // Upload to S3.
+  const upload = await fetch(url, {
+    method: 'POST',
+    body: formData,
+  })
+  if (!upload.ok) {
+    // WHAT DO WE DO IF THE UPLOAD FAILS!? >_<
+  }
+}
