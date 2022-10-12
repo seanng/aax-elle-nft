@@ -13,7 +13,7 @@ import {
 import { emailTemplateIds } from '../utils/config'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 
-const WINNERS_TABLE = '(Testing) - Winners NFT Generation' // TODO: CHANGEME
+const WINNERS_TABLE = '(Testing) - Winners Airdrop' // TODO: CHANGEME
 
 async function airdropWinners() {
   if (!network.config.from)

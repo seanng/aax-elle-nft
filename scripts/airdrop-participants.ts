@@ -6,7 +6,7 @@ import { CONTRACT_NAME, WALLET_FIELD, EMAIL_FIELD } from '../shared/constants'
 import { emailTemplateIds } from '../utils/config'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 
-const PARTICIPANT_TABLE = '(Testing) - Participants NFT Generation' // TODO: CHANGEME
+const PARTICIPANT_TABLE = '(Testing) - Participants Airdrop' // TODO: CHANGEME
 
 async function airdropParticipants() {
   if (!network.config.from)

@@ -13,7 +13,7 @@ import {
 } from '../shared/constants'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 
-const KOL_TABLE = '(Testing) - KOL NFT Generation' // TODO: CHANGEME
+const KOL_TABLE = '(Testing) - KOL Airdrop' // TODO: CHANGEME
 
 async function airdropKols() {
   if (!network.config.from)
