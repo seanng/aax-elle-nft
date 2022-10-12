@@ -2,23 +2,33 @@ import React, { useCallback, useState, useEffect } from 'react'
 
 import { genRandomId } from 'utils/nft'
 
+const FONT_SIZE = 25
+const LETTER_SPACING = 0.02
+const CHARACTER_WIDTH = FONT_SIZE * 0.6 + FONT_SIZE * LETTER_SPACING
+const LETTERS = 18
+const CONTAINER_WIDTH = 350
+const MARGINS = CONTAINER_WIDTH - LETTERS * CHARACTER_WIDTH
+const MARGIN = MARGINS / 2
+const TEXT_WIDTH = CONTAINER_WIDTH - MARGINS
+
 const compStyle = {
   position: 'absolute',
-  width: '350px',
-  height: '350px',
+  width: `${CONTAINER_WIDTH}px`,
+  height: `${CONTAINER_WIDTH}px`,
   fontFamily: '"DM Mono", "DMMono"',
   fontWeight: '500',
   fontStyle: 'italic',
-  fontSize: '22px',
+  fontSize: `${FONT_SIZE}px`,
+  letterSpacing: `${LETTER_SPACING}em`,
   boxSizing: 'border-box',
   color: 'transparent',
 } as React.CSSProperties
 
 const commonOuterContainerStyle = {
   whiteSpace: 'nowrap',
-  width: 'calc(100% - 75px)',
-  height: '37.5px',
-  margin: '0 37.5px',
+  width: `${TEXT_WIDTH}px`,
+  height: `${MARGIN}px`,
+  margin: `0 ${MARGIN}px`,
   position: 'absolute',
   transformOrigin: 'top left',
 } as React.CSSProperties
@@ -28,14 +38,14 @@ const commonInnerContainerStyle = {
   height: '100%',
   overflow: 'hidden',
   boxSizing: 'content-box',
-  paddingBottom: '37.5px',
+  paddingBottom: `${MARGIN}px`,
 } as React.CSSProperties
 
 const commonTextContainerStyle = {
   display: 'flex',
   justifyContent: 'start',
   alignItems: 'end',
-  height: '37.5px',
+  height: `${MARGIN}px`,
 } as React.CSSProperties
 
 const commonTextStyle = {
@@ -54,7 +64,7 @@ const rightContainerStyle = {
   transformOrigin: 'bottom left',
   transform: 'rotate(90deg)',
   top: '0',
-  left: 'calc(100% - 75px)',
+  left: `${TEXT_WIDTH}px`,
 } as React.CSSProperties
 
 const bottomContainerStyle = {
@@ -62,14 +72,14 @@ const bottomContainerStyle = {
   transformOrigin: 'top right',
   transform: 'rotate(180deg)',
   top: '100%',
-  left: '-275px',
+  left: `-${TEXT_WIDTH}px`,
 } as React.CSSProperties
 
 const leftContainerStyle = {
   ...commonOuterContainerStyle,
   transformOrigin: 'bottom left',
   transform: 'rotate(270deg)',
-  top: 'calc(100% - 75px)',
+  top: `${TEXT_WIDTH}px`,
   left: '0',
 } as React.CSSProperties
 
@@ -98,7 +108,7 @@ const getTransformValues = (widths: GetTransformValuesProps) => {
   const velocityPerSecond = 100
   const filledBoxes = Math.min(Math.floor(tW / cW), 4)
   const emptyBoxes = 4 - filledBoxes
-  const extraSpace = emptyBoxes ? 0 : 50
+  const extraSpace = emptyBoxes ? 0 : CHARACTER_WIDTH * 2
   const textTakenSpace = filledBoxes === 4 ? 0 : tW % cW
 
   // emptyWidth = total width of empty spaces needed
@@ -110,19 +120,19 @@ const getTransformValues = (widths: GetTransformValuesProps) => {
     totalWidth,
     animationTime: (totalWidth / velocityPerSecond).toFixed(1),
     emptyWidth,
-    bottom: {
+    top: {
       start: -(cW * 0),
       end: -(totalWidth - tW + cW * 0),
     },
-    left: {
+    right: {
       start: -(cW * 1),
       end: -(totalWidth - tW + cW * 1),
     },
-    top: {
+    bottom: {
       start: -(cW * 2),
       end: -(totalWidth - tW + cW * 2),
     },
-    right: {
+    left: {
       start: -(cW * 3),
       end: -(totalWidth - tW + cW * 3),
     },
@@ -162,8 +172,10 @@ function CompsNFTAroundText({
     if (containerNode && textNode && isFontReady) {
       setTransformValues(
         getTransformValues({
-          cW: containerNode.offsetWidth,
-          tW: textNode.offsetWidth,
+          cW: Number(
+            window.getComputedStyle(containerNode).width.replace('px', '')
+          ),
+          tW: Number(window.getComputedStyle(textNode).width.replace('px', '')),
         })
       )
       setIsCompReady(true)
@@ -186,7 +198,7 @@ function CompsNFTAroundText({
           <span
             style={{
               ...commonTextStyle,
-              lineHeight: isImageCaptured ? '16px' : '14px',
+              lineHeight: isImageCaptured ? '18px' : '14px',
             }}
           >
             {aroundText}
@@ -196,13 +208,13 @@ function CompsNFTAroundText({
               ...commonTextStyle,
               width: `${transformValues.emptyWidth}px`,
               minWidth: `${transformValues.emptyWidth}px`,
-              height: '37.5px',
+              height: `${MARGIN}px`,
             }}
           />
           <span
             style={{
               ...commonTextStyle,
-              lineHeight: isImageCaptured ? '16px' : '14px',
+              lineHeight: isImageCaptured ? '18px' : '14px',
             }}
           >
             {aroundText}

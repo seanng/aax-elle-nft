@@ -7,7 +7,7 @@
   "license": "ISC",
   "scripts": {
     "dev": "next dev",
-    "build": "hardhat compile && next build",
+    "build": "prisma generate && hardhat compile && next build",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "husky install",

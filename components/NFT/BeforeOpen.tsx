@@ -2,7 +2,6 @@ import React, { useCallback, useState, useEffect } from 'react'
 import { genImageFile, genHTMLFile } from 'utils/nft'
 import CompsNFTBackground from 'components/NFT/shared/Background'
 import CompsNFTGrid from 'components/NFT/shared/Grid'
-import CompsNFTBlinkingIcons from 'components/NFT/shared/BlinkingIcons'
 import CompsNFTAroundText from 'components/NFT/shared/AroundText'
 import CompsNFTSignature from 'components/NFT/shared/Signature'
 import { NFTParameters } from 'shared/types'
@@ -23,10 +22,12 @@ interface Props {
 function CompsNFTBeforeOpen({
   data: {
     aroundText,
+    gridIconTemplate,
     backgroundStyle,
-    gridIconStyle1,
-    gridIconTemplate1,
+    gridStyle,
     aroundTextColor,
+    iconOutlineColor,
+    iconFillColor,
     signature,
   },
   setImage,
@@ -37,7 +38,6 @@ function CompsNFTBeforeOpen({
   const [isGridReady, setIsGridReady] = useState(false)
   const [isFontReady, setIsFontReady] = useState(false)
   const [isDimensionReady, setIsDimensionReady] = useState(false)
-  const [isIconsReady, setIsIconsReady] = useState(false)
   const [isSignatureReady, setIsSignatureReady] = useState(!signature)
   const [isImageCaptured, setIsImageCaptured] = useState(false)
 
@@ -63,7 +63,6 @@ function CompsNFTBeforeOpen({
       isGridReady &&
       isFontReady &&
       isDimensionReady &&
-      isIconsReady &&
       isSignatureReady
     ) {
       const getImage = async () => {
@@ -78,7 +77,6 @@ function CompsNFTBeforeOpen({
     isGridReady,
     isFontReady,
     isDimensionReady,
-    isIconsReady,
     isSignatureReady,
     setImage,
   ])
@@ -97,15 +95,12 @@ function CompsNFTBeforeOpen({
         setIsCompReady={setIsBackgroundReady}
       />
       <CompsNFTGrid
-        color={gridIconStyle1}
-        Template={gridIconTemplate1}
+        color={gridStyle}
+        iconOutlineColor={iconOutlineColor}
+        iconFillColor={iconFillColor}
+        Template={gridIconTemplate}
         isCompReady={isGridReady}
         setIsCompReady={setIsGridReady}
-      />
-      <CompsNFTBlinkingIcons
-        isImageCaptured={isImageCaptured}
-        isCompReady={isIconsReady}
-        setIsCompReady={setIsIconsReady}
       />
       <CompsNFTAroundText
         color={aroundTextColor}

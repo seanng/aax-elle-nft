@@ -4,6 +4,7 @@ import CompsNFTBackground from 'components/NFT/shared/Background'
 import CompsNFTGrid from 'components/NFT/shared/Grid'
 import CompsNFTMessage from 'components/NFT/shared/Message'
 import CompsNFTAroundText from 'components/NFT/shared/AroundText'
+import CompsNFTBlinkingIcons from 'components/NFT/shared/BlinkingIcons'
 import CompsNFTSignature from 'components/NFT/shared/Signature'
 import { NFTParameters } from 'shared/types'
 
@@ -25,8 +26,7 @@ function CompsNFTOpened({
     aroundText,
     message,
     backgroundStyle,
-    gridIconStyle2,
-    gridIconTemplate2,
+    gridStyle,
     aroundTextColor,
     messageColor,
     opacity = '0.25',
@@ -40,6 +40,7 @@ function CompsNFTOpened({
   const [isGridReady, setIsGridReady] = useState(false)
   const [isFontReady, setIsFontReady] = useState(false)
   const [isDimensionReady, setIsDimensionReady] = useState(false)
+  const [isIconsReady, setIsIconsReady] = useState(false)
   const [isSignatureReady, setIsSignatureReady] = useState(!signature)
   const [isImageCaptured, setIsImageCaptured] = useState(false)
 
@@ -65,6 +66,7 @@ function CompsNFTOpened({
       isGridReady &&
       isFontReady &&
       isDimensionReady &&
+      isIconsReady &&
       isSignatureReady
     ) {
       const getImage = async () => {
@@ -79,6 +81,7 @@ function CompsNFTOpened({
     isGridReady,
     isFontReady,
     isDimensionReady,
+    isIconsReady,
     isSignatureReady,
     setImage,
   ])
@@ -97,8 +100,7 @@ function CompsNFTOpened({
         setIsCompReady={setIsBackgroundReady}
       />
       <CompsNFTGrid
-        color={gridIconStyle2}
-        Template={gridIconTemplate2}
+        color={gridStyle}
         opacity={opacity}
         isCompReady={isGridReady}
         setIsCompReady={setIsGridReady}
@@ -110,6 +112,11 @@ function CompsNFTOpened({
         isFontReady={isFontReady}
         isCompReady={isDimensionReady}
         setIsCompReady={setIsDimensionReady}
+      />
+      <CompsNFTBlinkingIcons
+        isImageCaptured={isImageCaptured}
+        isCompReady={isIconsReady}
+        setIsCompReady={setIsIconsReady}
       />
       <CompsNFTMessage color={messageColor} message={message} />
       {signature && (

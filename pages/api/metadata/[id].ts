@@ -17,8 +17,8 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
 
   res.json({
     name: isIdEven ? 'Message Token' : prizeTokenName,
-    image: `${s3BaseUrl}/public/${fileName}.png`,
-    animation_url: `${s3BaseUrl}/public/${fileName}.html`,
+    image: `${s3BaseUrl}/public/${fileName}${isIdEven ? '.png' : '.svg'}`,
+    ...(isIdEven && { animation_url: `${s3BaseUrl}/public/${fileName}.html` }),
   })
 }
 

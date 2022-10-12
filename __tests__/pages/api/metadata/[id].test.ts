@@ -36,8 +36,7 @@ describe('api/metadata/[id]', () => {
 
       expect(res._getJSONData()).toEqual({
         name: 'Whitelist Token',
-        image: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/whitelist.png`,
-        animation_url: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/whitelist.html`,
+        image: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/whitelist.svg`,
       })
     })
 
@@ -53,8 +52,7 @@ describe('api/metadata/[id]', () => {
 
       expect(res._getJSONData()).toEqual({
         name: 'Prize Token',
-        image: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/prize.png`,
-        animation_url: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/prize.html`,
+        image: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/prize.svg`,
       })
     })
   })

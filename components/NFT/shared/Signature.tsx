@@ -4,12 +4,13 @@ import { genRandomId } from 'utils/nft'
 
 const compStyle = {
   position: 'absolute',
-  bottom: 0,
-  right: 0,
+  bottom: '35px',
+  right: '35px',
+  height: '56px',
 } as React.CSSProperties
 
 const imgStyle = {
-  height: '37.5px',
+  height: '56px',
   width: 'auto',
 }
 
