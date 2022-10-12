@@ -279,4 +279,23 @@ describe('Elleverse', function () {
       expect(postBurnErrorCallback).toHaveBeenCalled()
     })
   })
+
+  describe('getNextTokenId', () => {
+    it('correctly returns the next token id', async function () {
+      const nextTokenId = await contract.getNextTokenId()
+      expect(nextTokenId.toNumber()).toBe(0)
+    })
+
+    it('is not callable by non-contract owners', async function () {
+      const nonOwnerErrorCB = jest.fn()
+      const ownerErrorCB = jest.fn()
+      const [owner, nonOwner] = signers
+
+      await contract.connect(owner).getNextTokenId().catch(ownerErrorCB)
+      await contract.connect(nonOwner).getNextTokenId().catch(nonOwnerErrorCB)
+
+      expect(ownerErrorCB).not.toHaveBeenCalled()
+      expect(nonOwnerErrorCB).toHaveBeenCalled()
+    })
+  })
 })

@@ -2,8 +2,8 @@
  * This file contains app-wide configuration options.
  */
 
-import { GOERLI, HOMESTEAD, LOCALHOST, NOT_STARTED } from 'shared/constants'
-import { KolDropdownListItem } from 'shared/types'
+import { GOERLI, HOMESTEAD, LOCALHOST, NOT_STARTED } from '../shared/constants'
+import { KolDropdownListItem } from '../shared/types'
 
 export const salePhase = process.env.NEXT_PUBLIC_SALE_PHASE ?? NOT_STARTED
 

@@ -2,11 +2,14 @@ import { PrizeToken } from '@prisma/client'
 import * as service from 'backend/services/prize-tokens'
 import { check } from 'express-validator'
 import { validate } from 'lib/middlewares'
+import sendgrid from 'lib/sendgrid'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
+import { fromEmail } from 'utils/config'
 
 interface PostHandlerRequest extends NextApiRequest {
   body: PrizeToken & {
     emailTemplateId?: string
+    isPrivateSale?: boolean
   }
 }
 
@@ -21,16 +24,21 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
   )
     return
 
-  console.log('Storing prize token in db...')
-
   const prizeToken = await service.create({
     tokenId: req.body.tokenId,
+    isPrivateSale: req.body.isPrivateSale ?? false,
     minterEmail: req.body.minterEmail,
     minterWallet: req.body.minterWallet,
   })
 
   if (req.body.minterEmail && req.body.emailTemplateId) {
     // sendgrid do something. this is probably a WL/Prize Token-only airdrop.
+    await sendgrid.send({
+      from: fromEmail,
+      to: req.body.minterEmail,
+      templateId: req.body.emailTemplateId,
+      dynamicTemplateData: {},
+    })
   }
 
   res.json(prizeToken)
