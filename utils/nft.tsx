@@ -195,18 +195,19 @@ const COMBINATION_EXCLUSIONS = {
 }
 const KOL_EXCLUSIONS = ['#FFFD89', '#FFFFFF']
 
-export const genColorPair = (isKol) => {
-  const colorA = genRandomAColor()
-  const colorB = genRandomBColor()
+export const genBgTgColorPair = (isKol = false) => {
+  const bgColor = genRandomAColor()
+  const frameTextColor = genRandomBColor()
 
-  const isExcluded = COMBINATION_EXCLUSIONS[colorA]?.includes(colorB)
-  const isKolExcluded = isKol && KOL_EXCLUSIONS.includes(colorA)
+  const isBlacklisted =
+    COMBINATION_EXCLUSIONS[bgColor]?.includes(frameTextColor)
+  const clashesWithSignature = isKol && KOL_EXCLUSIONS.includes(bgColor)
 
-  if (isExcluded || isKolExcluded) {
-    return genColorPair(isKol)
+  if (isBlacklisted || clashesWithSignature) {
+    return genBgTgColorPair(isKol)
   }
 
-  return [colorA, colorB]
+  return [bgColor, frameTextColor]
 }
 
 const NORMAL_GI_TEMPLATES = [
@@ -373,8 +374,8 @@ export const genRandomKolGITemplate = () => {
 // opacity? | '0.0' to '1.0' | optional
 export const getNFTSettings = (settings) => {
   const { isKol, ...otherSettings } = settings
-  const [bgColor, tgColor] = genColorPair(isKol)
-  const [iIColor, iOColor] = genColorPair(isKol)
+  const [bgColor, tgColor] = genBgTgColorPair(isKol)
+  const [iIColor, iOColor] = [genRandomAColor(), genRandomBColor()]
 
   // ? Other Configurable Settings
   // backgroundStyle: 'https://i.imgur.com/4q7eRSU.png',
