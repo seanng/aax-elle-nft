@@ -88,6 +88,10 @@ contract Elleverse is ERC721BQueryable, Ownable {
     PRIVATE_SALE_MINT_LIMIT = _newLimit;
   }
 
+  function getNextTokenId() external view onlyOwner returns (uint256) {
+    return _nextTokenId();
+  }
+
   // =============================================================
   //                      MINTS & TRANSACTIONS
   // =============================================================
@@ -114,10 +118,6 @@ contract Elleverse is ERC721BQueryable, Ownable {
     require(
       TOTAL_MINT_LIMIT >= totalSupply() + (_to.length * 2),
       "Can't mint - Max mint limit will be exceeded."
-    );
-    require(
-      _isStringEqual(SALE_PHASE, NOT_STARTED_PHASE),
-      'Can only airdrop whitelist tokens before private sale phase has started.'
     );
     for (uint256 i; i < _to.length; i++) {
       if (_nextTokenId() % 2 == 0) _incrementIndex(1);
