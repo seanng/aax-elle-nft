@@ -39,6 +39,6 @@ export const uploadOneFile = async (
     body: formData,
   })
   if (!upload.ok) {
-    // WHAT DO WE DO IF THE UPLOAD FAILS!? >_<
+    console.error(`Upload failed for ${folder}/${key}`)
   }
 }
