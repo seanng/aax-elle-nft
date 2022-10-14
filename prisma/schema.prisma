@@ -28,6 +28,7 @@ model PrizeToken {
   minterEmail   String
   minterWallet  String
   isPrivateSale Boolean   @default(false)
+  prizeName     String?
   openedAt      DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt

@@ -1,17 +1,17 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
-import { NOT_STARTED, PRIVATE_SALE } from 'shared/constants'
-import { salePhase, s3BaseUrl } from 'utils/config'
+import { s3BaseUrl } from 'utils/config'
+
+// TODO: Change me.
+const PUBLIC_SALE_FIRST_TOKEN_ID = 3113
 
 async function getHandler(req: NextApiRequest, res: NextApiResponse) {
   let { id: fileName } = req.query as { id: string }
   const isIdEven = Number(fileName) % 2 === 0
-  const isWhitelistPhase = [NOT_STARTED, PRIVATE_SALE].includes(salePhase)
+  const isWhitelistPhase = Number(fileName) < PUBLIC_SALE_FIRST_TOKEN_ID
 
-  // TODO: Update logic if WLTs do not become Prize Tokens
   const prizeTokenName = isWhitelistPhase ? 'Whitelist Token' : 'Prize Token'
 
   if (!isIdEven) {
-    // TODO: Update logic if WLTs do not become Prize Tokens
     fileName = isWhitelistPhase ? 'whitelist' : 'prize'
   }
 

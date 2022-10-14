@@ -518,7 +518,11 @@ export const genKolAssets = async (records) => {
 
 export const genNftFrameTextMsg = (sender, receiver, kolMsg = ''): string => {
   const formattedDate = format(new Date(), 'LLL.dd.yyyy E. HH:mm:ss')
-  const receiverNotifier = `${receiver}! ${sender} sent you a LOVE message. Love, ELLEverse.`
+  const receiverGreeting = receiver ? receiver + '! ' : ''
+  const senderGreeting = sender
+    ? `${sender} sent you a LOVE message.`
+    : 'You were sent a LOVE message.'
+  const receiverNotifier = `${receiverGreeting}${senderGreeting} Love, ELLEverse.`
   const fillerText = 'In ELLEverse, you are special & stylish.'
 
   return kolMsg
