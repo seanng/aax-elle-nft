@@ -14,14 +14,9 @@ const compStyle = {
 } as React.CSSProperties
 
 const innerWrapperStyle = {
-  width: '275px',
-  height: '275px',
-  padding: '5.5px',
-} as React.CSSProperties
-
-const imgStyle = {
-  width: '350px',
-  height: '350px',
+  width: '280px',
+  height: '280px',
+  padding: '8px',
 } as React.CSSProperties
 
 function CompsNFTMessage({ color, message }) {

@@ -16,7 +16,7 @@ import { salePhase } from 'utils/config'
 import { getAssets } from 'utils/nft'
 import { toast } from 'react-toastify'
 
-const TEXTAREA_HEIGHT = 276
+const TEXTAREA_HEIGHT = 300
 
 interface Props extends Partial<StepWizardChildProps> {
   updateForm: (formValues: Partial<MintForm>) => void
@@ -189,18 +189,19 @@ export function MessageStep({
             shadow-sm
             block
             md:scale-[2]
-            w-[275px]
-            h-[275px]
-            pt-[9px]
-            pb-[12px]
-            px-[12px]
+            w-[280px]
+            h-[280px]
+            px-[5.5px]
+            py-0
+            tracking-[0.01em]
             text-[26px]
-            leading-[140%]
+            leading-[150%]
             bg-black
             border-0
             rounded-none
             resize-none
             text-white
+            font-cubic
             focus:border-transparent 
             focus:ring-0
           "

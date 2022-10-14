@@ -3,6 +3,8 @@ import IconBubble from 'components/NFT/shared/misc-icons/bubble'
 
 import { genRandomId } from 'utils/nft'
 
+const TEXT_HEIGHT = 20
+
 const compStyle = {
   position: 'absolute',
   width: '320px',
@@ -18,9 +20,9 @@ const compStyle = {
 
 const commonOuterContainerStyle = {
   whiteSpace: 'nowrap',
-  width: 'calc(100% - 45px)',
-  height: '22.5px',
-  margin: '0 22.5px',
+  width: 'calc(100% - 40px)',
+  height: `${TEXT_HEIGHT}px`,
+  margin: `0 ${TEXT_HEIGHT}px`,
   position: 'absolute',
   transformOrigin: 'top left',
   background: '#55F263',
@@ -31,14 +33,14 @@ const commonInnerContainerStyle = {
   height: '100%',
   overflow: 'hidden',
   boxSizing: 'content-box',
-  paddingBottom: '22.5px',
+  paddingBottom: `${TEXT_HEIGHT}px`,
 } as React.CSSProperties
 
 const commonTextContainerStyle = {
   display: 'flex',
   justifyContent: 'start',
   alignItems: 'center',
-  height: '22.5px',
+  height: `${TEXT_HEIGHT}px`,
 } as React.CSSProperties
 
 const commonTextStyle = {
@@ -57,7 +59,7 @@ const rightContainerStyle = {
   transformOrigin: 'bottom left',
   transform: 'rotate(90deg)',
   top: '0',
-  left: 'calc(100% - 45px)',
+  left: 'calc(100% - 40px)',
 } as React.CSSProperties
 
 const bottomContainerStyle = {
@@ -65,14 +67,14 @@ const bottomContainerStyle = {
   transformOrigin: 'top right',
   transform: 'rotate(180deg)',
   top: '100%',
-  left: '-275px',
+  left: '-280px',
 } as React.CSSProperties
 
 const leftContainerStyle = {
   ...commonOuterContainerStyle,
   transformOrigin: 'bottom left',
   transform: 'rotate(270deg)',
-  top: 'calc(100% - 45px)',
+  top: 'calc(100% - 40px)',
   left: '0',
 } as React.CSSProperties
 
@@ -185,7 +187,7 @@ function CompsNFTAroundText2({ aroundText, optClass }) {
               ...commonTextStyle,
               width: `${transformValues.emptyWidth}px`,
               minWidth: `${transformValues.emptyWidth}px`,
-              height: '22.5px',
+              height: `${TEXT_HEIGHT}px`,
             }}
           />
           <span
@@ -201,7 +203,7 @@ function CompsNFTAroundText2({ aroundText, optClass }) {
               ...commonTextStyle,
               width: `${transformValues.emptyWidth}px`,
               minWidth: `${transformValues.emptyWidth}px`,
-              height: '22.5px',
+              height: `${TEXT_HEIGHT}px`,
             }}
           />
           <span
@@ -255,10 +257,10 @@ function CompsNFTAroundText2({ aroundText, optClass }) {
         </span>
       </div>
 
-      <IconBubble optClass="absolute top-0 left-0 h-[22.5px] w-[22.5px]" />
-      <IconBubble optClass="absolute top-0 right-0 h-[22.5px] w-[22.5px]" />
-      <IconBubble optClass="absolute bottom-0 left-0 h-[22.5px] w-[22.5px] scale-y-[-1]" />
-      <IconBubble optClass="absolute bottom-0 right-0 h-[22.5px] w-[22.5px] scale-y-[-1]" />
+      <IconBubble optClass="absolute top-0 left-0 h-5 w-5" />
+      <IconBubble optClass="absolute top-0 right-0 h-5 w-5" />
+      <IconBubble optClass="absolute bottom-0 left-0 h-5 w-5 scale-y-[-1]" />
+      <IconBubble optClass="absolute bottom-0 right-0 h-5 w-5 scale-y-[-1]" />
 
       {/* Top */}
       <div style={topContainerStyle}>{renderText('top')}</div>

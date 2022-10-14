@@ -32,6 +32,7 @@ module.exports = {
         english: 'MplusRounded',
         mono: 'DMMono',
         noto: 'NotoSans',
+        cubic: 'Cubic11',
       },
       spacing: {
         'navbar-height': '84px',
