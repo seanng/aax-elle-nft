@@ -68,7 +68,13 @@ export function DonationStep({
 }: Props) {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
   const [errorType, setErrorType] = useState('')
-  const { handleSubmit, register, watch, setValue } = useForm({
+  const {
+    handleSubmit,
+    register,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm({
     mode: 'onChange',
     defaultValues: { donationInput: 5000, donationInEth: 0 },
   })
@@ -169,8 +175,14 @@ export function DonationStep({
         </p>
         <TwSpcaButton />
         <CaretDownIcon fill="#fff" className="my-3 md:my-6" />
+        <div className="w-[300px] md:w-[408px] mb-3">
+          <div className="flex items-center">
+            <StampSvg />
+            <span className="ml-2">愛的捐款最低從500元開始</span>
+          </div>
+        </div>
         <div className="flex border border-lime mb-3 w-[300px] md:w-[408px]">
-          {[1000, 5000, 10000].map((val, i) => (
+          {[500, 1000, 1500].map((val, i) => (
             <DonationButton
               type="button"
               isActive={donationInput == val}
@@ -198,10 +210,12 @@ export function DonationStep({
               <input
                 type="number"
                 id="donationInput"
-                className="w-40 text-5xl font-medium font-mono bg-transparent border-transparent focus:border-transparent focus:ring-0 p-0 text-right"
-                min={0}
-                placeholder="0"
-                {...register('donationInput', { required: true })}
+                className={`w-40 text-5xl font-medium font-mono bg-transparent border-transparent focus:border-transparent focus:ring-0 p-0 text-right ${
+                  errors?.donationInput ? 'text-red-500' : 'text-lime'
+                }`}
+                min={500}
+                placeholder="500"
+                {...register('donationInput', { required: true, min: 500 })}
               />
               <p className="text-xs md:text-sm">
                 (~ETH {donationInEth.toFixed(ETH_DECIMAL_PLACES)})
@@ -223,7 +237,7 @@ export function DonationStep({
             上一步
           </ResponsiveSecondaryButton>
           <ResponsivePrimaryButton
-            disabled={donationInput <= 0}
+            disabled={donationInput < 500}
             onClick={handleNextClick}
             className="ml-8"
           >
@@ -291,3 +305,20 @@ export function DonationStep({
     </>
   )
 }
+
+const StampSvg = () => (
+  <svg
+    width="15"
+    height="16"
+    viewBox="0 0 15 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect y="2.375" width="1.875" height="11.25" fill="#D9D9D9" />
+    <rect x="13.125" y="2.375" width="1.875" height="11.25" fill="#D9D9D9" />
+    <rect x="6.5625" y="4.25" width="1.875" height="4.6875" fill="#D9D9D9" />
+    <rect x="6.5625" y="9.875" width="1.875" height="1.875" fill="#D9D9D9" />
+    <rect x="1.875" y="0.5" width="11.25" height="1.875" fill="#D9D9D9" />
+    <rect x="1.875" y="13.625" width="11.25" height="1.875" fill="#D9D9D9" />
+  </svg>
+)
