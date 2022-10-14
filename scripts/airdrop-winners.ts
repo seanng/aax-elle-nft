@@ -9,6 +9,7 @@ import {
   WALLET_FIELD,
   EMAIL_FIELD,
   WINNER,
+  AUTONUMBER_FIELD,
 } from '../shared/constants'
 import { emailTemplateIds } from '../utils/config'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
@@ -25,7 +26,11 @@ async function airdropWinners() {
 
   const nextTokenId = (await contract.callStatic.getNextTokenId()).toNumber()
 
-  const data = await airtable(WINNERS_TABLE).select().firstPage()
+  const data = await airtable(WINNERS_TABLE)
+    .select({
+      sort: [{ field: AUTONUMBER_FIELD, direction: 'asc' }],
+    })
+    .firstPage()
 
   const records = data
     .map(({ fields }) => fields)

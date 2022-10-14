@@ -10,6 +10,7 @@ import {
   WALLET_FIELD,
   EMAIL_FIELD,
   KOL_NAME_FIELD,
+  AUTONUMBER_FIELD,
 } from '../shared/constants'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 
@@ -28,6 +29,7 @@ async function airdropKols() {
   const data = await airtable(KOL_TABLE)
     .select({
       fields: [KOL_NAME_FIELD, NFT_MESSAGE_FIELD, WALLET_FIELD, EMAIL_FIELD],
+      sort: [{ field: AUTONUMBER_FIELD, direction: 'asc' }],
     })
     .firstPage()
 

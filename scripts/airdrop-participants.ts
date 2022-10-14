@@ -2,7 +2,12 @@ import { ethers, network } from 'hardhat'
 import airtable from '../lib/airtable'
 import axios from '../lib/axios'
 import dotenv from 'dotenv'
-import { CONTRACT_NAME, WALLET_FIELD, EMAIL_FIELD } from '../shared/constants'
+import {
+  CONTRACT_NAME,
+  WALLET_FIELD,
+  EMAIL_FIELD,
+  AUTONUMBER_FIELD,
+} from '../shared/constants'
 import { emailTemplateIds } from '../utils/config'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 
@@ -18,7 +23,11 @@ async function airdropParticipants() {
 
   const nextTokenId = (await contract.callStatic.getNextTokenId()).toNumber()
 
-  const data = await airtable(PARTICIPANT_TABLE).select().firstPage()
+  const data = await airtable(PARTICIPANT_TABLE)
+    .select({
+      sort: [{ field: AUTONUMBER_FIELD, direction: 'asc' }],
+    })
+    .firstPage()
 
   const records = data
     .map(({ fields }) => fields)
