@@ -29,13 +29,9 @@ export interface MintForm {
 
 export type MintResponseData = Partial<MessageToken> | undefined
 
-export interface NFTParametersBasic {
-  aroundText: string
-  message: string
-  isKol?: boolean
-  signature?: string
-  gridIconTemplate?: FC
+export type NFTParametersBasic = Partial<NFTParameters> & {
   Comps?: any
+  isKol?: boolean
 }
 
 export interface NFTParameters {

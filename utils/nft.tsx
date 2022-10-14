@@ -145,11 +145,15 @@ import KolIcon111 from 'components/NFT/shared/kol-icons/111'
 import KolIcon112 from 'components/NFT/shared/kol-icons/112'
 import KolIcon113 from 'components/NFT/shared/kol-icons/113'
 import {
-  FRAME_PHRASE,
-  FRAME_RECEIVER,
-  FRAME_SENDER,
+  BG_COLOR_FIELD,
+  FRAME_COLOR_FIELD,
+  FRAME_PHRASE_FIELD,
+  FRAME_RECEIVER_FIELD,
+  FRAME_SENDER_FIELD,
   NFT_MESSAGE_FIELD,
+  SIGNATURE_FIELD,
 } from 'shared/constants'
+import { s3BaseUrl } from './config'
 
 const IMAGE_DEBUG = false
 const HTML_DEBUG = false
@@ -372,11 +376,17 @@ export const genRandomKolGITemplate = () => {
 // messageColor | hex
 // signature? | link | currently uses png link, modification to component will be need for svg comps | optional
 // opacity? | '0.0' to '1.0' | optional
-export const getNFTSettings = (settings) => {
-  const { isKol, ...otherSettings } = settings
-  const [bgColor, tgColor] = genBgTgColorPair(isKol)
-  const [iIColor, iOColor] = [genRandomAColor(), genRandomBColor()]
+export const getNFTSettings = ({
+  isKol = false,
+  gridIconTemplate,
+  ...settings
+}: NFTParametersBasic) => {
+  let { backgroundStyle, gridStyle } = settings
 
+  if (!backgroundStyle || !gridStyle) {
+    const colorPair = genBgTgColorPair(isKol)
+    ;[backgroundStyle, gridStyle] = colorPair
+  }
   // ? Other Configurable Settings
   // backgroundStyle: 'https://i.imgur.com/4q7eRSU.png',
   // backgroundStyle: 'radial-gradient(60.05% 60.05% at 50.55% 55.01%, #FFFF00 3%, #FFFF00 24%, #33FF99 100%)',
@@ -385,13 +395,13 @@ export const getNFTSettings = (settings) => {
   // signature: 'https://i.imgur.com/Zp4A6e4.png',
   return {
     messageColor: '#000000',
-    backgroundStyle: bgColor,
-    gridStyle: tgColor,
-    aroundTextColor: tgColor,
-    iconOutlineColor: iOColor,
-    iconFillColor: iIColor,
-    gridIconTemplate: genRandomNormalGITemplate(),
-    ...otherSettings,
+    backgroundStyle,
+    gridStyle,
+    aroundTextColor: gridStyle,
+    iconOutlineColor: genRandomBColor(),
+    iconFillColor: genRandomAColor(),
+    gridIconTemplate: gridIconTemplate || genRandomNormalGITemplate(),
+    ...settings,
   }
 }
 
@@ -484,17 +494,21 @@ export const genKolAssets = async (records) => {
 
   for (let i = 0; i < records.length; i++) {
     const rec = records[i]
+    const signature = `${s3BaseUrl}/assets/${rec[SIGNATURE_FIELD]}`
     const randomIndex = Math.floor(Math.random() * availableIcons.length)
     const kol = await getAssets({
       isKol: true,
-      signature: 'https://i.imgur.com/Qpji4ZS.png',
+      signature,
       gridIconTemplate: availableIcons.splice(randomIndex, 1)[0],
       message: rec[NFT_MESSAGE_FIELD] as string,
       aroundText: genNftFrameTextMsg(
-        rec[FRAME_SENDER],
-        rec[FRAME_RECEIVER],
-        rec[FRAME_PHRASE] as string
+        rec[FRAME_SENDER_FIELD],
+        rec[FRAME_RECEIVER_FIELD],
+        rec[FRAME_PHRASE_FIELD] as string
       ),
+      backgroundStyle: rec[BG_COLOR_FIELD],
+      aroundTextColor: rec[FRAME_COLOR_FIELD],
+      gridStyle: rec[FRAME_COLOR_FIELD],
     })
     assets.push(kol)
   }

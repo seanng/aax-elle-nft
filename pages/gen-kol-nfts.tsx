@@ -3,15 +3,17 @@ import { useWeb3Context } from 'context'
 import { ethers } from 'ethers'
 import type { NextPage } from 'next'
 import {
-  AFTER,
-  AIRTABLE_BASE_ID,
-  AUTONUMBER,
   BEFORE,
-  FRAME_PHRASE,
-  KOL_NAME_FIELD,
+  AFTER,
   NEVER,
-  NFT_MESSAGE_FIELD,
   PUBLIC,
+  AIRTABLE_BASE_ID,
+  AUTONUMBER_FIELD,
+  FRAME_PHRASE_FIELD,
+  KOL_NAME_FIELD,
+  NFT_MESSAGE_FIELD,
+  FRAME_RECEIVER_FIELD,
+  FRAME_SENDER_FIELD,
 } from 'shared/constants'
 import { contractAddress } from 'utils/config'
 import { genKolAssets } from 'utils/nft'
@@ -24,7 +26,13 @@ const airtable = new Airtable({
 
 const validateAirtableRecords = (records) => {
   const errors = [] as string[]
-  const requiredFields = [NFT_MESSAGE_FIELD, FRAME_PHRASE, AUTONUMBER]
+  const requiredFields = [
+    NFT_MESSAGE_FIELD,
+    FRAME_PHRASE_FIELD,
+    FRAME_SENDER_FIELD,
+    FRAME_RECEIVER_FIELD,
+    AUTONUMBER_FIELD,
+  ]
   for (let i = 0; i < records.length; i++) {
     const rec = records[i]
     for (let j = 0; j < requiredFields.length; j++) {
@@ -64,7 +72,7 @@ const GenKolNFTsPage: NextPage = () => {
     // Get Airtable Records
     const TABLE_NAME = '(Testing) - KOL Airdrop'
     const data = await airtable(TABLE_NAME)
-      .select({ sort: [{ field: AUTONUMBER, direction: 'asc' }] })
+      .select({ sort: [{ field: AUTONUMBER_FIELD, direction: 'asc' }] })
       .firstPage()
     const records = data.map(({ fields }) => fields)
 
