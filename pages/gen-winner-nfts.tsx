@@ -1,28 +1,27 @@
 import Airtable from 'airtable'
 import { useWeb3Context } from 'context'
 import { ethers } from 'ethers'
-import type { NextPage } from 'next'
+import { NextPage } from 'next'
 import {
-  BEFORE,
   AFTER,
-  NEVER,
-  PUBLIC,
   AIRTABLE_BASE_ID,
-  SIGNATURE_FIELD,
   AUTONUMBER_FIELD,
-  FRAME_PHRASE_FIELD,
-  NAME_FIELD,
-  NFT_MESSAGE_FIELD,
-  FRAME_RECEIVER_FIELD,
-  FRAME_SENDER_FIELD,
-  ELLEMOJI_FIELD,
+  BEFORE,
   BG_COLOR_FIELD,
+  ELLEMOJI_FIELD,
   FRAME_COLOR_FIELD,
+  FRAME_PHRASE_FIELD,
+  FRAME_SENDER_FIELD,
+  NEVER,
+  NFT_MESSAGE_FIELD,
+  PUBLIC,
+  SIGNATURE_FIELD,
+  NAME_FIELD,
 } from 'shared/constants'
 import { contractAddress, s3BaseUrl } from 'utils/config'
+import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
 import { genNftFrameTextMsg, getAssets, KOL_GI_TEMPLATES } from 'utils/nft'
 import { uploadOneFile } from 'utils/helpers'
-import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
 
 const airtable = new Airtable({
   apiKey: process.env.NEXT_PUBLIC_AIRTABLE_API_KEY,
@@ -34,7 +33,6 @@ const validateAirtableRecords = (records) => {
     NFT_MESSAGE_FIELD,
     FRAME_PHRASE_FIELD,
     FRAME_SENDER_FIELD,
-    FRAME_RECEIVER_FIELD,
     AUTONUMBER_FIELD,
     ELLEMOJI_FIELD,
     SIGNATURE_FIELD,
@@ -52,7 +50,7 @@ const validateAirtableRecords = (records) => {
   return errors
 }
 
-const GenKolNFTsPage: NextPage = () => {
+const GenWinnerNFTsPage: NextPage = () => {
   const { web3Provider } = useWeb3Context()
 
   const handleGenKolNftClick = async () => {
@@ -76,12 +74,11 @@ const GenKolNFTsPage: NextPage = () => {
     }
 
     // Get Airtable Records
-    const TABLE_NAME = '(Testing) - KOL Airdrop'
+    const TABLE_NAME = '(Testing) - Winners Airdrop'
     const data = await airtable(TABLE_NAME)
       .select({ sort: [{ field: AUTONUMBER_FIELD, direction: 'asc' }] })
       .firstPage()
     const records = data.map(({ fields }) => fields)
-
     // Validate Airtable Records Fields.
     const errors = validateAirtableRecords(records)
     if (errors.length > 0) {
@@ -103,7 +100,7 @@ const GenKolNFTsPage: NextPage = () => {
         message: rec[NFT_MESSAGE_FIELD] as string,
         aroundText: genNftFrameTextMsg(
           rec[FRAME_SENDER_FIELD],
-          rec[FRAME_RECEIVER_FIELD],
+          rec[NAME_FIELD],
           rec[FRAME_PHRASE_FIELD] as string
         ),
         backgroundStyle: rec[BG_COLOR_FIELD] as string,
@@ -111,16 +108,11 @@ const GenKolNFTsPage: NextPage = () => {
         gridStyle: rec[FRAME_COLOR_FIELD] as string,
       })
 
-      // * Uncomment for testing.
-      // Object.values(asset).forEach((file) => {
-      //   downloadFile(file)
-      // })
-
       // * Upload to S3.
       const tokenId = i * 2 + startingTokenId
       console.log('uploading ', tokenId)
-      await uploadOneFile(PUBLIC, `${tokenId}.png`, asset.beforeOpenImage)
-      await uploadOneFile(PUBLIC, `${tokenId}.html`, asset.beforeOpenHtml)
+      await uploadOneFile(PUBLIC, `${tokenId}.png`, asset.afterOpenImage)
+      await uploadOneFile(PUBLIC, `${tokenId}.html`, asset.afterOpenHtml)
       await uploadOneFile(BEFORE, `${tokenId}.png`, asset.beforeOpenImage)
       await uploadOneFile(BEFORE, `${tokenId}.html`, asset.beforeOpenHtml)
       await uploadOneFile(AFTER, `${tokenId}.png`, asset.afterOpenImage)
@@ -132,9 +124,11 @@ const GenKolNFTsPage: NextPage = () => {
 
   return (
     <div>
-      <button onClick={handleGenKolNftClick}>Gen and Upload KOL Assets</button>
+      <button onClick={handleGenKolNftClick}>
+        Gen and Upload Winners Assets
+      </button>
     </div>
   )
 }
 
-export default GenKolNFTsPage
+export default GenWinnerNFTsPage

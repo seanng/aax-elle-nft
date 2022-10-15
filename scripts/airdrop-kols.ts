@@ -9,7 +9,7 @@ import {
   NFT_MESSAGE_FIELD,
   WALLET_FIELD,
   EMAIL_FIELD,
-  KOL_NAME_FIELD,
+  NAME_FIELD,
   AUTONUMBER_FIELD,
 } from '../shared/constants'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
@@ -28,7 +28,7 @@ async function airdropKols() {
 
   const data = await airtable(KOL_TABLE)
     .select({
-      fields: [KOL_NAME_FIELD, NFT_MESSAGE_FIELD, WALLET_FIELD, EMAIL_FIELD],
+      fields: [NAME_FIELD, NFT_MESSAGE_FIELD, WALLET_FIELD, EMAIL_FIELD],
       sort: [{ field: AUTONUMBER_FIELD, direction: 'asc' }],
     })
     .firstPage()
@@ -36,8 +36,7 @@ async function airdropKols() {
   const records = data
     .map(({ fields }) => fields)
     .filter(
-      (field) =>
-        field[KOL_NAME_FIELD] && field[WALLET_FIELD] && field[EMAIL_FIELD]
+      (field) => field[NAME_FIELD] && field[WALLET_FIELD] && field[EMAIL_FIELD]
     ) // remove blank rows
 
   await contract.airdropBothTokens(
