@@ -35,6 +35,7 @@ function CompsNFTSignature({ url, setIsCompReady }) {
         src={`${url}?randomId=${randomId}`}
         alt="signature"
         onLoad={onLoad}
+        crossOrigin="anonymous"
       />
     </div>
   )
