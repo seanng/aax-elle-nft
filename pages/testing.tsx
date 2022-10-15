@@ -1,15 +1,16 @@
 import type { NextPage } from 'next'
-import { genKolAssets, getNFTSettings, genRandomKolGITemplate } from 'utils/nft'
+import { getNFTSettings } from 'utils/nft'
 import CompsNFTMain from 'components/NFT/Main'
+import KolIcon07 from 'components/NFT/shared/kol-icons/07'
 
 const data = getNFTSettings({
   isKol: true,
   signature: 'https://i.imgur.com/Qpji4ZS.png',
-  gridIconTemplate: genRandomKolGITemplate(),
+  gridIconTemplate: KolIcon07,
   aroundText:
     'AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCFDDDDDDDDDDDDDDDDDDEE',
   message:
-    '在旅途中，\n小王子思考愛的真諦明白馴養的意義。\n小王子思考愛的真諦明白馴養的意義。\nI love you.\n我愛你。',
+    '狐狸：「這是我的一個秘密，再簡單不過的秘密，一個人只有用心去看，才能看到真實。事情的真相只用眼睛是看不見的。」hello hello hell',
 })
 
 const TestPage: NextPage = () => {
@@ -38,18 +39,6 @@ const TestPage: NextPage = () => {
 
     document.body.removeChild(link)
     window.URL.revokeObjectURL(url)
-  }
-
-  const genKOL = () => {
-    genKolAssets(1).then((assets) => {
-      console.log(assets)
-
-      assets.forEach((asset) => {
-        Object.values(asset).forEach((file) => {
-          downloadFile(file)
-        })
-      })
-    })
   }
 
   return (

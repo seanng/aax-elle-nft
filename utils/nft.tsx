@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import html2canvas from 'html2canvas'
 import { format } from 'date-fns'
 
-import type { Files, NFTParameters, NFTParametersBasic } from 'shared/types'
+import type { NFTParameters, NFTParametersBasic } from 'shared/types'
 import CompsNFTMain from 'components/NFT/Main'
 import Icon01 from 'components/NFT/shared/background-icons/01'
 import Icon02 from 'components/NFT/shared/background-icons/02'
@@ -144,16 +144,6 @@ import KolIcon110 from 'components/NFT/shared/kol-icons/110'
 import KolIcon111 from 'components/NFT/shared/kol-icons/111'
 import KolIcon112 from 'components/NFT/shared/kol-icons/112'
 import KolIcon113 from 'components/NFT/shared/kol-icons/113'
-import {
-  BG_COLOR_FIELD,
-  FRAME_COLOR_FIELD,
-  FRAME_PHRASE_FIELD,
-  FRAME_RECEIVER_FIELD,
-  FRAME_SENDER_FIELD,
-  NFT_MESSAGE_FIELD,
-  SIGNATURE_FIELD,
-} from 'shared/constants'
-import { s3BaseUrl } from './config'
 
 const IMAGE_DEBUG = false
 const HTML_DEBUG = false
@@ -199,7 +189,7 @@ const COMBINATION_EXCLUSIONS = {
 }
 const KOL_EXCLUSIONS = ['#FFFD89', '#FFFFFF']
 
-export const genBgTgColorPair = (isKol = false) => {
+export const genBgTgColorPair = (isKol = false): string[] => {
   const bgColor = genRandomAColor()
   const frameTextColor = genRandomBColor()
 
@@ -247,7 +237,7 @@ export const genRandomNormalGITemplate = () => {
   ]
 }
 
-const KOL_GI_TEMPLATES = [
+export const KOL_GI_TEMPLATES = [
   KolIcon01,
   KolIcon02,
   KolIcon03,
@@ -362,9 +352,6 @@ const KOL_GI_TEMPLATES = [
   KolIcon112,
   KolIcon113,
 ]
-export const genRandomKolGITemplate = () => {
-  return KOL_GI_TEMPLATES[Math.floor(Math.random() * KOL_GI_TEMPLATES.length)]
-}
 
 // ? Settings
 // gridIconTemplate | FC | required if gridStyle is hex or gradient | IconSet for beforeOpen & neverOpened
@@ -380,12 +367,11 @@ export const getNFTSettings = ({
   isKol = false,
   gridIconTemplate,
   ...settings
-}: NFTParametersBasic) => {
+}: NFTParametersBasic): NFTParameters => {
   let { backgroundStyle, gridStyle } = settings
 
   if (!backgroundStyle || !gridStyle) {
-    const colorPair = genBgTgColorPair(isKol)
-    ;[backgroundStyle, gridStyle] = colorPair
+    ;[backgroundStyle, gridStyle] = genBgTgColorPair(isKol)
   }
   // ? Other Configurable Settings
   // backgroundStyle: 'https://i.imgur.com/4q7eRSU.png',
@@ -487,34 +473,6 @@ export const genRandomId = () =>
 export const urlRegex = new RegExp(
   /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i
 )
-
-export const genKolAssets = async (records) => {
-  const assets: any[] = []
-  const availableIcons = [...KOL_GI_TEMPLATES]
-
-  for (let i = 0; i < records.length; i++) {
-    const rec = records[i]
-    const signature = `${s3BaseUrl}/assets/${rec[SIGNATURE_FIELD]}`
-    const randomIndex = Math.floor(Math.random() * availableIcons.length)
-    const kol = await getAssets({
-      isKol: true,
-      signature,
-      gridIconTemplate: availableIcons.splice(randomIndex, 1)[0],
-      message: rec[NFT_MESSAGE_FIELD] as string,
-      aroundText: genNftFrameTextMsg(
-        rec[FRAME_SENDER_FIELD],
-        rec[FRAME_RECEIVER_FIELD],
-        rec[FRAME_PHRASE_FIELD] as string
-      ),
-      backgroundStyle: rec[BG_COLOR_FIELD],
-      aroundTextColor: rec[FRAME_COLOR_FIELD],
-      gridStyle: rec[FRAME_COLOR_FIELD],
-    })
-    assets.push(kol)
-  }
-
-  return assets
-}
 
 export const genNftFrameTextMsg = (sender, receiver, kolMsg = ''): string => {
   const formattedDate = format(new Date(), 'LLL.dd.yyyy E. HH:mm:ss')

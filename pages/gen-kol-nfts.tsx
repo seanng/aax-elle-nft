@@ -8,15 +8,19 @@ import {
   NEVER,
   PUBLIC,
   AIRTABLE_BASE_ID,
+  SIGNATURE_FIELD,
   AUTONUMBER_FIELD,
   FRAME_PHRASE_FIELD,
   KOL_NAME_FIELD,
   NFT_MESSAGE_FIELD,
   FRAME_RECEIVER_FIELD,
   FRAME_SENDER_FIELD,
+  ELLEMOJI_FIELD,
+  BG_COLOR_FIELD,
+  FRAME_COLOR_FIELD,
 } from 'shared/constants'
-import { contractAddress } from 'utils/config'
-import { genKolAssets } from 'utils/nft'
+import { contractAddress, s3BaseUrl } from 'utils/config'
+import { genNftFrameTextMsg, getAssets, KOL_GI_TEMPLATES } from 'utils/nft'
 import { uploadOneFile } from 'utils/helpers'
 import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
 
@@ -32,6 +36,8 @@ const validateAirtableRecords = (records) => {
     FRAME_SENDER_FIELD,
     FRAME_RECEIVER_FIELD,
     AUTONUMBER_FIELD,
+    ELLEMOJI_FIELD,
+    SIGNATURE_FIELD,
   ]
   for (let i = 0; i < records.length; i++) {
     const rec = records[i]
@@ -44,6 +50,19 @@ const validateAirtableRecords = (records) => {
     }
   }
   return errors
+}
+
+const downloadFile = (file) => {
+  const link = document.createElement('a')
+  const url = URL.createObjectURL(file)
+
+  link.href = url
+  link.download = file.name
+  document.body.appendChild(link)
+  link.click()
+
+  document.body.removeChild(link)
+  window.URL.revokeObjectURL(url)
 }
 
 const GenKolNFTsPage: NextPage = () => {
@@ -87,13 +106,32 @@ const GenKolNFTsPage: NextPage = () => {
     }
 
     // Generate KOL Assets.
-    const assets = await genKolAssets(records)
-    console.log('assets: ', assets)
+    for (let i = 0; i < records.length; i++) {
+      const rec = records[i]
+      const signature = `${s3BaseUrl}/assets/${rec[SIGNATURE_FIELD]}`
+      const asset = await getAssets({
+        isKol: true,
+        signature,
+        gridIconTemplate: KOL_GI_TEMPLATES[rec[ELLEMOJI_FIELD] as string],
+        message: rec[NFT_MESSAGE_FIELD] as string,
+        aroundText: genNftFrameTextMsg(
+          rec[FRAME_SENDER_FIELD],
+          rec[FRAME_RECEIVER_FIELD],
+          rec[FRAME_PHRASE_FIELD] as string
+        ),
+        backgroundStyle: rec[BG_COLOR_FIELD] as string,
+        aroundTextColor: rec[FRAME_COLOR_FIELD] as string,
+        gridStyle: rec[FRAME_COLOR_FIELD] as string,
+      })
 
-    // Upload to S3.
-    for (let i = 0; i < assets.length; i++) {
+      // * Uncomment for testing.
+      // Object.values(asset).forEach((file) => {
+      //   downloadFile(file)
+      // })
+
+      // * Upload to S3.
       const tokenId = i * 2 + startingTokenId
-      const asset = assets[i]
+      console.log('uploading ', tokenId)
       await uploadOneFile(PUBLIC, `${tokenId}.png`, asset.beforeOpenImage)
       await uploadOneFile(PUBLIC, `${tokenId}.html`, asset.beforeOpenHtml)
       await uploadOneFile(BEFORE, `${tokenId}.png`, asset.beforeOpenImage)
