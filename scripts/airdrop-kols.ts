@@ -47,7 +47,7 @@ async function airdropKols() {
 
   for (let i = 0; i < records.length; i++) {
     const record = records[i]
-    await axios.post('/api/mints', {
+    await axios.post('/api/message-tokens', {
       message: record[NFT_MESSAGE_FIELD] ?? 'N/A',
       minterEmail: record[EMAIL_FIELD],
       minterWallet: record[WALLET_FIELD],
