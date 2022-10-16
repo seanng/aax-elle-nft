@@ -101,6 +101,13 @@ const GenWinnerNFTsPage: NextPage = () => {
         aroundText: genNftFrameTextMsg(
           rec[FRAME_SENDER_FIELD],
           rec[NAME_FIELD],
+          false,
+          rec[FRAME_PHRASE_FIELD] as string
+        ),
+        neverOpenedAroundText: genNftFrameTextMsg(
+          rec[FRAME_SENDER_FIELD],
+          rec[NAME_FIELD],
+          true,
           rec[FRAME_PHRASE_FIELD] as string
         ),
         backgroundStyle: rec[BG_COLOR_FIELD] as string,

@@ -101,9 +101,16 @@ const GenKolNFTsPage: NextPage = () => {
         signature,
         gridIconTemplate: KOL_GI_TEMPLATES[rec[ELLEMOJI_FIELD] as string],
         message: rec[NFT_MESSAGE_FIELD] as string,
+        neverOpenedAroundText: genNftFrameTextMsg(
+          rec[FRAME_SENDER_FIELD],
+          rec[FRAME_RECEIVER_FIELD],
+          true,
+          rec[FRAME_PHRASE_FIELD] as string
+        ),
         aroundText: genNftFrameTextMsg(
           rec[FRAME_SENDER_FIELD],
           rec[FRAME_RECEIVER_FIELD],
+          false,
           rec[FRAME_PHRASE_FIELD] as string
         ),
         backgroundStyle: rec[BG_COLOR_FIELD] as string,

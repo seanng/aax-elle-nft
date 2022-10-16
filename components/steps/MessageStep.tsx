@@ -9,14 +9,14 @@ import {
 } from 'components'
 import AroundText2 from 'components/NFT/shared/AroundText2'
 import { useEffect, useState } from 'react'
-import { encrypt } from 'lib/crypto'
+// import { encrypt } from 'lib/crypto'
 import { Files, KolDropdownListItem, MintForm } from 'shared/types'
 import { FINISHED, NOT_STARTED, PRIVATE_SALE } from 'shared/constants'
 import { salePhase } from 'utils/config'
-import { getAssets } from 'utils/nft'
+import { genNftFrameTextMsg, getAssets } from 'utils/nft'
 import { toast } from 'react-toastify'
 
-const TEXTAREA_HEIGHT = 300
+const TEXTAREA_HEIGHT = 290
 
 interface Props extends Partial<StepWizardChildProps> {
   updateForm: (formValues: Partial<MintForm>) => void
@@ -51,7 +51,7 @@ export function MessageStep({
     name: '',
     frameText: '',
   })
-  const [frameText, setFrameText] = useState('Write down your secret...')
+  const [frameText, setFrameText] = useState('Write down your secret')
 
   useEffect(() => {
     if (selectedKol.frameText) {
@@ -85,7 +85,8 @@ export function MessageStep({
     const { message, minterName, receiverName } = values
     const files = await getAssets({
       message: message,
-      aroundText: `${minterName} wants to give you something, ${receiverName}!`,
+      aroundText: genNftFrameTextMsg(minterName, receiverName),
+      neverOpenedAroundText: genNftFrameTextMsg(minterName, receiverName, true),
     })
     setFiles(files)
     updateForm(values)
@@ -113,6 +114,7 @@ export function MessageStep({
   }, [address, isProcessingMint, isConnectModalOpen])
 
   const handleTextareaChange = (e) => {
+    console.log('e.target.scrollHeight: ', e.target.scrollHeight)
     if (e.target.scrollHeight <= TEXTAREA_HEIGHT) {
       setValues((prev) => ({
         ...prev,
@@ -215,7 +217,7 @@ export function MessageStep({
           className="leading-0"
           target="__blank"
           {...(!shouldDisableButtons && {
-            href: `/ig-share?at=${encrypt(frameText)}`,
+            href: `/ig-share?at=${frameText}&m=${values.message}`,
           })}
         >
           <ResponsiveSecondaryButton disabled={shouldDisableButtons}>

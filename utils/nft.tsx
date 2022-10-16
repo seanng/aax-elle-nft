@@ -474,7 +474,12 @@ export const urlRegex = new RegExp(
   /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i
 )
 
-export const genNftFrameTextMsg = (sender, receiver, kolMsg = ''): string => {
+export const genNftFrameTextMsg = (
+  sender,
+  receiver,
+  neverOpened = false,
+  kolMsg = ''
+): string => {
   const formattedDate = format(new Date(), 'LLL.dd.yyyy E. HH:mm:ss')
   const receiverGreeting = receiver ? receiver + '! ' : ''
   const senderGreeting = sender
@@ -482,10 +487,15 @@ export const genNftFrameTextMsg = (sender, receiver, kolMsg = ''): string => {
     : 'You were sent a LOVE message.'
   const receiverNotifier = `${receiverGreeting}${senderGreeting} Love, ELLEverse.`
   const fillerText = 'In ELLEverse, you are special & stylish.'
+  const msgFromKora = 'Love yourself before loving others.'
 
   return kolMsg
     ? // Private Sale Text
-      `${kolMsg} ${formattedDate} ${receiverNotifier} ${fillerText}`
+      `${kolMsg} ${formattedDate} ${receiverNotifier} ${fillerText} ${
+        neverOpened ? msgFromKora : ''
+      }`
     : // Public Sale Text
-      `${receiverNotifier} ${formattedDate} ${fillerText} Shhh… Keep Secret, Keep Stylish.`
+      `${receiverNotifier} ${formattedDate} ${fillerText} ${
+        neverOpened ? msgFromKora : 'Shhh… Keep Secret, Keep Stylish.'
+      }`
 }

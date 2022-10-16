@@ -1,13 +1,15 @@
 import { NextPage } from 'next'
-import { decrypt } from 'lib/crypto'
+// import { decrypt } from 'lib/crypto'
 import { useRouter } from 'next/router'
 import { OutlinedHeading, WarningIcon, IgShareInstructions } from 'components'
 import CompsNFTBeforeOpen from 'components/NFT/BeforeOpen'
 import { useCallback, useEffect, useState } from 'react'
 import { genImageFile, getAssets } from 'utils/nft'
+import { downloadFile } from 'utils/helpers'
 import randomstring from 'randomstring'
 import Image from 'next/image'
 import { s3BaseUrl } from 'utils/config'
+import AroundText2 from 'components/NFT/shared/AroundText2'
 
 const html2canvasOpts = {
   height: 534,
@@ -29,7 +31,7 @@ const IgSharePage: NextPage = () => {
 
   // Set Image from Component
   useEffect(() => {
-    if (nftImageSource && compNode) {
+    if (compNode && nftImageSource) {
       ;(async () => {
         const file = await genImageFile(
           compNode,
@@ -48,7 +50,7 @@ const IgSharePage: NextPage = () => {
         reader.readAsDataURL(file as File)
       })()
     }
-  }, [nftImageSource, compNode])
+  }, [compNode, nftImageSource])
 
   return (
     <>
@@ -101,9 +103,11 @@ const IgSharePage: NextPage = () => {
                 src={nftImageSource}
                 width="350"
                 height="350"
-                alt="beforeOpenImg"
+                crossOrigin="anonymous"
+                alt="my-secret-message"
               />
             )}
+
             <div className="flex justify-between font-mono py-8 items-center">
               <OutlinedHeading
                 className="mb-0.5"
@@ -129,6 +133,10 @@ const IgSharePage: NextPage = () => {
             </div>
           </div>
         </div>
+        <CompsMessageBox
+          data={{ aroundText: 'hello ', message: 'hellooo' }}
+          assetsCB={() => {}}
+        />
       </div>
     </>
   )
@@ -143,6 +151,70 @@ const CompsNFTSingle = ({ data, assetsCB }) => {
 
   const setImage = setFile
   return <CompsNFTBeforeOpen {...{ data, setImage, setHTML: () => {} }} />
+}
+
+const CompsMessageBox = ({ data, assetsCB }) => {
+  const [compNode, setCompNode] = useState<any>(null)
+  const [isAroundTextReady, setIsAroundTextReady] = useState(false)
+  const [file, setFile] = useState(null)
+
+  // Set Comp Node
+  const compRef = useCallback((node) => {
+    if (node) setCompNode(node)
+  }, [])
+
+  useEffect(() => {
+    if (isAroundTextReady) {
+      genImageFile(compNode, 'my-secret-message.png', setFile)
+    }
+  }, [compNode, isAroundTextReady])
+
+  useEffect(() => {
+    if (file) assetsCB(file)
+  }, [file, assetsCB])
+
+  return (
+    <div
+      className="w-80 h-[320px] md:w-[642px] md:h-[642px] mb-6 relative flex justify-center items-center"
+      ref={compRef}
+    >
+      <AroundText2
+        aroundText={data.aroundText}
+        // optClass="w-80 h-[320px] md:w-[642px] md:h-[642px]"
+        setIsCompReady={setIsAroundTextReady}
+      />
+      {/* <textarea
+        id="message"
+        rows={7}
+        readOnly
+        style={{
+          WebkitFilter: 'blur(0px)',
+        }}
+        className="
+          relative
+          shadow-sm
+          block
+          md:scale-[2]
+          w-[280px]
+          h-[280px]
+          px-[5.5px]
+          py-0
+          tracking-[0.01em]
+          text-[26px]
+          leading-[150%]
+          bg-black
+          border-0
+          rounded-none
+          resize-none
+          text-white
+          font-cubic
+          focus:border-transparent 
+          focus:ring-0
+        "
+        value={data.message}
+      /> */}
+    </div>
+  )
 }
 
 function useNftImageSource() {
@@ -164,9 +236,11 @@ function useNftImageSource() {
     if (router.query.at) {
       ;(async () => {
         const imageFile = await getAssets({
-          message: '',
-          aroundText: decrypt(router.query.at as string) ?? '',
-          Comps: CompsNFTSingle,
+          message: (router.query.m as string) ?? '',
+          aroundText: (router.query.at as string) ?? '',
+          neverOpenedAroundText: (router.query.at as string) ?? '',
+          // Comps: CompsNFTSingle,
+          Comps: CompsMessageBox,
         })
 
         const reader = new FileReader()

@@ -31,6 +31,7 @@ export type MintResponseData = Partial<MessageToken> | undefined
 
 export type NFTParametersBasic = Partial<NFTParameters> & {
   aroundText: string
+  neverOpenedAroundText: string
   message: string
   Comps?: any
   isKol?: boolean
@@ -38,6 +39,7 @@ export type NFTParametersBasic = Partial<NFTParameters> & {
 
 export interface NFTParameters {
   aroundText: string
+  neverOpenedAroundText: string
   message: string
   messageColor: string
   gridIconTemplate?: FC

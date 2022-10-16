@@ -22,7 +22,7 @@ interface Props {
 
 function CompsNFTUnopen({
   data: {
-    aroundText,
+    neverOpenedAroundText,
     gridIconTemplate,
     backgroundStyle,
     gridStyle,
@@ -105,7 +105,7 @@ function CompsNFTUnopen({
       />
       <CompsNFTAroundText
         color={aroundTextColor}
-        aroundText={aroundText}
+        aroundText={neverOpenedAroundText}
         isImageCaptured={isImageCaptured}
         isFontReady={isFontReady}
         isCompReady={isDimensionReady}

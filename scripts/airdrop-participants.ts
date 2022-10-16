@@ -35,11 +35,11 @@ async function airdropParticipants() {
 
   console.log('records: ', records)
 
-  // await contract.airdropWhitelistTokens(
-  //   records.map((record) => record[WALLET_FIELD])
-  // )
+  await contract.airdropWhitelistTokens(
+    records.map((record) => record[WALLET_FIELD])
+  )
 
-  // console.log('AIRDROP SUCCESS! Storing to DB.')
+  console.log('AIRDROP SUCCESS! Storing to DB.')
 
   for (let i = 0; i < records.length; i++) {
     const record = records[i]
