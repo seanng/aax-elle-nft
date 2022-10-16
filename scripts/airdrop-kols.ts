@@ -54,7 +54,7 @@ async function airdropKols() {
       emailTemplateId: emailTemplateIds.KOL_AIRDROP,
       passcode: randomstring.generate({ length: 6 }),
       ethDonated: '0',
-      messageTokenId: nextTokenId + i * 2,
+      tokenId: nextTokenId + i * 2,
       isPrivateSale: true,
     })
 

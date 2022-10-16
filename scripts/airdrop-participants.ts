@@ -33,8 +33,6 @@ async function airdropParticipants() {
     .map(({ fields }) => fields)
     .filter((field) => field[WALLET_FIELD] && field[EMAIL_FIELD]) // remove blank rows
 
-  console.log('records: ', records)
-
   await contract.airdropWhitelistTokens(
     records.map((record) => record[WALLET_FIELD])
   )
