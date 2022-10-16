@@ -60,7 +60,7 @@ const IgSharePage: NextPage = () => {
         </OutlinedHeading>
         <IgShareInstructions />
         <div className="flex justify-center w-80 md:w-[650px] text-orange space-x-2 mb-4 md:mb-16">
-          <WarningIcon className="mt-1" width={16} height={16} />
+          <WarningIcon className="flex-none mt-1" width={16} height={16} />
           <div>
             你的告白完成到一半摟！想要把你心中的愛真正分享給愛的收件者並獲得抽獎資格嗎？趕緊去鑄造一張Impact
             NFT吧！
@@ -107,7 +107,6 @@ const IgSharePage: NextPage = () => {
                 alt="my-secret-message"
               />
             )}
-
             <div className="flex justify-between font-mono py-8 items-center">
               <OutlinedHeading
                 className="mb-0.5"
@@ -133,24 +132,9 @@ const IgSharePage: NextPage = () => {
             </div>
           </div>
         </div>
-        <CompsMessageBox
-          data={{ aroundText: 'hello ', message: 'hellooo' }}
-          assetsCB={() => {}}
-        />
       </div>
     </>
   )
-}
-
-const CompsNFTSingle = ({ data, assetsCB }) => {
-  const [file, setFile] = useState(null)
-
-  useEffect(() => {
-    if (file) assetsCB(file)
-  }, [file, assetsCB])
-
-  const setImage = setFile
-  return <CompsNFTBeforeOpen {...{ data, setImage, setHTML: () => {} }} />
 }
 
 const CompsMessageBox = ({ data, assetsCB }) => {
@@ -165,7 +149,12 @@ const CompsMessageBox = ({ data, assetsCB }) => {
 
   useEffect(() => {
     if (isAroundTextReady) {
-      genImageFile(compNode, 'my-secret-message.png', setFile)
+      genImageFile(compNode, 'my-secret-message.png', setFile, {
+        width: 320,
+        height: 320,
+        windowWidth: 320,
+        windowHeight: 320,
+      })
     }
   }, [compNode, isAroundTextReady])
 
@@ -180,17 +169,16 @@ const CompsMessageBox = ({ data, assetsCB }) => {
     >
       <AroundText2
         aroundText={data.aroundText}
-        // optClass="w-80 h-[320px] md:w-[642px] md:h-[642px]"
         setIsCompReady={setIsAroundTextReady}
       />
-      {/* <textarea
-        id="message"
-        rows={7}
-        readOnly
-        style={{
-          WebkitFilter: 'blur(0px)',
-        }}
-        className="
+
+      {data.message && (
+        <div
+          id="message"
+          style={{
+            WebkitFilter: 'blur(0px)',
+          }}
+          className="
           relative
           shadow-sm
           block
@@ -211,8 +199,14 @@ const CompsMessageBox = ({ data, assetsCB }) => {
           focus:border-transparent 
           focus:ring-0
         "
-        value={data.message}
-      /> */}
+        >
+          {data.message.split('\n').map((line, index) => (
+            <div className={line === '' ? 'invisible' : ''} key={index}>
+              {line === '' ? 'f' : line}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
@@ -239,7 +233,6 @@ function useNftImageSource() {
           message: (router.query.m as string) ?? '',
           aroundText: (router.query.at as string) ?? '',
           neverOpenedAroundText: (router.query.at as string) ?? '',
-          // Comps: CompsNFTSingle,
           Comps: CompsMessageBox,
         })
 

@@ -16,7 +16,7 @@ import { salePhase } from 'utils/config'
 import { genNftFrameTextMsg, getAssets } from 'utils/nft'
 import { toast } from 'react-toastify'
 
-const TEXTAREA_HEIGHT = 290
+const TEXTAREA_HEIGHT = 280
 
 interface Props extends Partial<StepWizardChildProps> {
   updateForm: (formValues: Partial<MintForm>) => void
@@ -182,7 +182,6 @@ export function MessageStep({
         />
         <textarea
           id="message"
-          rows={7}
           style={{
             WebkitFilter: 'blur(0px)',
           }}
@@ -190,6 +189,7 @@ export function MessageStep({
             relative
             shadow-sm
             block
+            overflow-hidden
             md:scale-[2]
             w-[280px]
             h-[280px]
@@ -215,9 +215,9 @@ export function MessageStep({
       <div className="flex">
         <a
           className="leading-0"
-          target="__blank"
+          target="_blank"
           {...(!shouldDisableButtons && {
-            href: `/ig-share?at=${frameText}&m=${values.message}`,
+            href: `/ig-share?at=${frameText}&m=${encodeURI(values.message)}`,
           })}
         >
           <ResponsiveSecondaryButton disabled={shouldDisableButtons}>

@@ -24,7 +24,9 @@ function CompsNFTMessage({ color, message }) {
     <div style={{ ...compStyle, color }}>
       <div style={innerWrapperStyle}>
         {message.split('\n').map((line, index) => (
-          <div key={index}>{line}</div>
+          <div className={line === '' ? 'invisible' : ''} key={index}>
+            {line === '' ? 'f' : line}
+          </div>
         ))}
       </div>
     </div>

@@ -262,23 +262,30 @@ function CompsNFTAroundText2({
           {aroundText}
         </span>
       </div>
-
-      <IconBubble optClass="absolute top-2 left-2 h-5 w-5" />
-      <IconBubble optClass="absolute top-0 right-0 h-5 w-5" />
-      <IconBubble optClass="absolute bottom-0 left-0 h-5 w-5 scale-y-[-1]" />
-      <IconBubble optClass="absolute bottom-0 right-0 h-5 w-5 scale-y-[-1]" />
+      <div className="absolute top-0 left-0 h-5 w-5">
+        <IconBubble />
+      </div>
+      <div className="absolute top-0 right-0 h-5 w-5">
+        <IconBubble />
+      </div>
+      <div className="absolute bottom-0 left-0 h-5 w-5 scale-y-[-1]">
+        <IconBubble />
+      </div>
+      <div className="absolute bottom-0 right-0 h-5 w-5 scale-y-[-1]">
+        <IconBubble />
+      </div>
 
       {/* Top */}
-      {/* <div style={topContainerStyle}>{renderText('top')}</div> */}
+      <div style={topContainerStyle}>{renderText('top')}</div>
 
       {/* Right */}
-      {/* <div style={rightContainerStyle}>{renderText('right')}</div> */}
+      <div style={rightContainerStyle}>{renderText('right')}</div>
 
       {/* Bottom */}
-      {/* <div style={bottomContainerStyle}>{renderText('bottom')}</div> */}
+      <div style={bottomContainerStyle}>{renderText('bottom')}</div>
 
       {/* Left */}
-      {/* <div style={leftContainerStyle}>{renderText('left')}</div> */}
+      <div style={leftContainerStyle}>{renderText('left')}</div>
 
       {renderStyles()}
     </div>
