@@ -65,7 +65,11 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
     await sendMail({
       templateId: req.body.emailTemplateId,
       dynamicTemplateData: {
-        unlock_url: `${metadata.siteUrl}/open/${slug}`,
+        unlock_url: `${
+          process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+            ? 'https://elleverse.io'
+            : 'https://aax-elle-nft-git-dev-seanng.vercel.app'
+        }/open/${slug}`,
         passcode: req.body.passcode,
         opensea_url: `${openseaBaseUrl}/${contractAddress}/${req.body.tokenId}`,
         KOL_name: req.body[KOL_NAME_FIELD] ?? '你喜歡的藝人',

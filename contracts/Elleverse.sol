@@ -17,8 +17,7 @@ contract Elleverse is ERC721BQueryable, Ownable {
 
   string public _baseContractURI;
   // TODO: change to production base token uri
-  string private _baseTokenURI =
-    'https://aax-elle-nft.vercel.app/api/metadata/';
+  string private _baseTokenURI = 'https://elleverse.io/api/metadata/';
   address public treasury;
 
   constructor() ERC721B('Elleverse', 'ELLEVERSE') {
