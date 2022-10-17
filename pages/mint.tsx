@@ -70,7 +70,7 @@ const MintPage: NextPage = () => {
 
   const onMetamaskConfirm = () => {
     setShowsSpinner(true)
-    setSpinnerText('鑄造時間大約為1分鐘，\n等待時請不要關閉頁面。')
+    setSpinnerText('鑄造時間大約為30秒，\n等待時請不要關閉頁面。')
   }
 
   useEffect(() => {
