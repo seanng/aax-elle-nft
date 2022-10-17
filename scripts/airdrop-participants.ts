@@ -1,13 +1,8 @@
 import { ethers, network } from 'hardhat'
-import airtable from '../lib/airtable'
+import { getAirtableRecords } from '../lib/airtable'
 import axios from '../lib/axios'
 import dotenv from 'dotenv'
-import {
-  CONTRACT_NAME,
-  WALLET_FIELD,
-  EMAIL_FIELD,
-  AUTONUMBER_FIELD,
-} from '../shared/constants'
+import { CONTRACT_NAME, WALLET_FIELD, EMAIL_FIELD } from '../shared/constants'
 import { emailTemplateIds } from '../utils/config'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 
@@ -23,15 +18,15 @@ async function airdropParticipants() {
 
   const nextTokenId = (await contract.callStatic.getNextTokenId()).toNumber()
 
-  const data = await airtable(PARTICIPANT_TABLE)
-    .select({
-      sort: [{ field: AUTONUMBER_FIELD, direction: 'asc' }],
-    })
-    .firstPage()
+  const records = await getAirtableRecords(PARTICIPANT_TABLE)
 
-  const records = data
-    .map(({ fields }) => fields)
-    .filter((field) => field[WALLET_FIELD] && field[EMAIL_FIELD]) // remove blank rows
+  // * Ad-hoc airdrop
+  // const records = [
+  //   {
+  //     [WALLET_FIELD]: '0x42B4BF6010A3c37a072083fF001Bf767bE642EEa',
+  //     [EMAIL_FIELD]: 'ian@accucrazy.com',
+  //   },
+  // ]
 
   await contract.airdropWhitelistTokens(
     records.map((record) => record[WALLET_FIELD])

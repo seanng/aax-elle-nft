@@ -1,11 +1,12 @@
-import * as service from 'backend/services/message-tokens'
-import sendgrid from 'lib/sendgrid'
+import * as messageTokensService from 'backend/services/message-tokens'
+import { sendMail } from 'lib/sendgrid'
 import randomstring from 'randomstring'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import { MessageToken } from '@prisma/client'
 import { validate } from 'lib/middlewares'
 import { metadata, s3BaseUrl, fromEmail, openseaBaseUrl } from 'utils/config'
 import { check } from 'express-validator'
+import { KOL_NAME_FIELD } from 'shared/constants'
 
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
 
@@ -40,12 +41,12 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
       capitalization: 'lowercase',
       length: 5,
     })
-    isSlugUnique = !(await service.findUnique({ slug }))
+    isSlugUnique = !(await messageTokensService.findUnique({ slug }))
   }
 
   console.log('Storing MessageToken in DB.')
 
-  const mint = await service.create({
+  const mint = await messageTokensService.create({
     slug,
     message: req.body.message,
     minterEmail: req.body.minterEmail,
@@ -61,19 +62,18 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
     console.log(`Sending Email to ${req.body.minterEmail}`)
     const imgUrl = `${s3BaseUrl}/public/${req.body.tokenId}.png`
 
-    await sendgrid.send({
+    await sendMail({
       templateId: req.body.emailTemplateId,
       dynamicTemplateData: {
         unlock_url: `${metadata.siteUrl}/open/${slug}`,
         passcode: req.body.passcode,
         opensea_url: `${openseaBaseUrl}/${contractAddress}/${req.body.tokenId}`,
-        KOL_name: req.body.kolName ?? '你喜歡的藝人',
+        KOL_name: req.body[KOL_NAME_FIELD] ?? '你喜歡的藝人',
         image_url: imgUrl,
         image2_url: req.body.isPrivateSale
           ? `${s3BaseUrl}/public/whitelist.png`
           : `${s3BaseUrl}/public/prize.png`,
       },
-      from: fromEmail,
       to: req.body.minterEmail,
     })
   }
@@ -88,7 +88,7 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
   const where = {
     ...(typeof slug === 'string' && { slug }),
   }
-  const mints = await service.findMany(where)
+  const mints = await messageTokensService.findMany(where)
   res.json(mints)
 }
 

@@ -1,7 +1,7 @@
 import { ethers, network } from 'hardhat'
 import randomstring from 'randomstring'
 import axios from '../lib/axios'
-import airtable from '../lib/airtable'
+import { getAirtableRecords } from '../lib/airtable'
 import dotenv from 'dotenv'
 import {
   CONTRACT_NAME,
@@ -9,7 +9,7 @@ import {
   WALLET_FIELD,
   EMAIL_FIELD,
   WINNER,
-  AUTONUMBER_FIELD,
+  KOL_NAME_FIELD,
 } from '../shared/constants'
 import { emailTemplateIds } from '../utils/config'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
@@ -26,15 +26,7 @@ async function airdropWinners() {
 
   const nextTokenId = (await contract.callStatic.getNextTokenId()).toNumber()
 
-  const data = await airtable(WINNERS_TABLE)
-    .select({
-      sort: [{ field: AUTONUMBER_FIELD, direction: 'asc' }],
-    })
-    .firstPage()
-
-  const records = data
-    .map(({ fields }) => fields)
-    .filter((field) => field[WALLET_FIELD] && field[EMAIL_FIELD]) // remove blank rows
+  const records = await getAirtableRecords(WINNERS_TABLE)
 
   await contract.airdropBothTokens(
     records.map((record) => record[WALLET_FIELD])
@@ -48,6 +40,7 @@ async function airdropWinners() {
       airdropReceiver: WINNER,
       message: record[NFT_MESSAGE_FIELD] ?? 'N/A',
       minterEmail: record[EMAIL_FIELD],
+      [KOL_NAME_FIELD]: record[KOL_NAME_FIELD],
       emailTemplateId: emailTemplateIds.WINNER_AIRDROP,
       minterWallet: record[WALLET_FIELD],
       passcode: randomstring.generate({ length: 6 }),

@@ -1,8 +1,8 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
-import sendgrid from 'lib/sendgrid'
+import { sendMail } from 'lib/sendgrid'
 import * as service from 'backend/services/message-tokens'
 import { makeS3 } from 'lib/aws'
-import { emailTemplateIds, s3BaseUrl, s3Bucket, fromEmail } from 'utils/config'
+import { emailTemplateIds, s3BaseUrl, s3Bucket } from 'utils/config'
 
 async function unlockSecret(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query as { id: string }
@@ -37,13 +37,12 @@ async function unlockSecret(req: NextApiRequest, res: NextApiResponse) {
       .promise()
 
     if (data.minterEmail) {
-      await sendgrid.send({
+      await sendMail({
         templateId: emailTemplateIds.RECEIVER_OPEN,
+        to: data.minterEmail,
         dynamicTemplateData: {
           image_url: `${s3BaseUrl}/public/${data.tokenId}.png?ello`,
         },
-        to: data.minterEmail,
-        from: fromEmail,
       })
     }
 

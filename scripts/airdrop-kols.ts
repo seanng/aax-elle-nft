@@ -1,7 +1,7 @@
 import { ethers, network } from 'hardhat'
 import randomstring from 'randomstring'
 import axios from '../lib/axios'
-import airtable from '../lib/airtable'
+import { getAirtableRecords } from '../lib/airtable'
 import dotenv from 'dotenv'
 import { emailTemplateIds } from '../utils/config'
 import {
@@ -9,8 +9,6 @@ import {
   NFT_MESSAGE_FIELD,
   WALLET_FIELD,
   EMAIL_FIELD,
-  NAME_FIELD,
-  AUTONUMBER_FIELD,
 } from '../shared/constants'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 
@@ -26,18 +24,7 @@ async function airdropKols() {
 
   const nextTokenId = (await contract.callStatic.getNextTokenId()).toNumber()
 
-  const data = await airtable(KOL_TABLE)
-    .select({
-      fields: [NAME_FIELD, NFT_MESSAGE_FIELD, WALLET_FIELD, EMAIL_FIELD],
-      sort: [{ field: AUTONUMBER_FIELD, direction: 'asc' }],
-    })
-    .firstPage()
-
-  const records = data
-    .map(({ fields }) => fields)
-    .filter(
-      (field) => field[NAME_FIELD] && field[WALLET_FIELD] && field[EMAIL_FIELD]
-    ) // remove blank rows
+  const records = await getAirtableRecords(KOL_TABLE)
 
   await contract.airdropBothTokens(
     records.map((record) => record[WALLET_FIELD])
