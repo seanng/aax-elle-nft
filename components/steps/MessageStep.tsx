@@ -70,7 +70,7 @@ export function MessageStep({
         toast.warn(
           <ToastMessage
             heading="你的錢包內沒有白名單NFT"
-            body="公開鑄造時間將會在11/20開始"
+            body="公開鑄造時間將會在12/16開始"
           />,
           {
             icon: <WarningIcon height={32} width={32} color="white" />,

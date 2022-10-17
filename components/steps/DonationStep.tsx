@@ -259,7 +259,7 @@ export function DonationStep({
                   <WarningStamp />
                   <div className="text-white">
                     <p>你的錢包內沒有 white list token</p>
-                    <p>公開鑄造時間將會在10/15開始</p>
+                    <p>公開鑄造時間將會在12/16開始</p>
                   </div>
                 </div>
               ),
