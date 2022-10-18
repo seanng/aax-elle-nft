@@ -9,6 +9,7 @@ const data = getNFTSettings({
   gridIconTemplate: KolIcon07,
   aroundText:
     'AAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCFDDDDDDDDDDDDDDDDDDEE',
+  neverOpenedAroundText: 'abcdef',
   message:
     '狐狸：「這是我的一個秘密，再簡單不過的秘密，一個人只有用心去看，才能看到真實。事情的真相只用眼睛是看不見的。」hello hello hell',
 })
