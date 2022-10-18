@@ -175,7 +175,7 @@ const FaqPage: NextPage = () => {
                   <Disclosure.Button className="text-left w-full flex justify-between text-lemon">
                     <div className="flex items-center">
                       <div className="bg-lemon h-4 w-4 mt-1 mr-4" />
-                      <p className="font-noto text-white text-xl md:text-2xl leading-120%">
+                      <p className="font-noto font-bold text-white text-xl md:text-2xl leading-120%">
                         {faq.question}
                       </p>
                     </div>

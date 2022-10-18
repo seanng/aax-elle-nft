@@ -56,7 +56,7 @@ const Panel = () => (
       <Nav />
     </div>
     {/* desktop */}
-    <div className="hidden md:flex flex-col h-[797px] self-end pr-10 w-[321px]">
+    <div className="hidden md:flex flex-col h-[797px] self-end pr-10 w-[441px]">
       <CloseButton />
       <div
         className="bg-repeat h-full"
@@ -84,21 +84,18 @@ const CloseButton = () => (
 
 const Nav = () => (
   <div className="h-full flex flex-col bg-repeat py-2 pl-6 text-4xl text-lime font-bold font-mono leading-150% space-y-4 md:space-y-7 md:pt-8">
-    <Link href="/welcome">
-      <a>ELLEverse</a>
+    <Link href="/collection">
+      <a>My love secret</a>
+    </Link>
+    <Link href="/lucky-draw">
+      <a>ELLEverse 抽獎</a>
     </Link>
     <a href="https://www.aax.com/zh-TW/newbie/">新手指南</a>
-    <Link href="/collection">
-      <a>我的秘密告白</a>
-    </Link>
-    <Link href="/">
-      <a>Instagram</a>
-    </Link>
-    <Link href="/">
-      <a>Facebook</a>
-    </Link>
     <Link href="/faq">
-      <a>FAQ</a>
+      <a>常見問題</a>
+    </Link>
+    <Link href="/mint">
+      <a>鑄造告白</a>
     </Link>
   </div>
 )
