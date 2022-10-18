@@ -4,21 +4,10 @@ import Link from 'next/link'
 
 export function MintFooter() {
   return (
-    <div className="bg-black p-4 md:px-20 md:py-10">
-      <div className="flex items-center space-x-4 md:space-x-10 mb-4 md:mb-10">
-        <Link href="/">
-          <a>
-            <Image
-              priority
-              src="/logos/elle-white.png"
-              alt="ELLE"
-              height={24}
-              width={64}
-            />
-          </a>
-        </Link>
-        <Link href="/">
-          <a>
+    <div className="bg-black flex flex-col items-center p-4 md:px-20 md:py-10">
+      <div className="flex justify-between w-[344px] items-center mb-4 md:mb-10">
+        <div>
+          <a href="https://www.hearst.com.tw" className="mr-4">
             <Image
               priority
               src="/logos/hearst.png"
@@ -27,9 +16,18 @@ export function MintFooter() {
               width={120}
             />
           </a>
-        </Link>
+          <a href="https://www.aax.com">
+            <Image
+              priority
+              src="/logos/aax.svg"
+              alt="ELLE"
+              height={37}
+              width={80}
+            />
+          </a>
+        </div>
         {/* socials. */}
-        <div className="flex md:space-x-1">
+        <div className="flex md:space-x-1 items-center">
           <a
             href="https://www.facebook.com/elle.tw"
             target="_blank"
@@ -53,17 +51,12 @@ export function MintFooter() {
           </a>
         </div>
       </div>
-      <p className="font-mono text-xs leading-120% text-dark-gray">
-        A Part of Hearst Digital Media ELLE participates in various affiliate
-        marketing programs, which means ELLE gets paid commissions on purchases
-        made through our links to retailer sites.
-        <br />
-        <br />
-        ©2022 Hearst Magazines Taiwan All Rights Reserved.
-        <br />
-        <br />
-        任何未經本公司同意或授權，擅自抄襲、剽竊本公司報導、文章或照片，本公司為遏止抄襲歪風，維護創作秩序，一定會向法院提起民刑訴訟追究相關法律責任，絕不寬貸。
-      </p>
+      <div className="font-mono text-center text-xs md:text-base leading-120%">
+        <p className="text-dark-gray mb-8">
+          ©2022 Hearst Magazine Taiwan 台灣赫斯特媒體股份有限公司
+        </p>
+        <p className="text-white mb-4">Powered by AAX</p>
+      </div>
     </div>
   )
 }
