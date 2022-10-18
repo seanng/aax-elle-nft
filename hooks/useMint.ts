@@ -8,6 +8,7 @@ import {
   PUBLIC,
   INCONSISTENT_CONTRACT_STATUS,
   PUBLIC_SALE,
+  PRIVATE_SALE,
 } from 'shared/constants'
 import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
 import { useState } from 'react'
@@ -130,14 +131,12 @@ export function useMint() {
       passcode: form.passcode,
     })
 
-    // TODO: If WLT can become Prize Token, we remove this condition.
-    if (salePhase === PUBLIC_SALE) {
-      await axios.post('/api/prize-tokens', {
-        tokenId: messageTokenId + 1,
-        minterEmail: form.email,
-        minterWallet: address,
-      })
-    }
+    await axios.post('/api/prize-tokens', {
+      tokenId: messageTokenId + 1,
+      minterEmail: form.email,
+      minterWallet: address,
+      isPrivateSale: salePhase === PRIVATE_SALE,
+    })
 
     return mintData
   }
