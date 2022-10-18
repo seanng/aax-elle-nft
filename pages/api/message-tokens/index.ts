@@ -1,14 +1,13 @@
 import * as messageTokensService from 'backend/services/message-tokens'
 import { sendMail } from 'lib/sendgrid'
+import contract from 'lib/contract'
 import randomstring from 'randomstring'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import { MessageToken } from '@prisma/client'
 import { validate } from 'lib/middlewares'
-import { metadata, s3BaseUrl, fromEmail, openseaBaseUrl } from 'utils/config'
+import { s3BaseUrl, openseaBaseUrl, contractAddress } from 'utils/config'
 import { check } from 'express-validator'
 import { KOL_NAME_FIELD } from 'shared/constants'
-
-const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
 
 interface PostHandlerRequest extends NextApiRequest {
   body: MessageToken & {
@@ -88,12 +87,48 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
 
 // getOneMint (based on slug). /open?slug=abc
 async function getHandler(req: NextApiRequest, res: NextApiResponse) {
-  const { slug } = req.query
-  const where = {
-    ...(typeof slug === 'string' && { slug }),
+  const { slug, address } = req.query
+
+  if (!slug || !address) {
+    res.status(400).send('No slug or address provided')
+    return
   }
-  const mints = await messageTokensService.findMany(where)
-  res.json(mints)
+
+  if (slug) {
+    const where = {
+      ...(typeof slug === 'string' && { slug }),
+    }
+    const mints = await messageTokensService.findMany(where)
+    res.json(mints)
+    return
+  }
+
+  if (address) {
+    if (typeof address !== 'string' || Array.isArray(address)) {
+      res.status(422).send('Single address not provided')
+      return
+    }
+    try {
+      const tokenIdBnList = await contract.callStatic.tokensOfOwner(address)
+      const tokenIdList = tokenIdBnList.map((bn) => bn.toNumber())
+      const messageTokenIdList = tokenIdList.filter((id) => id % 2 === 0)
+
+      if (messageTokenIdList.length === 0)
+        return res.status(404).send('No Message Tokens Found')
+
+      const data = await messageTokensService.findMany({
+        OR: messageTokenIdList.map((id) => ({ tokenId: id })),
+      })
+
+      res.status(200).json({ data })
+    } catch (error) {
+      console.log('error: ', error)
+      if (error.code === 'INVALID_ARGUMENT')
+        return res.status(422).send('Invalid Address')
+
+      res.status(500).send(error.message)
+    }
+  }
 }
 
 const handler: NextApiHandler = async (req, res) => {

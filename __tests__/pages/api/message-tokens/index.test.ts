@@ -4,6 +4,7 @@ import randomstring from 'randomstring'
 import * as service from 'backend/services/message-tokens'
 
 jest.mock('lib/sendgrid')
+jest.mock('lib/contract', () => {})
 jest.mock('@sendgrid/mail')
 
 const validRequestBody = {

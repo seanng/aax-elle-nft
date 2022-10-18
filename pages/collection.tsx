@@ -5,8 +5,8 @@ import {
   MintLayout,
   PinkGiftIcon,
   SpinningOverlay,
-  WarningIcon,
   ResponsivePrimaryButton,
+  NotConnectedView,
 } from 'components'
 import type { NextPage } from 'next'
 import axios from 'lib/axios'
@@ -30,7 +30,7 @@ const HAS_TOKENS = 'HAS_TOKENS'
 const CollectionPage: NextPage = () => {
   const [displayMode, setDisplayMode] = useState(LOADING)
   const [data, setData] = useState<MessageToken[]>([])
-  const { address, openConnectModal } = useWeb3Context()
+  const { address } = useWeb3Context()
   const {
     browser,
     setIsWrongBrowserModalOpen,
@@ -62,7 +62,7 @@ const CollectionPage: NextPage = () => {
       try {
         const {
           data: { data },
-        } = (await axios.get(`/api/collection?address=${address}`)) as {
+        } = (await axios.get(`/api/message-tokens?address=${address}`)) as {
           data: { data: MessageToken[] }
         }
         setData(data)
@@ -82,7 +82,7 @@ const CollectionPage: NextPage = () => {
         {
           {
             [NO_TOKENS]: <NoTokensView />,
-            [NOT_CONNECTED]: <NotConnectedView {...{ openConnectModal }} />,
+            [NOT_CONNECTED]: <NotConnectedView />,
             [HAS_TOKENS]: <HasTokensView {...{ tokens: data }} />,
           }[displayMode ?? NOT_CONNECTED]
         }
@@ -129,25 +129,6 @@ const NoTokensView = () => {
           <ResponsivePrimaryButton>我要告白</ResponsivePrimaryButton>
         </a>
       </Link>
-    </>
-  )
-}
-
-const NotConnectedView = ({ openConnectModal }) => {
-  return (
-    <>
-      <div className="pt-36 pb-6">
-        <WarningIcon />
-      </div>
-      <p className="text-cement text-2xl md:text-3xl mb-3 md:mb-5">
-        請先連結錢包
-      </p>
-      <p className="text-cement md:text-xl tracking-wide mb-8 md:mb-12">
-        此頁面需要連結錢包才能瀏覽
-      </p>
-      <ResponsivePrimaryButton onClick={() => openConnectModal()}>
-        連結錢包
-      </ResponsivePrimaryButton>
     </>
   )
 }

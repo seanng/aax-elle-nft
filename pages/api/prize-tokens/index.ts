@@ -1,6 +1,7 @@
 import { PrizeToken } from '@prisma/client'
 import * as service from 'backend/services/prize-tokens'
 import { check } from 'express-validator'
+import contract from 'lib/contract'
 import { validate } from 'lib/middlewares'
 import { sendMail } from 'lib/sendgrid'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
@@ -45,17 +46,33 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
 }
 
 async function getHandler(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query
-  if (!id || typeof id !== 'string' || Array.isArray(id)) {
-    res.status(422).send('Single id not provided')
-    return
+  const { address } = req.query
+
+  if (address) {
+    if (typeof address !== 'string' || Array.isArray(address)) {
+      res.status(422).send('Single address not provided')
+      return
+    }
+    try {
+      const tokenIdBnList = await contract.callStatic.tokensOfOwner(address)
+      const tokenIdList = tokenIdBnList.map((bn) => bn.toNumber())
+      const prizeTokenIdList = tokenIdList.filter((id) => id % 2 === 1)
+
+      if (prizeTokenIdList.length === 0)
+        return res.status(404).send('No Message Tokens Found')
+
+      const data = await service.findMany({
+        OR: prizeTokenIdList.map((id) => ({ tokenId: id })),
+      })
+      res.status(200).json({ data })
+    } catch (error) {
+      console.log('error: ', error)
+      if (error.code === 'INVALID_ARGUMENT')
+        return res.status(422).send('Invalid Address')
+
+      res.status(500).send(error.message)
+    }
   }
-
-  const prizeTokens = await service.findMany(
-    Array.isArray(id) ? { OR: { id } } : { id }
-  )
-
-  res.json(prizeTokens)
 }
 
 const handler: NextApiHandler = async (req, res) => {
