@@ -89,7 +89,7 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
 async function getHandler(req: NextApiRequest, res: NextApiResponse) {
   const { slug, address } = req.query
 
-  if (!slug || !address) {
+  if (!slug && !address) {
     res.status(400).send('No slug or address provided')
     return
   }
