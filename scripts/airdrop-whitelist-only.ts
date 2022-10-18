@@ -1,14 +1,18 @@
 import { ethers, network } from 'hardhat'
-import { getAirtableRecords } from '../lib/airtable'
 import axios from '../lib/axios'
 import dotenv from 'dotenv'
 import { CONTRACT_NAME, WALLET_FIELD, EMAIL_FIELD } from '../shared/constants'
 import { emailTemplateIds } from '../utils/config'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 
-const PARTICIPANT_TABLE = '(Testing) - Participants Airdrop' // TODO: CHANGEME
+const records = [
+  {
+    [WALLET_FIELD]: '0xdD2FD4581271e230360230F9337D5c0430Bf44C0',
+    [EMAIL_FIELD]: 'sean.ng@aax.com',
+  },
+]
 
-async function airdropParticipants() {
+async function airdropWhitelistOnly() {
   if (!network.config.from)
     throw new Error(`no from address configured in ${network.name}!`)
 
@@ -17,8 +21,6 @@ async function airdropParticipants() {
   )
 
   const nextTokenId = (await contract.callStatic.getNextTokenId()).toNumber()
-
-  const records = await getAirtableRecords(PARTICIPANT_TABLE)
 
   await contract.airdropWhitelistTokens(
     records.map((record) => record[WALLET_FIELD])
@@ -38,7 +40,7 @@ async function airdropParticipants() {
   }
 }
 
-airdropParticipants()
+airdropWhitelistOnly()
   .then(() => process.exit(0))
   .catch((error) => {
     console.error(error)
