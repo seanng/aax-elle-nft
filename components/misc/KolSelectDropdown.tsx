@@ -31,15 +31,16 @@ export function KolSelectDropdown({ selectedPerson, setSelectedPerson }) {
       </div>
       <div
         className={classNames(
-          'flex flex-auto border border-lime bg-transparent focus:border-lime focus:ring-0 justify-between px-2.5'
+          'flex flex-auto border border-lime bg-transparent focus:border-lime focus:ring-0 justify-between pl-2.5'
         )}
       >
         <Combobox.Input
           onChange={(event) => setQuery(event.target.value)}
           displayValue={(person: KolDropdownListItem) => person?.name}
           className="w-full bg-transparent border-0 focus:ring-0 font-mono md:text-2xl px-0"
+          placeholder="選擇藝人"
         />
-        <Combobox.Button>
+        <Combobox.Button className="px-4">
           <CaretDownIcon />
         </Combobox.Button>
       </div>

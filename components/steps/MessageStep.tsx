@@ -142,6 +142,14 @@ export function MessageStep({
       <OutlinedHeading className="mt-6 mb-6 md:mb-10">
         寫下你的告白秘密吧
       </OutlinedHeading>
+      {salePhase === PRIVATE_SALE && (
+        <div className="flex w-80 md:w-[642px] mb-4">
+          <KolSelectDropdown
+            selectedPerson={selectedKol}
+            setSelectedPerson={setSelectedKol}
+          />
+        </div>
+      )}
       <div className="flex w-80 md:w-[642px] mb-4">
         <div className="flex-none bg-lime text-black font-mono p-2 md:text-2xl">
           寄件人
@@ -151,6 +159,7 @@ export function MessageStep({
           name="minterName"
           type="text"
           className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono md:text-2xl"
+          placeholder="你的名字"
           onChange={handleInputChange}
         />
       </div>
@@ -162,18 +171,11 @@ export function MessageStep({
           id="receiverName"
           name="receiverName"
           type="text"
+          placeholder="對方的名字"
           className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono md:text-2xl"
           onChange={handleInputChange}
         />
       </div>
-      {salePhase === PRIVATE_SALE && (
-        <div className="flex w-80 md:w-[642px] mb-6">
-          <KolSelectDropdown
-            selectedPerson={selectedKol}
-            setSelectedPerson={setSelectedKol}
-          />
-        </div>
-      )}
 
       <div className="w-80 h-[320px] md:w-[642px] md:h-[642px] mb-6 flex justify-center items-center">
         <AroundText2
