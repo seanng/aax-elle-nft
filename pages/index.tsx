@@ -6,7 +6,6 @@ import {
   HowToSection,
   OutlinedHeading,
   BlingIcon,
-  ButtonTooltip,
   Marquee,
   TinyPinkCat,
   TinyPinkSmiley,
@@ -209,15 +208,11 @@ const LandingPage: NextPage = () => {
       </Link>
       {[PRIVATE_SALE, NOT_STARTED].includes(salePhase) && (
         <div className="fixed bottom-4 right-4 flex flex-col items-center z-10">
-          <ButtonTooltip />
-          <div className="absolute text-black top-3 text-sm font-noto">
-            跟偶像告白?
-          </div>
           <a href="#how-to">
             <Image
-              width="80"
-              height="80"
-              src="/images/private-sale-sticky.png"
+              width="105"
+              height="123"
+              src="/images/private-sale-sticky2.png"
             />
           </a>
         </div>
