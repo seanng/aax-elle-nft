@@ -85,8 +85,15 @@ export function MessageStep({
     const { message, minterName, receiverName } = values
     const files = await getAssets({
       message: message,
-      aroundText: genNftFrameTextMsg(minterName, receiverName),
-      neverOpenedAroundText: genNftFrameTextMsg(minterName, receiverName, true),
+      aroundText: genNftFrameTextMsg({
+        sender: minterName,
+        receiver: receiverName,
+      }),
+      neverOpenedAroundText: genNftFrameTextMsg({
+        sender: minterName,
+        receiver: receiverName,
+        neverOpened: true,
+      }),
     })
     setFiles(files)
     updateForm(values)

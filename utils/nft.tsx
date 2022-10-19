@@ -474,12 +474,17 @@ export const urlRegex = new RegExp(
   /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i
 )
 
-export const genNftFrameTextMsg = (
+export const genNftFrameTextMsg = ({
   sender,
   receiver,
   neverOpened = false,
-  kolMsg = ''
-): string => {
+  kolMsg = '',
+}: {
+  sender: string
+  receiver: string
+  neverOpened?: boolean
+  kolMsg?: string
+}): string => {
   const formattedDate = format(new Date(), 'LLL.dd.yyyy E. HH:mm:ss')
   const receiverGreeting = receiver ? receiver + '! ' : ''
   const senderGreeting = sender

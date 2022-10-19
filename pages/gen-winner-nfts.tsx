@@ -79,6 +79,7 @@ const GenWinnerNFTsPage: NextPage = () => {
       .select({ sort: [{ field: AUTONUMBER_FIELD, direction: 'asc' }] })
       .firstPage()
     const records = data.map(({ fields }) => fields)
+
     // Validate Airtable Records Fields.
     const errors = validateAirtableRecords(records)
     if (errors.length > 0) {
@@ -98,18 +99,18 @@ const GenWinnerNFTsPage: NextPage = () => {
         signature,
         gridIconTemplate: KOL_GI_TEMPLATES[rec[ELLEMOJI_FIELD] as string],
         message: rec[NFT_MESSAGE_FIELD] as string,
-        aroundText: genNftFrameTextMsg(
-          rec[FRAME_SENDER_FIELD],
-          rec[NAME_FIELD],
-          false,
-          rec[FRAME_PHRASE_FIELD] as string
-        ),
-        neverOpenedAroundText: genNftFrameTextMsg(
-          rec[FRAME_SENDER_FIELD],
-          rec[NAME_FIELD],
-          true,
-          rec[FRAME_PHRASE_FIELD] as string
-        ),
+        aroundText: genNftFrameTextMsg({
+          sender: rec[FRAME_SENDER_FIELD] as string,
+          receiver: rec[NAME_FIELD] as string,
+          neverOpened: false,
+          kolMsg: rec[FRAME_PHRASE_FIELD] as string,
+        }),
+        neverOpenedAroundText: genNftFrameTextMsg({
+          sender: rec[FRAME_SENDER_FIELD] as string,
+          receiver: rec[NAME_FIELD] as string,
+          neverOpened: true,
+          kolMsg: rec[FRAME_PHRASE_FIELD] as string,
+        }),
         backgroundStyle: rec[BG_COLOR_FIELD] as string,
         aroundTextColor: rec[FRAME_COLOR_FIELD] as string,
         gridStyle: rec[FRAME_COLOR_FIELD] as string,
