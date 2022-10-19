@@ -4,7 +4,7 @@ import {
   LinkAndPasscode,
   MintLayout,
   SpinningOverlay,
-  ResponsivePrimaryButton,
+  PrimaryButton,
   NotConnectedView,
   TokenInfoBox,
 } from 'components'
@@ -177,7 +177,7 @@ const NoTokensView = ({ tokenInfoBox }: { tokenInfoBox: ReactNode }) => {
       </p>
       <Link href="/mint">
         <a>
-          <ResponsivePrimaryButton>我要告白</ResponsivePrimaryButton>
+          <PrimaryButton>我要告白</PrimaryButton>
         </a>
       </Link>
     </>

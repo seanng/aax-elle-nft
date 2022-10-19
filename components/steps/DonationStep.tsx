@@ -8,8 +8,8 @@ import {
   WarningStamp,
   MintConfirmationModal,
   TwSpcaButton,
-  ResponsiveSecondaryButton,
-  ResponsivePrimaryButton,
+  SecondaryButton,
+  PrimaryButton,
   OutlinedHeading,
   CaretDownIcon,
 } from 'components'
@@ -232,17 +232,17 @@ export function DonationStep({
               : '尚未連結錢包'}
           </div>
         </div>
-        <div className="flex mt-10">
-          <ResponsiveSecondaryButton type="button" onClick={handleBackClick}>
+        <div className="flex space-x-8 mt-10">
+          <SecondaryButton type="button" onClick={handleBackClick}>
             上一步
-          </ResponsiveSecondaryButton>
-          <ResponsivePrimaryButton
+          </SecondaryButton>
+          <PrimaryButton
+            type="button"
             disabled={donationInput < 500}
             onClick={handleNextClick}
-            className="ml-8"
           >
             下一步
-          </ResponsivePrimaryButton>
+          </PrimaryButton>
         </div>
       </div>
       {wizard.isActive && (

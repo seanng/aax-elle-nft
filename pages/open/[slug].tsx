@@ -3,11 +3,11 @@ import {
   ErrorScreen,
   GreenLockIcon,
   FormErrorIcon,
-  ResponsivePrimaryButton,
+  PrimaryButton,
   GreenUnlockIcon,
   OutlinedHeading,
   SpinningOverlay,
-  ResponsiveSecondaryButton,
+  SecondaryButton,
   SquareShareButton,
   WarningIcon,
 } from 'components'
@@ -89,9 +89,7 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
             <div className="flex items-center space-x-3 md:space-x-4">
               <Link href="/" passHref>
                 <a target="__blank" className="leading-0">
-                  <ResponsiveSecondaryButton type="button">
-                    體驗鑄造
-                  </ResponsiveSecondaryButton>
+                  <SecondaryButton type="button">體驗鑄造</SecondaryButton>
                 </a>
               </Link>
               <Link href={`/ig-share?id=${data.tokenId}&lol`} passHref>
@@ -134,13 +132,11 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
                     <span className="ml-2 text-sm">{errorMsg}</span>
                   </div>
                 )}
-                <ResponsivePrimaryButton
-                  className="mx-auto mt-5 md:mt-12 mb-10"
-                  disabled={inputValue === ''}
-                  type="submit"
-                >
-                  解鎖
-                </ResponsivePrimaryButton>
+                <div className="mx-auto mt-5 md:mt-12 mb-10">
+                  <PrimaryButton disabled={inputValue === ''} type="submit">
+                    解鎖
+                  </PrimaryButton>
+                </div>
               </form>
             )}
           </div>

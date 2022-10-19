@@ -1,7 +1,7 @@
 import {
   OutlinedHeading,
   ActiveLeftIcon,
-  MobilePrimaryButton,
+  PrimaryButton,
   ActiveRightIcon,
   HowToHeartIcon,
 } from 'components'
@@ -193,9 +193,9 @@ function Step({
             {body}
           </p>
           {shouldShowCta && (
-            <div className="mt-2 md:mt-4 w-full text-center">
+            <div className="my-2 md:mt-4 w-full text-center">
               <Link href="/mint">
-                <MobilePrimaryButton>填寫表單</MobilePrimaryButton>
+                <PrimaryButton mobileOnly>填寫表單</PrimaryButton>
               </Link>
             </div>
           )}

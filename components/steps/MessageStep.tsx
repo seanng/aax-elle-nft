@@ -1,15 +1,14 @@
 import { StepWizardChildProps } from 'react-step-wizard'
 import {
-  ResponsivePrimaryButton,
+  PrimaryButton,
+  SecondaryButton,
   ToastMessage,
   WarningIcon,
   OutlinedHeading,
   KolSelectDropdown,
-  ResponsiveSecondaryButton,
 } from 'components'
 import AroundText2 from 'components/NFT/shared/AroundText2'
 import { useEffect, useState } from 'react'
-// import { encrypt } from 'lib/crypto'
 import { Files, KolDropdownListItem, MintForm } from 'shared/types'
 import { FINISHED, NOT_STARTED, PRIVATE_SALE } from 'shared/constants'
 import { salePhase } from 'utils/config'
@@ -221,26 +220,24 @@ export function MessageStep({
           placeholder="寫下你的告白"
         />
       </div>
-      <div className="flex">
+      <div className="flex space-x-8">
         <a
-          className="leading-0"
           target="_blank"
           {...(!shouldDisableButtons && {
             href: `/ig-share?at=${frameText}&m=${encodeURI(values.message)}`,
           })}
         >
-          <ResponsiveSecondaryButton disabled={shouldDisableButtons}>
+          <SecondaryButton type="button" disabled={shouldDisableButtons}>
             分享告白
-          </ResponsiveSecondaryButton>
+          </SecondaryButton>
         </a>
-        <ResponsivePrimaryButton
+        <PrimaryButton
           type="button"
           disabled={shouldDisableButtons}
           onClick={handleMintClick}
-          className="ml-8"
         >
           鑄造告白
-        </ResponsivePrimaryButton>
+        </PrimaryButton>
       </div>
     </div>
   )

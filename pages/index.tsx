@@ -2,7 +2,6 @@ import {
   MintHeroDesktop,
   MintHeroMobile,
   MintLayout,
-  ResponsivePrimaryButton,
   FlipCardsSection,
   HowToSection,
   OutlinedHeading,
@@ -13,6 +12,7 @@ import {
   TinyPinkSmiley,
   TinyPinkThumb,
   HowToHeartIcon,
+  PrimaryButton,
 } from 'components'
 import { salePhase } from 'utils/config'
 import type { NextPage } from 'next'
@@ -101,7 +101,7 @@ const LandingPage: NextPage = () => {
       <MintHeroDesktop className="hidden md:block mb-14 max-h-[700px]" />
       <Link href="/mint">
         <a>
-          <ResponsivePrimaryButton>我要告白</ResponsivePrimaryButton>
+          <PrimaryButton>我要告白</PrimaryButton>
         </a>
       </Link>
       {/* <CaretDownButton className="my-6 md:mt-12 md:mb-14" /> */}
@@ -204,7 +204,7 @@ const LandingPage: NextPage = () => {
       <HowToSection />
       <Link href="/mint">
         <a>
-          <ResponsivePrimaryButton>我要告白</ResponsivePrimaryButton>
+          <PrimaryButton>我要告白</PrimaryButton>
         </a>
       </Link>
       {[PRIVATE_SALE, NOT_STARTED].includes(salePhase) && (

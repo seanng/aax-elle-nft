@@ -2,9 +2,9 @@ import { StepWizardChildProps } from 'react-step-wizard'
 import { useForm } from 'react-hook-form'
 import {
   FormErrorIcon,
-  ResponsiveSecondaryButton,
+  SecondaryButton,
   OutlinedHeading,
-  ResponsivePrimaryButton,
+  PrimaryButton,
   FormStamp,
 } from 'components'
 
@@ -67,17 +67,13 @@ export function PasscodeStep({ updateForm, ...wizard }: Props) {
             )}
           </div>
         </div>
-        <div className="flex">
-          <ResponsiveSecondaryButton type="button" onClick={handleBackClick}>
+        <div className="flex space-x-8">
+          <SecondaryButton type="button" onClick={handleBackClick}>
             上一步
-          </ResponsiveSecondaryButton>
-          <ResponsivePrimaryButton
-            disabled={!isValid || !isDirty}
-            type="submit"
-            className="ml-8"
-          >
+          </SecondaryButton>
+          <PrimaryButton disabled={!isValid || !isDirty} type="submit">
             下一步
-          </ResponsivePrimaryButton>
+          </PrimaryButton>
         </div>
       </div>
     </form>

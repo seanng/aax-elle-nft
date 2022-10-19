@@ -6,6 +6,7 @@ import { GOERLI, HOMESTEAD, LOCALHOST, NOT_STARTED } from '../shared/constants'
 import { KolDropdownListItem } from '../shared/types'
 
 export const salePhase = process.env.NEXT_PUBLIC_SALE_PHASE ?? NOT_STARTED
+export const luckyDrawable = process.env.NEXT_PUBLIC_LUCKY_DRAWABLE ?? false
 
 export const emailTemplateIds = {
   PRIVATE_SALE_MINT: 'd-0ba6a6e9fcfc428f85116aee8a0eb368',

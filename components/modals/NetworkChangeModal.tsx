@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
-import { ResponsivePrimaryButton, WarningIcon } from 'components'
+import { PrimaryButton, WarningIcon } from 'components'
 
 export function NetworkChangeModal({ isOpen, handleChangeNetwork }) {
   return (
@@ -22,9 +22,9 @@ export function NetworkChangeModal({ isOpen, handleChangeNetwork }) {
                   <p className="mb-4 md:mb-8 md:text-lg">
                     請到手機App或網頁版錢包切換至 Ethereum Main Network
                   </p>
-                  <ResponsivePrimaryButton onClick={handleChangeNetwork}>
+                  <PrimaryButton onClick={handleChangeNetwork}>
                     切換 Network
-                  </ResponsivePrimaryButton>
+                  </PrimaryButton>
                 </div>
                 <div className="h-4 w-mobile-modal-top md:w-desktop-modal-top bg-white" />
               </Dialog.Panel>

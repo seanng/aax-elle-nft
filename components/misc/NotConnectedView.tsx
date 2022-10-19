@@ -1,4 +1,4 @@
-import { ResponsivePrimaryButton, WarningIcon } from 'components'
+import { PrimaryButton, WarningIcon } from 'components'
 import { useWeb3Context } from 'context'
 
 export const NotConnectedView = ({}) => {
@@ -15,9 +15,7 @@ export const NotConnectedView = ({}) => {
       <p className="text-cement md:text-xl tracking-wide mb-8 md:mb-12">
         此頁面需要連結錢包才能瀏覽
       </p>
-      <ResponsivePrimaryButton onClick={() => openConnectModal()}>
-        連結錢包
-      </ResponsivePrimaryButton>
+      <PrimaryButton onClick={() => openConnectModal()}>連結錢包</PrimaryButton>
     </>
   )
 }

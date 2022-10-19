@@ -1,7 +1,7 @@
 import { Files, MintResponseData } from 'shared/types'
 import {
   SquareShareButton,
-  ResponsiveSecondaryButton,
+  SecondaryButton,
   OutlinedHeading,
   LinkAndPasscode,
 } from 'components'
@@ -31,9 +31,7 @@ export function SuccessStep({ data, files }: Props) {
         <div className="mt-6 mb-4 flex items-center justify-center space-x-3 md:space-x-4">
           <Link href="/collection" passHref>
             <a target="__blank" className="leading-0">
-              <ResponsiveSecondaryButton type="button">
-                前往我的秘密
-              </ResponsiveSecondaryButton>
+              <SecondaryButton type="button">前往我的秘密</SecondaryButton>
             </a>
           </Link>
           <Link href={`/ig-share?id=${data?.tokenId}&lol`} passHref>

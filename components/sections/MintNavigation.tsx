@@ -7,7 +7,7 @@ import {
   ModalCloseButton,
   AddressOKButton,
   DisconnectIcon,
-  MobilePrimaryButton,
+  PrimaryButton,
   AddressErrorButton,
 } from 'components'
 import { useDetectionContext, useWeb3Context } from 'context'
@@ -178,9 +178,9 @@ const Web3Button = () => {
       </Popover.Panel>
     </Popover>
   ) : (
-    <MobilePrimaryButton type="button" onClick={handleConnectClick}>
+    <PrimaryButton type="button" onClick={handleConnectClick} mobileOnly>
       連結錢包
-    </MobilePrimaryButton>
+    </PrimaryButton>
   )
 }
 // see https://github.com/codeSTACKr/hamburger-animation if you want to make an animated hamburger

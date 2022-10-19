@@ -14,7 +14,7 @@ const data = getNFTSettings({
     '狐狸：「這是我的一個秘密，再簡單不過的秘密，一個人只有用心去看，才能看到真實。事情的真相只用眼睛是看不見的。」hello hello hell',
 })
 
-const TestPage: NextPage = () => {
+const TestNFT: NextPage = () => {
   // ? Enable below to test getAssets function
   // useEffect(() => {
   //   const test = async () => {
@@ -64,4 +64,4 @@ const TestPage: NextPage = () => {
   )
 }
 
-export default TestPage
+export default TestNFT
