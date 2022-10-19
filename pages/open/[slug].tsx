@@ -86,14 +86,16 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
                 className="mb-6 md:mb-10 scale-100 md:scale-[1.5] h-[350px] w-[350px] md:h-[525px] md:w-[525px] origin-top-left max-w-full"
               />
             </div>
-            <div className="flex items-center space-x-3 md:space-x-4">
-              <Link href="/" passHref>
-                <a target="__blank" className="leading-0">
-                  <SecondaryButton type="button">體驗鑄造</SecondaryButton>
-                </a>
-              </Link>
+            <div className="flex items-start">
+              <div className="mr-4 md:mr-8">
+                <Link href="/" passHref>
+                  <a target="__blank">
+                    <SecondaryButton type="button">體驗鑄造</SecondaryButton>
+                  </a>
+                </Link>
+              </div>
               <Link href={`/ig-share?id=${data.tokenId}&lol`} passHref>
-                <a target="__blank" className="leading-0">
+                <a target="__blank">
                   <SquareShareButton />
                 </a>
               </Link>
