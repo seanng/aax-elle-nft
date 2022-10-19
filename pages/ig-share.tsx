@@ -14,16 +14,13 @@ import AroundText2 from 'components/NFT/shared/AroundText2'
 const html2canvasOpts = {
   height: 534,
   windowHeight: 534,
-  // scale: 1,
-  // height: 534 * IMG_SCALE,
-  // windowHeight: 534 * IMG_SCALE,
-  // IMG_SCALE,
 }
 
 const IgSharePage: NextPage = () => {
   const [previewImage, setPreviewImage] = useState<any>(null)
   const [compNode, setCompNode] = useState<any>(null)
-  const nftImageSource = useNftImageSource()
+  const router = useRouter()
+  const nftImageSource = useNftImageSource(router)
 
   const compRef = useCallback((node) => {
     if (node) setCompNode(node)
@@ -59,13 +56,15 @@ const IgSharePage: NextPage = () => {
           如何儲存分享Impact NFT？
         </OutlinedHeading>
         <IgShareInstructions />
-        <div className="flex justify-center w-80 md:w-[650px] text-orange space-x-2 mb-4 md:mb-16">
-          <WarningIcon className="flex-none mt-1" width={16} height={16} />
-          <div>
-            你的告白完成到一半摟！想要把你心中的愛真正分享給愛的收件者並獲得抽獎資格嗎？趕緊去鑄造一張Impact
-            NFT吧！
+        {router.query.at && (
+          <div className="flex justify-center w-80 md:w-[650px] text-orange space-x-2 mb-4 md:mb-16">
+            <WarningIcon className="flex-none mt-1" width={16} height={16} />
+            <div>
+              你的告白完成到一半摟！想要把你心中的愛真正分享給愛的收件者並獲得抽獎資格嗎？趕緊去鑄造一張Impact
+              NFT吧！
+            </div>
           </div>
-        </div>
+        )}
 
         {previewImage ? (
           <img src={previewImage} height="534" width="350" alt="finalImg" />
@@ -211,9 +210,8 @@ const CompsMessageBox = ({ data, assetsCB }) => {
   )
 }
 
-function useNftImageSource() {
+function useNftImageSource(router) {
   const [imageSource, setImageSource] = useState<any>(null)
-  const router = useRouter()
 
   useEffect(() => {
     if (router.query.id) {
