@@ -109,15 +109,8 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
                 <p className="font-medium md:text-xl">活動已結束</p>
               </div>
             )}
-            <>
-              <GreenLockIcon height={50} width={50} className="mb-3" />
-              <OutlinedHeading>解鎖秘密告白</OutlinedHeading>
-              {salePhase !== FINISHED && (
-                <p className="mt-5 md:mt-8 text-center md:text-2xl w-[275px] leading-150% tracking-wide">
-                  輸入密碼解鎖秘密！
-                </p>
-              )}
-            </>
+            <GreenLockIcon height={50} width={50} className="mb-3" />
+            <OutlinedHeading>解鎖秘密告白</OutlinedHeading>
             <iframe
               height={350}
               width={350}
@@ -129,7 +122,7 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
                 <input
                   id="passcode"
                   name="passcode"
-                  placeholder="輸入專屬密碼"
+                  placeholder="輸入密碼解鎖秘密"
                   type="text"
                   value={inputValue}
                   className="text-black border-lime w-full font-mono placeholder-slate-500 bg-lime border-transparent focus:border-transparent focus:ring-0 md:p-4 md:text-lg"
