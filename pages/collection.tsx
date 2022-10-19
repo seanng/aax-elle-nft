@@ -1,24 +1,25 @@
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import {
   OutlinedHeading,
   LinkAndPasscode,
   MintLayout,
-  PinkGiftIcon,
   SpinningOverlay,
   ResponsivePrimaryButton,
   NotConnectedView,
+  TokenInfoBox,
 } from 'components'
 import type { NextPage } from 'next'
 import axios from 'lib/axios'
-import { MessageToken } from '@prisma/client'
+import { MessageToken, PrizeToken } from '@prisma/client'
 import { useDetectionContext, useWeb3Context } from 'context'
 import Link from 'next/link'
-import { SAFARI } from 'shared/constants'
+import { PRIVATE_SALE, SAFARI } from 'shared/constants'
 import {
   contractAddress,
   metadata,
   openseaBaseUrl,
   s3BaseUrl,
+  salePhase,
 } from 'utils/config'
 import { useRouter } from 'next/router'
 
@@ -29,7 +30,9 @@ const HAS_TOKENS = 'HAS_TOKENS'
 
 const CollectionPage: NextPage = () => {
   const [displayMode, setDisplayMode] = useState(LOADING)
-  const [data, setData] = useState<MessageToken[]>([])
+  const [messageTokens, setMessageTokens] = useState<MessageToken[]>([])
+  const [isFetchingPrizeTokens, setIsFetchingPrizeTokens] = useState(true)
+  const [prizeTokens, setPrizeTokens] = useState<PrizeToken[]>([])
   const { address } = useWeb3Context()
   const {
     browser,
@@ -53,48 +56,96 @@ const CollectionPage: NextPage = () => {
   }, [isProcessingCloseClick])
 
   useEffect(() => {
-    async function getTokensOfWallet() {
+    async function getTokensFromWallet() {
       setDisplayMode(LOADING)
       if (!address) {
         setDisplayMode(NOT_CONNECTED)
         return
       }
+
+      // Get Message Tokens
       try {
         const {
           data: { data },
         } = (await axios.get(`/api/message-tokens?address=${address}`)) as {
           data: { data: MessageToken[] }
         }
-        setData(data)
+        setMessageTokens(data)
         setDisplayMode(HAS_TOKENS)
       } catch (error) {
-        console.log('error: ', error)
+        console.log('error retrieving message-tokens: ', error)
         setDisplayMode(NO_TOKENS)
       }
+
+      // Get WLT / PrizeTokens
+      try {
+        setIsFetchingPrizeTokens(true)
+        const {
+          data: { data },
+        } = (await axios.get(`/api/prize-tokens?address=${address}`)) as {
+          data: { data: PrizeToken[] }
+        }
+        setPrizeTokens(
+          data.filter((t) =>
+            salePhase === PRIVATE_SALE
+              ? t.isPrivateSale
+              : !t.isPrivateSale && !t.openedAt
+          )
+        )
+        setIsFetchingPrizeTokens(false)
+      } catch (error) {
+        console.log('error retrieving prize-tokens', error)
+        setIsFetchingPrizeTokens(false)
+      }
     }
-    getTokensOfWallet()
+    getTokensFromWallet()
   }, [address])
+
+  const tokenInfoBox = (
+    <TokenInfoBox
+      tokens={prizeTokens}
+      isLoading={isFetchingPrizeTokens}
+      showsPrizeTokens={salePhase !== PRIVATE_SALE}
+    >
+      <div className="text-center underline text-blue-600">
+        {salePhase !== PRIVATE_SALE ? (
+          <Link href="/lucky-draw">
+            <a>前往 ELLE 抽獎頁</a>
+          </Link>
+        ) : (
+          <Link href="/faq">
+            <a>什麼是白名單NFT？</a>
+          </Link>
+        )}
+      </div>
+    </TokenInfoBox>
+  )
 
   return (
     <>
       <MintLayout className="flex flex-col items-center font-noto">
-        <OutlinedHeading className="pt-6 mb-8">我的秘密告白</OutlinedHeading>
+        <OutlinedHeading className="pt-6 md:pt-12 mb-8">
+          My Love Secrets
+        </OutlinedHeading>
         {
           {
-            [NO_TOKENS]: <NoTokensView />,
+            [NO_TOKENS]: <NoTokensView {...{ tokenInfoBox }} />,
             [NOT_CONNECTED]: <NotConnectedView />,
-            [HAS_TOKENS]: <HasTokensView {...{ tokens: data }} />,
-          }[displayMode ?? NOT_CONNECTED]
+            [HAS_TOKENS]: (
+              <HasTokensView {...{ messageTokens, tokenInfoBox }} />
+            ),
+            [LOADING]: <SpinningOverlay />,
+          }[displayMode ?? LOADING]
         }
       </MintLayout>
-      {displayMode === LOADING && <SpinningOverlay />}
     </>
   )
 }
 
-const NoTokensView = () => {
+const NoTokensView = ({ tokenInfoBox }: { tokenInfoBox: ReactNode }) => {
   return (
     <>
+      {tokenInfoBox}
       <div className="pt-36 pb-6 md:pb-10">
         <svg
           width="121"
@@ -133,15 +184,18 @@ const NoTokensView = () => {
   )
 }
 
-const HasTokensView = ({ tokens }: { tokens: MessageToken[] }) => {
+const HasTokensView = ({
+  tokenInfoBox,
+  messageTokens,
+}: {
+  tokenInfoBox: ReactNode
+  messageTokens: MessageToken[]
+}) => {
   return (
     <>
-      <PinkGiftIcon />
-      <p className="text-guava md:text-xl mt-3 md:mt-5 mb-10 md:mb-12">
-        恭喜獲得抽獎機會！
-      </p>
-      <div className="flex flex-col items-center md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-14 xl:gap-20">
-        {tokens.map((t, i) => (
+      {tokenInfoBox}
+      <div className="flex flex-col items-center md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-14 xl:gap-20 mt-10 md:mt-16">
+        {messageTokens.map((t, i) => (
           <div key={t.id} className="pb-10">
             <iframe
               height={350}
@@ -160,7 +214,7 @@ const HasTokensView = ({ tokens }: { tokens: MessageToken[] }) => {
             >
               前往 OpenSea
             </a>
-            {i < tokens.length - 1 && (
+            {i < messageTokens.length - 1 && (
               <div className="flex flex-col items-center md:hidden mt-10">
                 <svg
                   width="48"
