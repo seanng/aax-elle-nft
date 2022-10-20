@@ -55,3 +55,19 @@ export const downloadFile = (file) => {
   document.body.removeChild(link)
   window.URL.revokeObjectURL(url)
 }
+
+export const shuffle = (list: string[]) => {
+  const keys = Object.keys(list) as unknown[] as number[]
+  const result: string[] = []
+  for (let k = 0, n = keys.length; k < list.length && n > 0; k += 1) {
+    // eslint-disable-next-line no-bitwise
+    const i = (Math.random() * n) | 0
+    const key = keys[i]
+    result.push(list[key])
+    n -= 1
+    const tmp = keys[n]
+    keys[n] = key
+    keys[i] = tmp
+  }
+  return result
+}

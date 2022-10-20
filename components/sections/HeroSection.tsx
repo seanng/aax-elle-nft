@@ -1,7 +1,6 @@
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { useEffect } from 'react'
-import { useAnimation } from 'framer-motion'
+import { useAnimation, motion } from 'framer-motion'
 import {
   Cactus,
   PacManSmall,

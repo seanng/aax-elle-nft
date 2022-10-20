@@ -114,3 +114,13 @@ export const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
 export const fromEmail = 'notify@elleverse.io'
 
 export const s3Bucket = process.env.S3_BUCKET ?? 'elle-nft-dev'
+
+export const prizeNames = [
+  'Fake wig',
+  'iPhone 69',
+  'Playstation 69',
+  'Samsung Galaxy 69',
+  'Starbucks Voucher',
+  'Yaboo Coffee Powder',
+  'Luxury Cruise',
+]
