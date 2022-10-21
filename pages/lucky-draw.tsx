@@ -42,10 +42,12 @@ const LuckyDrawPage: NextPage = () => {
   const { prizeTokens, setPrizeTokens } = usePrizeTokens(setPageDisplay)
   const { reelItems, arrangeReel, clearOutLosers } = useReel()
 
-  const canDraw = useMemo(
-    () => luckyDrawable && prizeTokens.length > 0,
-    [luckyDrawable, prizeTokens.length]
-  )
+  const canDraw = true
+
+  // const canDraw = useMemo(
+  //   () => luckyDrawable && prizeTokens.length > 0,
+  //   [luckyDrawable, prizeTokens.length]
+  // )
 
   const handleSpinClick = async () => {
     if (!canDraw) return
