@@ -20,7 +20,7 @@ export const TokenInfoBox = ({
     : ['/images/whitelist-token.svg', '白名單 NFT']
 
   return (
-    <div className=" border-2 border-dashed border-lime px-12 py-4 md:py-6">
+    <div className="border-2 border-dashed border-lime px-12 py-4 md:py-6">
       <div className="flex items-center justify-center">
         <div className="md:hidden">
           <Image height={32} width={32} src={imgSrc} />

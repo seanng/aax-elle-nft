@@ -42,7 +42,7 @@ export function MintNavigation() {
 const Panel = () => (
   <Popover.Panel
     focus
-    className="h-full z-navigation bg-black-rgba-70 backdrop-blur-3xl flex flex-col"
+    className="h-full z-10 bg-black-rgba-70 backdrop-blur-3xl flex flex-col"
   >
     {/* mobile */}
     <div

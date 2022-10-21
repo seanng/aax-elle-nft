@@ -7,6 +7,7 @@ import {
   PrimaryButton,
   NotConnectedView,
   TokenInfoBox,
+  SquareShareButton,
 } from 'components'
 import type { NextPage } from 'next'
 import axios from 'lib/axios'
@@ -22,6 +23,7 @@ import {
   salePhase,
 } from 'utils/config'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 const LOADING = 'LOADING'
 const NOT_CONNECTED = 'NOT_CONNECTED'
@@ -200,20 +202,35 @@ const HasTokensView = ({
             <iframe
               height={350}
               width={350}
-              src={`${s3BaseUrl}/public/${t.tokenId}.html`}
+              sandbox="allow-scripts"
+              style={{ minHeight: 350 }}
+              src={`${s3BaseUrl}/public/${t.tokenId}.html?abc`}
             />
-            <LinkAndPasscode
-              link={`${metadata.siteUrl}/open/${t.slug}`}
-              passcode={t.passcode}
-              className="my-6"
-            />
-            <a
-              href={`${openseaBaseUrl}/${contractAddress}/${t.tokenId}`}
-              target="__blank"
-              className="font-bold text-[#2081E2]"
-            >
-              前往 OpenSea
-            </a>
+            <div className="flex items-center justify-center my-6 space-x-6">
+              <Link href={`/ig-share?id=${t?.tokenId}&seen`} passHref>
+                <a className="leading-0" target="__blank">
+                  <SquareShareButton />
+                </a>
+              </Link>
+              <div className="flex items-center">
+                <Image src="/logos/opensea.svg" height={24} width={24} />
+                <a
+                  href={`${openseaBaseUrl}/${contractAddress}/${t.tokenId}`}
+                  target="__blank"
+                  className="font-bold text-[#2081E2] underline ml-2 md:text-lg"
+                >
+                  前往 OpenSea
+                </a>
+              </div>
+            </div>
+            <div className="my-6">
+              <LinkAndPasscode
+                mobileOnly
+                link={`${metadata.siteUrl}/open/${t.slug}`}
+                passcode={t.passcode}
+              />
+            </div>
+
             {i < messageTokens.length - 1 && (
               <div className="flex flex-col items-center md:hidden mt-10">
                 <svg
