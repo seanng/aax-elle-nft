@@ -440,6 +440,17 @@ export const genHTMLFile = (htmlStr, filename, fileCB) => {
       </style>
     </head>
     <body style="width: 350px; height: 350px; margin: 0;">
+      <script>
+        const resizeHandler = () => {
+          const width = window.innerWidth
+          const scale = width / 350
+          document.body.style.transform = \`scale(\${scale})\`
+          document.body.style.transformOrigin = 'top left'
+        }
+
+        resizeHandler()
+        document.addEventListener('resize', resizeHandler)
+      </script>
       ${htmlStr}
     </body>
     </html>
