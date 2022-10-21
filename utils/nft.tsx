@@ -423,7 +423,7 @@ export const genImageFile = (
 export const genHTMLFile = (htmlStr, filename, fileCB) => {
   const withDoctype = `
     <!DOCTYPE html>
-    <html lang="en" style="width: 350px; height: 350px;">
+    <html lang="en" style="background-color: transparent;">
     <head>
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -439,17 +439,18 @@ export const genHTMLFile = (htmlStr, filename, fileCB) => {
       }
       </style>
     </head>
-    <body style="width: 350px; height: 350px; margin: 0;">
+    <body style="position: absolute; margin: 0; left: 50%; top: 50%;">
       <script>
         const resizeHandler = () => {
           const width = window.innerWidth
           const scale = width / 350
-          document.body.style.transform = \`scale(\${scale})\`
+          document.body.style.transform = \`scale(\${scale > (500 / 350) ? (500 / 350) : scale}) translate(-50%, -50%)\`
           document.body.style.transformOrigin = 'top left'
         }
 
         resizeHandler()
         document.addEventListener('resize', resizeHandler)
+        window.addEventListener('resize', resizeHandler)
       </script>
       ${htmlStr}
     </body>

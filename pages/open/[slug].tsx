@@ -85,7 +85,7 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
                 src={`${s3BaseUrl}/public/${data.tokenId}.html?bgc`}
                 style={{ minHeight: 350 }}
                 sandbox="allow-scripts"
-                className="mb-6 md:mb-10 h-[350px] w-[350px] md:h-[525px] md:w-[525px]"
+                className="mb-6 md:mb-10 h-[350px] w-[350px] md:h-[500px] md:w-[500px]"
               />
             </div>
             <div className="flex items-start">
