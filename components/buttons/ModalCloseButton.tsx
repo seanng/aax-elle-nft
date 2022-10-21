@@ -1,4 +1,4 @@
-import { classNames } from 'utils/helpers'
+import clsx from 'clsx'
 
 export const ModalCloseButton = ({
   width = 20,
@@ -10,7 +10,7 @@ export const ModalCloseButton = ({
   return (
     <button
       type="button"
-      className={classNames('focus:outline-none', className)}
+      className={clsx('focus:outline-none', className)}
       {...props}
     >
       <span className="sr-only">Close</span>

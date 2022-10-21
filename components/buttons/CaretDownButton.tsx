@@ -1,8 +1,8 @@
-import { classNames } from 'utils/helpers'
+import clsx from 'clsx'
 
 export function CaretDownButton({ className = '', ...props }) {
   return (
-    <button className={classNames('relative', className)} {...props}>
+    <button className={clsx('relative', className)} {...props}>
       <Svg />
     </button>
   )

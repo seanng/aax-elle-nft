@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import ReactCardFlip from 'react-card-flip'
 import dynamic from 'next/dynamic'
-import { classNames } from 'utils/helpers'
+import clsx from 'clsx'
 
 const FlipCard1 = dynamic(() => import('components').then((m) => m.FlipCard1))
 const FlipCard2 = dynamic(() => import('components').then((m) => m.FlipCard2))
@@ -10,7 +10,7 @@ const FlipCard4 = dynamic(() => import('components').then((m) => m.FlipCard4))
 const FlipCard5 = dynamic(() => import('components').then((m) => m.FlipCard5))
 
 const withClass = (custom = '') =>
-  classNames('absolute w-full md:text-[32px]', custom)
+  clsx('absolute w-full md:text-[32px]', custom)
 
 const data = [
   {
@@ -94,7 +94,7 @@ export function FlipCardsSection({ className = '', ...props }) {
 
   return (
     <div
-      className={classNames(
+      className={clsx(
         className,
         'mt-20 flex flex-col items-start w-[360px] md:w-[670px]'
       )}

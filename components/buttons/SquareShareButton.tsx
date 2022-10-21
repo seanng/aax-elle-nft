@@ -1,7 +1,7 @@
-import { classNames } from 'utils/helpers'
+import clsx from 'clsx'
 
 export const SquareShareButton = ({ className = '', ...props }) => (
-  <button className={classNames(className, 'relative')} {...props}>
+  <button className={clsx(className, 'relative')} {...props}>
     <SquareShareSvg className="hidden md:block" width={64} height={64} />
     <SquareShareSvg className="md:hidden" width={42} height={42} />
   </button>

@@ -1,8 +1,8 @@
-import { classNames } from 'utils/helpers'
+import clsx from 'clsx'
 
 export const WarningStamp = ({ className = '', ...props }) => (
   <div
-    className={classNames(
+    className={clsx(
       'relative flex flex-col justify-between items-center h-8 w-8 flex-none',
       className
     )}

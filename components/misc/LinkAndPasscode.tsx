@@ -1,10 +1,10 @@
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { GreenLockIcon } from 'components'
-import { classNames } from 'utils/helpers'
+import clsx from 'clsx'
 
 export function LinkAndPasscode({ link = '', passcode = '', className = '' }) {
   return (
-    <div className={classNames('w-full', className)}>
+    <div className={clsx('w-full', className)}>
       <div className="flex w-full mb-2">
         <input
           readOnly
@@ -18,7 +18,7 @@ export function LinkAndPasscode({ link = '', passcode = '', className = '' }) {
         </CopyToClipboard>
       </div>
       {passcode && (
-        <div className={classNames('flex items-center text-lime', className)}>
+        <div className={clsx('flex items-center text-lime', className)}>
           <GreenLockIcon />
           <span className="ml-2">解鎖密碼：</span>
           <span className="underline">{passcode}</span>

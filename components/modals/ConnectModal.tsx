@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { ModalCloseButton } from 'components'
 import Image from 'next/image'
 import { Fragment, useEffect, useRef, useState } from 'react'
-import { classNames } from 'utils/helpers'
+import clsx from 'clsx'
 
 export function ConnectModal({ isOpen, closeModal, connect }) {
   const [hasMetaMask, setHasMetaMask] = useState(false)
@@ -83,7 +83,7 @@ const MetaMaskButton = ({ onClick, hasMetaMask = false, className = '' }) => (
   <button
     type="button"
     onClick={onClick}
-    className={classNames('relative ', className)}
+    className={clsx('relative ', className)}
   >
     <svg
       height={106}

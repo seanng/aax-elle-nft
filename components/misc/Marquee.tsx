@@ -1,5 +1,5 @@
+import clsx from 'clsx'
 import { useState, useMemo, useCallback, useEffect } from 'react'
-import { classNames } from 'utils/helpers'
 import { genRandomId } from 'utils/nft'
 
 const LEFT = 'left'
@@ -118,10 +118,7 @@ export function Marquee({
 
   return (
     <div
-      className={classNames(
-        className,
-        'relative whitespace-nowrap overflow-hidden'
-      )}
+      className={clsx(className, 'relative whitespace-nowrap overflow-hidden')}
     >
       {/* Reference | Hidden */}
       <div
