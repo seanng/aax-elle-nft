@@ -1,8 +1,7 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { ModalCloseButton } from 'components'
 import Image from 'next/image'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import clsx from 'clsx'
+import { BaseModal } from './BaseModal'
 
 export function ConnectModal({ isOpen, closeModal, connect }) {
   const [hasMetaMask, setHasMetaMask] = useState(false)
@@ -18,66 +17,32 @@ export function ConnectModal({ isOpen, closeModal, connect }) {
   }, [])
 
   return (
-    <Transition.Root show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-modal" onClose={closeModal}>
-        <TransitionChild>
-          <div className="fixed inset-0 bg-black-rgba-70 backdrop-blur-3xl transition-opacity" />
-        </TransitionChild>
-        <div className="fixed z-modal inset-0 overflow-y-auto">
-          <div className="flex items-center justify-center min-h-full text-center">
-            <TransitionChild>
-              <Dialog.Panel className="transition-all relative flex flex-col items-center">
-                <ModalCloseButton
-                  onClick={closeModal}
-                  className="absolute right-5 -top-10"
-                />
-                <div className="h-4 w-mobile-modal-top md:w-desktop-modal-top bg-white" />
-                <div className="w-mobile-modal-body md:w-desktop-modal-body bg-white px-4 pt-6 md:pt-8 pb-20 text-center md:text-lg">
-                  <h4 className="text-2xl md:text-3xl mb-8">連結錢包</h4>
-                  <div className="mb-4">
-                    我還沒有錢包
-                    <a className="ml-2 underline text-cyan-600">
-                      為什麼需要虛擬錢包？
-                    </a>
-                  </div>
-                  <MetaMaskButton
-                    hasMetaMask={hasMetaMask}
-                    className="mb-8"
-                    onClick={handleMetaMaskButtonClick}
-                  />
-                  <p className="mb-4">下載AAX錢包獲得 50 USDT</p>
-                  <a target="__blank" href="https://aax.com">
-                    <Image
-                      src="/images/aax-modal-promotion.jpg"
-                      layout="fixed"
-                      objectFit="contain"
-                      width="288px"
-                      height="97px"
-                    />
-                  </a>
-                </div>
-                <div className="h-4 w-mobile-modal-top md:w-desktop-modal-top bg-white" />
-              </Dialog.Panel>
-            </TransitionChild>
-          </div>
+    <BaseModal onClose={closeModal} isOpen={isOpen} showsCloseIcon>
+      <div className="px-4 pt-6 md:pt-8 pb-20 text-center md:text-lg">
+        <h4 className="text-2xl md:text-3xl mb-8">連結錢包</h4>
+        <div className="mb-4">
+          我還沒有錢包
+          <a className="ml-2 underline text-cyan-600">為什麼需要虛擬錢包？</a>
         </div>
-      </Dialog>
-    </Transition.Root>
+        <MetaMaskButton
+          hasMetaMask={hasMetaMask}
+          className="mb-8"
+          onClick={handleMetaMaskButtonClick}
+        />
+        <p className="mb-4">下載AAX錢包獲得 50 USDT</p>
+        <a target="__blank" href="https://aax.com">
+          <Image
+            src="/images/aax-modal-promotion.jpg"
+            layout="fixed"
+            objectFit="contain"
+            width="288px"
+            height="97px"
+          />
+        </a>
+      </div>
+    </BaseModal>
   )
 }
-
-const TransitionChild = (props) => (
-  <Transition.Child
-    as={Fragment}
-    enter="ease-out duration-300"
-    enterFrom="opacity-0"
-    enterTo="opacity-100"
-    leave="ease-in duration-200"
-    leaveFrom="opacity-100"
-    leaveTo="opacity-0"
-    {...props}
-  />
-)
 
 const MetaMaskButton = ({ onClick, hasMetaMask = false, className = '' }) => (
   <button
