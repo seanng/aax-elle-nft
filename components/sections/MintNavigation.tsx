@@ -42,7 +42,7 @@ export function MintNavigation() {
 const Panel = () => (
   <Popover.Panel
     focus
-    className="h-full z-10 bg-black-rgba-70 backdrop-blur-3xl flex flex-col"
+    className="h-full z-10 bg-black-rgba-90 md:bg-black-rgba-70 backdrop-blur-3xl flex flex-col"
   >
     {/* mobile */}
     <div
@@ -85,7 +85,7 @@ const CloseButton = () => (
 const Nav = () => (
   <div className="h-full flex flex-col bg-repeat py-2 pl-6 text-4xl text-lime font-bold font-mono leading-150% space-y-4 md:space-y-7 md:pt-8">
     <Link href="/collection">
-      <a>My love secrets</a>
+      <a>My Love Secrets</a>
     </Link>
     <Link href="/lucky-draw">
       <a>ELLEverse 抽獎</a>
