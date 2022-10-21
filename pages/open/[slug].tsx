@@ -82,20 +82,22 @@ const OpenPage: NextPage<Props> = ({ slugExists, data }) => {
             </OutlinedHeading>
             <div className="flex flex-col mb-20 md:mb-28 w-full items-center">
               <iframe
-                src={`${s3BaseUrl}/public/${data.tokenId}.html?b`}
-                className="mb-6 md:mb-10 scale-100 md:scale-[1.5] h-[350px] w-[350px] md:h-[525px] md:w-[525px] origin-top-left max-w-full"
+                src={`${s3BaseUrl}/public/${data.tokenId}.html?bgc`}
+                style={{ minHeight: 350 }}
+                sandbox="allow-scripts"
+                className="mb-6 md:mb-10 h-[350px] w-[350px] md:h-[525px] md:w-[525px]"
               />
             </div>
             <div className="flex items-start">
               <div className="mr-4 md:mr-8">
                 <Link href="/" passHref>
-                  <a target="__blank">
+                  <a target="_blank">
                     <SecondaryButton type="button">體驗鑄造</SecondaryButton>
                   </a>
                 </Link>
               </div>
               <Link href={`/ig-share?id=${data.tokenId}&lol`} passHref>
-                <a target="__blank">
+                <a target="_blank">
                   <SquareShareButton />
                 </a>
               </Link>
