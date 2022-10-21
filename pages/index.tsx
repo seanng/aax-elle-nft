@@ -81,20 +81,21 @@ const LandingPage: NextPage = () => {
 
   return (
     <MintLayout className="relative flex flex-col items-center overflow-hidden w-full pb-14 md:pb-52">
-      <div className="font-mono font-medium text-xl text-center text-black bg-guava py-2 w-full">
-        Impact NFT 限量預發7天，預售階段將在11/11截止!
+      <div className="bg-guava py-2 w-full mb-8 md:mb-12">
+        <Marquee velocity={100}>
+          <span className="font-mono font-medium text-xl text-black">
+            Impact NFT 限量預發7天，預售階段將在11/11截止!&nbsp;&nbsp;&nbsp;
+            Impact NFT 限量預發7天，預售階段將在11/11截止!&nbsp;&nbsp;&nbsp;
+          </span>
+        </Marquee>
       </div>
 
-      <Marquee velocity={400}>
-        <OutlinedHeading
-          color="#C3FA08"
-          fontSizeClass="text-6xl font-mono italic leading-120%"
-        >
-          Welcome to ELLEverse&nbsp;&nbsp;&nbsp;Welcome to
-          ELLEverse&nbsp;&nbsp;&nbsp;Welcome to
-          ELLEverse&nbsp;&nbsp;&nbsp;Welcome to ELLEverse&nbsp;&nbsp;&nbsp;
-        </OutlinedHeading>
-      </Marquee>
+      <OutlinedHeading
+        color="#55F263"
+        fontSizeClass="text-5xl md:text-6xl font-mono italic leading-120% text-center w-72 md:w-full mb-8 md:mb-16"
+      >
+        ELLEverse Impact NFT
+      </OutlinedHeading>
 
       <MintHeroMobile className="md:hidden mb-14" />
       <MintHeroDesktop className="hidden md:block mb-14 max-h-[700px]" />

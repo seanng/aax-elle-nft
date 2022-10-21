@@ -28,11 +28,11 @@ export function MintConfirmationModal({
 }: Props) {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={closeModal}>
+      <Dialog as="div" className="relative z-modal" onClose={closeModal}>
         <TransitionChild>
           <div className="fixed inset-0 bg-black-rgba-70 backdrop-blur-3xl transition-opacity" />
         </TransitionChild>
-        <div className="fixed z-10 inset-0 overflow-y-auto">
+        <div className="fixed z-modal inset-0 overflow-y-auto">
           <div className="flex items-end sm:items-center justify-center min-h-full p-4 sm:p-0">
             <TransitionChild>
               <Dialog.Panel className="relative transition-all flex flex-col items-center">

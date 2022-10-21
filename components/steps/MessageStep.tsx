@@ -220,12 +220,13 @@ export function MessageStep({
           placeholder="寫下你的告白"
         />
       </div>
-      <div className="flex space-x-8">
+      <div className="flex">
         <a
           target="_blank"
           {...(!shouldDisableButtons && {
             href: `/ig-share?at=${frameText}&m=${encodeURI(values.message)}`,
           })}
+          className="mr-8"
         >
           <SecondaryButton type="button" disabled={shouldDisableButtons}>
             分享告白

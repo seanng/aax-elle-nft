@@ -5,11 +5,11 @@ import { ModalCloseButton, WarningIcon } from 'components'
 export function WrongBrowserModal({ onClose, isOpen }) {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={() => {}}>
+      <Dialog as="div" className="relative z-modal" onClose={() => {}}>
         <TransitionChild>
           <div className="fixed inset-0 bg-black-rgba-70 backdrop-blur-3xl transition-opacity" />
         </TransitionChild>
-        <div className="fixed z-10 inset-0 overflow-y-auto">
+        <div className="fixed z-modal inset-0 overflow-y-auto">
           <div className="flex items-center justify-center min-h-full text-center">
             <TransitionChild>
               <Dialog.Panel className="transition-all relative flex flex-col items-center">

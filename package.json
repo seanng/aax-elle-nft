@@ -33,6 +33,7 @@
     "@walletconnect/web3-provider": "^1.7.8",
     "aws-sdk": "^2.1137.0",
     "axios": "^0.27.2",
+    "clsx": "^1.2.1",
     "crypto-js": "^4.1.1",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.0",

@@ -101,8 +101,8 @@ const LuckyDrawPage: NextPage = () => {
 
             {/* Slot */}
             <div className="mt-10 md:mt-20 relative">
-              <div className="relative text-center z-20">
-                <div className="w-full relative z-30 bg-black p-3 mx-auto mb-10">
+              <div className="relative text-center">
+                <div className="w-full relative z-reel bg-black p-3 mx-auto mb-10">
                   <div className="w-full h-full bg-white overflow-hidden relative">
                     <div id="reel" className="h-10">
                       {reelItems.map((prizeName, i) => (

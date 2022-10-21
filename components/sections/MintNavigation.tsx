@@ -16,7 +16,7 @@ import { SAFARI } from 'shared/constants'
 
 export function MintNavigation() {
   return (
-    <Popover as="header" className="fixed left-0 right-0 z-10">
+    <Popover as="header" className="fixed left-0 right-0 z-navigation">
       <div className="flex justify-between items-center px-4 h-navbar-height bg-black">
         <Logo />
         <div className="flex items-center space-x-4">
@@ -42,7 +42,7 @@ export function MintNavigation() {
 const Panel = () => (
   <Popover.Panel
     focus
-    className="h-full z-30 bg-black-rgba-70 backdrop-blur-3xl flex flex-col"
+    className="h-full z-navigation bg-black-rgba-70 backdrop-blur-3xl flex flex-col"
   >
     {/* mobile */}
     <div
@@ -167,7 +167,7 @@ const Web3Button = () => {
           {`${address?.slice(0, 4)}...${address?.slice(-2)}`}
         </div>
       </Popover.Button>
-      <Popover.Panel className="absolute z-10 top-navbar-height -mt-3 right-4 bg-white p-6 ">
+      <Popover.Panel className="absolute z-navigation top-navbar-height -mt-3 right-4 bg-white p-6 ">
         <button
           className="flex space-x-2"
           onClick={disconnect ? disconnect : () => {}}

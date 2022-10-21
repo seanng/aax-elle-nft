@@ -56,6 +56,13 @@ module.exports = {
         '120%': '120%',
         '150%': '150%',
       },
+      zIndex: {
+        reel: 20,
+        modal: 30,
+        confetti: 40,
+        'spin-button': 50,
+        navigation: 100,
+      },
     },
   },
   variants: {
