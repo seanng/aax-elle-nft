@@ -37,44 +37,42 @@ const transition = {
   iterations: 1,
 }
 
+const animateSpin = async () => {
+  const container = document.querySelector('#reel')
+  const animation = container?.animate(keyframes, transition)
+
+  if (!animation) {
+    throw new Error('Could not start animation.')
+  }
+
+  const animationPromise = new Promise((resolve) => {
+    animation.onfinish = resolve
+  })
+
+  animation.play()
+  await animationPromise
+  animation.finish()
+}
+
 const LuckyDrawPage: NextPage = () => {
   const [pageDisplay, setPageDisplay] = useState(FETCHING)
-  const { prizeTokens, setPrizeTokens } = usePrizeTokens(setPageDisplay)
+  const { prizeTokens, spendPrizeToken } = usePrizeTokens(setPageDisplay)
   const { reelItems, arrangeReel, clearOutLosers } = useReel()
 
   const canDraw = useMemo(
+    // () => true,
     () => luckyDrawable && prizeTokens.length > 0,
     [luckyDrawable, prizeTokens.length]
   )
 
   const handleSpinClick = async () => {
     if (!canDraw) return
-
-    arrangeReel('German Shepherd')
-    // arrangeReel(prizeTokens[0].prizeName)
-
-    // Animate
-    const container = document.querySelector('#reel')
-    const animation = container?.animate(keyframes, transition)
-
-    if (!animation) {
-      console.error('Could not start animation.')
-      return
-    }
-
-    const animationPromise = new Promise((resolve) => {
-      animation.onfinish = resolve
-    })
-
-    animation.play()
-    await animationPromise
-    animation.finish()
-
-    // Remove non-winning prizes
+    // const winningPrize = 'German Shepherd'
+    const winningPrize = prizeTokens[0].prizeName
+    arrangeReel(winningPrize)
+    spendPrizeToken()
+    animateSpin()
     clearOutLosers()
-
-    // TODO: shift 1 from prize token array
-
     // TODO: display congratuations modal and throw confetti
   }
 
@@ -169,7 +167,6 @@ function usePrizeTokens(setPageDisplay) {
         const validPrizeTokens = (data.data as PrizeToken[]).filter(
           (t) => !t.isPrivateSale && !t.openedAt && t.prizeName
         )
-        // const shuffledPrizeNames = shuffle(prizeNames).concat([data])
         setPrizeTokens(validPrizeTokens)
         setPageDisplay(READY)
       } catch (error) {
@@ -189,5 +186,15 @@ function usePrizeTokens(setPageDisplay) {
     getPrizeTokensFromWallet()
   }, [address])
 
-  return { prizeTokens, setPrizeTokens }
+  const spendPrizeToken = () => {
+    const prizeToken = prizeTokens[0]
+    setPrizeTokens((tokens) => tokens.slice(1))
+    try {
+      axios.post(`/api/prize-tokens/${prizeToken.id}`)
+    } catch (error) {
+      console.log('error posting to prize token:', error)
+    }
+  }
+
+  return { prizeTokens, setPrizeTokens, spendPrizeToken }
 }
