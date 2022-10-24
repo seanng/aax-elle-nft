@@ -30,31 +30,31 @@ const Carousel = dynamic(() => import('react-spring-3d-carousel'), {
 
 const carouselItems = [
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-1.png',
   },
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-2.png',
   },
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-3.png',
   },
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-4.png',
   },
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-5.png',
   },
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-6.png',
   },
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-7.png',
   },
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-8.png',
   },
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-9.png',
   },
 ]
 
