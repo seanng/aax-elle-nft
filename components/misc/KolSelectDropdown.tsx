@@ -15,6 +15,14 @@ export function KolSelectDropdown({ selectedPerson, setSelectedPerson }) {
           return person.name.toLowerCase().includes(query.toLowerCase())
         })
 
+  const handleInputChange = (event) => {
+    setQuery(event.target.value)
+  }
+
+  const handleInputDisplayValue = (person: KolDropdownListItem) => {
+    return person?.name
+  }
+
   return (
     <Combobox
       as="div"
@@ -35,8 +43,8 @@ export function KolSelectDropdown({ selectedPerson, setSelectedPerson }) {
         )}
       >
         <Combobox.Input
-          onChange={(event) => setQuery(event.target.value)}
-          displayValue={(person: KolDropdownListItem) => person?.name}
+          onChange={handleInputChange}
+          displayValue={handleInputDisplayValue}
           className="w-full bg-transparent border-0 focus:ring-0 font-mono md:text-2xl px-0"
           placeholder="選擇藝人"
         />
@@ -44,9 +52,13 @@ export function KolSelectDropdown({ selectedPerson, setSelectedPerson }) {
           <CaretDownIcon />
         </Combobox.Button>
       </div>
-      {filteredPeople.length > 0 && (
-        <Combobox.Options className="absolute left-0 origin-bottom-left z-10 mt-14 w-full overflow-auto max-h-60 bg-black border border-lime focus:outline-none">
-          {filteredPeople.map((person) => (
+      <Combobox.Options className="absolute left-0 origin-bottom-left z-10 mt-12 md:mt-14 w-full overflow-auto max-h-60 bg-black border border-lime focus:outline-none">
+        {filteredPeople.length === 0 && query !== '' ? (
+          <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
+            Nothing found.
+          </div>
+        ) : (
+          filteredPeople.map((person) => (
             <Combobox.Option
               key={person.id}
               value={person}
@@ -68,9 +80,9 @@ export function KolSelectDropdown({ selectedPerson, setSelectedPerson }) {
                 </span>
               )}
             </Combobox.Option>
-          ))}
-        </Combobox.Options>
-      )}
+          ))
+        )}
+      </Combobox.Options>
     </Combobox>
   )
 }
