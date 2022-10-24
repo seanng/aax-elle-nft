@@ -43,7 +43,7 @@ export const DetectionContextProvider = ({ children }: Props) => {
   const [browser, setBrowser] = useState(OTHER_BROWSER)
 
   useEffect(() => {
-    if (!navigator?.userAgent) return
+    if (!window || !window.navigator?.userAgent) return
 
     const ua = navigator.userAgent
     let newDevice = device
@@ -63,7 +63,7 @@ export const DetectionContextProvider = ({ children }: Props) => {
     } else if (!!ua.match(/WebKit/i) && !ua.match(/CriOS/i)) {
       setBrowser(SAFARI)
     }
-  }, [navigator.userAgent])
+  }, [])
 
   return (
     <>
