@@ -15,6 +15,7 @@ import {
   IOS,
   OTHER_BROWSER,
   SAFARI,
+  METAMASK_MOBILE,
 } from 'shared/constants'
 
 const DetectionContext = createContext<{
@@ -42,17 +43,27 @@ export const DetectionContextProvider = ({ children }: Props) => {
   const [browser, setBrowser] = useState(OTHER_BROWSER)
 
   useEffect(() => {
-    const ua = navigator.userAgent
+    if (!navigator?.userAgent) return
 
-    if (/Android/i.test(ua)) setDevice(ANDROID)
-    else if (/iPhone|iPad/i.test(ua)) setDevice(IOS)
+    const ua = navigator.userAgent
+    let newDevice = device
+
+    if (/Android/i.test(ua)) {
+      newDevice = ANDROID
+    } else if (/iPhone|iPad/i.test(ua)) {
+      newDevice = IOS
+    }
+
+    setDevice(newDevice)
 
     if (/Chrome/i.test(ua) || ua.match(/CriOS/i)) {
       setBrowser(CHROME)
+    } else if (window?.ethereum && [IOS, ANDROID].includes(newDevice)) {
+      setBrowser(METAMASK_MOBILE)
     } else if (!!ua.match(/WebKit/i) && !ua.match(/CriOS/i)) {
       setBrowser(SAFARI)
     }
-  }, [])
+  }, [navigator.userAgent])
 
   return (
     <>

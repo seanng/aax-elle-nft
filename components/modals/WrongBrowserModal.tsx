@@ -9,7 +9,7 @@ export function WrongBrowserModal({ onClose, isOpen }) {
         <h4 className="font-medium text-2xl mb-2 md:mb-3 leading-150%">
           請使用Chrome瀏覽器
         </h4>
-        <p className="mb-4 md:mb-8 md:text-lg">MetaMask 僅支援Chrome 瀏覽器</p>
+        <p className="mb-4 md:mb-8 md:text-lg">MetaMask 不支援Safari 瀏覽器</p>
       </div>
     </BaseModal>
   )

@@ -33,6 +33,7 @@ export const DESKTOP = 'desktop'
 // browsers
 export const CHROME = 'chrome'
 export const SAFARI = 'safari'
+export const METAMASK_MOBILE = 'metamask mobile'
 export const OTHER_BROWSER = 'other browser'
 
 // networks
