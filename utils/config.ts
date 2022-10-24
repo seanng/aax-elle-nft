@@ -27,9 +27,8 @@ export const metadata = {
 export const kolDropdownList = [
   {
     id: 1,
-    name: '鄧紫棋',
-    frameText:
-      'A long, long time ago... I can still remember How that music used to make me smile.',
+    name: 'ELLEverse',
+    frameText: 'In ELLEverse, you are special & stylish.',
   },
   {
     id: 2,
