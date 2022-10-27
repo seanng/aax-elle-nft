@@ -3,7 +3,7 @@ import { CaretDownIcon } from 'components'
 import { useState } from 'react'
 import { KolDropdownListItem } from 'shared/types'
 import clsx from 'clsx'
-import { kolDropdownList } from 'utils/config'
+import { kolDropdownList } from 'data'
 
 export function KolSelectDropdown({ selectedPerson, setSelectedPerson }) {
   const [query, setQuery] = useState('')

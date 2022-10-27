@@ -62,3 +62,8 @@ export const BG_COLOR_FIELD = 'BG Color'
 export const FRAME_COLOR_FIELD = 'Frame Color'
 export const SIGNATURE_FIELD = 'Signature File'
 export const ELLEMOJI_FIELD = 'Ellemoji ID'
+
+// lucky draw
+export const FETCHING = 'LOADING'
+export const NOT_CONNECTED = 'NOT_CONNECTED'
+export const READY = 'READY'

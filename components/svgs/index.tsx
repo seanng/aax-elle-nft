@@ -55,6 +55,7 @@ export { DisconnectIcon } from './icons/DisconnectIcon'
 export { WarningIcon } from './icons/WarningIcon'
 export { GreenLipsIcon } from './icons/GreenLipsIcon'
 export { ToastSuccessIcon } from './icons/ToastSuccessIcon'
+export { HeartIcon } from './icons/HeartIcon'
 
 // buttons
 export { AddressOKButton } from './buttons/AddressOKButton'

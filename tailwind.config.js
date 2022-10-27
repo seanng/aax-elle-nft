@@ -46,6 +46,8 @@ module.exports = {
         cubic: 'Cubic11',
       },
       spacing: {
+        'reel-height-mobile': '66px',
+        'reel-height-desktop': '148px',
         'navbar-height': '84px',
         'mobile-modal-top': '300px',
         'mobile-modal-body': '330px',
