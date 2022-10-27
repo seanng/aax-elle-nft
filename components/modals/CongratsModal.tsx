@@ -25,7 +25,7 @@ export function CongratsModal({ onClose, isOpen, prizeName }) {
       />
       <div className="relative bg-transparent text-white mt-10 sm:mt-16 mb-10 sm:mb-0">
         <Borders classes="border-lime" />
-        <div className="bg-black py-3 w-60 md:w-96 px-3 h-72 md:h-96">
+        <div className="bg-black py-3 w-60 md:w-96 px-3">
           <div className="relative w-full h-full">
             <Borders classes="border-guava border-dashed" />
             <div className="flex flex-col items-center py-5 md:py-8">
@@ -33,7 +33,7 @@ export function CongratsModal({ onClose, isOpen, prizeName }) {
               <h2 className="text-lime font-bold font-noto text-2xl md:text-3xl mt-2 md:mt-4">
                 恭喜你抽中
               </h2>
-              <h1 className="text-white font-cubic text-4xl md:text-6xl my-4 md:my-7 text-center !leading-120%">
+              <h1 className="text-white font-cubic text-4xl md:text-6xl mt-4 md:mt-7 text-center !leading-120%">
                 {prizeName}
               </h1>
             </div>

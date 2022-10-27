@@ -52,9 +52,10 @@ const CONFETTI_COLORS = [
 ]
 
 const LuckyDrawPage: NextPage = () => {
-  const [isModalOpen, setIsModalOpen] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSpinning, setIsSpinning] = useState(false)
   const [pageDisplay, setPageDisplay] = useState(FETCHING)
+  const [winningPrizeName, setWinningPrizeName] = useState('')
   const [confettiAnimationId, setConfettiAnimationId] = useState<any>(null)
   const { prizeTokens, consumePrizeToken } = usePrizeTokens(setPageDisplay)
   const { reelItems, arrangeReel, clearOutLosers, resetReel } = useReel()
@@ -88,20 +89,12 @@ const LuckyDrawPage: NextPage = () => {
       document.documentElement.clientWidth ||
       document.getElementsByTagName('body')[0].clientWidth
 
-    const confettiScale = Math.max(0.5, Math.min(1, windowWidth / 1100))
-
     customConfetti({
-      particleCount: 1,
-      gravity: 0.8,
-      spread: 90,
+      particleCount: 100,
+      spread: 70,
       origin: { y: 0.6 },
-      colors: [
-        CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
-      ],
-      scalar: confettiScale,
+      scalar: Math.max(0.5, Math.min(1, windowWidth / 1100)),
     })
-
-    setConfettiAnimationId(window.requestAnimationFrame(confettiAnimation))
   }
 
   const _animateSpin = async () => {
@@ -127,19 +120,29 @@ const LuckyDrawPage: NextPage = () => {
     animation.finish()
   }
 
-  const handleSpinClick = async () => {
-    if (!canDraw) return
-    setIsSpinning(true)
+  const spin = async () => {
+    // TODO: Delete this block.
+    if (!canDraw) {
+      throw new Error(
+        'Cannot spin. There are either no prize tokens left or the reel is already spinning.'
+      )
+    }
     const winningPrize = prizeTokens[0].prizeName
+    if (!winningPrize) {
+      // show modal
+      throw new Error('Cannot spin due to Error Code 9669')
+    }
+    setIsSpinning(true)
+    setWinningPrizeName(winningPrize)
     arrangeReel(winningPrize)
     consumePrizeToken()
     await _animateSpin()
     clearOutLosers()
-    confettiAnimation()
     await new Promise((resolve) => setTimeout(resolve, 1000))
     setIsSpinning(false)
     // display modal
     setIsModalOpen(true)
+    confettiAnimation()
     // send email to inputted email
   }
 
@@ -211,11 +214,7 @@ const LuckyDrawPage: NextPage = () => {
               <div className="flex mt-16 md:mt-24">
                 <div className="absolute bottom-0 left-0 w-5 md:w-36 lg:w-80 border-t-2 border-dashed border-guava" />
                 <div className="-mb-5 md:-mb-8">
-                  <PrimaryButton
-                    disabled={!canDraw}
-                    onClick={handleSpinClick}
-                    wide
-                  >
+                  <PrimaryButton disabled={!canDraw} onClick={spin} wide>
                     開始抽獎！
                   </PrimaryButton>
                 </div>
@@ -226,7 +225,7 @@ const LuckyDrawPage: NextPage = () => {
         )}
       </MintLayout>
       <CongratsModal
-        prizeName="German Shepherd"
+        prizeName={winningPrizeName}
         isOpen={isModalOpen}
         onClose={handleModalClose}
       />
