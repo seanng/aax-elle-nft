@@ -1,26 +1,26 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
-import { MessageToken } from '@prisma/client'
 import { fromEmail } from 'utils/config'
 import { sendMail } from 'lib/sendgrid'
 
 interface PostHandlerRequest extends NextApiRequest {
-  body: MessageToken & {
-    emailTemplateId?: string
+  body: {
+    email: string
+    templateId: string
   }
 }
 
 async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
-  if (!req.body.emailTemplateId || !req.body.minterEmail) {
-    res.status(401).send('No email template id or minterEmail provided')
+  if (!req.body.templateId || !req.body.email) {
+    res.status(401).send('No email template id or email provided')
     return
   }
 
-  const { emailTemplateId, minterEmail, ...rest } = req.body
+  const { templateId, email, ...rest } = req.body
 
   const data = await sendMail({
-    templateId: emailTemplateId,
+    templateId,
     from: fromEmail,
-    to: minterEmail,
+    to: email,
     dynamicTemplateData: rest,
   })
 

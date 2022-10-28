@@ -5,18 +5,21 @@ import {
   CongratsModal,
   PrimaryButton,
   HeartIcon,
+  FormErrorIcon,
 } from 'components'
+import { useForm } from 'react-hook-form'
 import { NextPage } from 'next'
 import { useMemo, useState } from 'react'
-import { FETCHING, NOT_CONNECTED } from 'shared/constants'
+import { EMAIL_REGEX, FETCHING, NOT_CONNECTED } from 'shared/constants'
 import confetti from 'canvas-confetti'
 import { useIsMobile, usePrizeTokens } from 'hooks'
-import { luckyDrawable, reelRotations } from 'utils/config'
+import { emailTemplateIds, luckyDrawable, reelRotations } from 'utils/config'
 import { prizeList } from 'data'
 import { theme } from '../tailwind.config'
 import { useReel } from 'hooks/useReel'
 import Image from 'next/image'
 import { isBrowser } from 'utils/helpers'
+import axios from 'lib/axios'
 
 const [reelHeightMobile, reelHeightDesktop] = [
   theme.extend.spacing['reel-height-mobile'],
@@ -42,14 +45,27 @@ const transition = {
   iterations: 1,
 }
 
+const EMAIL_MODE = 'email_mode'
+const STORING_MODE = 'storing_mode'
+const REEL_MODE = 'reel_mode'
+
 const LuckyDrawPage: NextPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSpinning, setIsSpinning] = useState(false)
   const [pageDisplay, setPageDisplay] = useState(FETCHING)
+  const [boxState, setBoxState] = useState(EMAIL_MODE)
   const [winningPrizeName, setWinningPrizeName] = useState('')
+
   const { prizeTokens, consumePrizeToken } = usePrizeTokens(setPageDisplay)
   const { reelItems, arrangeReel, clearOutLosers, resetReel } = useReel()
   const isMobile = useIsMobile()
+
+  const {
+    handleSubmit,
+    register,
+    getValues,
+    formState: { isDirty, isValid, errors },
+  } = useForm({ mode: 'onChange' })
 
   const canDraw = useMemo(
     () => luckyDrawable && !isSpinning && prizeTokens.length > 0,
@@ -111,29 +127,34 @@ const LuckyDrawPage: NextPage = () => {
   }
 
   const spin = async () => {
-    // TODO: Delete this block.
-    if (!canDraw) {
+    const { email } = getValues()
+    if (!email) throw new Error('No Email Stored')
+    if (!canDraw)
       throw new Error(
         'Cannot spin. There are either no prize tokens left or the reel is already spinning.'
       )
-    }
     const winningPrize = prizeTokens[0].prizeName
-    if (!winningPrize) {
-      // show modal
-      throw new Error('Cannot spin due to Error Code 9669')
-    }
+    if (!winningPrize) throw new Error('Cannot spin due to Error Code 9669')
     setIsSpinning(true)
     setWinningPrizeName(winningPrize)
     arrangeReel(winningPrize)
     consumePrizeToken()
     await _animateSpin()
     clearOutLosers()
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await axios.post('/api/mailer', {
+      prizeName: winningPrize,
+      templateId: emailTemplateIds['PRIZE_WON'],
+      email,
+    })
     setIsSpinning(false)
-    // display modal
     setIsModalOpen(true)
     confettiAnimation()
-    // send email to inputted email
+  }
+
+  const onEmailSubmit = async ({ email }) => {
+    setBoxState(STORING_MODE)
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    setBoxState(REEL_MODE)
   }
 
   const handleModalClose = () => {
@@ -144,15 +165,15 @@ const LuckyDrawPage: NextPage = () => {
   return (
     <>
       <MintLayout className="flex flex-col items-center">
-        {!luckyDrawable && (
+        {/* {!luckyDrawable && (
           <div className="font-mono font-medium text-xl text-center text-black bg-guava py-2 w-full mb-6 md:mb-10">
             抽獎第一波將於 12/24開始！
           </div>
-        )}
+        )} */}
         {pageDisplay === NOT_CONNECTED ? (
           <NotConnectedView />
         ) : (
-          <>
+          <form onSubmit={handleSubmit(onEmailSubmit)}>
             <div className="relative w-[300px] md:w-[600px] lg:w-[960px] border-x-2 border-guava border-dashed flex flex-col items-center mt-20">
               {/* TOP */}
               <div className="flex pb-2">
@@ -182,51 +203,103 @@ const LuckyDrawPage: NextPage = () => {
                   )}
                 </p>
               </div>
-
-              {/* REEL */}
-              <div className="flex justify-between w-full items-center">
-                <div className="flex items-center -ml-4 md:-ml-9">
-                  <HeartIcon
-                    width={isMobile ? 30 : 74}
-                    height={isMobile ? 30 : 74}
-                    color="#55F263"
-                  />
-                  <div className="h-1 w-7 md:h-2 md:w-12 lg:w-24 -ml-1 bg-lime" />
-                </div>
-
-                <div className="border-4 border-lime w-[220px] md:w-[440px] lg:w-[715px] p-1 md:p-3">
-                  <div className="w-full relative overflow-hidden border-2 border-dashed border-lime">
-                    <div
-                      id="reel"
-                      className="h-reel-height-mobile md:h-reel-height-desktop relative"
-                    >
-                      {reelItems}
+              {
+                {
+                  [EMAIL_MODE]: (
+                    <div className="w-80 md:w-96">
+                      <input
+                        id="email"
+                        type="text"
+                        placeholder="Your email"
+                        className="text-black md:text-2xl border-lime font-mono placeholder-slate-500 bg-lime border-transparent focus:border-transparent focus:ring-0 w-full mb-2"
+                        {...register('email', {
+                          required: true,
+                          pattern: {
+                            value: EMAIL_REGEX,
+                            message: '!',
+                          },
+                        })}
+                      />
+                      {errors?.email?.message && (
+                        <div className="flex items-center">
+                          <FormErrorIcon />
+                          <span className="ml-2 text-sm md:text-base">
+                            Email 格式不正確
+                          </span>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                </div>
+                  ),
+                  [STORING_MODE]: (
+                    <Image
+                      src="/images/loading-icon.gif"
+                      layout="fixed"
+                      height={104}
+                      width={104}
+                    />
+                  ),
+                  [REEL_MODE]: (
+                    <div className="flex justify-between w-full items-center">
+                      <div className="flex items-center -ml-4 md:-ml-9">
+                        <HeartIcon
+                          width={isMobile ? 30 : 74}
+                          height={isMobile ? 30 : 74}
+                          color="#55F263"
+                        />
+                        <div className="h-1 w-7 md:h-2 md:w-12 lg:w-24 -ml-1 bg-lime" />
+                      </div>
 
-                <div className="flex items-center -mr-4 md:-mr-9">
-                  <div className="h-1 w-7 md:h-2 md:w-12 lg:w-24 -mr-1 bg-lime" />
-                  <HeartIcon
-                    width={isMobile ? 30 : 74}
-                    height={isMobile ? 30 : 74}
-                    color="#55F263"
-                  />
-                </div>
-              </div>
+                      <div className="border-4 border-lime w-[220px] md:w-[440px] lg:w-[715px] p-1 md:p-3">
+                        <div className="w-full relative overflow-hidden border-2 border-dashed border-lime">
+                          <div
+                            id="reel"
+                            className="h-reel-height-mobile md:h-reel-height-desktop relative"
+                          >
+                            {reelItems}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center -mr-4 md:-mr-9">
+                        <div className="h-1 w-7 md:h-2 md:w-12 lg:w-24 -mr-1 bg-lime" />
+                        <HeartIcon
+                          width={isMobile ? 30 : 74}
+                          height={isMobile ? 30 : 74}
+                          color="#55F263"
+                        />
+                      </div>
+                    </div>
+                  ),
+                }[boxState || EMAIL_MODE]
+              }
 
               {/* BOTTOM */}
               <div className="flex mt-16 md:mt-24">
                 <div className="absolute bottom-0 left-0 w-5 md:w-36 lg:w-80 border-t-2 border-dashed border-guava" />
                 <div className="-mb-5 md:-mb-8">
-                  <PrimaryButton disabled={!canDraw} onClick={spin} wide>
-                    開始抽獎！
-                  </PrimaryButton>
+                  {boxState === REEL_MODE ? (
+                    <PrimaryButton
+                      type="button"
+                      disabled={!canDraw}
+                      onClick={spin}
+                      wide
+                    >
+                      開始抽獎！
+                    </PrimaryButton>
+                  ) : (
+                    <PrimaryButton
+                      type="submit"
+                      disabled={!isValid || !isDirty || boxState !== EMAIL_MODE}
+                      wide
+                    >
+                      送出
+                    </PrimaryButton>
+                  )}
                 </div>
                 <div className="absolute bottom-0 right-0 w-5 md:w-36 lg:w-80 border-t-2 border-dashed border-guava" />
               </div>
             </div>
-          </>
+          </form>
         )}
       </MintLayout>
       <CongratsModal
@@ -234,7 +307,6 @@ const LuckyDrawPage: NextPage = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
       />
-      {/* Congratulations modal */}
       <canvas
         id="confetti-canvas"
         className="fixed w-full h-full top-0 left-0 z-confetti pointer-events-none"
