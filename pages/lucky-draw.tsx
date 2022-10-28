@@ -53,7 +53,9 @@ const LuckyDrawPage: NextPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSpinning, setIsSpinning] = useState(false)
   const [pageDisplay, setPageDisplay] = useState(FETCHING)
-  const [boxState, setBoxState] = useState(EMAIL_MODE)
+  const [boxState, setBoxState] = useState(
+    luckyDrawable ? EMAIL_MODE : REEL_MODE
+  )
   const [winningPrizeName, setWinningPrizeName] = useState('')
 
   const { prizeTokens, consumePrizeToken } = usePrizeTokens(setPageDisplay)
@@ -133,25 +135,25 @@ const LuckyDrawPage: NextPage = () => {
       throw new Error(
         'Cannot spin. There are either no prize tokens left or the reel is already spinning.'
       )
-    const winningPrize = prizeTokens[0].prizeName
-    if (!winningPrize) throw new Error('Cannot spin due to Error Code 9669')
+    const prizeToken = prizeTokens[0]
+    if (!prizeToken.prizeName)
+      throw new Error('Cannot spin due to Error Code 9669')
     setIsSpinning(true)
-    setWinningPrizeName(winningPrize)
-    arrangeReel(winningPrize)
+    setWinningPrizeName(prizeToken.prizeName)
+    arrangeReel(prizeToken.prizeName)
     consumePrizeToken()
     await _animateSpin()
     clearOutLosers()
-    await axios.post('/api/mailer', {
-      prizeName: winningPrize,
-      templateId: emailTemplateIds['PRIZE_WON'],
+    await axios.post(`/api/prize-tokens/${prizeToken.id}`, {
       email,
+      templateId: emailTemplateIds['PRIZE_WON'],
     })
     setIsSpinning(false)
     setIsModalOpen(true)
     confettiAnimation()
   }
 
-  const onEmailSubmit = async ({ email }) => {
+  const onEmailAddressSave = async ({ email }) => {
     setBoxState(STORING_MODE)
     await new Promise((resolve) => setTimeout(resolve, 1000))
     setBoxState(REEL_MODE)
@@ -173,7 +175,7 @@ const LuckyDrawPage: NextPage = () => {
         {pageDisplay === NOT_CONNECTED ? (
           <NotConnectedView />
         ) : (
-          <form onSubmit={handleSubmit(onEmailSubmit)}>
+          <form onSubmit={handleSubmit(onEmailAddressSave)}>
             <div className="relative w-[300px] md:w-[600px] lg:w-[960px] border-x-2 border-guava border-dashed flex flex-col items-center mt-20">
               {/* TOP */}
               <div className="flex pb-2">

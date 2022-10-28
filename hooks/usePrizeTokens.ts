@@ -45,14 +45,7 @@ export function usePrizeTokens(setPageDisplay) {
   }, [address])
 
   const consumePrizeToken = () => {
-    const prizeToken = prizeTokens[0]
     setPrizeTokens((tokens) => tokens.slice(1))
-    try {
-      // TODO: Uncomment
-      // axios.post(`/api/prize-tokens/${prizeToken.id}`)
-    } catch (error) {
-      console.log('error posting to prize token:', error)
-    }
   }
 
   return { prizeTokens, setPrizeTokens, consumePrizeToken }
