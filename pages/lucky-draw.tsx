@@ -4,6 +4,7 @@ import {
   OutlinedHeading,
   CongratsModal,
   PrimaryButton,
+  HeartIcon,
 } from 'components'
 import { NextPage } from 'next'
 import { useMemo, useState } from 'react'
@@ -41,22 +42,11 @@ const transition = {
   iterations: 1,
 }
 
-const CONFETTI_COLORS = [
-  '#26ccff',
-  '#a25afd',
-  '#ff5e7e',
-  '#88ff5a',
-  '#fcff42',
-  '#ffa62d',
-  '#ff36ff',
-]
-
 const LuckyDrawPage: NextPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSpinning, setIsSpinning] = useState(false)
   const [pageDisplay, setPageDisplay] = useState(FETCHING)
   const [winningPrizeName, setWinningPrizeName] = useState('')
-  const [confettiAnimationId, setConfettiAnimationId] = useState<any>(null)
   const { prizeTokens, consumePrizeToken } = usePrizeTokens(setPageDisplay)
   const { reelItems, arrangeReel, clearOutLosers, resetReel } = useReel()
   const isMobile = useIsMobile()
@@ -147,7 +137,6 @@ const LuckyDrawPage: NextPage = () => {
   }
 
   const handleModalClose = () => {
-    if (confettiAnimationId) window.cancelAnimationFrame(confettiAnimationId)
     resetReel()
     setIsModalOpen(false)
   }
@@ -164,7 +153,6 @@ const LuckyDrawPage: NextPage = () => {
           <NotConnectedView />
         ) : (
           <>
-            {/* Slot */}
             <div className="relative w-[300px] md:w-[600px] lg:w-[960px] border-x-2 border-guava border-dashed flex flex-col items-center mt-20">
               {/* TOP */}
               <div className="flex pb-2">
@@ -174,7 +162,6 @@ const LuckyDrawPage: NextPage = () => {
                 </OutlinedHeading>
                 <div className="absolute top-0 right-0 w-8 md:w-24 lg:w-72 border-t-2 border-dashed border-guava" />
               </div>
-              {/* BODY */}
 
               {/* Token Info Box */}
               <div className="md:flex text-center items-center py-14 md:py-24">
@@ -197,7 +184,16 @@ const LuckyDrawPage: NextPage = () => {
               </div>
 
               {/* REEL */}
-              <div className="flex justify-center items-center">
+              <div className="flex justify-between w-full items-center">
+                <div className="flex items-center -ml-4 md:-ml-9">
+                  <HeartIcon
+                    width={isMobile ? 30 : 74}
+                    height={isMobile ? 30 : 74}
+                    color="#55F263"
+                  />
+                  <div className="h-1 w-7 md:h-2 md:w-12 lg:w-24 -ml-1 bg-lime" />
+                </div>
+
                 <div className="border-4 border-lime w-[220px] md:w-[440px] lg:w-[715px] p-1 md:p-3">
                   <div className="w-full relative overflow-hidden border-2 border-dashed border-lime">
                     <div
@@ -207,6 +203,15 @@ const LuckyDrawPage: NextPage = () => {
                       {reelItems}
                     </div>
                   </div>
+                </div>
+
+                <div className="flex items-center -mr-4 md:-mr-9">
+                  <div className="h-1 w-7 md:h-2 md:w-12 lg:w-24 -mr-1 bg-lime" />
+                  <HeartIcon
+                    width={isMobile ? 30 : 74}
+                    height={isMobile ? 30 : 74}
+                    color="#55F263"
+                  />
                 </div>
               </div>
 

@@ -1,4 +1,15 @@
+import { luckyDrawable } from 'utils/config'
+
 export function ReelCover() {
+  if (!luckyDrawable) {
+    return (
+      <div className="origin-center flex items-center justify-center h-full px-3">
+        <span className="text-lime font-noto text-lg md:text-3xl text-center">
+          抽獎第一波將於 12/24 開始
+        </span>
+      </div>
+    )
+  }
   return (
     <>
       <div className="lg:hidden overflow-hidden transform-gpu md:scale-150 origin-center flex items-center justify-center h-full">
