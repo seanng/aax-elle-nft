@@ -20,7 +20,12 @@ const toastClass = {
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <SEO />
+      <SEO
+        seoImage={{
+          url: 'https://d378vx0xcxselt.cloudfront.net/assets/meta-image.png',
+          dimensions: { width: 1200, height: 630 },
+        }}
+      />
       <DetectionContextProvider>
         <Web3ContextProvider>
           <Component {...pageProps} />
