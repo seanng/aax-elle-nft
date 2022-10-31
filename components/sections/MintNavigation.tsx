@@ -11,7 +11,7 @@ import {
   AddressErrorButton,
 } from 'components'
 import { useDetectionContext, useWeb3Context } from 'context'
-import { correctHexChain } from 'utils/config'
+import { correctHexChain, openseaBaseUrl } from 'utils/config'
 import { SAFARI } from 'shared/constants'
 
 export function MintNavigation() {
@@ -90,13 +90,26 @@ const Nav = () => (
     <Link href="/lucky-draw">
       <a>ELLEverse 抽獎</a>
     </Link>
-    <a href="https://www.aax.com/zh-TW/newbie/">新手指南</a>
+    <a
+      target="_blank"
+      href="https://www.aax.com/zh-TW/newbie/"
+      rel="noreferrer"
+    >
+      新手指南
+    </a>
     <Link href="/faq">
       <a>常見問題</a>
     </Link>
     <Link href="/mint">
       <a>鑄造告白</a>
     </Link>
+    <a
+      target="_blank"
+      href={`${openseaBaseUrl}/collection/elleverse`}
+      rel="noreferrer"
+    >
+      Opensea
+    </a>
   </div>
 )
 
