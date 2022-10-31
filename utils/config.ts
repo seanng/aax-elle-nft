@@ -56,5 +56,5 @@ export const fromEmail = 'notify@elleverse.io'
 export const s3Bucket = process.env.S3_BUCKET ?? 'elle-nft-dev'
 
 // lucky draw
-export const luckyDrawable = process.env.NEXT_PUBLIC_LUCKY_DRAWABLE ?? false
+export const luckyDrawable = true
 export const reelRotations = 12
