@@ -69,12 +69,10 @@ const LuckyDrawPage: NextPage = () => {
     formState: { isDirty, isValid, errors },
   } = useForm({ mode: 'onChange' })
 
-  const canDraw = true
-
-  // const canDraw = useMemo(
-  //   () => luckyDrawable && prizeTokens.length > 0,
-  //   [luckyDrawable, prizeTokens.length]
-  // )
+  const canDraw = useMemo(
+    () => !isSpinning && prizeTokens.length > 0,
+    [prizeTokens.length, isSpinning]
+  )
 
   const confettiAnimation = () => {
     if (!isBrowser) throw new Error('Window object not detected.')
@@ -146,10 +144,10 @@ const LuckyDrawPage: NextPage = () => {
     consumePrizeToken()
     await _animateSpin()
     clearOutLosers()
-    await axios.post(`/api/prize-tokens/${prizeToken.id}`, {
-      email,
-      templateId: emailTemplateIds['PRIZE_WON'],
-    })
+    // await axios.post(`/api/prize-tokens/${prizeToken.id}`, {
+    //   email,
+    //   templateId: emailTemplateIds['PRIZE_WON'],
+    // })
     setIsSpinning(false)
     setIsModalOpen(true)
     confettiAnimation()
