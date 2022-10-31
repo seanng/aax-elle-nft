@@ -30,31 +30,31 @@ const Carousel = dynamic(() => import('react-spring-3d-carousel'), {
 
 const carouselItems = [
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-1.png',
   },
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-2.png',
   },
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-3.png',
   },
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-4.png',
   },
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-5.png',
   },
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-6.png',
   },
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-7.png',
   },
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-8.png',
   },
   {
-    src: '/test/artboard-88.jpg',
+    src: '/images/carousel-9.png',
   },
 ]
 
@@ -84,8 +84,8 @@ const LandingPage: NextPage = () => {
       <div className="bg-guava py-2 w-full mb-8 md:mb-12">
         <Marquee velocity={100}>
           <span className="font-mono font-medium text-xl text-black">
-            Impact NFT 限量預發7天，預售階段將在11/11截止!&nbsp;&nbsp;&nbsp;
-            Impact NFT 限量預發7天，預售階段將在11/11截止!&nbsp;&nbsp;&nbsp;
+            Impact NFT 限量預發10天，預售階段將在12/20截止!&nbsp;&nbsp;&nbsp;
+            Impact NFT 限量預發10天，預售階段將在12/20截止!&nbsp;&nbsp;&nbsp;
           </span>
         </Marquee>
       </div>
@@ -185,7 +185,7 @@ const LandingPage: NextPage = () => {
             color="#FF66FF"
             className="mb-4 text-center tracking-widest leading-150% md:leading-150% font-bold"
           >
-            想與喜愛的偶像共同擁有
+            想與喜愛的名人共同擁有
             <br />
             最特別的數位紀念品嗎？
           </OutlinedHeading>

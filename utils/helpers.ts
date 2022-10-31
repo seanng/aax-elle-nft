@@ -1,9 +1,5 @@
 import { HERO_CANVAS_WIDTH, HERO_CANVAS_HEIGHT } from 'shared/constants'
 
-export function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
 export function getWidthHeightPercentages(
   w = 0,
   h = 0,
@@ -71,3 +67,10 @@ export const shuffle = (list: string[]) => {
   }
   return result
 }
+
+const isSSR =
+  typeof window === 'undefined' ||
+  !window.navigator ||
+  /ServerSideRendering|^Deno\//.test(window.navigator.userAgent)
+
+export const isBrowser = !isSSR

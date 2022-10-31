@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { classNames } from 'utils/helpers'
+import clsx from 'clsx'
 
 export function DonationButton({
   isActive = false,
@@ -9,7 +9,7 @@ export function DonationButton({
 }) {
   return (
     <button
-      className={classNames(
+      className={clsx(
         'flex justify-center font-medium font-mono text-xl md:text-3xl items-center w-1/3 p-2',
         isActive ? 'bg-lime text-black' : 'bg-transparent text-lime',
         className

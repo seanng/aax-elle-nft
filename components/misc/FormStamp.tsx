@@ -1,9 +1,9 @@
-import { classNames } from 'utils/helpers'
+import clsx from 'clsx'
 
 export function FormStamp({ children, className = '', ...props }) {
   return (
     <div
-      className={classNames(
+      className={clsx(
         'relative flex flex-col justify-between items-center h-12 w-12 ',
         className
       )}

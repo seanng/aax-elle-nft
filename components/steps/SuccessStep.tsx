@@ -16,7 +16,7 @@ interface Props {
 
 export function SuccessStep({ data, files }: Props) {
   const preview = usePreviewHtml(files.beforeOpenHtml)
-  const link = `${metadata.siteUrl}/open/${data?.slug}`
+  const link = `elleverse.io/open/${data?.slug}`
 
   return (
     <div className="flex flex-col font-noto pt-16 text-center">
@@ -32,21 +32,21 @@ export function SuccessStep({ data, files }: Props) {
           <div className="mr-4 md:mr-8">
             <Link href="/collection" passHref>
               <a target="__blank">
-                <SecondaryButton type="button">前往我的秘密</SecondaryButton>
+                <SecondaryButton type="button">
+                  前往 My Love Secrets
+                </SecondaryButton>
               </a>
             </Link>
           </div>
           <Link href={`/ig-share?id=${data?.tokenId}&lol`} passHref>
-            <a target="__blank">
+            <a className="leading-0" target="__blank">
               <SquareShareButton />
             </a>
           </Link>
         </div>
-        <LinkAndPasscode
-          link={link}
-          passcode={data?.passcode ?? 'abc12'}
-          className="mb-5 md:mb-9 mt-8"
-        />
+        <div className="mb-5 md:mb-9 mt-8 items-center">
+          <LinkAndPasscode link={link} passcode={data?.passcode ?? 'abc12'} />
+        </div>
       </div>
     </div>
   )

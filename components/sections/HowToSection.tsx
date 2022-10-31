@@ -15,7 +15,8 @@ import {
 } from 'react'
 import { salePhase } from 'utils/config'
 import { useIntersectionObserver } from 'hooks'
-import { classNames } from 'utils/helpers'
+import clsx from 'clsx'
+
 import { NOT_STARTED, PRIVATE_SALE } from 'shared/constants'
 import Link from 'next/link'
 
@@ -159,13 +160,13 @@ function Step({
     <div ref={ref} className="flex justify-center items-center mb-4 md:-mr-2">
       <ActiveLeftIcon className={isHighlighted ? '' : 'hidden'} />
       <div
-        className={classNames(
+        className={clsx(
           'flex w-[270px] md:w-[630px]',
           isHighlighted ? 'border-2 border-lime' : 'border border-dark-gray'
         )}
       >
         <div
-          className={classNames(
+          className={clsx(
             'flex flex-none items-center justify-center border-r w-16 text-[28px] font-mono italic',
             isHighlighted
               ? 'border-lime bg-lime text-black'
@@ -185,7 +186,7 @@ function Step({
             </OutlinedHeading>
           )}
           <p
-            className={classNames(
+            className={clsx(
               isHighlighted ? 'text-white' : 'text-dark-gray',
               'leading-150% md:text-lg'
             )}

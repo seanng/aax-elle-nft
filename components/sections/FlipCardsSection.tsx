@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import ReactCardFlip from 'react-card-flip'
 import dynamic from 'next/dynamic'
-import { classNames } from 'utils/helpers'
+import clsx from 'clsx'
 
 const FlipCard1 = dynamic(() => import('components').then((m) => m.FlipCard1))
 const FlipCard2 = dynamic(() => import('components').then((m) => m.FlipCard2))
@@ -10,7 +10,7 @@ const FlipCard4 = dynamic(() => import('components').then((m) => m.FlipCard4))
 const FlipCard5 = dynamic(() => import('components').then((m) => m.FlipCard5))
 
 const withClass = (custom = '') =>
-  classNames('absolute w-full md:text-[32px]', custom)
+  clsx('absolute w-full md:text-[32px]', custom)
 
 const data = [
   {
@@ -85,16 +85,9 @@ const data = [
 ]
 
 export function FlipCardsSection({ className = '', ...props }) {
-  const [isFlipped, setIsFlipped] = useState(Array(5).fill(false))
-  const handleFlip = (idx) => {
-    const flipped = isFlipped.slice()
-    flipped[idx] = !flipped[idx]
-    setIsFlipped(flipped)
-  }
-
   return (
     <div
-      className={classNames(
+      className={clsx(
         className,
         'mt-20 flex flex-col items-start w-[360px] md:w-[670px]'
       )}
@@ -102,9 +95,7 @@ export function FlipCardsSection({ className = '', ...props }) {
     >
       {data.map((props, i) => (
         <FlipCard
-          isFlipped={isFlipped[i]}
           key={i}
-          onClick={() => handleFlip(i)}
           className={`-mt-20 self-${i % 2 === 0 ? 'start' : 'end'}`}
           {...props}
         />
@@ -113,16 +104,22 @@ export function FlipCardsSection({ className = '', ...props }) {
   )
 }
 
-const FlipCard = ({ isFlipped, onClick, Svg, front, back, ...props }) => {
+const FlipCard = ({ Svg, front, back, ...props }) => {
+  const [isFlipped, setIsFlipped] = useState(false)
+
   return (
-    <div {...props}>
+    <div
+      onMouseEnter={() => setIsFlipped(true)}
+      onMouseLeave={() => setIsFlipped(false)}
+      {...props}
+    >
       <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
-        <button className="relative" onClick={onClick}>
+        <button className="relative">
           <Svg className="block md:hidden" />
           <Svg className="hidden md:block" height={400} width={400} />
           {front}
         </button>
-        <button className="relative" onClick={onClick}>
+        <button className="relative">
           <Svg className="block md:hidden" isBack />
           <Svg className="hidden md:block" height={400} width={400} isBack />
           {back}

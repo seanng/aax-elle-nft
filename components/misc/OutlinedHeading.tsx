@@ -1,4 +1,4 @@
-import { classNames } from 'utils/helpers'
+import clsx from 'clsx'
 
 export function OutlinedHeading({
   className = '',
@@ -9,7 +9,7 @@ export function OutlinedHeading({
 }) {
   return (
     <h2
-      className={classNames(
+      className={clsx(
         'text-black font-medium leading-150%',
         fontSizeClass,
         className

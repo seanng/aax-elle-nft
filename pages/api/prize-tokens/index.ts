@@ -32,6 +32,8 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
     minterWallet: req.body.minterWallet,
   })
 
+  console.log('Prize Token Create Success!')
+
   if (req.body.minterEmail && req.body.emailTemplateId) {
     // sendgrid do something. this is probably a WL/Prize Token-only airdrop.
 

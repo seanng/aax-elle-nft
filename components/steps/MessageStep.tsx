@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { Files, KolDropdownListItem, MintForm } from 'shared/types'
 import { FINISHED, NOT_STARTED, PRIVATE_SALE } from 'shared/constants'
 import { salePhase } from 'utils/config'
+import { kolDropdownList } from 'data'
 import { genNftFrameTextMsg, getAssets } from 'utils/nft'
 import { toast } from 'react-toastify'
 
@@ -45,11 +46,9 @@ export function MessageStep({
     receiverName: '',
   })
   const [isProcessingMint, setIsProcessingMint] = useState(false)
-  const [selectedKol, setSelectedKol] = useState<KolDropdownListItem>({
-    id: 1,
-    name: '',
-    frameText: '',
-  })
+  const [selectedKol, setSelectedKol] = useState<KolDropdownListItem>(
+    kolDropdownList[0]
+  )
   const [frameText, setFrameText] = useState('Write down your secret')
 
   useEffect(() => {

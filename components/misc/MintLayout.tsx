@@ -1,12 +1,12 @@
+import clsx from 'clsx'
 import { MintNavigation, MintFooter } from 'components'
-import { classNames } from 'utils/helpers'
 
 export function MintLayout({ children, className = '' }) {
   return (
     <>
       <MintNavigation />
       <div
-        className={classNames(
+        className={clsx(
           className,
           'bg-black min-h-screen pt-navbar-height pb-10 md:pb-20 text-white bg-repeat'
         )}

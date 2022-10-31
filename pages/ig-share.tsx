@@ -1,19 +1,19 @@
 import { NextPage } from 'next'
-// import { decrypt } from 'lib/crypto'
 import { useRouter } from 'next/router'
 import { OutlinedHeading, WarningIcon, IgShareInstructions } from 'components'
-import CompsNFTBeforeOpen from 'components/NFT/BeforeOpen'
 import { useCallback, useEffect, useState } from 'react'
 import { genImageFile, getAssets } from 'utils/nft'
-import { downloadFile } from 'utils/helpers'
 import randomstring from 'randomstring'
 import Image from 'next/image'
 import { s3BaseUrl } from 'utils/config'
 import AroundText2 from 'components/NFT/shared/AroundText2'
 
 const html2canvasOpts = {
-  height: 534,
-  windowHeight: 534,
+  height: 690,
+  windowHeight: 690,
+  width: 394,
+  windowWidth: 394,
+  backgroundColor: 'black',
 }
 
 const IgSharePage: NextPage = () => {
@@ -52,9 +52,7 @@ const IgSharePage: NextPage = () => {
   return (
     <>
       <div className="flex flex-col items-center bg-black min-h-screen text-white py-10 md:py-20">
-        <OutlinedHeading className="mb-10">
-          如何儲存分享Impact NFT？
-        </OutlinedHeading>
+        <OutlinedHeading className="mb-10">分享 Impact NFT</OutlinedHeading>
         <IgShareInstructions />
         {router.query.at && (
           <div className="flex justify-center w-80 md:w-[650px] text-orange space-x-2 mb-4 md:mb-16">
@@ -67,7 +65,7 @@ const IgSharePage: NextPage = () => {
         )}
 
         {previewImage ? (
-          <img src={previewImage} height="534" width="350" alt="finalImg" />
+          <img src={previewImage} height="694px" width="390px" alt="finalImg" />
         ) : (
           <div className="pt-10">
             <Image
@@ -81,53 +79,56 @@ const IgSharePage: NextPage = () => {
         )}
 
         {/* Hidden div */}
-        <div className="h-0 overflow-hidden">
+        <div className="h-0 w-[390px] bg-black overflow-hidden">
           <div
             ref={compRef}
-            className="bg-black h-[534px] flex flex-col items-center"
-            style={{
-              backgroundImage: `linear-gradient(to right, rgba(85, 242, 99, 0.3) 0.5px, transparent 1px), linear-gradient(to bottom, rgba(85, 242, 99, 0.3) 0.5px, transparent 1px)`,
-              backgroundSize: '40px 40px',
-              backgroundPosition: '-10% -10%',
-            }}
+            className="bg-black h-[694px] w-full flex flex-col items-center"
           >
-            <img
-              className="py-8"
-              src="/logos/elle-white.png"
-              height="27"
-              width="72"
-            />
-            {nftImageSource && (
+            <div className="flex justify-between items-center pt-20 px-5 w-full mb-10">
+              <img src="/images/ig-share-top-left.png" height="25" width="99" />
+              <img src="/logos/elle-white.png" height="39" width="104" />
               <img
-                src={nftImageSource}
-                width="350"
-                height="350"
-                crossOrigin="anonymous"
-                alt="my-secret-message"
+                src="/images/ig-share-top-right.png"
+                height="25"
+                width="99"
               />
+            </div>
+            {nftImageSource && (
+              <div className="px-[35px]">
+                <img
+                  src={nftImageSource}
+                  width="320"
+                  height="320"
+                  crossOrigin="anonymous"
+                  alt="my-secret-message"
+                />
+              </div>
             )}
-            <div className="flex justify-between font-mono py-8 items-center">
+            <div className="flex items-center mt-6">
               <OutlinedHeading
-                className="mb-0.5"
-                fontSizeClass="text-lg tracking-wider font-noto"
-                color="#EDFA00"
+                color="#FF66FF"
+                fontSizeClass="font-noto text-lg tracking-[4px] mr-3"
               >
-                前往鑄造
+                前往
               </OutlinedHeading>
               <OutlinedHeading
-                fontSizeClass="text-lg tracking-wider italic"
-                color="#EDFA00"
-                className="ml-2"
+                color="#FF66FF"
+                fontSizeClass="italic text-lg tracking-[4px] mr-3 font-mono"
               >
                 {`>>>`}
               </OutlinedHeading>
-              <OutlinedHeading
-                className="ml-4"
-                fontSizeClass="text-lg tracking-wider italic"
-                color="#FF66FF"
-              >
+              <span className="text-[22px] font-medium italic text-guava font-mono">
                 elleverse.io
-              </OutlinedHeading>
+              </span>
+            </div>
+            <OutlinedHeading
+              color="#FF66FF"
+              fontSizeClass="font-noto text-lg tracking-[4px]"
+            >
+              鑄造你的 Impact NFT！
+            </OutlinedHeading>
+            <div className="mt-20 text-center">
+              <img src="/images/ig-share-bottom.png" height="25" width="354" />
             </div>
           </div>
         </div>

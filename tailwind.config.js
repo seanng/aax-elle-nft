@@ -23,6 +23,7 @@ module.exports = {
       colors: {
         'black-rgba-20': 'rgba(0, 0, 0, 0.2)',
         'black-rgba-70': 'rgba(0, 0, 0, 0.7)',
+        'black-rgba-90': 'rgba(0, 0, 0, 0.9)',
         lime,
         cucumber: '#2FB500',
         lemon: '#C3FA08',
@@ -45,6 +46,8 @@ module.exports = {
         cubic: 'Cubic11',
       },
       spacing: {
+        'reel-height-mobile': '66px',
+        'reel-height-desktop': '148px',
         'navbar-height': '84px',
         'mobile-modal-top': '300px',
         'mobile-modal-body': '330px',

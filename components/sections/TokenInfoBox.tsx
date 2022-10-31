@@ -1,12 +1,14 @@
 import { PrizeToken } from '@prisma/client'
 import Image from 'next/image'
 import { ReactNode } from 'react'
+import clsx from 'clsx'
 
 interface Props {
   isLoading?: boolean
   tokens: PrizeToken[]
   children?: ReactNode
   showsPrizeTokens?: boolean
+  withBorder?: boolean
 }
 
 export const TokenInfoBox = ({
@@ -14,13 +16,19 @@ export const TokenInfoBox = ({
   tokens = [],
   children = null,
   showsPrizeTokens = false,
+  withBorder = true,
 }: Props) => {
   const [imgSrc, tokenName] = showsPrizeTokens
     ? ['/images/prize-token.svg', '抽獎卷']
     : ['/images/whitelist-token.svg', '白名單 NFT']
 
   return (
-    <div className=" border-2 border-dashed border-lime px-12 py-4 md:py-6">
+    <div
+      className={clsx(
+        withBorder && 'border-2 border-dashed border-lime',
+        'px-12 py-4 md:py-6'
+      )}
+    >
       <div className="flex items-center justify-center">
         <div className="md:hidden">
           <Image height={32} width={32} src={imgSrc} />

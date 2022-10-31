@@ -2,8 +2,8 @@ import { Combobox } from '@headlessui/react'
 import { CaretDownIcon } from 'components'
 import { useState } from 'react'
 import { KolDropdownListItem } from 'shared/types'
-import { classNames } from 'utils/helpers'
-import { kolDropdownList } from 'utils/config'
+import clsx from 'clsx'
+import { kolDropdownList } from 'data'
 
 export function KolSelectDropdown({ selectedPerson, setSelectedPerson }) {
   const [query, setQuery] = useState('')
@@ -15,6 +15,14 @@ export function KolSelectDropdown({ selectedPerson, setSelectedPerson }) {
           return person.name.toLowerCase().includes(query.toLowerCase())
         })
 
+  const handleInputChange = (event) => {
+    setQuery(event.target.value)
+  }
+
+  const handleInputDisplayValue = (person: KolDropdownListItem) => {
+    return person?.name
+  }
+
   return (
     <Combobox
       as="div"
@@ -23,20 +31,20 @@ export function KolSelectDropdown({ selectedPerson, setSelectedPerson }) {
       className="relative flex w-full"
     >
       <div
-        className={classNames(
+        className={clsx(
           'flex-none bg-lime text-black font-mono px-4 md:px-5 py-2 md:text-2xl'
         )}
       >
         藝人
       </div>
       <div
-        className={classNames(
+        className={clsx(
           'flex flex-auto border border-lime bg-transparent focus:border-lime focus:ring-0 justify-between pl-2.5'
         )}
       >
         <Combobox.Input
-          onChange={(event) => setQuery(event.target.value)}
-          displayValue={(person: KolDropdownListItem) => person?.name}
+          onChange={handleInputChange}
+          displayValue={handleInputDisplayValue}
           className="w-full bg-transparent border-0 focus:ring-0 font-mono md:text-2xl px-0"
           placeholder="選擇藝人"
         />
@@ -44,14 +52,18 @@ export function KolSelectDropdown({ selectedPerson, setSelectedPerson }) {
           <CaretDownIcon />
         </Combobox.Button>
       </div>
-      {filteredPeople.length > 0 && (
-        <Combobox.Options className="absolute left-0 origin-bottom-left z-10 mt-14 w-full overflow-auto max-h-60 bg-black border border-lime focus:outline-none">
-          {filteredPeople.map((person) => (
+      <Combobox.Options className="absolute left-0 origin-bottom-left z-10 mt-12 md:mt-14 w-full overflow-auto max-h-60 bg-black border border-lime focus:outline-none">
+        {filteredPeople.length === 0 && query !== '' ? (
+          <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
+            Nothing found.
+          </div>
+        ) : (
+          filteredPeople.map((person) => (
             <Combobox.Option
               key={person.id}
               value={person}
               className={({ active }) =>
-                classNames(
+                clsx(
                   'relative cursor-default select-none py-2 pl-3 pr-9 md:text-xl',
                   active ? 'bg-lime text-black' : 'text-white'
                 )
@@ -59,7 +71,7 @@ export function KolSelectDropdown({ selectedPerson, setSelectedPerson }) {
             >
               {({ selected, active }) => (
                 <span
-                  className={classNames(
+                  className={clsx(
                     'block truncate',
                     selected && active ? 'text-black' : selected && 'text-lime'
                   )}
@@ -68,9 +80,9 @@ export function KolSelectDropdown({ selectedPerson, setSelectedPerson }) {
                 </span>
               )}
             </Combobox.Option>
-          ))}
-        </Combobox.Options>
-      )}
+          ))
+        )}
+      </Combobox.Options>
     </Combobox>
   )
 }
