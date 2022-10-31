@@ -18,8 +18,11 @@ export const emailTemplateIds = {
 
 export const metadata = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://elleverse.io',
-  siteTitle: 'NFT Mintverse',
-  siteDesc: 'Enter the stylish metaverse to shill you love.',
+  siteTitle: 'ELLEverse Impact NFT：寄一封「告白信」給Web3.0世界裡的他',
+  siteDesc:
+    'ELLEverse的Impact NFT很不一樣，是寄給另一位玩家的「情書NFT」，還可以共同鑄造和持有！和ELLEverse一起用最具風格、最有溫度的方式，進入Web3.0的世界吧！',
+  siteKeywords:
+    'NFT,元宇宙,ELLE,ELLEverse,Web3.0,ELLE NFT,NFT是什麼,NFT白名單,NFT怎麼玩,元宇宙是什麼,ELLE元宇宙,Metaverse,NFT平台,NFT遊戲,賦能',
 }
 
 export const s3BaseUrl =

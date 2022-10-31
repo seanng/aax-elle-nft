@@ -9,6 +9,7 @@ interface Props {
   description?: string
   canonical?: string
   seoImage?: NextImage
+  keywords?: string
 }
 
 function SEO(p: Props) {
@@ -17,6 +18,7 @@ function SEO(p: Props) {
 
   const title = p.title || metadata.siteTitle
   const description = p.description || metadata.siteDesc
+  const keywords = p.keywords || metadata.siteKeywords
 
   const jsonLd = getJsonLd({
     ...p,
@@ -30,6 +32,7 @@ function SEO(p: Props) {
     <Head>
       <title>{title}</title>
       <meta name="description" content={description} />
+      {keywords && <meta name="keywords" content={keywords} />}
       <link rel="canonical" href={canonical} />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta property="og:type" content="website" />
