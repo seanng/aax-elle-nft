@@ -35,6 +35,7 @@ export default {
       accounts: [
         process.env.WALLET_PRIVATE_KEY, // "owner" private key
       ],
+      gasPrice: 'auto',
     },
   },
   paths: {
