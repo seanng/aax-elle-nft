@@ -73,6 +73,7 @@ export function DonationStep({
     register,
     watch,
     setValue,
+    clearErrors,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -186,7 +187,10 @@ export function DonationStep({
             <DonationButton
               type="button"
               isActive={donationInput == val}
-              onClick={() => setValue('donationInput', val)}
+              onClick={() => {
+                setValue('donationInput', val)
+                clearErrors()
+              }}
               key={val}
               className={i < 2 ? 'border-r border-lime' : ''}
             >
