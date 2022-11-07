@@ -1,4 +1,5 @@
-import { LinkAndPasscode, WarningIcon } from 'components'
+import { WarningIcon } from 'components'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { useDetectionContext } from 'context'
 import { useEffect, useState } from 'react'
 import { ANDROID, CHROME, DESKTOP, IOS, SAFARI } from 'shared/constants'
@@ -36,7 +37,21 @@ export function IgShareInstructions() {
           </div>
         </div>
         <div className="w-80 md:w-[650px] text-left mb-8">
-          <LinkAndPasscode link={window?.location?.href ?? ''} />
+          <div className="flex w-full mb-2">
+            <input
+              readOnly
+              className="border border-lime flex-1 text-white font-mono py-2 px-3 bg-transparent focus:ring-0 focus:border-lime"
+              value={window?.location?.href ?? ''}
+            />
+            <CopyToClipboard text={window?.location?.href ?? ''}>
+              <a
+                href="#"
+                className="flex-none bg-lime text-blue-600 px-4 py-2 "
+              >
+                複製
+              </a>
+            </CopyToClipboard>
+          </div>
           <li className="pl-2">使用iOS 請貼連結至Safari</li>
           <li className="pl-2">使用Android 請貼連結至Chrome</li>
         </div>
