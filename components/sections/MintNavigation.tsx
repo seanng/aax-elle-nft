@@ -116,13 +116,13 @@ const Nav = () => (
 const Logo = () => {
   return (
     <Link href="/">
-      <a>
+      <a className="leading-0">
         <Image
           priority
-          src="/logos/elle-white.png"
-          alt="ELLE"
-          height={46}
-          width={112}
+          src="/logos/elleverse-logo.png"
+          alt="ELLEverse"
+          height={37}
+          width={130}
         />
       </a>
     </Link>

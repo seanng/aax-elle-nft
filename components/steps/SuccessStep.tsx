@@ -16,7 +16,7 @@ interface Props {
 
 export function SuccessStep({ data, files }: Props) {
   const preview = usePreviewHtml(files.beforeOpenHtml)
-  const link = `elleverse.io/open/${data?.slug}`
+  const link = `${metadata.siteUrl}/open/${data?.slug}`
 
   return (
     <div className="flex flex-col font-noto pt-16 text-center">
