@@ -95,7 +95,7 @@ const Nav = () => (
       href="https://www.aax.com/zh-TW/newbie/"
       rel="noreferrer"
     >
-      新手指南
+      AAX 新手指南
     </a>
     <Link href="/faq">
       <a>常見問題</a>
