@@ -13,11 +13,6 @@ contract Elleverse is ERC721BQueryable, Ownable {
 
   string public SALE_PHASE = NOT_STARTED_PHASE;
   uint256 public TOTAL_MINT_LIMIT = 6226;
-  uint256 public PRIVATE_SALE_MINT_LIMIT = 6226;
-
-  string public _baseContractURI;
-  // TODO: change to production base token uri
-  string private _baseTokenURI = 'https://elleverse.io/api/metadata/';
   address public treasury;
 
   constructor() ERC721B('Elleverse', 'ELLEVERSE') {
@@ -55,6 +50,8 @@ contract Elleverse is ERC721BQueryable, Ownable {
     return false;
   }
 
+  string private _baseTokenURI = 'https://elleverse.io/api/metadata/';
+
   function _baseURI() internal view virtual override returns (string memory) {
     return _baseTokenURI;
   }
@@ -83,12 +80,12 @@ contract Elleverse is ERC721BQueryable, Ownable {
     TOTAL_MINT_LIMIT = _newTotalMintLimit;
   }
 
-  function setPrivateSaleMintLimit(uint256 _newLimit) external onlyOwner {
-    PRIVATE_SALE_MINT_LIMIT = _newLimit;
-  }
-
   function getNextTokenId() external view onlyOwner returns (uint256) {
     return _nextTokenId();
+  }
+
+  function contractURI() public pure returns (string memory) {
+    return 'https://elleverse.io/opensea.json';
   }
 
   // =============================================================
@@ -131,7 +128,7 @@ contract Elleverse is ERC721BQueryable, Ownable {
       "Can't mint - Not in private sale phase"
     );
     require(
-      PRIVATE_SALE_MINT_LIMIT >= totalSupply() + 2, // because mint 2 at a time
+      TOTAL_MINT_LIMIT >= totalSupply() + 2, // because mint 2 at a time
       "Can't mint - mints will exceed private sale mint limit."
     );
     require(
