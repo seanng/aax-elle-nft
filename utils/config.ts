@@ -61,3 +61,5 @@ export const s3Bucket = process.env.S3_BUCKET ?? 'elle-nft-dev'
 // lucky draw
 export const luckyDrawable = process.env.NEXT_PUBLIC_LUCKY_DRAWABLE ?? false
 export const reelRotations = 12
+
+export const publicFrameText = 'In ELLEverse, you are special & stylish.'

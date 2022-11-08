@@ -12,7 +12,7 @@ import AroundText2 from 'components/NFT/shared/AroundText2'
 import { useEffect, useState } from 'react'
 import { Files, KolDropdownListItem, MintForm } from 'shared/types'
 import { FINISHED, NOT_STARTED, PRIVATE_SALE } from 'shared/constants'
-import { salePhase } from 'utils/config'
+import { publicFrameText, salePhase } from 'utils/config'
 import { kolDropdownList } from 'data'
 import { genNftFrameTextMsg, getAssets } from 'utils/nft'
 import { toast } from 'react-toastify'
@@ -51,7 +51,7 @@ export function MessageStep({
   const [selectedKol, setSelectedKol] = useState<KolDropdownListItem>(
     kolDropdownList[0]
   )
-  const [frameText, setFrameText] = useState('Write down your secret')
+  const [frameText, setFrameText] = useState(publicFrameText)
 
   useEffect(() => {
     if (selectedKol.frameText) {
@@ -229,7 +229,7 @@ export function MessageStep({
           <a
             target="_blank"
             {...(!shouldDisableIgShare && {
-              href: `/ig-share?at=${frameText}&m=${encodeURI(values.message)}`,
+              href: `/ig-share?at=yes&m=${encodeURI(values.message)}`,
             })}
             className="mr-8"
           >

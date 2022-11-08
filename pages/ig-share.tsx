@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { genImageFile, getAssets } from 'utils/nft'
 import randomstring from 'randomstring'
 import Image from 'next/image'
-import { s3BaseUrl } from 'utils/config'
+import { publicFrameText, s3BaseUrl } from 'utils/config'
 import AroundText2 from 'components/NFT/shared/AroundText2'
 
 const html2canvasOpts = {
@@ -230,8 +230,8 @@ function useNftImageSource(router) {
       ;(async () => {
         const imageFile = await getAssets({
           message: (router.query.m as string) ?? '',
-          aroundText: (router.query.at as string) ?? '',
-          neverOpenedAroundText: (router.query.at as string) ?? '',
+          aroundText: publicFrameText,
+          neverOpenedAroundText: publicFrameText,
           Comps: CompsMessageBox,
         })
 
