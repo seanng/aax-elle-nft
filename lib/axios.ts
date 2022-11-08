@@ -1,3 +1,10 @@
-import axios from 'axios'
+import Axios from 'axios'
 
-export default axios.create()
+const axios =
+  typeof window !== 'undefined'
+    ? Axios
+    : Axios.create({
+        baseURL: process.env.NEXT_PUBLIC_SITE_URL,
+      })
+
+export default axios

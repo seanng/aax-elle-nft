@@ -49,13 +49,13 @@ const EMAIL_MODE = 'email_mode'
 const STORING_MODE = 'storing_mode'
 const REEL_MODE = 'reel_mode'
 
+const initialBoxState = luckyDrawable ? EMAIL_MODE : REEL_MODE
+
 const LuckyDrawPage: NextPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSpinning, setIsSpinning] = useState(false)
   const [pageDisplay, setPageDisplay] = useState(FETCHING)
-  const [boxState, setBoxState] = useState(
-    luckyDrawable ? EMAIL_MODE : REEL_MODE
-  )
+  const [boxState, setBoxState] = useState(initialBoxState)
   const [winningPrizeName, setWinningPrizeName] = useState('')
 
   const { prizeTokens, consumePrizeToken } = usePrizeTokens(setPageDisplay)
