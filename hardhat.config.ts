@@ -18,7 +18,8 @@ task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
 // Go to https://hardhat.org/config/ to learn more!
 
 const GOERLI_PRIVATE_KEY =
-  process.env.GOERLI_PRIVATE_KEY ?? 'YOUR GOERLI PRIVATE KEY'
+  process.env.GOERLI_PRIVATE_KEY ??
+  'c57e41207a822cbfaeb301493c4b56fd4d7a9f9c5dbb0b4d5939abcabcabcabc'
 
 const MAINNET_PRIVATE_KEY =
   process.env.MAINNET_PRIVATE_KEY ?? 'YOUR MAINNET PRIVATE KEY'
