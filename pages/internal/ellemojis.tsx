@@ -228,15 +228,20 @@ const KOL_GI_TEMPLATES = [
   KolIcon113,
 ]
 
-const InternalEllemojis = () => (
-  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 pt-8">
-    {KOL_GI_TEMPLATES.map((Comp, i) => (
-      <div key={i}>
-        <p>{`${i})`} </p>
-        <Comp />
-      </div>
-    ))}
-  </div>
-)
+const InternalEllemojis = () => {
+  if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
+    return <div>Internal Only. Pls view page on Staging Site.</div>
+  }
+  return (
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 pt-8">
+      {KOL_GI_TEMPLATES.map((Comp, i) => (
+        <div key={i}>
+          <p>{`${i})`} </p>
+          <Comp />
+        </div>
+      ))}
+    </div>
+  )
+}
 
 export default InternalEllemojis

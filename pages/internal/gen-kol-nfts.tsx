@@ -137,6 +137,10 @@ const GenKolNFTsPage: NextPage = () => {
     }
   }
 
+  if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
+    return <div>Internal Only. Pls view page on Staging Site.</div>
+  }
+
   return (
     <div>
       <button onClick={handleGenKolNftClick}>Gen and Upload KOL Assets</button>

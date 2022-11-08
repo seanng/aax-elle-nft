@@ -122,7 +122,7 @@ export function MessageStep({
     if (isProcessingMint && !isConnectModalOpen) {
       setIsProcessingMint(false)
     }
-  }, [address, isProcessingMint, isConnectModalOpen])
+  }, [address, isProcessingMint, isConnectModalOpen, onWalletConnect])
 
   const handleTextareaChange = (e) => {
     if (e.target.scrollHeight <= TEXTAREA_HEIGHT) {

@@ -42,6 +42,10 @@ const TestNFT: NextPage = () => {
     window.URL.revokeObjectURL(url)
   }
 
+  if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
+    return <div>Internal Only. Pls view page on Staging Site.</div>
+  }
+
   return (
     <CompsNFTMain
       data={data}
