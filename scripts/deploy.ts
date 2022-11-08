@@ -1,13 +1,14 @@
-import { ethers, network } from 'hardhat'
+import { ethers } from 'hardhat'
 
 async function main() {
+  const [deployer] = await ethers.getSigners()
+  console.log('Deploying contract with the account:', deployer.address)
+  console.log('Account balance:', (await deployer.getBalance()).toString())
+
   const ContractFactory = await ethers.getContractFactory('Elleverse')
-  if (!network.config.from)
-    throw new Error(`no from address configured in ${network.name}!`)
-  const contractOwner = await ethers.getSigner(network.config.from)
-  const contract = await ContractFactory.connect(contractOwner).deploy()
-  await contract.deployed()
-  console.log('Contract deployed to:', contract.address)
+  const token = await ContractFactory.deploy()
+  await token.deployed()
+  console.log('Contract deployed to:', token.address)
 }
 
 // Goerli Contract deployed on 10 Oct: 0xAbfFa373ef628884951567831f1650cfB8883aca

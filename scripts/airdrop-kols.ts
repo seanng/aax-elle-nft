@@ -15,9 +15,6 @@ if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 const KOL_TABLE = '(Testing) - KOL Airdrop' // TODO: CHANGEME
 
 async function airdropKols() {
-  if (!network.config.from)
-    throw new Error(`no from address configured in ${network.name}!`)
-
   const contract = (await ethers.getContractFactory(CONTRACT_NAME)).attach(
     process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as string
   )

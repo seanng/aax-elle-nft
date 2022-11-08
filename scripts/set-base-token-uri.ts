@@ -7,9 +7,6 @@ const NEW_BASE_URI =
   'https://aax-elle-nft-git-dev-seanng.vercel.app/api/metadata/'
 
 async function setBaseTokenURI() {
-  if (!network.config.from)
-    throw new Error(`no from address configured in ${network.name}!`)
-
   const contract = (await ethers.getContractFactory('Elleverse')).attach(
     process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as string
   )

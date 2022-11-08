@@ -17,6 +17,12 @@ task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more!
 
+const GOERLI_PRIVATE_KEY =
+  process.env.GOERLI_PRIVATE_KEY ?? 'YOUR GOERLI PRIVATE KEY'
+
+const MAINNET_PRIVATE_KEY =
+  process.env.MAINNET_PRIVATE_KEY ?? 'YOUR MAINNET PRIVATE KEY'
+
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
@@ -26,14 +32,10 @@ export default {
     hardhat: {
       chainId: 1337,
     },
-    localhost: {
-      from: '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266', // owner address from npx hardhat node
-    },
     goerli: {
-      url: process.env.ALCHEMY_API_URL,
-      from: process.env.WALLET_ADDRESS, // "owner" address
+      url: `https://eth-goerli.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
       accounts: [
-        process.env.WALLET_PRIVATE_KEY, // "owner" private key
+        GOERLI_PRIVATE_KEY, // "owner" private key
       ],
       gasPrice: 'auto',
     },

@@ -13,9 +13,6 @@ const records = [
 ]
 
 async function airdropWhitelistOnly() {
-  if (!network.config.from)
-    throw new Error(`no from address configured in ${network.name}!`)
-
   const contract = (await ethers.getContractFactory(CONTRACT_NAME)).attach(
     process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as string
   )
