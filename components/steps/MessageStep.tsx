@@ -3,6 +3,7 @@ import {
   PrimaryButton,
   SecondaryButton,
   ToastMessage,
+  GreenLipsIcon,
   WarningIcon,
   OutlinedHeading,
   KolSelectDropdown,
@@ -45,6 +46,7 @@ export function MessageStep({
     minterName: '',
     receiverName: '',
   })
+  const [showMessageOverlay, setShowMessageOverlay] = useState(false)
   const [isProcessingMint, setIsProcessingMint] = useState(false)
   const [selectedKol, setSelectedKol] = useState<KolDropdownListItem>(
     kolDropdownList[0]
@@ -101,6 +103,10 @@ export function MessageStep({
   }
 
   const handleMintClick = async () => {
+    if ([NOT_STARTED, FINISHED].includes(salePhase)) {
+      setShowMessageOverlay(true)
+      return
+    }
     // If no address, connect to wallet and call onWalletConnect when address is updated (in useEffect)
     setIsProcessingMint(true)
     if (!address) openConnectModal()
@@ -135,63 +141,64 @@ export function MessageStep({
     }))
   }
 
-  const shouldDisableButtons =
+  const shouldDisableIgShare =
     values.message === '' || [NOT_STARTED, FINISHED].includes(salePhase)
 
   // https://stackoverflow.com/a/46118025/6007700
   // https://stackoverflow.com/a/65893635/6007700
 
   return (
-    <div className="flex flex-col items-center font-noto h-full">
-      <OutlinedHeading className="mt-6 mb-6 md:mb-10">
-        寫下你的告白秘密吧
-      </OutlinedHeading>
-      {salePhase === PRIVATE_SALE && (
+    <>
+      <div className="flex flex-col items-center font-noto h-full">
+        <OutlinedHeading className="mt-6 mb-6 md:mb-10">
+          寫下你的告白秘密吧
+        </OutlinedHeading>
+        {salePhase === PRIVATE_SALE && (
+          <div className="flex w-80 md:w-[642px] mb-4">
+            <KolSelectDropdown
+              selectedPerson={selectedKol}
+              setSelectedPerson={setSelectedKol}
+            />
+          </div>
+        )}
         <div className="flex w-80 md:w-[642px] mb-4">
-          <KolSelectDropdown
-            selectedPerson={selectedKol}
-            setSelectedPerson={setSelectedKol}
+          <div className="flex-none bg-lime text-black font-mono p-2 md:text-2xl">
+            寄件人
+          </div>
+          <input
+            id="minterName"
+            name="minterName"
+            type="text"
+            className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono md:text-2xl"
+            placeholder="你的名字"
+            onChange={handleInputChange}
           />
         </div>
-      )}
-      <div className="flex w-80 md:w-[642px] mb-4">
-        <div className="flex-none bg-lime text-black font-mono p-2 md:text-2xl">
-          寄件人
+        <div className="flex w-80 md:w-[642px] mb-6">
+          <div className="flex-none bg-lime text-black font-mono p-2 md:text-2xl">
+            收件人
+          </div>
+          <input
+            id="receiverName"
+            name="receiverName"
+            type="text"
+            placeholder="對方的名字"
+            className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono md:text-2xl"
+            onChange={handleInputChange}
+          />
         </div>
-        <input
-          id="minterName"
-          name="minterName"
-          type="text"
-          className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono md:text-2xl"
-          placeholder="你的名字"
-          onChange={handleInputChange}
-        />
-      </div>
-      <div className="flex w-80 md:w-[642px] mb-6">
-        <div className="flex-none bg-lime text-black font-mono p-2 md:text-2xl">
-          收件人
-        </div>
-        <input
-          id="receiverName"
-          name="receiverName"
-          type="text"
-          placeholder="對方的名字"
-          className="flex-auto border-lime text-white bg-transparent focus:border-lime focus:ring-0 font-mono md:text-2xl"
-          onChange={handleInputChange}
-        />
-      </div>
 
-      <div className="w-80 h-[320px] md:w-[642px] md:h-[642px] mb-6 flex justify-center items-center">
-        <AroundText2
-          aroundText={frameText}
-          optClass="md:scale-[2] md:hover:scale-[2]"
-        />
-        <textarea
-          id="message"
-          style={{
-            WebkitFilter: 'blur(0px)',
-          }}
-          className="
+        <div className="w-80 h-[320px] md:w-[642px] md:h-[642px] mb-6 flex justify-center items-center">
+          <AroundText2
+            aroundText={frameText}
+            optClass="md:scale-[2] md:hover:scale-[2]"
+          />
+          <textarea
+            id="message"
+            style={{
+              WebkitFilter: 'blur(0px)',
+            }}
+            className="
             relative
             shadow-sm
             block
@@ -213,31 +220,42 @@ export function MessageStep({
             focus:border-transparent 
             focus:ring-0
           "
-          onInput={handleTextareaChange}
-          value={values.message}
-          placeholder="寫下你的告白"
-        />
+            onInput={handleTextareaChange}
+            value={values.message}
+            placeholder="寫下你的告白"
+          />
+        </div>
+        <div className="flex">
+          <a
+            target="_blank"
+            {...(!shouldDisableIgShare && {
+              href: `/ig-share?at=${frameText}&m=${encodeURI(values.message)}`,
+            })}
+            className="mr-8"
+          >
+            <SecondaryButton type="button" disabled={shouldDisableIgShare}>
+              分享告白
+            </SecondaryButton>
+          </a>
+          <PrimaryButton
+            type="button"
+            disabled={values.message === ''}
+            onClick={handleMintClick}
+          >
+            鑄造告白
+          </PrimaryButton>
+        </div>
       </div>
-      <div className="flex">
-        <a
-          target="_blank"
-          {...(!shouldDisableButtons && {
-            href: `/ig-share?at=${frameText}&m=${encodeURI(values.message)}`,
-          })}
-          className="mr-8"
-        >
-          <SecondaryButton type="button" disabled={shouldDisableButtons}>
-            分享告白
-          </SecondaryButton>
-        </a>
-        <PrimaryButton
-          type="button"
-          disabled={shouldDisableButtons}
-          onClick={handleMintClick}
-        >
-          鑄造告白
-        </PrimaryButton>
-      </div>
-    </div>
+      {showMessageOverlay && (
+        <div className="fixed top-0 right-0 left-0 bottom-0 z-30 bg-black-rgba-70 backdrop-blur-sm text-center">
+          <GreenLipsIcon className="mt-40 mb-10 mx-auto" />
+          <OutlinedHeading>
+            {salePhase === NOT_STARTED
+              ? '活動尚未開始 請於12/20再來告白！'
+              : '活動已結束了'}
+          </OutlinedHeading>
+        </div>
+      )}
+    </>
   )
 }

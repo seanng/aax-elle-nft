@@ -133,21 +133,6 @@ const MintPage: NextPage = () => {
       {isLoading && (
         <SpinningOverlay showsSpinner={showsSpinner} text={spinnerText} />
       )}
-      {/* @ts-ignore */}
-      {salePhase === NOT_STARTED && (
-        <div className="fixed top-0 right-0 left-0 bottom-0 z-30 bg-black-rgba-70 backdrop-blur-sm text-center">
-          <GreenLipsIcon className="mt-40 mb-10 mx-auto" />
-          <div
-            className="leading-150% text-3xl"
-            style={{
-              textShadow:
-                '-1.5px -1.5px 0 #55F263, 1.5px -1.5px 0 #55F263, -1.5px 1.5px 0 #55F263, 1.5px 1.5px 0 #55F263',
-            }}
-          >
-            活動尚未開始 請於12/20再來告白！
-          </div>
-        </div>
-      )}
     </>
   )
 }
