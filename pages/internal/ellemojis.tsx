@@ -228,7 +228,7 @@ const KOL_GI_TEMPLATES = [
   KolIcon113,
 ]
 
-const KolIconFilenames = () => (
+const InternalEllemojis = () => (
   <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 pt-8">
     {KOL_GI_TEMPLATES.map((Comp, i) => (
       <div key={i}>
@@ -239,4 +239,4 @@ const KolIconFilenames = () => (
   </div>
 )
 
-export default KolIconFilenames
+export default InternalEllemojis
