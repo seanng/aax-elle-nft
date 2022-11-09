@@ -1,4 +1,4 @@
-import { ethers, network } from 'hardhat'
+import { ethers } from 'hardhat'
 import dotenv from 'dotenv'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 
