@@ -86,6 +86,7 @@ const LandingPage: NextPage = () => {
           <span className="font-mono font-medium text-xl text-black">
             Impact NFT 限量預發10天，預售階段將在12/20截止!&nbsp;&nbsp;&nbsp;
             Impact NFT 限量預發10天，預售階段將在12/20截止!&nbsp;&nbsp;&nbsp;
+            Impact NFT 限量預發10天，預售階段將在12/20截止!&nbsp;&nbsp;&nbsp;
           </span>
         </Marquee>
       </div>
