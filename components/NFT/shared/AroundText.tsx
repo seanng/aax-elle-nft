@@ -198,7 +198,8 @@ function CompsNFTAroundText({
           <span
             style={{
               ...commonTextStyle,
-              lineHeight: isImageCaptured ? '18px' : '14px',
+              // lineHeight: isImageCaptured ? '18px' : '14px',
+              lineHeight: '18px',
             }}
           >
             {aroundText}
@@ -214,7 +215,8 @@ function CompsNFTAroundText({
           <span
             style={{
               ...commonTextStyle,
-              lineHeight: isImageCaptured ? '18px' : '14px',
+              // lineHeight: isImageCaptured ? '18px' : '14px',
+              lineHeight: '18px',
             }}
           >
             {aroundText}
