@@ -12,7 +12,7 @@ contract Elleverse is ERC721BQueryable, Ownable {
   string private EVENT_OVER_PHASE = 'EVENT OVER';
 
   string public SALE_PHASE = NOT_STARTED_PHASE;
-  uint256 public TOTAL_MINT_LIMIT = 6226;
+  uint256 public MSG_TOKEN_LIMIT = 3113;
   address public treasury;
 
   constructor() ERC721B('Elleverse', 'ELLEVERSE') {
@@ -78,8 +78,8 @@ contract Elleverse is ERC721BQueryable, Ownable {
     SALE_PHASE = EVENT_OVER_PHASE;
   }
 
-  function setTotalMintLimit(uint256 _newTotalMintLimit) external onlyOwner {
-    TOTAL_MINT_LIMIT = _newTotalMintLimit;
+  function setMsgTokenLimit(uint256 _newLimit) external onlyOwner {
+    MSG_TOKEN_LIMIT = _newLimit;
   }
 
   function getNextTokenId() external view onlyOwner returns (uint256) {
@@ -100,8 +100,8 @@ contract Elleverse is ERC721BQueryable, Ownable {
    */
   function airdropBothTokens(address[] calldata _to) external onlyOwner {
     require(
-      TOTAL_MINT_LIMIT >= totalSupply() + (_to.length * 2),
-      "Can't mint - Max mint limit will be exceeded."
+      MSG_TOKEN_LIMIT >= ((_nextTokenId() / 2) + _to.length),
+      "Can't mint - Will exceed msg token limit"
     );
     if (_nextTokenId() % 2 != 0) _incrementIndex(1);
     for (uint256 i; i < _to.length; i++) {
@@ -113,10 +113,6 @@ contract Elleverse is ERC721BQueryable, Ownable {
    * @dev Function used to airdrop only WL tokens to fans that responded.
    */
   function airdropWhitelistTokens(address[] calldata _to) external onlyOwner {
-    require(
-      TOTAL_MINT_LIMIT >= totalSupply() + (_to.length * 2),
-      "Can't mint - Max mint limit will be exceeded."
-    );
     for (uint256 i; i < _to.length; i++) {
       if (_nextTokenId() % 2 == 0) _incrementIndex(1);
       // mint whitelist token to owner
@@ -130,8 +126,8 @@ contract Elleverse is ERC721BQueryable, Ownable {
       "Can't mint - Not in private sale phase"
     );
     require(
-      TOTAL_MINT_LIMIT >= totalSupply() + 2, // because mint 2 at a time
-      "Can't mint - mints will exceed private sale mint limit."
+      MSG_TOKEN_LIMIT >= (_nextTokenId() / 2 + 1),
+      "Can't mint - Will exceed msg token limit"
     );
     require(
       ownsWhitelistToken(msg.sender) == true,
@@ -150,8 +146,8 @@ contract Elleverse is ERC721BQueryable, Ownable {
       "Can't mint - Not in public sale phase"
     );
     require(
-      TOTAL_MINT_LIMIT >= totalSupply() + 2, // because mint 2 at a time
-      "Can't mint - mints will exceed total mint limit."
+      MSG_TOKEN_LIMIT >= (_nextTokenId() / 2 + 1),
+      "Can't mint - Will exceed msg token limit"
     );
     require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
     if (_nextTokenId() % 2 != 0) _incrementIndex(1);

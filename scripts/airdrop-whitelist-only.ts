@@ -1,4 +1,4 @@
-import { ethers, network } from 'hardhat'
+import { ethers } from 'hardhat'
 import axios from '../lib/axios'
 import dotenv from 'dotenv'
 import { CONTRACT_NAME, WALLET_FIELD, EMAIL_FIELD } from '../shared/constants'

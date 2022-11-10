@@ -60,6 +60,35 @@ describe('Elleverse', function () {
       )
       expect(Number(newContractBalance)).toEqual(0.1)
     })
+    it('cannot mint if exceeds message token limit', async function () {
+      const errorCallback1 = jest.fn()
+      const errorCallback2 = jest.fn()
+      const errorCallback3 = jest.fn()
+      const errorCallback4 = jest.fn()
+      await contract.setPublicSalePhase()
+      await contract.setMsgTokenLimit(3)
+      await contract
+        .connect(signers[1])
+        .publicSaleMint({ value: donation })
+        .catch(errorCallback1)
+      await contract
+        .connect(signers[2])
+        .publicSaleMint({ value: donation })
+        .catch(errorCallback2)
+      await contract
+        .connect(signers[3])
+        .publicSaleMint({ value: donation })
+        .catch(errorCallback3)
+      await contract
+        .connect(signers[4])
+        .publicSaleMint({ value: donation })
+        .catch(errorCallback4)
+
+      expect(errorCallback1).not.toHaveBeenCalled()
+      expect(errorCallback2).not.toHaveBeenCalled()
+      expect(errorCallback3).not.toHaveBeenCalled()
+      expect(errorCallback4).toHaveBeenCalled()
+    })
   })
 
   describe('setBaseURI', () => {
@@ -104,6 +133,40 @@ describe('Elleverse', function () {
       expect(token5Owner).toEqual(sender3.address)
       expect(token6Owner).toEqual(sender4.address)
       expect(token7Owner).toEqual(sender4.address)
+    })
+
+    it('can airdrop if not reached message token limit', async function () {
+      const errorCallback = jest.fn()
+      await contract.setMsgTokenLimit(3)
+      await contract
+        .airdropBothTokens([signers[1].address, signers[2].address])
+        .catch(errorCallback)
+
+      expect(errorCallback).not.toHaveBeenCalled()
+
+      const token0Owner = await contract.ownerOf(0)
+      const token1Owner = await contract.ownerOf(1)
+      const token2Owner = await contract.ownerOf(2)
+      const token3Owner = await contract.ownerOf(3)
+      expect(token0Owner).toEqual(signers[1].address)
+      expect(token1Owner).toEqual(signers[1].address)
+      expect(token2Owner).toEqual(signers[2].address)
+      expect(token3Owner).toEqual(signers[2].address)
+    })
+
+    it('cannot airdrop if exceeds message token limit', async function () {
+      const errorCallback = jest.fn()
+      const [, sender1, sender2, sender3, sender4] = signers
+      await contract.setMsgTokenLimit(3)
+      await contract
+        .airdropBothTokens([
+          sender1.address,
+          sender2.address,
+          sender3.address,
+          sender4.address,
+        ])
+        .catch(errorCallback)
+      expect(errorCallback).toHaveBeenCalled()
     })
   })
 
