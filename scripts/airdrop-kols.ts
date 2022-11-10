@@ -8,6 +8,7 @@ import {
   CONTRACT_NAME,
   NFT_MESSAGE_FIELD,
   WALLET_FIELD,
+  WLT_NAME_FIELD,
   EMAIL_FIELD,
 } from '../shared/constants'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
@@ -44,8 +45,7 @@ async function airdropKols() {
 
     await axios.post('/api/prize-tokens', {
       tokenId: nextTokenId + i * 2 + 1,
-      // TODO: Fill Me Out.
-      tokenName: 'FILL ME IN',
+      tokenName: record[WLT_NAME_FIELD],
       isPrivateSale: true,
       minterEmail: record[EMAIL_FIELD],
       minterWallet: record[WALLET_FIELD],

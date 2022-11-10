@@ -10,6 +10,7 @@ import {
   EMAIL_FIELD,
   WINNER,
   KOL_NAME_FIELD,
+  WLT_NAME_FIELD,
 } from '../shared/constants'
 import { emailTemplateIds } from '../utils/config'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
@@ -37,7 +38,7 @@ async function airdropWinners() {
       airdropReceiver: WINNER,
       message: record[NFT_MESSAGE_FIELD] ?? 'N/A',
       minterEmail: record[EMAIL_FIELD],
-      [KOL_NAME_FIELD]: record[KOL_NAME_FIELD],
+      kolName: record[KOL_NAME_FIELD],
       emailTemplateId: emailTemplateIds.WINNER_AIRDROP,
       minterWallet: record[WALLET_FIELD],
       passcode: randomstring.generate({ length: 6 }),
@@ -48,8 +49,7 @@ async function airdropWinners() {
 
     await axios.post('/api/prize-tokens', {
       tokenId: nextTokenId + i * 2 + 1,
-      // TODO: FILL ME OUT.
-      tokenName: 'BASED ON KOL',
+      tokenName: record[WLT_NAME_FIELD],
       minterEmail: record[EMAIL_FIELD],
       minterWallet: record[WALLET_FIELD],
       isPrivateSale: true,

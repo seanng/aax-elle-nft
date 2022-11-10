@@ -1,8 +1,13 @@
-import { ethers, network } from 'hardhat'
+import { ethers } from 'hardhat'
 import { getAirtableRecords } from '../lib/airtable'
 import axios from '../lib/axios'
 import dotenv from 'dotenv'
-import { CONTRACT_NAME, WALLET_FIELD, EMAIL_FIELD } from '../shared/constants'
+import {
+  CONTRACT_NAME,
+  WALLET_FIELD,
+  EMAIL_FIELD,
+  WLT_NAME_FIELD,
+} from '../shared/constants'
 import { emailTemplateIds } from '../utils/config'
 if (!process.env.VERCEL) dotenv.config({ path: __dirname + '/.env.local' })
 
@@ -27,7 +32,7 @@ async function airdropParticipants() {
     const record = records[i]
     await axios.post('/api/prize-tokens', {
       emailTemplateId: emailTemplateIds.PARTICIPANT_AIRDROP,
-      tokenName: 'BASED ON KOL',
+      tokenName: record[WLT_NAME_FIELD],
       isPrivateSale: true,
       tokenId: nextTokenId + i * 2 + 1,
       minterEmail: record[EMAIL_FIELD],

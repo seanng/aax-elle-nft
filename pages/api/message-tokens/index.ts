@@ -7,7 +7,6 @@ import { MessageToken } from '@prisma/client'
 import { validate } from 'lib/middlewares'
 import { s3BaseUrl, openseaBaseUrl, contractAddress } from 'utils/config'
 import { check } from 'express-validator'
-import { KOL_NAME_FIELD } from 'shared/constants'
 
 interface PostHandlerRequest extends NextApiRequest {
   body: MessageToken & {
@@ -71,7 +70,7 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
         }/open/${slug}`,
         passcode: req.body.passcode,
         opensea_url: `${openseaBaseUrl}/${contractAddress}/${req.body.tokenId}`,
-        KOL_name: req.body[KOL_NAME_FIELD] ?? '你喜歡的藝人',
+        KOL_name: req.body.kolName ?? '你喜歡的藝人',
         image_url: imgUrl,
         image2_url: req.body.isPrivateSale
           ? `${s3BaseUrl}/public/whitelist.png`
