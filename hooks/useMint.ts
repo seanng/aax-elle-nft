@@ -136,6 +136,7 @@ export function useMint() {
       minterEmail: form.email,
       minterWallet: address,
       isPrivateSale: salePhase === PRIVATE_SALE,
+      ...(salePhase !== PRIVATE_SALE && { tokenName: 'Prize Token' }),
     })
 
     return mintData

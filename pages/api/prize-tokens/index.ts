@@ -6,6 +6,7 @@ import { validate } from 'lib/middlewares'
 import { sendMail } from 'lib/sendgrid'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import { fromEmail } from 'utils/config'
+import { whitelistTokenNames } from 'data'
 
 interface PostHandlerRequest extends NextApiRequest {
   body: PrizeToken & {
@@ -25,8 +26,11 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
   )
     return
 
+  const nameIdx = Math.floor(Number(req.body.tokenId) / 2)
+
   const prizeToken = await service.create({
     tokenId: req.body.tokenId,
+    tokenName: req.body.tokenName ?? whitelistTokenNames[nameIdx],
     isPrivateSale: req.body.isPrivateSale ?? false,
     minterEmail: req.body.minterEmail,
     minterWallet: req.body.minterWallet,

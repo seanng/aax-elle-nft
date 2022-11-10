@@ -65,8 +65,9 @@ const MintPage: NextPage = () => {
     setForm({ ...form, ...formValues })
   }
 
-  const ownsWhitelistToken = async (address: string) =>
-    contract?.callStatic.ownsWhitelistToken(address)
+  const ownsWhitelistToken = async (address: string) => {
+    return contract?.callStatic.ownsWhitelistToken(address)
+  }
 
   const onMetamaskConfirm = () => {
     setShowsSpinner(true)

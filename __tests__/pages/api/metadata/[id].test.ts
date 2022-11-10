@@ -1,5 +1,6 @@
 import handler from 'pages/api/metadata/[id]'
 import { createMocks, RequestMethod } from 'node-mocks-http'
+import { whitelistTokenNames } from 'data'
 
 jest.mock('backend/services/prize-tokens', () => {
   const originalModule = jest.requireActual('backend/services/prize-tokens')
@@ -31,7 +32,7 @@ describe('api/metadata/[id]', () => {
       await handler(req, res)
 
       expect(res._getJSONData()).toEqual({
-        name: 'Message Token',
+        name: 'Love Message',
         image: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/${EVEN_NUMBER}.png`,
         animation_url: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/${EVEN_NUMBER}.html`,
       })
@@ -39,14 +40,14 @@ describe('api/metadata/[id]', () => {
 
     it('successfully returns a Whitelist Token JSON if ID is odd number during private sale', async () => {
       // @ts-ignore
-      const ODD_NUMBER = '13'
-      httpMockedData.query.id = ODD_NUMBER
+      const id = '13'
+      httpMockedData.query.id = id
       const { req, res } = createMocks(httpMockedData)
 
       await handler(req, res)
 
       expect(res._getJSONData()).toEqual({
-        name: 'Whitelist Token',
+        name: whitelistTokenNames[Math.floor(Number(id) / 2)],
         image: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/whitelist.png`,
       })
     })

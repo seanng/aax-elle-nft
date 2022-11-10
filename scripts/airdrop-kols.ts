@@ -44,6 +44,8 @@ async function airdropKols() {
 
     await axios.post('/api/prize-tokens', {
       tokenId: nextTokenId + i * 2 + 1,
+      // TODO: Fill Me Out.
+      tokenName: 'FILL ME IN',
       isPrivateSale: true,
       minterEmail: record[EMAIL_FIELD],
       minterWallet: record[WALLET_FIELD],

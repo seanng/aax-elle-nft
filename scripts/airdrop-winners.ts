@@ -48,6 +48,8 @@ async function airdropWinners() {
 
     await axios.post('/api/prize-tokens', {
       tokenId: nextTokenId + i * 2 + 1,
+      // TODO: FILL ME OUT.
+      tokenName: 'BASED ON KOL',
       minterEmail: record[EMAIL_FIELD],
       minterWallet: record[WALLET_FIELD],
       isPrivateSale: true,

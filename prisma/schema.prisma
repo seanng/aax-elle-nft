@@ -25,6 +25,7 @@ model MessageToken {
 model PrizeToken {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   tokenId       Int // should be odd. 
+  tokenName     String?
   minterEmail   String
   minterWallet  String
   isPrivateSale Boolean   @default(false)

@@ -27,6 +27,7 @@ async function airdropParticipants() {
     const record = records[i]
     await axios.post('/api/prize-tokens', {
       emailTemplateId: emailTemplateIds.PARTICIPANT_AIRDROP,
+      tokenName: 'BASED ON KOL',
       isPrivateSale: true,
       tokenId: nextTokenId + i * 2 + 1,
       minterEmail: record[EMAIL_FIELD],

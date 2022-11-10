@@ -2,6 +2,7 @@ export const fakePrizeTokens = [
   {
     id: 'abcdef',
     tokenId: 3,
+    tokenName: 'Yo',
     prizeName: 'Godiva Chocolate Box',
     isPrivateSale: false,
     minterEmail: 'shonum69@gmail.com',
@@ -16,6 +17,7 @@ export const fakePrizeTokens = [
     prizeName: 'Brother Printer',
     isPrivateSale: false,
     minterEmail: 'shonum@gmail.com',
+    tokenName: 'Yo',
     minterWallet: 'abcasdf',
     openedAt: new Date(),
     createdAt: new Date(),
@@ -25,6 +27,7 @@ export const fakePrizeTokens = [
     id: 'abcdefgf',
     tokenId: 7,
     prizeName: 'Kylian Mbappe',
+    tokenName: 'Yo',
     isPrivateSale: false,
     minterEmail: 'shonum@gmail.com',
     minterWallet: 'abcasdf',
