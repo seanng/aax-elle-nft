@@ -42,8 +42,10 @@ contract Elleverse is ERC721BQueryable, Ownable {
   function ownsWhitelistToken(address _owner) public view returns (bool) {
     if (balanceOf(_owner) >= 1) {
       for (uint256 i = 1; i < _nextTokenId(); i += 2) {
-        if (ownerOf(i) == _owner) {
-          return true;
+        if (_exists(i)) {
+          if (ownerOf(i) == _owner) {
+            return true;
+          }
         }
       }
     }

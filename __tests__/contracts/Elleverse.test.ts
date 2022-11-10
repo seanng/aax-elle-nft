@@ -278,6 +278,15 @@ describe('Elleverse', function () {
       expect(preBurnErrorCallback).not.toHaveBeenCalled()
       expect(postBurnErrorCallback).toHaveBeenCalled()
     })
+
+    it('allows to check whitelist after burn', async function () {
+      const tokenIdsToBurn = [1]
+      const [, sender1, sender2, sender3, sender4] = signers
+      await contract.burnMultiple(tokenIdsToBurn)
+      await contract.setPrivateSalePhase()
+      const owns = await contract.ownsWhitelistToken(sender3.address)
+      expect(owns).toBe(true)
+    })
   })
 
   describe('getNextTokenId', () => {
