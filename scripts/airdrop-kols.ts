@@ -28,7 +28,7 @@ async function airdropKols() {
     records.map((record) => record[WALLET_FIELD])
   )
 
-  console.log('AIRDROP SUCCESS! Making POST request...')
+  console.log('AIRDROP SUCCESS! Making POST request....')
 
   for (let i = 0; i < records.length; i++) {
     const record = records[i]
