@@ -34,7 +34,7 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
 
   res.json({
     name: tokenName,
-    image: `${s3BaseUrl}/public/${isPrivateSale ? 'whitelist' : 'prize'}.png`,
+    image: `${s3BaseUrl}/public/${isPrivateSale ? 'whitelist' : 'prize'}.svg`,
   })
 }
 

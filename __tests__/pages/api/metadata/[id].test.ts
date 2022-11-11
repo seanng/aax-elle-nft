@@ -48,7 +48,7 @@ describe('api/metadata/[id]', () => {
 
       expect(res._getJSONData()).toEqual({
         name: whitelistTokenNames[Math.floor(Number(id) / 2)],
-        image: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/whitelist.png`,
+        image: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/whitelist.svg`,
       })
     })
   })
