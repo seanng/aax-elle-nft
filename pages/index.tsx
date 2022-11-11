@@ -31,30 +31,39 @@ const Carousel = dynamic(() => import('react-spring-3d-carousel'), {
 const carouselItems = [
   {
     src: '/images/carousel-1.png',
+    kolName: 'Mr Beast',
   },
   {
     src: '/images/carousel-2.png',
+    kolName: '蔡依林',
   },
   {
     src: '/images/carousel-3.png',
+    kolName: '周杰倫',
   },
   {
     src: '/images/carousel-4.png',
+    kolName: '周星馳',
   },
   {
     src: '/images/carousel-5.png',
+    kolName: 'Rihanna',
   },
   {
     src: '/images/carousel-6.png',
+    kolName: '蔡英文',
   },
   {
     src: '/images/carousel-7.png',
+    kolName: '張學友',
   },
   {
     src: '/images/carousel-8.png',
+    kolName: '梁朝偉',
   },
   {
     src: '/images/carousel-9.png',
+    kolName: 'Your mother',
   },
 ]
 
@@ -62,7 +71,9 @@ const LandingPage: NextPage = () => {
   const [goToSlide, setGoToSlide] = useState(0)
 
   const slides = carouselItems
-    .map(({ src }) => ({ content: <DesktopCarouselItem src={src} /> }))
+    .map(({ src, kolName }) => ({
+      content: <CarouselItem src={src} kolName={kolName} />,
+    }))
     .map((slide, index) => {
       return { ...slide, key: index, onClick: () => setGoToSlide(index) }
     })
@@ -132,9 +143,9 @@ const LandingPage: NextPage = () => {
             disableOnInteraction: false,
           }}
         >
-          {carouselItems.map(({ src }, i) => (
+          {carouselItems.map((props, i) => (
             <SwiperSlide key={i}>
-              <MobileCarouselItem src={src} />
+              <CarouselItem {...props} />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -237,22 +248,15 @@ const LandingPage: NextPage = () => {
   )
 }
 
-const MobileCarouselItem = ({ src }) => (
+const CarouselItem = ({ src, kolName = '' }) => (
   <div className="flex flex-col items-center">
     <div className="h-4 w-mobile-modal-top bg-white" />
-    <div className="bg-white w-mobile-modal-body text-center">
+    <div className="bg-white w-mobile-modal-body text-center border border-white">
       <Image width={300} height={300} src={src} />
+      <p className="text-black font-cubic mt-2 text-2xl">{kolName}</p>
     </div>
     <div className="h-4 w-mobile-modal-top bg-white" />
   </div>
 )
-
-const DesktopCarouselItem = ({ src }) => {
-  return (
-    <div>
-      <img src={src} height="300" width="300" className="max-w-none" />
-    </div>
-  )
-}
 
 export default LandingPage
