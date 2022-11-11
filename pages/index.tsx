@@ -146,7 +146,7 @@ const LandingPage: NextPage = () => {
       >
         你是不是也有以下症狀?
       </OutlinedHeading>
-      <p className="text-lg md:text-2xl font-noto text-center mb-20 md:mb-28 md:leading-[36px]">
+      <p className="text-lg md:text-2xl font-noto text-center mb-10 md:mb-16 md:leading-[36px]">
         好想說出<mark className="bg-lime">喜歡你</mark>
         <br />
         有個<mark className="bg-lime">秘密</mark>藏在心裡好久了{' '}
@@ -156,6 +156,20 @@ const LandingPage: NextPage = () => {
         <br />
         好想寫點東西給<mark className="bg-lime">未來</mark>的自己
       </p>
+
+      {/* YOUTUBE VIDEO */}
+      <div className="mb-20 md:mb-28 max-w-full w-[500px] h-[282px] md:w-[750px] md:h-[422px]">
+        <iframe
+          width="100%"
+          height="100%"
+          src="https://www.youtube.com/embed/LJ-uCAu6acE"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
+
       <div className="flex items-center md:mb-4">
         <BlingIcon />
         <OutlinedHeading color="#FF66FF" className="mx-2 md:mx-4">

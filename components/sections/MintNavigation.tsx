@@ -119,7 +119,7 @@ const Logo = () => {
       <a className="leading-0">
         <Image
           priority
-          src="/logos/elleverse-logo.png"
+          src="/logos/elleverse-logo.svg"
           alt="ELLEverse"
           height={37}
           width={130}
