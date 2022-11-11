@@ -73,8 +73,8 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
         KOL_name: req.body.kolName ?? '你喜歡的藝人',
         image_url: imgUrl,
         image2_url: req.body.isPrivateSale
-          ? `${s3BaseUrl}/public/whitelist.svg`
-          : `${s3BaseUrl}/public/prize.svg`,
+          ? `${s3BaseUrl}/public/whitelist.png`
+          : `${s3BaseUrl}/public/prize.png`,
       },
       to: req.body.minterEmail,
     })
