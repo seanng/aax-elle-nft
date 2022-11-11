@@ -25,16 +25,16 @@ describe('api/metadata/[id]', () => {
 
   describe('GET', () => {
     it('successfully returns a MessageToken JSON if ID is even number', async () => {
-      const EVEN_NUMBER = '310'
-      httpMockedData.query.id = EVEN_NUMBER
+      const id = '310'
+      httpMockedData.query.id = id
       const { req, res } = createMocks(httpMockedData)
 
       await handler(req, res)
 
       expect(res._getJSONData()).toEqual({
-        name: 'Love Message',
-        image: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/${EVEN_NUMBER}.png`,
-        animation_url: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/${EVEN_NUMBER}.html`,
+        name: `Love Message #${id}`,
+        image: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/${id}.png`,
+        animation_url: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/${id}.html`,
       })
     })
 

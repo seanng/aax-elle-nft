@@ -13,7 +13,7 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
 
   if (isMessageToken) {
     res.json({
-      name: 'Love Message',
+      name: `Love Message #${id}`,
       image: `${s3BaseUrl}/public/${id}.png`,
       animation_url: `${s3BaseUrl}/public/${id}.html`,
     })
