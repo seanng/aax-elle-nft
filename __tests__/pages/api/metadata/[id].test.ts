@@ -32,7 +32,7 @@ describe('api/metadata/[id]', () => {
       await handler(req, res)
 
       expect(res._getJSONData()).toEqual({
-        name: `Love Message #${id}`,
+        name: `Love Message #${Number(id) / 2 + 1}`,
         image: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/${id}.png`,
         animation_url: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/${id}.html`,
       })
