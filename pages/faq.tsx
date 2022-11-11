@@ -21,8 +21,12 @@ const faqs = [
         <br />
         <p>
           - 如何使用虛擬錢包轉帳和交易？ {'>>'} 連結至{' '}
-          <a href="https://reurl.cc/NRaZ0Q" target="_blank" rel="noreferrer">
-            https://reurl.cc/NRaZ0Q
+          <a
+            href="https://www.aax.com/zh-TW/newbie/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            https://www.aax.com/zh-TW/newbie/
           </a>
         </p>
         <p>
