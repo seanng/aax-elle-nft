@@ -44,11 +44,11 @@ const CollectionPage: NextPage = () => {
   } = useDetectionContext()
   const router = useRouter()
 
-  useEffect(() => {
-    if (browser === SAFARI) {
-      setIsWrongBrowserModalOpen(true)
-    }
-  }, [browser])
+  // useEffect(() => {
+  //   if (browser === SAFARI) {
+  //     setIsWrongBrowserModalOpen(true)
+  //   }
+  // }, [browser])
 
   useEffect(() => {
     if (isProcessingCloseClick) {

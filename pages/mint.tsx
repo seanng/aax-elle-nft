@@ -78,11 +78,11 @@ const MintPage: NextPage = () => {
     return () => setShowsSpinner(false)
   }, [])
 
-  useEffect(() => {
-    if (browser === SAFARI) {
-      setIsWrongBrowserModalOpen(true)
-    }
-  }, [browser])
+  // useEffect(() => {
+  //   if (browser === SAFARI) {
+  //     setIsWrongBrowserModalOpen(true)
+  //   }
+  // }, [browser])
 
   useEffect(() => {
     if (isProcessingCloseClick) {

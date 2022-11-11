@@ -150,10 +150,10 @@ const Web3Button = () => {
   } = useDetectionContext()
 
   const handleConnectClick = () => {
-    if (browser === SAFARI) {
-      setIsWrongBrowserModalOpen(true)
-      return
-    }
+    // if (browser === SAFARI) {
+    //   setIsWrongBrowserModalOpen(true)
+    //   return
+    // }
     openConnectModal()
   }
 
