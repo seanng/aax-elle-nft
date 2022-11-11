@@ -112,8 +112,9 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
       const tokenIdList = tokenIdBnList.map((bn) => bn.toNumber())
       const messageTokenIdList = tokenIdList.filter((id) => id % 2 === 0)
 
-      if (messageTokenIdList.length === 0)
-        return res.status(404).send('No Message Tokens Found')
+      if (messageTokenIdList.length === 0) {
+        return res.status(200).json({ data: [] })
+      }
 
       const data = await messageTokensService.findMany({
         OR: messageTokenIdList.map((id) => ({ tokenId: id })),

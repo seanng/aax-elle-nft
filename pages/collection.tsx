@@ -63,7 +63,7 @@ const CollectionPage: NextPage = () => {
           data: { data: MessageToken[] }
         }
         setMessageTokens(data)
-        setDisplayMode(HAS_TOKENS)
+        setDisplayMode(data.length > 0 ? HAS_TOKENS : NO_TOKENS)
       } catch (error) {
         console.log('error retrieving message-tokens: ', error)
         setDisplayMode(NO_TOKENS)

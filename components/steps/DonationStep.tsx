@@ -262,8 +262,8 @@ export function DonationStep({
                 <div className="bg-tomato flex px-4 py-4 space-x-4 mb-2">
                   <WarningStamp />
                   <div className="text-white">
-                    <p>你的錢包內沒有 white list token</p>
-                    <p>公開鑄造時間將會在12/16開始</p>
+                    <p>你的錢包內沒有白名單NFT</p>
+                    <p>公開鑄造時間會在12/16開始</p>
                   </div>
                 </div>
               ),
