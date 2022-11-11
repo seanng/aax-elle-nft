@@ -1,4 +1,3 @@
-import { WrongBrowserModal } from 'components'
 import {
   createContext,
   Dispatch,
@@ -19,13 +18,11 @@ import {
 } from 'shared/constants'
 
 const DetectionContext = createContext<{
-  setIsWrongBrowserModalOpen: Dispatch<SetStateAction<boolean>>
   setIsProcessingCloseClick: Dispatch<SetStateAction<boolean>>
   isProcessingCloseClick: boolean
   device: string
   browser: string
 }>({
-  setIsWrongBrowserModalOpen: () => {},
   setIsProcessingCloseClick: () => {},
   isProcessingCloseClick: false,
   device: DESKTOP,
@@ -37,7 +34,6 @@ interface Props {
 }
 
 export const DetectionContextProvider = ({ children }: Props) => {
-  const [isWrongBrowserModalOpen, setIsWrongBrowserModalOpen] = useState(false)
   const [isProcessingCloseClick, setIsProcessingCloseClick] = useState(false)
   const [device, setDevice] = useState(DESKTOP)
   const [browser, setBrowser] = useState(OTHER_BROWSER)
@@ -66,23 +62,16 @@ export const DetectionContextProvider = ({ children }: Props) => {
   }, [])
 
   return (
-    <>
-      <DetectionContext.Provider
-        value={{
-          setIsWrongBrowserModalOpen,
-          setIsProcessingCloseClick,
-          isProcessingCloseClick,
-          browser,
-          device,
-        }}
-      >
-        {children}
-      </DetectionContext.Provider>
-      <WrongBrowserModal
-        isOpen={isWrongBrowserModalOpen}
-        onClose={() => setIsProcessingCloseClick(true)}
-      />
-    </>
+    <DetectionContext.Provider
+      value={{
+        setIsProcessingCloseClick,
+        isProcessingCloseClick,
+        browser,
+        device,
+      }}
+    >
+      {children}
+    </DetectionContext.Provider>
   )
 }
 

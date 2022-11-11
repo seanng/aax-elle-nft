@@ -36,19 +36,9 @@ const CollectionPage: NextPage = () => {
   const [isFetchingPrizeTokens, setIsFetchingPrizeTokens] = useState(true)
   const [prizeTokens, setPrizeTokens] = useState<PrizeToken[]>([])
   const { address } = useWeb3Context()
-  const {
-    browser,
-    setIsWrongBrowserModalOpen,
-    setIsProcessingCloseClick,
-    isProcessingCloseClick,
-  } = useDetectionContext()
+  const { setIsProcessingCloseClick, isProcessingCloseClick } =
+    useDetectionContext()
   const router = useRouter()
-
-  useEffect(() => {
-    if (browser === SAFARI) {
-      setIsWrongBrowserModalOpen(true)
-    }
-  }, [browser])
 
   useEffect(() => {
     if (isProcessingCloseClick) {

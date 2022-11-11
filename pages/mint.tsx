@@ -9,14 +9,11 @@ import {
   SuccessStep,
   Stepper,
   SpinningOverlay,
-  GreenLipsIcon,
   MintLayout,
 } from 'components'
 import Animate from 'styles/animate.module.css'
 import { useMint } from 'hooks'
-import { NOT_STARTED, SAFARI } from 'shared/constants'
 import { useDetectionContext, useWeb3Context } from 'context'
-import { salePhase } from 'utils/config'
 import { MintResponseData } from 'shared/types'
 import { useRouter } from 'next/router'
 
@@ -54,12 +51,8 @@ const MintPage: NextPage = () => {
     mintGasFee,
   } = useMint()
 
-  const {
-    browser,
-    setIsWrongBrowserModalOpen,
-    setIsProcessingCloseClick,
-    isProcessingCloseClick,
-  } = useDetectionContext()
+  const { setIsProcessingCloseClick, isProcessingCloseClick } =
+    useDetectionContext()
 
   const updateForm = (formValues) => {
     setForm({ ...form, ...formValues })
@@ -77,12 +70,6 @@ const MintPage: NextPage = () => {
   useEffect(() => {
     return () => setShowsSpinner(false)
   }, [])
-
-  useEffect(() => {
-    if (browser === SAFARI) {
-      setIsWrongBrowserModalOpen(true)
-    }
-  }, [browser])
 
   useEffect(() => {
     if (isProcessingCloseClick) {

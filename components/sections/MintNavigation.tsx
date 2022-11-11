@@ -12,7 +12,6 @@ import {
 } from 'components'
 import { useDetectionContext, useWeb3Context } from 'context'
 import { correctHexChain, openseaBaseUrl } from 'utils/config'
-import { SAFARI } from 'shared/constants'
 
 export function MintNavigation() {
   return (
@@ -142,25 +141,16 @@ const Web3Button = () => {
   const { web3Provider, address, openConnectModal, disconnect, provider } =
     useWeb3Context()
   const [walletHasError, setWalletHasError] = useState(false)
-  const {
-    browser,
-    setIsWrongBrowserModalOpen,
-    isProcessingCloseClick,
-    setIsProcessingCloseClick,
-  } = useDetectionContext()
+  const { isProcessingCloseClick, setIsProcessingCloseClick } =
+    useDetectionContext()
 
   const handleConnectClick = () => {
-    if (browser === SAFARI) {
-      setIsWrongBrowserModalOpen(true)
-      return
-    }
     openConnectModal()
   }
 
   useEffect(() => {
     if (isProcessingCloseClick) {
       setIsProcessingCloseClick(false)
-      setIsWrongBrowserModalOpen(false)
     }
   }, [isProcessingCloseClick])
 
