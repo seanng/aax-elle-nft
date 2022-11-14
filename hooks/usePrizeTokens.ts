@@ -13,7 +13,7 @@ import { PrizeToken } from '@prisma/client'
 import { fakePrizeTokens } from 'data'
 
 export function usePrizeTokens(setPageDisplay) {
-  const [prizeTokens, setPrizeTokens] = useState<PrizeToken[]>(fakePrizeTokens)
+  const [prizeTokens, setPrizeTokens] = useState<PrizeToken[]>([])
   const { address } = useWeb3Context()
 
   useEffect(() => {
@@ -40,8 +40,7 @@ export function usePrizeTokens(setPageDisplay) {
       setPageDisplay(READY)
       return
     }
-    // TODO: Uncomment
-    // getPrizeTokensFromWallet()
+    getPrizeTokensFromWallet()
   }, [address])
 
   const consumePrizeToken = () => {
