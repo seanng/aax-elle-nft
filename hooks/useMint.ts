@@ -21,13 +21,14 @@ export function useMint() {
   const { web3Provider, address, balance } = useWeb3Context()
   const [mintGasFee, setMintGasFee] = useState<string>('')
 
-  const contract = web3Provider
-    ? new ethers.Contract(
-        contractAddress as string,
-        contractABI.abi,
-        web3Provider.getSigner()
-      )
-    : null
+  const contract =
+    web3Provider && contractAddress
+      ? new ethers.Contract(
+          contractAddress as string,
+          contractABI.abi,
+          web3Provider.getSigner()
+        )
+      : null
 
   const calcMintGasFee = async (): Promise<void> => {
     if (contract && web3Provider) {

@@ -251,7 +251,7 @@ export function MessageStep({
           <GreenLipsIcon className="mt-40 mb-10 mx-auto" />
           <OutlinedHeading>
             {salePhase === NOT_STARTED
-              ? '活動尚未開始 請於12/20再來告白！'
+              ? '活動尚未開始 請於12/10再來告白！'
               : '活動已結束了'}
           </OutlinedHeading>
         </div>

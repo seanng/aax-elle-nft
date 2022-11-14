@@ -95,9 +95,9 @@ const LandingPage: NextPage = () => {
       <div className="bg-guava py-2 w-full mb-8 md:mb-12">
         <Marquee velocity={100}>
           <span className="font-mono font-medium text-xl text-black">
-            Impact NFT 限量預發10天，預售階段將在12/20截止!&nbsp;&nbsp;&nbsp;
-            Impact NFT 限量預發10天，預售階段將在12/20截止!&nbsp;&nbsp;&nbsp;
-            Impact NFT 限量預發10天，預售階段將在12/20截止!&nbsp;&nbsp;&nbsp;
+            Impact NFT 限量預發10天，預售階段將在12/10截止!&nbsp;&nbsp;&nbsp;
+            Impact NFT 限量預發10天，預售階段將在12/10截止!&nbsp;&nbsp;&nbsp;
+            Impact NFT 限量預發10天，預售階段將在12/10截止!&nbsp;&nbsp;&nbsp;
           </span>
         </Marquee>
       </div>
@@ -253,7 +253,7 @@ const CarouselItem = ({ src, kolName = '' }) => (
     <div className="h-4 w-mobile-modal-top bg-white" />
     <div className="bg-white w-mobile-modal-body text-center border border-white">
       <Image width={300} height={300} src={src} />
-      <p className="text-black font-cubic mt-2 text-2xl">{kolName}</p>
+      <p className="text-black font-cubic mt-2 text-2xl">{''}</p>
     </div>
     <div className="h-4 w-mobile-modal-top bg-white" />
   </div>
