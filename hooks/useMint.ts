@@ -9,6 +9,7 @@ import {
   INCONSISTENT_CONTRACT_STATUS,
   PUBLIC_SALE,
   PRIVATE_SALE,
+  REACHED_MESSAGE_LIMIT,
 } from 'shared/constants'
 import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
 import { useState } from 'react'
@@ -20,6 +21,7 @@ import { contractAddress, salePhase, emailTemplateIds } from 'utils/config'
 export function useMint() {
   const { web3Provider, address, balance } = useWeb3Context()
   const [mintGasFee, setMintGasFee] = useState<string>('')
+  const [atMsgTokenLimit, setAtMsgTokenLimit] = useState(false)
 
   const contract =
     web3Provider && contractAddress
@@ -43,7 +45,19 @@ export function useMint() {
         const estGasFeeBN = feeData.maxFeePerGas?.mul(functionFee)
         estGasFeeBN && setMintGasFee(ethers.utils.formatEther(estGasFeeBN))
       } catch (error) {
-        console.log('error calculating gas fee: ', error)
+        if (error?.data?.message?.search('exceed msg token limit') > -1) {
+          setAtMsgTokenLimit(true)
+          // send notifer emails to sean.
+          axios.post('/api/mailer', {
+            templateId: 'd-033f8971bd3646aabcf8103caa0c25f7',
+            email: [
+              'sean.ng@aax.com',
+              'shonum@gmail.com',
+              'sophie.hsu@aax.com',
+              'sharon@accucrazy.com',
+            ],
+          })
+        }
         setMintGasFee('')
       }
     }
@@ -101,6 +115,7 @@ export function useMint() {
     const mintMethod = isPrivateSale ? 'privateSaleMint' : 'publicSaleMint'
     const contractPhase = isPrivateSale ? 'PRIVATE SALE' : 'PUBLIC SALE'
 
+    if (atMsgTokenLimit) throw new Error(REACHED_MESSAGE_LIMIT)
     const statusIsConsistent =
       (await contract['SALE_PHASE']()) === contractPhase
     if (!statusIsConsistent) throw new Error(INCONSISTENT_CONTRACT_STATUS)
@@ -154,6 +169,7 @@ export function useMint() {
     files,
     contract,
     calcMintGasFee,
+    atMsgTokenLimit,
     mintGasFee,
   }
 }

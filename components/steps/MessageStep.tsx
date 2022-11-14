@@ -11,7 +11,12 @@ import {
 import AroundText2 from 'components/NFT/shared/AroundText2'
 import { useEffect, useState } from 'react'
 import { Files, KolDropdownListItem, MintForm } from 'shared/types'
-import { FINISHED, NOT_STARTED, PRIVATE_SALE } from 'shared/constants'
+import {
+  FINISHED,
+  NOT_STARTED,
+  PRIVATE_SALE,
+  REACHED_MESSAGE_LIMIT,
+} from 'shared/constants'
 import { publicFrameText, salePhase } from 'utils/config'
 import { kolDropdownList } from 'data'
 import { genNftFrameTextMsg, getAssets } from 'utils/nft'
@@ -103,7 +108,7 @@ export function MessageStep({
   }
 
   const handleMintClick = async () => {
-    if ([NOT_STARTED, FINISHED].includes(salePhase)) {
+    if ([NOT_STARTED, FINISHED, REACHED_MESSAGE_LIMIT].includes(salePhase)) {
       setShowMessageOverlay(true)
       return
     }
@@ -142,7 +147,8 @@ export function MessageStep({
   }
 
   const shouldDisableIgShare =
-    values.message === '' || [NOT_STARTED, FINISHED].includes(salePhase)
+    values.message === '' ||
+    [NOT_STARTED, FINISHED, REACHED_MESSAGE_LIMIT].includes(salePhase)
 
   // https://stackoverflow.com/a/46118025/6007700
   // https://stackoverflow.com/a/65893635/6007700
@@ -252,6 +258,8 @@ export function MessageStep({
           <OutlinedHeading>
             {salePhase === NOT_STARTED
               ? '活動尚未開始 請於12/10再來告白！'
+              : salePhase === REACHED_MESSAGE_LIMIT
+              ? '鑄造已達 3113 上限'
               : '活動已結束了'}
           </OutlinedHeading>
         </div>

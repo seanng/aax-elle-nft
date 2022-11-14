@@ -1,12 +1,7 @@
 import { StepWizardChildProps } from 'react-step-wizard'
-import {
-  OutlinedHeading,
-  Marquee,
-  StepperArrowRight,
-  PinkLockIcon,
-} from 'components'
+import { Marquee, StepperArrowRight, PinkLockIcon } from 'components'
 import { salePhase } from 'utils/config'
-import { FINISHED } from 'shared/constants'
+import { FINISHED, REACHED_MESSAGE_LIMIT } from 'shared/constants'
 
 const steps = [
   {
@@ -30,7 +25,7 @@ const steps = [
 export function Stepper({
   currentStep = 0,
 }: Partial<StepWizardChildProps>): JSX.Element {
-  if (salePhase === FINISHED) {
+  if (salePhase === FINISHED || salePhase === REACHED_MESSAGE_LIMIT) {
     return (
       <div
         className="relative text-center h-11 bg-tomato text-tomato font-mono font-medium italic text-4xl w-full leading-120% overflow-hidden px-6 "
@@ -39,7 +34,7 @@ export function Stepper({
             '-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black',
         }}
       >
-        告白活動已結束！
+        {salePhase === FINISHED ? '告白活動已結束！' : '鑄造已達 3113 上限'}
       </div>
     )
   }

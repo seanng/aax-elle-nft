@@ -8,6 +8,7 @@ import {
   READY,
   FINISHED,
   PUBLIC_SALE,
+  REACHED_MESSAGE_LIMIT,
 } from 'shared/constants'
 import { PrizeToken } from '@prisma/client'
 import { fakePrizeTokens } from 'data'
@@ -36,7 +37,7 @@ export function usePrizeTokens(setPageDisplay) {
       setPageDisplay(NOT_CONNECTED)
       return
     }
-    if (![FINISHED, PUBLIC_SALE].includes(salePhase)) {
+    if (![FINISHED, PUBLIC_SALE, REACHED_MESSAGE_LIMIT].includes(salePhase)) {
       setPageDisplay(READY)
       return
     }

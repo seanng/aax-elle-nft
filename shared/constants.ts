@@ -11,6 +11,7 @@ export const INTRO_CANVAS_HEIGHT = 1080
 export const NOT_STARTED = 'not started'
 export const PRIVATE_SALE = 'private sale'
 export const PUBLIC_SALE = 'public sale'
+export const REACHED_MESSAGE_LIMIT = 'reached message limit'
 export const FINISHED = 'finished'
 
 // error types

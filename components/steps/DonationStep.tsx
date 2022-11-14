@@ -20,6 +20,7 @@ import {
   NO_WHITELIST_TOKEN,
   PRIVATE_SALE,
   PUBLIC_SALE,
+  REACHED_MESSAGE_LIMIT,
 } from 'shared/constants'
 import { MintForm, MintResponseData } from 'shared/types'
 import { MessageToken } from '@prisma/client'
@@ -110,6 +111,9 @@ export function DonationStep({
       }
       // Do something on success? Here or in Donation Step.
     } catch (error) {
+      if (error.message === REACHED_MESSAGE_LIMIT) {
+        setErrorType(REACHED_MESSAGE_LIMIT)
+      }
       if (error.message === INCONSISTENT_CONTRACT_STATUS) {
         setErrorType(INCONSISTENT_CONTRACT_STATUS)
       }
@@ -289,6 +293,14 @@ export function DonationStep({
                   <div className="text-white">
                     <p>尚未連結錢包</p>
                     <p>請先連結錢包以繼續鑄造</p>
+                  </div>
+                </div>
+              ),
+              [REACHED_MESSAGE_LIMIT]: (
+                <div className="bg-tomato flex px-4 py-4 space-x-4 mb-2">
+                  <WarningStamp />
+                  <div className="text-white">
+                    <p>鑄造已達3113上限</p>
                   </div>
                 </div>
               ),
