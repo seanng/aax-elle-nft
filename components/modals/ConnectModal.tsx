@@ -29,16 +29,17 @@ export function ConnectModal({ isOpen, closeModal, connect }) {
           className="mb-8"
           onClick={handleMetaMaskButtonClick}
         />
-        <p className="mb-4">下載AAX錢包獲得 50 USDT</p>
+        {/* <p className="mb-4">下載AAX錢包獲得 50 USDT</p>
         <a target="__blank" href="https://aax.com">
           <Image
+            alt="aax promotion"
             src="/images/aax-modal-promotion.jpg"
             layout="fixed"
             objectFit="contain"
             width="288px"
             height="97px"
           />
-        </a>
+        </a> */}
       </div>
     </BaseModal>
   )
@@ -66,6 +67,7 @@ const MetaMaskButton = ({ onClick, hasMetaMask = false, className = '' }) => (
     <div className="absolute mx-auto font-noto top-4 w-full flex flex-col items-center">
       <div className="flex space-x-2 mb-3 items-center mr-2">
         <Image
+          alt="Metamask"
           src="/images/MetaMask-Emblem 1.png"
           layout="fixed"
           objectFit="contain"
