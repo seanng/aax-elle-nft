@@ -18,3 +18,5 @@ export const update = async (
   where: Prisma.MessageTokenWhereUniqueInput,
   data: Prisma.MessageTokenUpdateInput
 ) => prisma.messageToken.update({ where, data })
+
+export const count = async () => prisma.messageToken.count()

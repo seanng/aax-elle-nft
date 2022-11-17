@@ -1,7 +1,8 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import { s3BaseUrl } from 'utils/config'
 import { whitelistTokenNames } from 'data'
-import * as service from 'backend/services/prize-tokens'
+import * as prizeTokens from 'backend/services/prize-tokens'
+import * as messageTokens from 'backend/services/message-tokens'
 
 // const PUBLIC_SALE_FIRST_TOKEN_ID = 3113
 
@@ -12,15 +13,21 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
   const isMessageToken = Number(id) % 2 === 0
 
   if (isMessageToken) {
+    const messages = await messageTokens.findMany({
+      tokenId: Number(id),
+    })
+
+    const { number } = messages[0]
+
     res.json({
-      name: `Love Message #${id}`,
+      name: `Love Message${number ? ` #${number}` : ''}`,
       image: `${s3BaseUrl}/public/${id}.png`,
       animation_url: `${s3BaseUrl}/public/${id}.html`,
     })
     return
   }
 
-  const prizeTokenList = await service.findMany({
+  const prizeTokenList = await prizeTokens.findMany({
     tokenId: Number(id),
   })
 

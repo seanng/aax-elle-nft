@@ -42,11 +42,14 @@ async function postHandler(req: PostHandlerRequest, res: NextApiResponse) {
     isSlugUnique = !(await messageTokensService.findUnique({ slug }))
   }
 
+  const count = await messageTokensService.count()
+
   console.log('Storing MessageToken in DB.')
 
   const mint = await messageTokensService.create({
     slug,
     message: req.body.message,
+    number: count + 1,
     minterEmail: req.body.minterEmail,
     minterWallet: req.body.minterWallet,
     ethDonated: req.body.ethDonated,

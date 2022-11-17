@@ -17,6 +17,22 @@ jest.mock('backend/services/prize-tokens', () => {
   }
 })
 
+jest.mock('backend/services/message-tokens', () => {
+  const originalModule = jest.requireActual('backend/services/message-tokens')
+  return {
+    __esModule: true,
+    ...originalModule,
+    findMany: jest.fn().mockResolvedValue([
+      {
+        id: 'abcd123411',
+        number: 69,
+        tokenId: 13,
+        isPrivateSale: true,
+      },
+    ]),
+  }
+})
+
 describe('api/metadata/[id]', () => {
   let httpMockedData = {
     method: 'GET' as RequestMethod,
@@ -32,7 +48,7 @@ describe('api/metadata/[id]', () => {
       await handler(req, res)
 
       expect(res._getJSONData()).toEqual({
-        name: `Love Message #${id}`,
+        name: `Love Message #69`,
         image: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/${id}.png`,
         animation_url: `https://elle-nft-dev.s3.ap-southeast-1.amazonaws.com/public/${id}.html`,
       })

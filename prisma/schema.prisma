@@ -9,6 +9,7 @@ datasource db {
 
 model MessageToken {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  number        Int // i.e. Love Message #3
   tokenId       Int // should be even. 
   message       String
   minterEmail   String

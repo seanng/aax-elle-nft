@@ -31,6 +31,7 @@ jest.mock('backend/services/message-tokens', () => {
     ...originalModule,
     findUnique: jest.fn().mockResolvedValue(null),
     create: jest.fn(),
+    count: jest.fn(),
   }
 })
 
