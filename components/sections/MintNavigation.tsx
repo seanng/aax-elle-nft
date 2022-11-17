@@ -86,9 +86,9 @@ const Nav = () => (
     <Link href="/collection">
       <a>My Love Secrets</a>
     </Link>
-    <Link href="/lucky-draw">
+    {/* <Link href="/lucky-draw">
       <a>ELLEverse 抽獎</a>
-    </Link>
+    </Link> */}
     <a
       target="_blank"
       href="https://www.aax.com/zh-TW/newbie/"
