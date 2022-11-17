@@ -105,7 +105,7 @@ contract Elleverse is ERC721BQueryable, Ownable {
     );
     if (_nextTokenId() % 2 != 0) _incrementIndex(1);
     for (uint256 i; i < _to.length; i++) {
-      _safeMint(_to[i], 2);
+      _mint(_to[i], 2);
     }
   }
 
@@ -116,7 +116,7 @@ contract Elleverse is ERC721BQueryable, Ownable {
     for (uint256 i; i < _to.length; i++) {
       if (_nextTokenId() % 2 == 0) _incrementIndex(1);
       // mint whitelist token to owner
-      _safeMint(_to[i], 1);
+      _mint(_to[i], 1);
     }
   }
 
