@@ -165,7 +165,7 @@ export function BodySection() {
         </div>
       </div>
       {/* Marquee */}
-      <div className="mb-14 md:mb-48 font-english max-w-full overflow-hidden -rotate-3 font-extrabold text-4xl md:text-[168px] leading-[48px] md:leading-[224px]">
+      {/* <div className="mb-14 md:mb-48 font-english max-w-full overflow-hidden -rotate-3 font-extrabold text-4xl md:text-[168px] leading-[48px] md:leading-[224px]">
         <div className="relative text-black bg-lime h-12 md:h-56">
           <Marquee velocity={200}>
             SHHHH.......&nbsp;&nbsp;&nbsp;SHHHH.......&nbsp;&nbsp;&nbsp;
@@ -176,17 +176,15 @@ export function BodySection() {
             TELL YOU A SECRET ____&nbsp;&nbsp;TELL YOU A SECRET ____&nbsp;&nbsp;
           </Marquee>
         </div>
-      </div>
+      </div> */}
       {/* FAQ */}
-      <div className="relative pb-14 md:pb-48">
+      {/* <div className="relative pb-14 md:pb-48">
         <div className="px-8 md:px-20 lg:px-28 mb-10 md:mb-36">
-          {/* Heading */}
           <div className="relative text-white text-center px-3 md:px-6 font-english font-black text-2xl md:text-5xl lg:text-7xl">
             <span>FAQ</span>
             <GreenDialog className="absolute -top-[110%] left-[56%] md:left-[62%] w-[35px] h-[21px] md:w-[111px] md:h-[65px]" />
           </div>
 
-          {/* Content */}
           <div className="relative z-10 bg-black-rgba-70">
             <dl className="mt-4 md:mt-24 lg:mt-32 space-y-2 md:space-y-6 divide-y-2 md:divide-y-4 divide-lemon border-y-2 md:border-y-4 border-lemon">
               {faqs.map((faq) => (
@@ -230,7 +228,7 @@ export function BodySection() {
         </div>
         <PoopStraight className="absolute z-0 top-[255px] md:top-[600px] lg:top-[650px] left-[5%] w-[125px] h-[121px] md:w-[375px] md:h-[363px] lg:w-[568px] lg:h-[579px]" />
         <PinkSunflower className="absolute z-0 top-[115px] md:top-[200px] lg:top-[250px] right-[5%] w-[123px] h-[302px] md:w-[369px] md:h-[906px] lg:w-[493px] lg:h-[1206px]" />
-      </div>
+      </div> */}
       {/* Footer */}
       <div className="h-10 md:h-44 py-2 md:py-11 bg-lime flex items-center justify-center">
         <div className="relative h-full w-full">
