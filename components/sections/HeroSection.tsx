@@ -187,7 +187,7 @@ function Desktop() {
       <Raindrop className="absolute left-[24%] top-[44%] opacity-50" />
       <Raindrop className="absolute left-[24%] top-[38%]" />
       <div className="absolute right-[53%] top-[52%] mx-auto text-center">
-        <Link href="/welcome" passHref>
+        <Link href="/" passHref>
           <a>
             <TRCursorButton>我想說個祕密...</TRCursorButton>
           </a>
