@@ -159,7 +159,7 @@ export function MessageStep({
 
   const shouldDisableIgShare =
     values.message === '' ||
-    [NOT_STARTED, FINISHED, REACHED_MESSAGE_LIMIT].includes(salePhase)
+    [FINISHED, REACHED_MESSAGE_LIMIT].includes(salePhase)
 
   // https://stackoverflow.com/a/46118025/6007700
   // https://stackoverflow.com/a/65893635/6007700
@@ -254,7 +254,7 @@ export function MessageStep({
           </a>
           <PrimaryButton
             type="button"
-            disabled={values.message === ''}
+            disabled={salePhase === NOT_STARTED || values.message === ''}
             onClick={handleMintClick}
           >
             鑄造告白
