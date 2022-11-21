@@ -267,7 +267,7 @@ export function DonationStep({
                   <WarningStamp />
                   <div className="text-white">
                     <p>你的錢包內沒有白名單NFT</p>
-                    <p>公開鑄造時間會在12/16開始</p>
+                    <p>公開鑄造時間會在12/13開始</p>
                   </div>
                 </div>
               ),

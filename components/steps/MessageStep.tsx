@@ -9,7 +9,7 @@ import {
   KolSelectDropdown,
 } from 'components'
 import AroundText2 from 'components/NFT/shared/AroundText2'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Files, KolDropdownListItem, MintForm } from 'shared/types'
 import {
   FINISHED,
@@ -64,48 +64,59 @@ export function MessageStep({
     }
   }, [selectedKol])
 
-  const onWalletConnect = async (address: string) => {
-    setShowsSpinner(true)
-    setIsLoading(true)
-    // @ts-ignore
-    if (salePhase === PRIVATE_SALE) {
-      const hasWhitelistToken = await ownsWhitelistToken(address)
-      if (!hasWhitelistToken) {
-        // If address does not contain whitelist token, display Sorry modal. Do not proceed.
-        toast.warn(
-          <ToastMessage
-            heading="你的錢包內沒有白名單NFT"
-            body="公開鑄造時間將會在12/16開始"
-          />,
-          {
-            icon: <WarningIcon height={32} width={32} color="white" />,
-          }
-        )
-        setIsLoading(false)
-        return
+  const onWalletConnect = useCallback(
+    async (address: string) => {
+      setShowsSpinner(true)
+      setIsLoading(true)
+      // @ts-ignore
+      if (salePhase === PRIVATE_SALE) {
+        const hasWhitelistToken = await ownsWhitelistToken(address)
+        if (!hasWhitelistToken) {
+          // If address does not contain whitelist token, display Sorry modal. Do not proceed.
+          toast.warn(
+            <ToastMessage
+              heading="你的錢包內沒有白名單NFT"
+              body="公開鑄造時間將會在12/13開始"
+            />,
+            {
+              icon: <WarningIcon height={32} width={32} color="white" />,
+            }
+          )
+          setIsLoading(false)
+          return
+        }
       }
-    }
 
-    // Set Data
-    const { message, minterName, receiverName } = values
-    const files = await getAssets({
-      message: message,
-      aroundText: genNftFrameTextMsg({
-        sender: minterName,
-        receiver: receiverName,
-      }),
-      neverOpenedAroundText: genNftFrameTextMsg({
-        sender: minterName,
-        receiver: receiverName,
-        neverOpened: true,
-      }),
-    })
-    setFiles(files)
-    updateForm(values)
-    wizard.nextStep && wizard.nextStep()
-    setShowsSpinner(false)
-    setIsLoading(false)
-  }
+      // Set Data
+      const { message, minterName, receiverName } = values
+      const files = await getAssets({
+        message: message,
+        aroundText: genNftFrameTextMsg({
+          sender: minterName,
+          receiver: receiverName,
+        }),
+        neverOpenedAroundText: genNftFrameTextMsg({
+          sender: minterName,
+          receiver: receiverName,
+          neverOpened: true,
+        }),
+      })
+      setFiles(files)
+      updateForm(values)
+      wizard.nextStep && wizard.nextStep()
+      setShowsSpinner(false)
+      setIsLoading(false)
+    },
+    [
+      ownsWhitelistToken,
+      setFiles,
+      setIsLoading,
+      setShowsSpinner,
+      updateForm,
+      values,
+      wizard,
+    ]
+  )
 
   const handleMintClick = async () => {
     if ([NOT_STARTED, FINISHED, REACHED_MESSAGE_LIMIT].includes(salePhase)) {
