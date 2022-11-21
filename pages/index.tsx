@@ -233,17 +233,6 @@ const LandingPage: NextPage = () => {
           <PrimaryButton>我要告白</PrimaryButton>
         </a>
       </Link>
-      {[PRIVATE_SALE, NOT_STARTED].includes(salePhase) && (
-        <div className="fixed bottom-4 right-4 flex flex-col items-center z-10">
-          <a href="#how-to">
-            <Image
-              width="105"
-              height="123"
-              src="/images/private-sale-sticky2.png"
-            />
-          </a>
-        </div>
-      )}
     </MintLayout>
   )
 }
