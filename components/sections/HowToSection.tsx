@@ -20,41 +20,7 @@ import clsx from 'clsx'
 import { NOT_STARTED, PRIVATE_SALE } from 'shared/constants'
 import Link from 'next/link'
 
-// const salePhase = PRIVATE_SALE
-
-const privateSaleSteps = [
-  {
-    body: '從名人的社群連結進入後，填寫你對他的愛',
-  },
-  {
-    body: (
-      <span>
-        輸入虛擬錢包，就可獲得Impact NFT白名單，
-        <a
-          target="__blank"
-          className="text-blue-600 underline"
-          href="https://www.aax.com/zh-TW/newbie/"
-        >
-          為什麼需要虛擬錢包？
-        </a>
-      </span>
-    ),
-  },
-  {
-    body: '在官網輸入錢包驗證白名單，就能鑄造名人邊框版NFT',
-  },
-  {
-    body: '進入 My Love Secret 就能看到你的 Impact NFT，並獲得一張能夠搶先鑄造的白名單NFT',
-  },
-  {
-    body: '轉傳白名單 NFT 給朋友，讓他也能優先鑄造屬於自己的Impact NFT',
-  },
-  {
-    body: '分享你的 Impact NFT 圖片到社群',
-  },
-]
-
-const defaultSteps = [
+const steps = [
   {
     heading: '寫下告白',
     body: '寫下愛並決定愛的價值，連結電子錢包，透過公益捐款救助受虐毛小孩',
@@ -79,10 +45,6 @@ const defaultSteps = [
 
 export function HowToSection() {
   const [highlightedStepIdx, setHighlightedStepIdx] = useState(-1)
-
-  const steps = [PRIVATE_SALE, NOT_STARTED].includes(salePhase)
-    ? privateSaleSteps
-    : defaultSteps
 
   return (
     <>
