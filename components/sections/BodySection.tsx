@@ -12,6 +12,7 @@ import { Disclosure } from '@headlessui/react'
 import { PlusIcon, MinusIcon } from '@heroicons/react/outline'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCoverflow } from 'swiper'
+import Link from 'next/link'
 
 const ElleLips = dynamic(() => import('components').then((m) => m.ElleLips))
 const BaizhouLips = dynamic(() =>
@@ -97,7 +98,11 @@ export function BodySection() {
           body="TSPCA目標是替所有的動物發聲，爭取福利，及提供動物必要的協助，成為有效率、公開透明，可信任的動物福利組織。
             協會努力將符合國際標準的動物福利帶入台灣，
             來自於不同領域的理監事成員、專業工作人員， 及愛心志工與支持者。"
-          button={<BLCursorButton>認識SPCA</BLCursorButton>}
+          button={
+            <a href="/" target="_blank">
+              <BLCursorButton>認識SPCA</BLCursorButton>
+            </a>
+          }
         />
         <div className="w-[350px] h-[274px] md:w-[700px] md:h-[548px] lg:w-[1058px] lg:h-[827px] mt-20 md:mt-28 lg:mt-44 relative">
           <Image
@@ -112,7 +117,13 @@ export function BodySection() {
           body="ELLE+Metaverse=ELLEverse。元宇宙發生中，時代像一艘往無垠宇宙噴飛的火箭，疾速奔馳而我們必須搭上；所謂的未來時空，已經失去距離、更非幻想，唯有抓住當下的機會才能抵達。在ELLE創造的元宇宙ELLEverse中，從講座、創作競賽、慈善Impact
             NFT、到虛擬角色養成的酷點地圖，囊括一系列虛擬世界大冒險無限擴充，請和ELLE用最具風格的方式踏入Web3.0。Remember,
             It's all about style。"
-          button={<BLCursorButton>ELLEverse</BLCursorButton>}
+          button={
+            <Link href="/" passHref>
+              <a>
+                <BLCursorButton>ELLEverse</BLCursorButton>
+              </a>
+            </Link>
+          }
         />
       </div>
       {/* Team */}

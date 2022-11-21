@@ -69,7 +69,11 @@ function Mobile() {
         <p className={pClassesMobile}>{text.body2}</p>
       </div>
       <div className="absolute bottom-[19%] left-0 right-0 mx-auto text-center">
-        <BLCursorButton>{text.button}</BLCursorButton>
+        <Link href="/" passHref>
+          <a>
+            <BLCursorButton>{text.button}</BLCursorButton>
+          </a>
+        </Link>
       </div>
     </div>
   )
