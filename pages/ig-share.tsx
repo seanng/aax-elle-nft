@@ -127,9 +127,6 @@ const IgSharePage: NextPage = () => {
             >
               鑄造你的 Impact NFT！
             </OutlinedHeading>
-            <div className="mt-20 text-center">
-              <img src="/images/ig-share-bottom.png" height="25" width="354" />
-            </div>
           </div>
         </div>
       </div>
