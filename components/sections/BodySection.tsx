@@ -99,7 +99,7 @@ export function BodySection() {
             協會努力將符合國際標準的動物福利帶入台灣，
             來自於不同領域的理監事成員、專業工作人員， 及愛心志工與支持者。"
           button={
-            <a href="/" target="_blank">
+            <a href="https://www.spca.org.tw" rel="noreferrer" target="_blank">
               <BLCursorButton>認識SPCA</BLCursorButton>
             </a>
           }
