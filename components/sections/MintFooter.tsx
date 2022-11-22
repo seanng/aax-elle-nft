@@ -23,6 +23,15 @@ export function MintFooter() {
             width={55}
           />
         </a>
+        <a target="_blank" href="https://www.elle.com/tw/" rel="noreferrer">
+          <Image
+            priority
+            src="/logos/elle-white.svg"
+            alt="ELLE"
+            height={21}
+            width={54}
+          />
+        </a>
         <a target="_blank" href="https://www.hearst.com.tw" rel="noreferrer">
           <Image
             priority
@@ -32,7 +41,7 @@ export function MintFooter() {
             width={83}
           />
         </a>
-        <a target="_blank" href="https://www.aax.com" rel="noreferrer">
+        {/* <a target="_blank" href="https://www.aax.com" rel="noreferrer">
           <Image
             priority
             src="/logos/aax.svg"
@@ -40,7 +49,7 @@ export function MintFooter() {
             height={37}
             width={80}
           />
-        </a>
+        </a> */}
         <a target="_blank" href="https://pointof.co" rel="noreferrer">
           <Image
             priority
