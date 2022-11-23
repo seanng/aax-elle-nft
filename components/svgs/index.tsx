@@ -29,13 +29,19 @@ export { Raindrop } from './old-landing/Raindrop'
 export { GreenDialog } from './old-landing/GreenDialog'
 export { PoopStraight } from './old-landing/PoopStraight'
 
-// team
-export { AaxLips } from './team/AaxLips'
-export { ElleLips } from './team/ElleLips'
-export { BaizhouLips } from './team/BaizhouLips'
-export { CrzyLips } from './team/CrzyLips'
-export { PointOfLips } from './team/PointOfLips'
-export { TeamFlower } from './team/TeamFlower'
+// team & roadmap items
+export { AaxLips } from './lips/AaxLips'
+export { ElleLips } from './lips/ElleLips'
+export { BaizhouLips } from './lips/BaizhouLips'
+export { CrzyLips } from './lips/CrzyLips'
+export { PointOfLips } from './lips/PointOfLips'
+export { TeamFlower } from './lips/TeamFlower'
+export { Roadmap1Lips } from './lips/Roadmap1Lips'
+export { Roadmap2Lips } from './lips/Roadmap2Lips'
+export { Roadmap3Lips } from './lips/Roadmap3Lips'
+export { Roadmap4Lips } from './lips/Roadmap4Lips'
+export { Roadmap5Lips } from './lips/Roadmap5Lips'
+export { Roadmap6Lips } from './lips/Roadmap6Lips'
 
 // icons
 export { FBIcon } from './icons/FBIcon'

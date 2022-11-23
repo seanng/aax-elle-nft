@@ -1,15 +1,6 @@
-import {
-  BLCursorButton,
-  GreenDialog,
-  Marquee,
-  PinkSunflower,
-  TeamFlower,
-  PoopStraight,
-} from 'components'
+import { BLCursorButton, GreenDialog, Marquee, TeamFlower } from 'components'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { Disclosure } from '@headlessui/react'
-import { PlusIcon, MinusIcon } from '@heroicons/react/outline'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCoverflow } from 'swiper'
 import Link from 'next/link'
@@ -22,6 +13,25 @@ const CrzyLips = dynamic(() => import('components').then((m) => m.CrzyLips))
 const AaxLips = dynamic(() => import('components').then((m) => m.AaxLips))
 const PointOfLips = dynamic(() =>
   import('components').then((m) => m.PointOfLips)
+)
+
+const Roadmap1Lips = dynamic(() =>
+  import('components').then((m) => m.Roadmap1Lips)
+)
+const Roadmap2Lips = dynamic(() =>
+  import('components').then((m) => m.Roadmap2Lips)
+)
+const Roadmap3Lips = dynamic(() =>
+  import('components').then((m) => m.Roadmap3Lips)
+)
+const Roadmap4Lips = dynamic(() =>
+  import('components').then((m) => m.Roadmap4Lips)
+)
+const Roadmap5Lips = dynamic(() =>
+  import('components').then((m) => m.Roadmap5Lips)
+)
+const Roadmap6Lips = dynamic(() =>
+  import('components').then((m) => m.Roadmap6Lips)
 )
 
 const faqs = [
@@ -44,6 +54,37 @@ const faqs = [
   {
     question: 'What is the answer? 5',
     answer: 'The answer is love.',
+  },
+]
+
+const roadmapItems = [
+  {
+    name: '漫遊元宇宙課程',
+    Svg: Roadmap1Lips,
+    url: 'https://www.xuexue.tw/workshop/',
+  },
+  {
+    name: '虛擬角色人物徵件',
+    Svg: Roadmap2Lips,
+    url: 'https://avatar.elleverse.io',
+  },
+  {
+    name: '首創互動式NFT',
+    Svg: Roadmap3Lips,
+    url: 'https://www.elleverse.io',
+  },
+  {
+    name: 'Web 3.0 交友程式',
+    Svg: Roadmap4Lips,
+    url: 'https://www.elle.com/tw/life/tech/g41717113/elleverse-zima',
+  },
+  {
+    name: 'To be noticed',
+    Svg: Roadmap5Lips,
+  },
+  {
+    name: 'To be noticed',
+    Svg: Roadmap6Lips,
   },
 ]
 
@@ -126,6 +167,67 @@ export function BodySection() {
           }
         />
       </div>
+
+      {/* Roadmap */}
+      <div className="lg:px-28 mb-10 md:mb-36">
+        {/* Heading */}
+        <div className="relative flex justify-between items-center my-12 md:my-28 lg:my-40 px-8 md:px-20">
+          <div className="w-full h-[2px] md:h-1 bg-lime" />
+          <div className="flex-none text-white px-3 md:px-6 font-english font-black text-2xl md:text-3xl lg:text-5xl">
+            ELLEverse Roadmap
+          </div>
+          <div className="w-full h-[2px] md:h-1 bg-lime" />
+          <GreenDialog className="absolute -top-[125%] left-[56%] md:left-[62%] w-[35px] h-[21px] md:w-[111px] md:h-[65px]" />
+        </div>
+        {/* Mobile Carousel */}
+        <div className="md:hidden" id="welcome-carousel-mobile">
+          <Swiper
+            effect="coverflow"
+            grabCursor
+            centeredSlides
+            loop
+            slidesPerView={3}
+            modules={[EffectCoverflow]}
+          >
+            {roadmapItems.map((item, i) => (
+              <SwiperSlide key={i}>
+                <TeamMember Svg={item.Svg} name={item.name} url={item.url} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+
+        {/* Desktop Grid */}
+        <div className="hidden md:block text-center px-20">
+          <div className="flex flex-wrap justify-center">
+            {roadmapItems.map((item, i) => (
+              <div key={i} className="w-[33%]">
+                <TeamMember
+                  Svg={item.Svg}
+                  name={item.name}
+                  // title={item.title}
+                  url={item.url}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Marquee */}
+      <div className="mb-14 md:mb-48 font-english max-w-full overflow-hidden -rotate-3 font-extrabold text-4xl md:text-[168px] leading-[48px] md:leading-[224px]">
+        <div className="relative text-black bg-lime h-12 md:h-56">
+          <Marquee velocity={200}>
+            SHHHH.......&nbsp;&nbsp;&nbsp;SHHHH.......&nbsp;&nbsp;&nbsp;
+          </Marquee>
+        </div>
+        <div className="relative text-black bg-[#EDFA00] h-12 md:h-56">
+          <Marquee velocity={200} direction="right">
+            TELL YOU A SECRET ____&nbsp;&nbsp;TELL YOU A SECRET ____&nbsp;&nbsp;
+          </Marquee>
+        </div>
+      </div>
+
       {/* Team */}
       <div className="lg:px-28 mb-10 md:mb-36">
         {/* Heading */}
@@ -159,6 +261,7 @@ export function BodySection() {
             ))}
           </Swiper>
         </div>
+
         {/* Desktop Grid */}
         <div className="hidden md:block text-center px-20">
           <div className="flex flex-wrap justify-center">
@@ -175,19 +278,6 @@ export function BodySection() {
           </div>
         </div>
       </div>
-      {/* Marquee */}
-      {/* <div className="mb-14 md:mb-48 font-english max-w-full overflow-hidden -rotate-3 font-extrabold text-4xl md:text-[168px] leading-[48px] md:leading-[224px]">
-        <div className="relative text-black bg-lime h-12 md:h-56">
-          <Marquee velocity={200}>
-            SHHHH.......&nbsp;&nbsp;&nbsp;SHHHH.......&nbsp;&nbsp;&nbsp;
-          </Marquee>
-        </div>
-        <div className="relative text-black bg-[#EDFA00] h-12 md:h-56">
-          <Marquee velocity={200} direction="right">
-            TELL YOU A SECRET ____&nbsp;&nbsp;TELL YOU A SECRET ____&nbsp;&nbsp;
-          </Marquee>
-        </div>
-      </div> */}
       {/* FAQ */}
       {/* <div className="relative pb-14 md:pb-48">
         <div className="px-8 md:px-20 lg:px-28 mb-10 md:mb-36">
@@ -269,7 +359,7 @@ function Feature({ heading, body, button }) {
   )
 }
 
-function TeamMember({ name, title, Svg, url }) {
+function TeamMember({ name = '', title = '', Svg, url = '#' }) {
   return (
     <div className="font-english font-light text-white text-sm md:text-xl lg:text-3xl mx-2 md:px-4 md:mb-16 text-center">
       <a href={url} target="_blank" className="group relative" rel="noreferrer">
@@ -284,10 +374,12 @@ function TeamMember({ name, title, Svg, url }) {
           className="relative md:group-hover:scale-110 transition-transform origin-top duration-300 ease-out"
         />
       </a>
-      <h6 className="font-extrabold mt-3 md:mt-6 lg:mt-10 leading-5 md:leading-7 lg:leading-10">
-        {name}
-      </h6>
-      <p>{title}</p>
+      {name && (
+        <h6 className="font-extrabold mt-3 md:mt-6 lg:mt-10 leading-5 md:leading-7 lg:leading-10">
+          {name}
+        </h6>
+      )}
+      {title && <p>{title}</p>}
     </div>
   )
 }
