@@ -79,11 +79,11 @@ const roadmapItems = [
     url: 'https://www.elle.com/tw/life/tech/g41717113/elleverse-zima',
   },
   {
-    name: 'To be noticed',
+    name: 'To be announced',
     Svg: Roadmap5Lips,
   },
   {
-    name: 'To be noticed',
+    name: 'To be announced',
     Svg: Roadmap6Lips,
   },
 ]
