@@ -95,20 +95,21 @@ const LandingPage: NextPage = () => {
       <div className="bg-guava py-2 w-full mb-8 md:mb-12">
         <Marquee velocity={100}>
           <span className="font-mono font-medium text-xl text-black">
-            Impact NFT 限量預發10天，預售階段將在12/10截止!&nbsp;&nbsp;&nbsp;
-            Impact NFT 限量預發10天，預售階段將在12/10截止!&nbsp;&nbsp;&nbsp;
-            Impact NFT 限量預發10天，預售階段將在12/10截止!&nbsp;&nbsp;&nbsp;
+            Impact NFT 限量發售3113張！ELLEverse
+            愛的鑄造廠正籌備您的愛的秘密中，請靜待官方更多消息~&nbsp;&nbsp;&nbsp;
+            Impact NFT 限量發售3113張！ELLEverse
+            愛的鑄造廠正籌備您的愛的秘密中，請靜待官方更多消息~&nbsp;&nbsp;&nbsp;
+            Impact NFT 限量發售3113張！ELLEverse
+            愛的鑄造廠正籌備您的愛的秘密中，請靜待官方更多消息~&nbsp;&nbsp;&nbsp;
           </span>
         </Marquee>
       </div>
-
       <OutlinedHeading
         color="#55F263"
         fontSizeClass="text-5xl md:text-6xl font-mono italic leading-120% text-center w-72 md:w-full mb-8 md:mb-16"
       >
         ELLEverse Impact NFT
       </OutlinedHeading>
-
       <MintHeroMobile className="md:hidden mb-14" />
       <MintHeroDesktop className="hidden md:block mb-14 max-h-[700px]" />
       <Link href="/mint">
@@ -167,20 +168,18 @@ const LandingPage: NextPage = () => {
         <br />
         好想寫點東西給<mark className="bg-lime">未來</mark>的自己
       </p>
-
       {/* YOUTUBE VIDEO */}
       <div className="mb-20 md:mb-28 max-w-full w-[500px] h-[282px] md:w-[750px] md:h-[422px]">
         <iframe
           width="100%"
           height="100%"
-          src="https://www.youtube.com/embed/LJ-uCAu6acE"
+          src="https://www.youtube.com/embed/ts4yTGzYzrw"
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         />
       </div>
-
       <div className="flex items-center md:mb-4">
         <BlingIcon />
         <OutlinedHeading color="#FF66FF" className="mx-2 md:mx-4">
@@ -191,7 +190,6 @@ const LandingPage: NextPage = () => {
       <OutlinedHeading color="#FF66FF" className="mx-2 md:mx-4 mb-10 md:mb-20">
         鑄造愛的秘密工坊
       </OutlinedHeading>
-
       <FlipCardsSection className="mb-navbar-height" />
       {[NOT_STARTED, PRIVATE_SALE].includes(salePhase) && (
         <>
@@ -216,13 +214,9 @@ const LandingPage: NextPage = () => {
             最特別的數位紀念品嗎？
           </OutlinedHeading>
           <p className="mt-4 md:mt-10 text-white md:text-2xl text-center tracking-wider leading-150% md:leading-150% font-noto">
-            名人的一句話是特別框
+            名人的一句經典名言
             <br />
-            他的回信將被鑄造為
-            <br />
-            Special Impact NFT
-            <br />
-            永存對彼此的愛
+            讓你的Impact NFT 賦上更有意義的秘密
           </p>
         </>
       )}
