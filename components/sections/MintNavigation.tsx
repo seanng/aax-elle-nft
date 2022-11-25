@@ -99,11 +99,11 @@ const Nav = () => (
     >
       AAX 新手指南
     </a>
-    <Link href="/faq">
-      <a>常見問題</a>
-    </Link>
     <Link href="/mint">
       <a>鑄造告白</a>
+    </Link>
+    <Link href="/faq">
+      <a>常見問題</a>
     </Link>
     <a
       target="_blank"
