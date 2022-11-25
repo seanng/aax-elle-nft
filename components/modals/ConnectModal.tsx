@@ -22,7 +22,14 @@ export function ConnectModal({ isOpen, closeModal, connect }) {
         <h4 className="text-2xl md:text-3xl mb-8">連結錢包</h4>
         <div className="mb-4">
           我還沒有錢包
-          <a className="ml-2 underline text-cyan-600">為什麼需要虛擬錢包？</a>
+          <a
+            className="ml-2 underline text-cyan-600"
+            target="_blank"
+            href="https://www.aax.com/zh-TW/newbie/"
+            rel="noreferrer"
+          >
+            為什麼需要虛擬錢包？
+          </a>
         </div>
         <MetaMaskButton
           hasMetaMask={hasMetaMask}
