@@ -23,6 +23,7 @@ async function main() {
 // Goerli Contract v3 deployed on 8 Nov: 0x447D1A0dD7e37E13f16678cCF4F1416f77aD6CB5
 // Goerli Contract v4 deployed on 10 Nov: 0x09cDDb19b298f4b6399793DcEB0E5e88621e81dE
 // Goerli Contract v5 deployed on 15 Nov: 0xebe71D5c9D5D1871612888985dF73afB33FE6823 (changes safeMint to mint)
+// Goerli Contract v6 deployed on 26 Nov: 0x610F7fC671a2b842970C5FEAb05e0DB25b6d1aB7
 
 main()
   .then(() => process.exit(0))
