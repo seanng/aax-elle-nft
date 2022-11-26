@@ -101,12 +101,21 @@ const faqs = [
     question:
       '為什麼是Free Mint NFT 還需要負擔最低費用 $500 TWD & Gas fee 呢？',
     answer: (
-      <p>
-        我們這次與防止虐待動物協會（SPCA）合作，希望透過愛的互動機制分享給你的愛人之外，同時也能分享愛給小動物們，讓他們也能被你的愛照護到呦～鑄造(mint)
-        NFT 的過程，需由 NFT 持有者負擔簽署智能合約交易產生的 Gas Fee。Gas Fee
-        類似於「交易轉帳手續費」的概念。連結加密貨幣錢包並確認鑄造 NFT
-        後，即完成 Love Impact NFT 的鑄造，一旦完成將不能取消喔，請謹慎決定。
-      </p>
+      <>
+        <p>
+          我們這次與防止虐待動物協會（SPCA）合作，希望透過愛的互動機制分享給你的愛人之外，同時也能分享愛給小動物們，讓他們也能被你的愛照護到呦～
+        </p>
+        <br />
+        <p>
+          鑄造(mint)NFT 的過程，需由 NFT 持有者負擔簽署智能合約交易產生的 Gas
+          Fee。Gas Fee 類似於「交易轉帳手續費」的概念。
+        </p>
+        <br />
+        <p>
+          連結加密貨幣錢包並確認鑄造 NFT 後，即完成 Love Impact NFT
+          的鑄造，一旦完成將不能取消喔，請謹慎決定。
+        </p>
+      </>
     ),
   },
   {
@@ -133,7 +142,11 @@ const faqs = [
         <br />
         <p>
           *[小秘訣] 在Opensea 上點擊 &quot;Refresh metadata&quot;
-          按鈕，可以更新資訊喔!*[溫馨提醒] NFT是不可逆的圖檔，當Love Impact NFT
+          按鈕，可以更新資訊喔!
+        </p>
+        <br />
+        <p>
+          *[溫馨提醒] NFT是不可逆的圖檔，當Love Impact NFT
           盲盒圖一旦被開啟，盲盒圖將會消失呦！切記要儲存好你獨特的NFT盲盒圖！
         </p>
       </>
@@ -142,22 +155,35 @@ const faqs = [
   {
     question: '如果對方沒有開啟 Love Impact NFT 怎麼辦？',
     answer: (
-      <p>
-        如果對方沒有開啟 Love Impact NFT，- 活動期間內：你可以選擇自己用 E-mail
-        內的連結與專屬密碼開啟這個專屬於自己的 Love Impact NFT- 活動截止後：NFT
-        圖像邊框將會顯示成新的文字內容，一句ELLE想對你說的話-- 噓！
-      </p>
+      <>
+        <p>如果對方沒有開啟 Love Impact NFT，-</p>
+        <br />
+        <p>
+          活動期間內：你可以選擇自己用 E-mail
+          內的連結與專屬密碼開啟這個專屬於自己的 Love Impact NFT-
+        </p>
+        <br />
+        <p>
+          活動截止後：NFT 圖像邊框將會顯示成新的文字內容，一句ELLE想對你說的話--
+          噓！
+        </p>
+      </>
     ),
   },
   {
     question: '我該如何拿到「限定版」的 ELLE Love Impact NFT？',
     answer: (
-      <p>
-        「特別版」的 Love Impact NFT 只有在私售時期釋出的系列 （2022/12/10 ~
-        2022/12/20）與 ELLEverse
-        合作藝人的愛的名言將會被鑄造成金典邊框！粉絲若是想要獲得名人的金典邊框，透過點擊名人於社群平台上分享的特定連結，填寫「愛的白名單」問券，就能優先獲得鑄造權取得，鑄造Love
-        Impact NFT獲得囉～
-      </p>
+      <>
+        <p>
+          「特別版」的 Love Impact NFT 只有在私售時期釋出的系列 （2022/12/10 ~
+          2022/12/20）與 ELLEverse 合作藝人的愛的名言將會被鑄造成金典邊框！
+        </p>
+        <br />
+        <p>
+          粉絲若是想要獲得名人的金典邊框，透過點擊名人於社群平台上分享的特定連結，填寫「愛的白名單」問券，就能優先獲得鑄造權取得，鑄造Love
+          Impact NFT獲得囉～
+        </p>
+      </>
     ),
   },
   {
@@ -167,8 +193,11 @@ const faqs = [
         <p>
           只要在公售期間 （2022/12/21 ~ 銷售完）鑄造(mint) 一張 ELLE Love Impact
           NFT，取得獨一無二 Impact NFT
-          的同時，你也會於虛擬錢包中一併獲得一張本次活動的「抽獎券」NFT！Mint
-          越多愛，中獎機率越高～ 預祝你抽中 ELLE
+          的同時，你也會於虛擬錢包中一併獲得一張本次活動的「抽獎券」NFT！
+        </p>
+        <br />
+        <p>
+          Mint 越多愛，中獎機率越高～ 預祝你抽中 ELLE
           特別準備的大禮喔～（待補大禮內容）
         </p>
         <br />
@@ -191,29 +220,43 @@ const faqs = [
   {
     question: '我該如何查看鑄造後的 Love Impact NFT 呢？',
     answer: (
-      <p>
-        有兩個方式可以查看你專屬的Love Impact NFT 呦！方法1: 至Opensea
-        上查看請前往連結：連結錢包後進入Opensea 上的 Collection page
-        ，這就是你在ELLEverse 區塊鏈上專屬的秘密代號呦！方法2:
-        至手機版小狐狸錢包Metamask App因為手機版Metamask 需手動加入您的ELLE
-        Impact NFT，請至App主畫面的收藏品點擊 &quot;添加收藏品&quot;
-        並輸入ELLEverse 合約地址 （放可copy & paste）以及你的秘密代號#
-        ，就能永存於你的虛擬錢包中呦！
-      </p>
+      <>
+        <p>有兩個方式可以查看你專屬的Love Impact NFT 呦！</p>
+        <br />
+        <p>
+          方法1: 至Opensea 上查看請前往連結：連結錢包後進入Opensea 上的
+          Collection page ，這就是你在ELLEverse 區塊鏈上專屬的秘密代號呦！
+        </p>
+        <br />
+        <p>
+          方法2: 至手機版小狐狸錢包Metamask App因為手機版Metamask
+          需手動加入您的ELLE Impact NFT，請至App主畫面的收藏品點擊
+          &quot;添加收藏品&quot; 並輸入ELLEverse 合約地址 （放可copy &
+          paste）以及你的秘密代號# ，就能永存於你的虛擬錢包中呦！
+        </p>
+      </>
     ),
   },
   {
     question: '我該如何轉送「愛的白名單NFT」呢？',
     answer: (
-      <p>
-        有兩個方式可以轉傳「愛的白名單NFT」給你的好友呦！方法1: 至Opensea
-        「轉移」請前往ELLEverse Opensea網頁：連結錢包後進入Opensea 上的
-        Collection page點擊進入後，選擇欲轉移的Impact NFT
-        ，右上方第二個按鈕「轉移」輸入好友的虛擬錢包地址並完成轉移～方法2:
-        至手機版小狐狸錢包Metamask App請先添加「愛的白名單NFT」至手機版Metamask
-        APP [ 需手動加入您的白名單NFT至App主畫面的收藏品 ]
-        點擊&quot;收藏品&quot; 並輸入好友的虛擬錢包地址並完成轉移！
-      </p>
+      <>
+        <p>有兩個方式可以轉傳「愛的白名單NFT」給你的好友呦！</p>
+        <br />
+        <p>
+          方法1: 至Opensea 「轉移」請前往ELLEverse
+          Opensea網頁：連結錢包後進入Opensea 上的 Collection
+          page點擊進入後，選擇欲轉移的Impact NFT
+          ，右上方第二個按鈕「轉移」輸入好友的虛擬錢包地址並完成轉移～
+        </p>
+        <br />
+        <p>
+          方法2: 至手機版小狐狸錢包Metamask
+          App請先添加「愛的白名單NFT」至手機版Metamask APP [
+          需手動加入您的白名單NFT至App主畫面的收藏品 ] 點擊&quot;收藏品&quot;
+          並輸入好友的虛擬錢包地址並完成轉移！
+        </p>
+      </>
     ),
   },
 ]
