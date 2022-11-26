@@ -14,7 +14,7 @@ export function MintFooter() {
             width={101}
           />
         </a>
-        <a target="_blank" href="https://www.crzy.io" rel="noreferrer">
+        <a target="_blank" href="http://crzy.io" rel="noreferrer">
           <Image
             priority
             src="/logos/crzy.svg"

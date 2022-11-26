@@ -6,14 +6,18 @@ import contractABI from 'artifacts/contracts/Elleverse.sol/Elleverse.json'
 const GOERLI_PRIVATE_KEY =
   process.env.GOERLI_PRIVATE_KEY ?? 'YOUR GOERLI PRIVATE KEY'
 
-const goerliGetSigner = () =>
-  new Wallet(
+const goerliGetSigner = () => {
+  const wallet = new Wallet(
     GOERLI_PRIVATE_KEY,
     providers.getDefaultProvider(correctNetwork, {
       etherscan: process.env.ETHERSCAN_API_KEY,
       infura: process.env.INFURA_PROJECT_KEY,
+      alchemy: process.env.ALCHEMY_API_KEY,
     })
   )
+
+  return wallet
+}
 
 const getSigner: () => Signer = {
   localhost: () => new providers.JsonRpcProvider().getSigner(),
