@@ -14,7 +14,7 @@ import axios from 'lib/axios'
 import { MessageToken, PrizeToken } from '@prisma/client'
 import { useDetectionContext, useWeb3Context } from 'context'
 import Link from 'next/link'
-import { PRIVATE_SALE, SAFARI } from 'shared/constants'
+import { NOT_STARTED, PRIVATE_SALE, SAFARI } from 'shared/constants'
 import {
   contractAddress,
   metadata,
@@ -97,7 +97,7 @@ const CollectionPage: NextPage = () => {
     <TokenInfoBox
       tokens={prizeTokens}
       isLoading={isFetchingPrizeTokens}
-      showsPrizeTokens={salePhase !== PRIVATE_SALE}
+      showsPrizeTokens={salePhase !== PRIVATE_SALE && salePhase !== NOT_STARTED}
     >
       <div className="text-center underline text-blue-600">
         {salePhase !== PRIVATE_SALE ? (
