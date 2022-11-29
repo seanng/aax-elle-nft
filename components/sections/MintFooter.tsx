@@ -87,7 +87,7 @@ export function MintFooter() {
             <YTIcon className="h-6 w-6 ml-2" />
           </a>
         </div>
-        <p className="text-white mb-4">Powered by AAX</p>
+        {/* <p className="text-white mb-4">Powered by AAX</p> */}
       </div>
     </div>
   )

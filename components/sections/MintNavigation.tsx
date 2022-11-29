@@ -97,7 +97,7 @@ const Nav = () => (
       href="https://www.aax.com/zh-TW/newbie/"
       rel="noreferrer"
     >
-      AAX 新手指南
+      CRZY 新手指南
     </a>
     <Link href="/mint">
       <a>鑄造告白</a>
@@ -124,7 +124,7 @@ const Logo = () => {
           src="/logos/elleverse-logo.svg"
           alt="ELLEverse"
           height={37}
-          width={130}
+          width={153}
         />
       </a>
     </Link>
