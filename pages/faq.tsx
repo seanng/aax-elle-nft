@@ -23,11 +23,11 @@ const faqs = [
           - 如何使用虛擬錢包轉帳和交易？ {'>>'} 連結至{' '}
           <a
             className="text-blue-500"
-            href="https://www.aax.com/zh-TW/newbie/"
+            href="https://www.accucrazy.com/category/crzy-newbie/"
             target="_blank"
             rel="noreferrer"
           >
-            https://www.aax.com/zh-TW/newbie/
+            https://www.accucrazy.com/category/crzy-newbie/
           </a>
         </p>
         <p>

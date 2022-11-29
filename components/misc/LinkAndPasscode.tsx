@@ -9,12 +9,7 @@ export function LinkAndPasscode({
   const clipboardText = `
 趕快解鎖 ELLEverse Impact NFT 看看對方想對你說的話吧！
 解鎖連結：${link}
-解鎖密碼：${passcode}
-
-=====================
-新手輸入邀請碼註冊 AAX 現賺 5 USDT！
-ELLEverse 專屬邀請碼: ELLE3113
-www.aax.com/zh-TW/invite/sign-up?inviteCode=ELLE3113`
+解鎖密碼：${passcode}`
 
   return (
     <div

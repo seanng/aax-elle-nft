@@ -95,12 +95,12 @@ const teamMembers = [
     url: 'https://elle.com/tw',
     Svg: ElleLips,
   },
-  {
-    title: 'Tech Partner',
-    name: 'AAX Limited',
-    url: 'https://aax.com/',
-    Svg: AaxLips,
-  },
+  // {
+  //   title: 'Tech Partner',
+  //   name: 'Consultants',
+  //   // url: 'https://aax.com/',
+  //   Svg: AaxLips,
+  // },
   {
     title: 'Strategic Planner',
     name: 'CRZY.io 肖準行銷',

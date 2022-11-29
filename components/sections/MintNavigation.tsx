@@ -94,7 +94,7 @@ const Nav = () => (
     </Link> */}
     <a
       target="_blank"
-      href="https://www.aax.com/zh-TW/newbie/"
+      href="https://www.accucrazy.com/category/crzy-newbie/"
       rel="noreferrer"
     >
       CRZY 新手指南

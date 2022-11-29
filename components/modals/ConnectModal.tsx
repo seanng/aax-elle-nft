@@ -25,7 +25,7 @@ export function ConnectModal({ isOpen, closeModal, connect }) {
           <a
             className="ml-2 underline text-cyan-600"
             target="_blank"
-            href="https://www.aax.com/zh-TW/newbie/"
+            href="https://www.accucrazy.com/category/crzy-newbie/"
             rel="noreferrer"
           >
             為什麼需要虛擬錢包？

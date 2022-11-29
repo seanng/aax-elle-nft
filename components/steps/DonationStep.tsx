@@ -277,7 +277,7 @@ export function DonationStep({
                   <div className="text-white">
                     <p>錢包資產不足 請購買以太幣</p>
                     <a
-                      href="https://www.aax.com/zh-TW/newbie/"
+                      href="https://www.accucrazy.com/category/crzy-newbie/"
                       target="_blank"
                       className="underline"
                       rel="noreferrer"
@@ -309,7 +309,7 @@ export function DonationStep({
                   <WarningStamp />
                   <div className="text-white">
                     <p>Unable to mint.</p>
-                    <p>Please contact AAX quoting Error 96.</p>
+                    <p>Please contact Accucrazy quoting Error 96.</p>
                   </div>
                 </div>
               ),
