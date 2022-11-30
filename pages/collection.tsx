@@ -14,7 +14,12 @@ import axios from 'lib/axios'
 import { MessageToken, PrizeToken } from '@prisma/client'
 import { useDetectionContext, useWeb3Context } from 'context'
 import Link from 'next/link'
-import { NOT_STARTED, PRIVATE_SALE, SAFARI } from 'shared/constants'
+import {
+  FINISHED,
+  NOT_STARTED,
+  PRIVATE_SALE,
+  PUBLIC_SALE,
+} from 'shared/constants'
 import {
   contractAddress,
   metadata,
@@ -100,11 +105,7 @@ const CollectionPage: NextPage = () => {
       showsPrizeTokens={salePhase !== PRIVATE_SALE && salePhase !== NOT_STARTED}
     >
       <div className="text-center underline text-blue-600">
-        {salePhase !== PRIVATE_SALE ? (
-          <Link href="/lucky-draw">
-            <a>前往 ELLE 抽獎頁</a>
-          </Link>
-        ) : (
+        {salePhase !== PUBLIC_SALE && salePhase !== FINISHED && (
           <Link href="/faq">
             <a>什麼是白名單NFT？</a>
           </Link>

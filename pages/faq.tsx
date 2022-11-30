@@ -12,36 +12,11 @@ const faqs = [
     question:
       '我一定要有虛擬錢包和以太幣(ETH)，才能鑄造 ELLE Love Impact NFT 嗎？',
     answer: (
-      <>
-        <p>
-          是的，因為鑄造(mint) NFT 需要連結虛擬錢包，其中也會衍伸部分 Gas Fee
-          (手續費)，所以我們建議你在活動開始前，就先辦好錢包，並轉帳好所需的以太幣喔，以利於鑄造獨一無二的
-          ELLE Love Impact NFT 喔～
-        </p>
-        <br />
-        <p>
-          - 如何使用虛擬錢包轉帳和交易？ {'>>'} 連結至{' '}
-          <a
-            className="text-blue-500"
-            href="https://www.accucrazy.com/category/crzy-newbie/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            https://www.accucrazy.com/category/crzy-newbie/
-          </a>
-        </p>
-        <p>
-          - 轉帳常見問題？ {'>>'} 連結至{' '}
-          <a
-            className="text-blue-500"
-            href="https://reurl.cc/8pl2p4"
-            target="_blank"
-            rel="noreferrer"
-          >
-            https://reurl.cc/8pl2p4
-          </a>
-        </p>
-      </>
+      <p>
+        是的，因為鑄造(mint) NFT 需要連結虛擬錢包，其中也會衍伸部分 Gas Fee
+        (手續費)，所以我們建議你在活動開始前，就先辦好錢包，並轉帳好所需的以太幣喔，以利於鑄造獨一無二的
+        ELLE Love Impact NFT 喔～
+      </p>
     ),
   },
   {
@@ -69,30 +44,6 @@ const faqs = [
           若想要參與 ELLE Love Impact NFT
           的「互動」機制，取得這份「專屬又特別」的愛的憑證，就需要開通虛擬錢包、轉入得以支付
           Gas Fee 的以太幣，以利於鑄造獨一無二的 ELLE Love Impact NFT 喔～
-        </p>
-        <br />
-        <p>
-          - 如何使用虛擬錢包轉帳和交易？ {'>>'} 連結至{' '}
-          <a
-            href="https://reurl.cc/NRaZ0Q"
-            target="_blank"
-            rel="noreferrer"
-            className="text-blue-500"
-          >
-            https://reurl.cc/NRaZ0Q
-          </a>
-        </p>
-        <br />
-        <p>
-          - 轉帳常見問題？ {'>>'} 連結至{' '}
-          <a
-            href="https://reurl.cc/8pl2p4"
-            target="_blank"
-            rel="noreferrer"
-            className="text-blue-500"
-          >
-            https://reurl.cc/8pl2p4
-          </a>
         </p>
       </>
     ),
@@ -171,53 +122,6 @@ const faqs = [
     ),
   },
   {
-    question: '我該如何拿到「限定版」的 ELLE Love Impact NFT？',
-    answer: (
-      <>
-        <p>
-          「特別版」的 Love Impact NFT 只有在私售時期釋出的系列 （2022/12/10 ~
-          2022/12/20）與 ELLEverse 合作藝人的愛的名言將會被鑄造成金典邊框！
-        </p>
-        <br />
-        <p>
-          粉絲若是想要獲得名人的金典邊框，透過點擊名人於社群平台上分享的特定連結，填寫「愛的白名單」問券，就能優先獲得鑄造權取得，鑄造Love
-          Impact NFT獲得囉～
-        </p>
-      </>
-    ),
-  },
-  {
-    question: '我該如何取得本次活動的「抽獎券」呢？',
-    answer: (
-      <>
-        <p>
-          只要在公售期間 （2022/12/21 ~ 銷售完）鑄造(mint) 一張 ELLE Love Impact
-          NFT，取得獨一無二 Impact NFT
-          的同時，你也會於虛擬錢包中一併獲得一張本次活動的「抽獎券」NFT！
-        </p>
-        <br />
-        <p>
-          Mint 越多愛，中獎機率越高～ 預祝你抽中 ELLE
-          特別準備的大禮喔～（待補大禮內容）
-        </p>
-        <br />
-        <p>
-          *中獎名單將於抽獎後統一公布於活動網站，中獎者需於指定期間內完成回填完整中獎所需資料，逾期未領獎者視為放棄中獎資格。
-        </p>
-      </>
-    ),
-  },
-  {
-    question: '我該如何進入「愛的白名單」，搶先取得參與活動的資格呢？',
-    answer: (
-      <p>
-        在私售活動期間（2022/12/10 ~ 2022/12/20)
-        ，可以透過點擊合作藝人/網紅於社群平台上分享的特定連結，填寫「愛的白名單」問券，就能進入「愛的白名單」，搶先取得空投「限定版」的
-        ELLE Love Impact NFT，比別人優先參與本次的活動喔！
-      </p>
-    ),
-  },
-  {
     question: '我該如何查看鑄造後的 Love Impact NFT 呢？',
     answer: (
       <>
@@ -229,10 +133,9 @@ const faqs = [
         </p>
         <br />
         <p>
-          方法2: 至手機版小狐狸錢包Metamask App因為手機版Metamask
-          需手動加入您的ELLE Impact NFT，請至App主畫面的收藏品點擊
-          &quot;添加收藏品&quot; 並輸入ELLEverse 合約地址 （放可copy &
-          paste）以及你的秘密代號# ，就能永存於你的虛擬錢包中呦！
+          方法2:
+          請至手機版小狐狸錢包App《Metamask》，點擊主畫面的收藏品即能查看擁有的秘密Impact
+          NFT
         </p>
       </>
     ),
@@ -251,10 +154,9 @@ const faqs = [
         </p>
         <br />
         <p>
-          方法2: 至手機版小狐狸錢包Metamask
-          App請先添加「愛的白名單NFT」至手機版Metamask APP [
-          需手動加入您的白名單NFT至App主畫面的收藏品 ] 點擊&quot;收藏品&quot;
-          並輸入好友的虛擬錢包地址並完成轉移！
+          方法2:
+          請至手機版小狐狸錢包App《Metamask》，點擊主畫面的收藏品即能查看擁有的秘密Impact
+          NFT
         </p>
       </>
     ),

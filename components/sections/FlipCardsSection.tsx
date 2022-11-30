@@ -29,8 +29,10 @@ const data = [
   {
     Svg: FlipCard2,
     front: (
-      <div className={withClass('text-guava top-16 md:top-32 px-7 font-bold')}>
-        ELLE的Impact NFT有什麼特別？
+      <div className={withClass('text-guava top-16 md:top-32 px-8 font-bold')}>
+        ELLE的Impact NFT
+        <br />
+        有什麼特別？
       </div>
     ),
     back: (
@@ -52,7 +54,9 @@ const data = [
     ),
     back: (
       <div className={withClass('text-black top-20 md:top-40 px-8 md:px-14')}>
-        透過NFT上鏈後，愛可以永恆於區塊鏈上
+        透過NFT上鏈後，
+        <br />
+        愛可以永恆於區塊鏈上
       </div>
     ),
   },
@@ -65,7 +69,9 @@ const data = [
     ),
     back: (
       <div className={withClass('text-black top-12 md:top-24 px-7 md:px-14')}>
-        ELLE Impact NFT限量3,113個 (3113倒過來就是ELLE喔)
+        ELLE Impact <br />
+        NFT限量3,113個 <br />
+        (3113倒過來就是ELLE喔)
       </div>
     ),
   },
