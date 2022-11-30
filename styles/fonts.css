@@ -1,46 +1,4 @@
 @font-face {
-  font-family: 'GenSenRounded';
-  font-weight: 300;
-  src: url('/fonts/GenSenRounded-L.ttc');
-}
-@font-face {
-  font-family: 'GenSenRounded';
-  font-weight: 400;
-  src: url('/fonts/GenSenRounded-R.ttc');
-}
-@font-face {
-  font-family: 'GenSenRounded';
-  font-weight: 500;
-  src: url('/fonts/GenSenRounded-M.ttc');
-}
-@font-face {
-  font-family: 'GenSenRounded';
-  font-weight: 700;
-  src: url('/fonts/GenSenRounded-B.ttc');
-}
-
-@font-face {
-  font-family: 'MplusRounded';
-  font-weight: 300;
-  src: url('/fonts/MPLUSRounded1c-Light.ttf');
-}
-@font-face {
-  font-family: 'MplusRounded';
-  font-weight: 500;
-  src: url('/fonts/MPLUSRounded1c-Medium.ttf');
-}
-@font-face {
-  font-family: 'MplusRounded';
-  font-weight: 800;
-  src: url('/fonts/MPLUSRounded1c-ExtraBold.ttf');
-}
-@font-face {
-  font-family: 'MplusRounded';
-  font-weight: 900;
-  src: url('/fonts/MPLUSRounded1c-Black.ttf');
-}
-
-@font-face {
   font-family: 'DMMono';
   src: url('/fonts/DMMono-Regular.ttf') format('truetype');
   font-weight: 400;
@@ -128,6 +86,7 @@
 
 @font-face {
   font-family: 'Cubic11';
-  src: url('https://elle-nft-prod.s3.ap-southeast-1.amazonaws.com/assets/Cubic_11_1.013_R.woff2 ') format('woff2');
+  src: url('https://elle-nft-prod.s3.ap-southeast-1.amazonaws.com/assets/Cubic_11_1.013_R.woff2 ')
+    format('woff2');
   font-weight: 400;
 }

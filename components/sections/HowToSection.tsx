@@ -35,7 +35,7 @@ const steps = [
   },
   {
     heading: '分享愛',
-    body: '將NFT圖片分享至社群，不鑄造也能分享黑白版本',
+    body: '將NFT圖片分享至社群，不鑄造也能分享Message Box',
   },
   {
     heading: '獲得抽獎',

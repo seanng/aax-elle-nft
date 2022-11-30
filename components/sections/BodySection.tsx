@@ -123,7 +123,7 @@ const teamMembers = [
 
 export function BodySection() {
   return (
-    <div className="section bg-black w-full overflow-x-clip font-gensen">
+    <div className="section bg-black w-full overflow-x-clip font-noto">
       {/* Features */}
       <div className="w-full flex flex-col items-center px-8 py-20 lg:py-24">
         <div className="w-[365px] h-[299px] md:w-[730px] md:h-[598px] lg:w-[914px] lg:h-[749px] relative">
@@ -173,7 +173,7 @@ export function BodySection() {
         {/* Heading */}
         <div className="relative flex justify-between items-center my-12 md:my-28 lg:my-40 px-8 md:px-20">
           <div className="w-full h-[2px] md:h-1 bg-lime" />
-          <div className="flex-none text-white px-3 md:px-6 font-english font-black text-2xl md:text-3xl lg:text-5xl">
+          <div className="flex-none text-white px-3 md:px-6 font-black text-2xl md:text-3xl lg:text-5xl">
             ELLEverse Roadmap
           </div>
           <div className="w-full h-[2px] md:h-1 bg-lime" />
@@ -233,7 +233,7 @@ export function BodySection() {
         {/* Heading */}
         <div className="relative flex justify-between items-center my-12 md:my-28 lg:my-40 px-8 md:px-20">
           <div className="w-full h-[2px] md:h-1 bg-lime" />
-          <div className="text-white px-3 md:px-6 font-english font-black text-2xl md:text-5xl lg:text-7xl">
+          <div className="text-white px-3 md:px-6 font-black text-2xl md:text-5xl lg:text-7xl">
             TEAM
           </div>
           <div className="w-full h-[2px] md:h-1 bg-lime" />
@@ -281,7 +281,7 @@ export function BodySection() {
       {/* FAQ */}
       {/* <div className="relative pb-14 md:pb-48">
         <div className="px-8 md:px-20 lg:px-28 mb-10 md:mb-36">
-          <div className="relative text-white text-center px-3 md:px-6 font-english font-black text-2xl md:text-5xl lg:text-7xl">
+          <div className="relative text-white text-center px-3 md:px-6 font-black text-2xl md:text-5xl lg:text-7xl">
             <span>FAQ</span>
             <GreenDialog className="absolute -top-[110%] left-[56%] md:left-[62%] w-[35px] h-[21px] md:w-[111px] md:h-[65px]" />
           </div>
@@ -361,7 +361,7 @@ function Feature({ heading, body, button }) {
 
 function TeamMember({ name = '', title = '', Svg, url = '#' }) {
   return (
-    <div className="font-english font-light text-white text-sm md:text-xl lg:text-3xl mx-2 md:px-4 md:mb-16 text-center">
+    <div className="font-light text-white text-sm md:text-xl lg:text-3xl mx-2 md:px-4 md:mb-16 text-center">
       <a href={url} target="_blank" className="group relative" rel="noreferrer">
         <TeamFlower
           width="50%"

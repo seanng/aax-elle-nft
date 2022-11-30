@@ -39,8 +39,6 @@ module.exports = {
         'shadow-gray': shadowGray,
       },
       fontFamily: {
-        gensen: 'GenSenRounded',
-        english: 'MplusRounded',
         mono: 'DMMono',
         noto: 'NotoSans',
         cubic: 'Cubic11',
