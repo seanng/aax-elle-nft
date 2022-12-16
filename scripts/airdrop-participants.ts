@@ -31,7 +31,8 @@ async function airdropParticipants() {
   for (let i = 0; i < records.length; i++) {
     const record = records[i]
     await axios.post('/api/prize-tokens', {
-      emailTemplateId: emailTemplateIds.PARTICIPANT_AIRDROP,
+      // do not send emails to airdrop recipients (from sharon)
+      // emailTemplateId: emailTemplateIds.PARTICIPANT_AIRDROP,
       tokenName: record[WLT_NAME_FIELD],
       isPrivateSale: true,
       tokenId: nextTokenId + i * 2 + 1,

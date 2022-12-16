@@ -36,7 +36,8 @@ async function airdropKols() {
       message: record[NFT_MESSAGE_FIELD] ?? 'N/A',
       minterEmail: record[EMAIL_FIELD],
       minterWallet: record[WALLET_FIELD],
-      emailTemplateId: emailTemplateIds.KOL_AIRDROP,
+      // do not send emails to airdrop recipients (from sharon)
+      // emailTemplateId: emailTemplateIds.KOL_AIRDROP,
       passcode: randomstring.generate({ length: 6 }),
       ethDonated: '0',
       tokenId: nextTokenId + i * 2,
