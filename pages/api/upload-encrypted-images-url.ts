@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { makeS3 } from 'lib/aws'
+import { makeElleDevS3 } from 'lib/aws'
 import { s3Bucket } from 'utils/config'
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const s3 = await makeS3()
+  const s3 = await makeElleDevS3()
 
   const isHtml = req.query.file.slice(-5) === '.html'
 

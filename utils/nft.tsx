@@ -434,7 +434,7 @@ export const genHTMLFile = (htmlStr, filename, fileCB) => {
       <style>
       @font-face {
         font-family: 'Cubic11';
-        src: url('https://elle-nft-prod.s3.ap-southeast-1.amazonaws.com/assets/Cubic_11_1.013_R.woff2 ') format('woff2');
+        src: url('https://elle-nft-dev-2.s3.ap-southeast-1.amazonaws.com/assets/Cubic_11_1.013_R.woff2 ') format('woff2');
         font-weight: 400;
       }
       </style>

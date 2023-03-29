@@ -1,7 +1,7 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import { sendMail } from 'lib/sendgrid'
 import * as service from 'backend/services/message-tokens'
-import { makeS3 } from 'lib/aws'
+import { makeElleDevS3 } from 'lib/aws'
 import { emailTemplateIds, s3BaseUrl, s3Bucket } from 'utils/config'
 
 async function unlockSecret(req: NextApiRequest, res: NextApiResponse) {
@@ -19,7 +19,7 @@ async function unlockSecret(req: NextApiRequest, res: NextApiResponse) {
     await service.update({ id }, { openedAt: new Date() })
 
     // Update public NFT image
-    const s3 = await makeS3()
+    const s3 = await makeElleDevS3()
     await s3
       .copyObject({
         Bucket: `${s3Bucket}/public`,
