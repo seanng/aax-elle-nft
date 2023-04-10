@@ -100,7 +100,11 @@ export function DonationStep({
     }
 
     setIsLoading(true)
-    setSpinnerText('請在MetaMask裡確認鑄造')
+    setSpinnerText(
+      process.env.NEXT_PUBLIC_AIRDROP
+        ? '鑄造至您的錢包中'
+        : '請在MetaMask裡確認鑄造'
+    )
     let mintResponseData: MintResponseData
     try {
       if (salePhase === PRIVATE_SALE) {
@@ -160,13 +164,20 @@ export function DonationStep({
   useEffect(() => {
     if (!address) return setErrorType(NO_ADDRESS_FOUND)
     setErrorType(
-      Number(balance) < Number(form.donationInEth)
+      Number(balance) < Number(form.donationInEth) &&
+        !process.env.NEXT_PUBLIC_AIRDROP
         ? INSUFFICIENT_WALLET_BALANCE
         : ''
     )
   }, [balance, form.donationInEth, address])
 
   const balanceNum = Number(balance)
+
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_AIRDROP) {
+      setValue('donationInput', 500)
+    }
+  }, [])
 
   return (
     <>
@@ -179,67 +190,75 @@ export function DonationStep({
           NFT定價，費用全額將捐助SPCA台灣防止虐待動物協會 一起關心受虐動物
         </p>
         <TwSpcaButton />
-        <CaretDownIcon fill="#fff" className="my-3 md:my-6" />
-        <div className="w-[300px] md:w-[408px] mb-3">
-          <div className="flex items-center">
-            <StampSvg />
-            <span className="ml-2">愛的捐款最低從500元開始</span>
-          </div>
-        </div>
-        <div className="flex border border-lime mb-3 w-[300px] md:w-[408px]">
-          {[500, 1000, 1500].map((val, i) => (
-            <DonationButton
-              type="button"
-              isActive={donationInput == val}
-              onClick={() => {
-                setValue('donationInput', val)
-                clearErrors()
-              }}
-              key={val}
-              className={i < 2 ? 'border-r border-lime' : ''}
-            >
-              {val}
-            </DonationButton>
-          ))}
-        </div>
 
-        <div className="w-[300px] md:w-[408px] border border-lime text-lime ">
-          <div className="border-b border-lime flex justify-between p-2">
-            <div
-              className="text-black text-5xl leading-120%"
-              style={{
-                textShadow:
-                  '-1px -1px 0 #55F263, 1px -1px 0 #55F263, -1px 1px 0 #55F263, 1px 1px 0 #55F263',
-              }}
-            >
-              NT$
+        {process.env.NEXT_PUBLIC_AIRDROP ? null : (
+          <>
+            <CaretDownIcon fill="#fff" className="my-3 md:my-6" />
+            <div className="w-[300px] md:w-[408px] mb-3">
+              <div className="flex items-center">
+                <StampSvg />
+                <span className="ml-2">愛的捐款最低從500元開始</span>
+              </div>
             </div>
-            <div className="flex flex-col items-end">
-              <input
-                type="number"
-                id="donationInput"
-                className={`w-40 text-5xl font-medium font-mono bg-transparent border-transparent focus:border-transparent focus:ring-0 p-0 text-right ${
-                  errors?.donationInput ? 'text-red-500' : 'text-lime'
+            <div className="flex border border-lime mb-3 w-[300px] md:w-[408px]">
+              {[500, 1000, 1500].map((val, i) => (
+                <DonationButton
+                  type="button"
+                  isActive={donationInput == val}
+                  onClick={() => {
+                    setValue('donationInput', val)
+                    clearErrors()
+                  }}
+                  key={val}
+                  className={i < 2 ? 'border-r border-lime' : ''}
+                >
+                  {val}
+                </DonationButton>
+              ))}
+            </div>
+
+            <div className="w-[300px] md:w-[408px] border border-lime text-lime ">
+              <div className="border-b border-lime flex justify-between p-2">
+                <div
+                  className="text-black text-5xl leading-120%"
+                  style={{
+                    textShadow:
+                      '-1px -1px 0 #55F263, 1px -1px 0 #55F263, -1px 1px 0 #55F263, 1px 1px 0 #55F263',
+                  }}
+                >
+                  NT$
+                </div>
+                <div className="flex flex-col items-end">
+                  <input
+                    type="number"
+                    id="donationInput"
+                    className={`w-40 text-5xl font-medium font-mono bg-transparent border-transparent focus:border-transparent focus:ring-0 p-0 text-right ${
+                      errors?.donationInput ? 'text-red-500' : 'text-lime'
+                    }`}
+                    min={500}
+                    placeholder="500"
+                    {...register('donationInput', { required: true, min: 500 })}
+                  />
+                  <p className="text-xs md:text-sm">
+                    (~ETH {donationInEth.toFixed(ETH_DECIMAL_PLACES)})
+                  </p>
+                </div>
+              </div>
+              <div
+                className={`text-right text-xs md:text-sm font-mono p-2 ${
+                  balanceNum < donationInEth || !address ? 'text-tomato' : ''
                 }`}
-                min={500}
-                placeholder="500"
-                {...register('donationInput', { required: true, min: 500 })}
-              />
-              <p className="text-xs md:text-sm">
-                (~ETH {donationInEth.toFixed(ETH_DECIMAL_PLACES)})
-              </p>
+              >
+                {address
+                  ? `Your balance: ETH ${balanceNum.toFixed(
+                      ETH_DECIMAL_PLACES
+                    )}`
+                  : '尚未連結錢包'}
+              </div>
             </div>
-          </div>
-          <div
-            className={`text-right text-xs md:text-sm font-mono p-2 ${
-              balanceNum < donationInEth || !address ? 'text-tomato' : ''
-            }`}
-          >
-            {address
-              ? `Your balance: ETH ${balanceNum.toFixed(ETH_DECIMAL_PLACES)}`
-              : '尚未連結錢包'}
-          </div>
-        </div>
+          </>
+        )}
+
         <div className="flex space-x-8 mt-10">
           <SecondaryButton type="button" onClick={handleBackClick}>
             上一步

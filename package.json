@@ -13,8 +13,13 @@
     "postinstall": "husky install",
     "typecheck": "tsc --pretty --noEmit",
     "test": "jest --watch",
+    "prisma-db-push": "prisma db push",
     "prisma-gen": "prisma generate",
-    "hardhat-compile": "hardhat compile"
+    "hardhat-compile": "hardhat compile",
+    "hardhat-deploy-goerli": "hardhat run scripts/deploy.ts --network goerli",
+    "hardhat-deploy-localhost": "hardhat run scripts/deploy.ts --network localhost",
+    "hardhat-set-sale-phase-localhost": "hardhat run scripts/set-sale-phase.ts --network localhost",
+    "hardhat-node": "hardhat node"
   },
   "lint-staged": {
     "*.{ts,tsx}": [

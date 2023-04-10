@@ -44,29 +44,33 @@ export function MintConfirmationModal({
           <p className="font-bold mb-2">解鎖密碼</p>
           <p>{form.passcode}</p>
         </div>
-        <p className="font-medium px-4">捐款金額</p>
-        <div className="flex pl-4 space-x-1 font-mono items-end mb-2">
-          <div className="font-medium underline text-2xl tracking-wide">
-            ~ETH {Number(form.donationInEth).toFixed(5)}
-          </div>
-          <div className="text-gray-400 text-xs mb-1">
-            {`(NTD${form.donationInput})`}
-          </div>
-        </div>
-        <div className="flex mb-5 space-x-1 px-4">
-          <Image
-            src="/images/tiny-gray-error-icon.png"
-            layout="fixed"
-            objectFit="contain"
-            height="15px"
-            width="15px"
-            className="flex-none"
-          />
-          <p className="text-gray-400 font-mono text-xs leading-150%">
-            ETH已包含 gas fee of ~ETH {Number(mintGasFee).toFixed(5)}
-            ，台幣金額會依據ETH的浮動匯率而改變
-          </p>
-        </div>
+        {process.env.NEXT_PUBLIC_AIRDROP ? null : (
+          <>
+            <p className="font-medium px-4">捐款金額</p>
+            <div className="flex pl-4 space-x-1 font-mono items-end mb-2">
+              <div className="font-medium underline text-2xl tracking-wide">
+                ~ETH {Number(form.donationInEth).toFixed(5)}
+              </div>
+              <div className="text-gray-400 text-xs mb-1">
+                {`(NTD${form.donationInput})`}
+              </div>
+            </div>
+            <div className="flex mb-5 space-x-1 px-4">
+              <Image
+                src="/images/tiny-gray-error-icon.png"
+                layout="fixed"
+                objectFit="contain"
+                height="15px"
+                width="15px"
+                className="flex-none"
+              />
+              <p className="text-gray-400 font-mono text-xs leading-150%">
+                ETH已包含 gas fee of ~ETH {Number(mintGasFee).toFixed(5)}
+                ，台幣金額會依據ETH的浮動匯率而改變
+              </p>
+            </div>
+          </>
+        )}
         <div className="text-center mb-5">
           <PrimaryButton
             onClick={onMintClick}

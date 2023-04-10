@@ -30,11 +30,10 @@ contract Elleverse is ERC721BQueryable, Ownable {
   // =============================================================
   //                      HELPERS
   // =============================================================
-  function _isStringEqual(string memory a, string memory b)
-    private
-    pure
-    returns (bool)
-  {
+  function _isStringEqual(
+    string memory a,
+    string memory b
+  ) private pure returns (bool) {
     return (keccak256(abi.encodePacked((a))) ==
       keccak256(abi.encodePacked((b))));
   }
@@ -118,6 +117,49 @@ contract Elleverse is ERC721BQueryable, Ownable {
       // mint whitelist token to owner
       _mint(_to[i], 1);
     }
+  }
+
+  function privateAirdrop(
+    address walletAddress
+  ) external payable callerIsUser returns (uint256) {
+    require(msg.sender == treasury);
+    require(
+      _isStringEqual(SALE_PHASE, PRIVATE_SALE_PHASE),
+      "Can't mint - Not in private sale phase"
+    );
+    require(
+      MSG_TOKEN_LIMIT >= (_nextTokenId() / 2 + 1),
+      "Can't mint - Will exceed msg token limit"
+    );
+    require(
+      ownsWhitelistToken(walletAddress) == true,
+      "Can't mint - Does not own whitelist token"
+    );
+    // require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
+    if (_nextTokenId() % 2 != 0) _incrementIndex(1);
+    uint256 tokenId = _nextTokenId();
+    _safeMint(walletAddress, 2);
+    return tokenId;
+  }
+
+  function publicAirdrop(
+    address walletAddress
+  ) external payable callerIsUser returns (uint256) {
+    require(msg.sender == treasury);
+
+    require(
+      _isStringEqual(SALE_PHASE, PUBLIC_SALE_PHASE),
+      "Can't mint - Not in public sale phase"
+    );
+    require(
+      MSG_TOKEN_LIMIT >= (_nextTokenId() / 2 + 1),
+      "Can't mint - Will exceed msg token limit"
+    );
+    // require(msg.value > 0 wei, 'Mint requires a donation of at least 1 wei.');
+    if (_nextTokenId() % 2 != 0) _incrementIndex(1);
+    uint256 tokenId = _nextTokenId();
+    _safeMint(walletAddress, 2);
+    return tokenId;
   }
 
   function privateSaleMint() external payable callerIsUser returns (uint256) {

@@ -7,8 +7,8 @@ async function setSalePhase() {
     process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as string
   )
 
-  // await contract.setPublicSalePhase()
-  await contract.setPrivateSalePhase()
+  await contract.setPublicSalePhase()
+  // await contract.setPrivateSalePhase()
 }
 
 setSalePhase()

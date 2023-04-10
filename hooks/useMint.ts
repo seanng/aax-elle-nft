@@ -107,55 +107,110 @@ export function useMint() {
     isPrivateSale: boolean,
     onMetamaskConfirm: () => void
   ): Promise<MintResponseData> => {
-    if (!contract) return
-    const mintOpts = {
-      value: ethers.utils.parseEther(form.donationInEth.toFixed(18)),
+    try {
+      if (!contract) return
+      console.log('executeMint...')
+      const mintOpts = {
+        value: ethers.utils.parseEther(form.donationInEth.toFixed(18)),
+      }
+      let mintMethod
+      if (process.env.NEXT_PUBLIC_AIRDROP) {
+        mintMethod = isPrivateSale ? 'privateAirdrop' : 'publicAirdrop'
+      } else {
+        mintMethod = isPrivateSale ? 'privateSaleMint' : 'publicSaleMint'
+      }
+      const contractPhase = isPrivateSale ? 'PRIVATE SALE' : 'PUBLIC SALE'
+      console.log(mintMethod, contractPhase)
+
+      if (atMsgTokenLimit) throw new Error(REACHED_MESSAGE_LIMIT)
+      console.log('atMsgTokenLimit', atMsgTokenLimit)
+      const SALE_PHASE = await contract['SALE_PHASE']()
+      const statusIsConsistent = SALE_PHASE === contractPhase
+      console.log(
+        'statusIsConsistent',
+        statusIsConsistent,
+        SALE_PHASE,
+        contractPhase
+      )
+
+      if (!statusIsConsistent) throw new Error(INCONSISTENT_CONTRACT_STATUS)
+      console.log(statusIsConsistent)
+
+      let tokenIdBN, messageTokenId
+      if (process.env.NEXT_PUBLIC_AIRDROP) {
+        console.log('airdroping...')
+
+        const { data } = await axios.post('/api/airdrop', {
+          mintMethod,
+          address,
+        })
+
+        messageTokenId = data?.messageTokenId
+      } else {
+        tokenIdBN = await contract.callStatic[mintMethod](mintOpts)
+        messageTokenId = Number(tokenIdBN.toString())
+        await contract[mintMethod](mintOpts)
+        onMetamaskConfirm()
+      }
+
+      await uploadOneFile(
+        PUBLIC,
+        `${messageTokenId}.png`,
+        files.beforeOpenImage
+      )
+      await uploadOneFile(
+        PUBLIC,
+        `${messageTokenId}.html`,
+        files.beforeOpenHtml
+      )
+      await uploadOneFile(
+        BEFORE,
+        `${messageTokenId}.png`,
+        files.beforeOpenImage
+      )
+      await uploadOneFile(
+        BEFORE,
+        `${messageTokenId}.html`,
+        files.beforeOpenHtml
+      )
+      await uploadOneFile(AFTER, `${messageTokenId}.png`, files.afterOpenImage)
+      await uploadOneFile(AFTER, `${messageTokenId}.html`, files.afterOpenHtml)
+      await uploadOneFile(
+        NEVER,
+        `${messageTokenId}.png`,
+        files.neverOpenedImage
+      )
+      await uploadOneFile(
+        NEVER,
+        `${messageTokenId}.html`,
+        files.neverOpenedHtml
+      )
+
+      const { PRIVATE_SALE_MINT, PUBLIC_SALE_MINT } = emailTemplateIds
+
+      const { data: mintData } = await axios.post(`/api/message-tokens`, {
+        emailTemplateId: isPrivateSale ? PRIVATE_SALE_MINT : PUBLIC_SALE_MINT,
+        tokenId: messageTokenId,
+        isPrivateSale,
+        message: form.message,
+        minterEmail: form.email,
+        minterWallet: address,
+        ethDonated: form.donationInEth.toString(),
+        passcode: form.passcode,
+      })
+
+      await axios.post('/api/prize-tokens', {
+        tokenId: messageTokenId + 1,
+        minterEmail: form.email,
+        minterWallet: address,
+        isPrivateSale: salePhase === PRIVATE_SALE,
+        ...(salePhase !== PRIVATE_SALE && { tokenName: 'Prize Token' }),
+      })
+
+      return mintData
+    } catch (error) {
+      console.log(error)
     }
-
-    const mintMethod = isPrivateSale ? 'privateSaleMint' : 'publicSaleMint'
-    const contractPhase = isPrivateSale ? 'PRIVATE SALE' : 'PUBLIC SALE'
-
-    if (atMsgTokenLimit) throw new Error(REACHED_MESSAGE_LIMIT)
-    const statusIsConsistent =
-      (await contract['SALE_PHASE']()) === contractPhase
-    if (!statusIsConsistent) throw new Error(INCONSISTENT_CONTRACT_STATUS)
-
-    const tokenIdBN = await contract.callStatic[mintMethod](mintOpts)
-    const messageTokenId = Number(tokenIdBN.toString())
-    await contract[mintMethod](mintOpts)
-    onMetamaskConfirm()
-
-    await uploadOneFile(PUBLIC, `${messageTokenId}.png`, files.beforeOpenImage)
-    await uploadOneFile(PUBLIC, `${messageTokenId}.html`, files.beforeOpenHtml)
-    await uploadOneFile(BEFORE, `${messageTokenId}.png`, files.beforeOpenImage)
-    await uploadOneFile(BEFORE, `${messageTokenId}.html`, files.beforeOpenHtml)
-    await uploadOneFile(AFTER, `${messageTokenId}.png`, files.afterOpenImage)
-    await uploadOneFile(AFTER, `${messageTokenId}.html`, files.afterOpenHtml)
-    await uploadOneFile(NEVER, `${messageTokenId}.png`, files.neverOpenedImage)
-    await uploadOneFile(NEVER, `${messageTokenId}.html`, files.neverOpenedHtml)
-
-    const { PRIVATE_SALE_MINT, PUBLIC_SALE_MINT } = emailTemplateIds
-
-    const { data: mintData } = await axios.post(`/api/message-tokens`, {
-      emailTemplateId: isPrivateSale ? PRIVATE_SALE_MINT : PUBLIC_SALE_MINT,
-      tokenId: messageTokenId,
-      isPrivateSale,
-      message: form.message,
-      minterEmail: form.email,
-      minterWallet: address,
-      ethDonated: form.donationInEth.toString(),
-      passcode: form.passcode,
-    })
-
-    await axios.post('/api/prize-tokens', {
-      tokenId: messageTokenId + 1,
-      minterEmail: form.email,
-      minterWallet: address,
-      isPrivateSale: salePhase === PRIVATE_SALE,
-      ...(salePhase !== PRIVATE_SALE && { tokenName: 'Prize Token' }),
-    })
-
-    return mintData
   }
 
   return {
